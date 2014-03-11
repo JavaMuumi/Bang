@@ -1,4 +1,4 @@
 Bang
 ====
 
-Vapu ei lopu
+Vapu ei lopu, ei varmasti
