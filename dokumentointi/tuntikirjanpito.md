@@ -8,3 +8,6 @@ YHTEENSÄ: 4,5h
 12.3.
 klo 10-11:30
 GitHubin kansioiden luontia ja aihemäärittelyn laatiminen
+klo 17-20
+Koodausta
+YHTEENSÄ: 4,5h
