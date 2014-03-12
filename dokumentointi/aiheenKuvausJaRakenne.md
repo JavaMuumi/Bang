@@ -1,0 +1,4 @@
+Aihe: BANG!-korttipelin tietokonesovellus
+BANG!-korttipeliin pohjautuva tietokonepeli (http://en.wikipedia.org/wiki/Bang!).
+Peli on villilänsi-teemainen ja siinä on tavoitteena ampua toinen pelaaja. Pelaajilla on hahmo, jolla on tietty erityisominaisuus. He nostavat vuorollaan pakasta kortteja, joita he tarvitsevat toimiakseen. Korteilla voi ampua, väistää, saada lisää kestoja, poistaa toisen kortteja, yms. Kortit nostetaan pelaajien käteen ja jotkin niistä voi pelata sieltä suoraan kertaluontoisesti, osa laitetaan pöytään pysyvän hyödyn saamiseksi. Käytetyt kortit menevät poistopakkaan, joka tarvittaessa sekoitetaan uudeksi nostopakaksi.
+Tietokonesovellus on pelkistetty versio alkuperäisestä siten, että siinä on vain kaksi pelaajaa. Peli toimii hotseat-periaatteella.
