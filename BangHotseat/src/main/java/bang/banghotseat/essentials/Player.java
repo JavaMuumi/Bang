@@ -6,6 +6,7 @@ package bang.banghotseat.essentials;
 
 import bang.banghotseat.avatars.Avatar;
 import bang.banghotseat.cards.Card;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +17,8 @@ public class Player {
     
     public Avatar avatar;
     public int currentHealth;
-    public List<Card> handCards;
-    public List<Card> frontCards;
+    public List<Card> handCards = new ArrayList<>();
+    public List<Card> frontCards = new ArrayList<>();
     public int counter = 1;
     
     public void setAvatar(AvatarRandomizer randomizer) {

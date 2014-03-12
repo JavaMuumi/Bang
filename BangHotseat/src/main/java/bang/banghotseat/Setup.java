@@ -13,7 +13,7 @@ import bang.banghotseat.essentials.Player;
  * @author Antti Korpi
  */
 public class Setup {
-    
+
     public Player player1 = new Player();
     public Player player2 = new Player();
     public AvatarRandomizer randomizer = new AvatarRandomizer();
@@ -23,6 +23,7 @@ public class Setup {
     public Setup() {
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
+        Runner runner = new Runner(player1, player2, drawpile, discardpile);
     }
     
     public void givePlayersAvatarsAndSetMaxHealths() {

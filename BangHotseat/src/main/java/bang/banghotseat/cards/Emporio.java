@@ -37,4 +37,9 @@ public class Emporio implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Emporio: " + number + " of " + suit;
+    }
 }

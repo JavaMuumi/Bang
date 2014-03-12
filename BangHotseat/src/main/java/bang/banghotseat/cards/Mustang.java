@@ -37,4 +37,9 @@ public class Mustang implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Mustang: " + number + " of " + suit;
+    }
 }

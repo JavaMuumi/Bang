@@ -37,4 +37,9 @@ public class Remington implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Remington: " + number + " of " + suit;
+    }
 }

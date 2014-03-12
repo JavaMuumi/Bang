@@ -37,4 +37,9 @@ public class WellsFargo implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Wells Fargo: " + number + " of " + suit;
+    }
 }

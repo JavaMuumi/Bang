@@ -37,4 +37,9 @@ public class Dinamite implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Dinamite: " + number + " of " + suit;
+    }
 }

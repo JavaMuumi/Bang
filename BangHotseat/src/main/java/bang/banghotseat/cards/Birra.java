@@ -37,4 +37,9 @@ public class Birra implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Birra: " + number + " of " + suit;
+    }
 }

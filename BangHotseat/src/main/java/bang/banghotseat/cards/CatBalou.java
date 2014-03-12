@@ -37,4 +37,9 @@ public class CatBalou implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Cat Balou: " + number + " of " + suit;
+    }
 }

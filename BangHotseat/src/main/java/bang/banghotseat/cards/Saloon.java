@@ -37,4 +37,9 @@ public class Saloon implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Saloon: " + number + " of " + suit;
+    }
 }

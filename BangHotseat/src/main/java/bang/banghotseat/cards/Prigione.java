@@ -37,4 +37,9 @@ public class Prigione implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Prigione: " + number + " of " + suit;
+    }
 }

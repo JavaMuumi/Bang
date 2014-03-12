@@ -37,4 +37,9 @@ public class Mirino implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Mirino: " + number + " of " + suit;
+    }
 }

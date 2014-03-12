@@ -37,4 +37,9 @@ public class Indiani implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Indiani!: " + number + " of " + suit;
+    }
 }

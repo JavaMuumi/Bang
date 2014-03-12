@@ -37,4 +37,9 @@ public class Panico implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Panico: " + number + " of " + suit;
+    }
 }

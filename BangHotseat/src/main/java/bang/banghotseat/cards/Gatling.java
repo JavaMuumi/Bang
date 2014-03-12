@@ -37,4 +37,9 @@ public class Gatling implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Gatling: " + number + " of " + suit;
+    }
 }

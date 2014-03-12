@@ -37,4 +37,9 @@ public class RevCarabine implements Card {
     public int getNumber() {
         return number;
     }
+    
+    @Override
+    public String toString() {
+        return "Rev.Carabine: " + number + " of " + suit;
+    }
 }
