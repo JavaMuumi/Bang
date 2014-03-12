@@ -5,6 +5,7 @@
 package bang.banghotseat.avatars;
 
 import bang.banghotseat.cards.Deck;
+import bang.banghotseat.essentials.Player;
 
 /**
  *
@@ -13,5 +14,5 @@ import bang.banghotseat.cards.Deck;
 public interface Avatar {
     
     int getMaxHealth();
-    void drawCards(Deck discardpile);
+    void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow);
 }

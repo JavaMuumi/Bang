@@ -34,7 +34,7 @@ public class Checker {
             
             if (cardToCheck.toString().contains("Dinamite")) {
                 
-                Card topCard = drawpile.take(discardpile.getDeck());
+                Card topCard = drawpile.take(discardpile);
                 
                 if (topCard.getSuit().equals("Spades")) {
                     
@@ -49,5 +49,9 @@ public class Checker {
                 }
             }
         }
+    }
+    
+    public void checkPrigione() {
+        
     }
 }

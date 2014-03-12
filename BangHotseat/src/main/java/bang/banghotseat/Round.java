@@ -12,12 +12,12 @@ import bang.banghotseat.essentials.Player;
  *
  * @author Antti Korpi
  */
-public class Runner {
+public class Round {
     
     Player playerInTurn;
     Player playerToFollow;
     
-    public Runner(Player player1, Player player2, Deck drawpile, Deck discardpile) {
+    public Round(Player player1, Player player2, Deck drawpile, Deck discardpile) {
         
         playerInTurn = player1;
         playerToFollow = player2;
@@ -26,8 +26,10 @@ public class Runner {
 //        while (playerInTurn.currentHealth > 0 && playerToFollow.currentHealth > 0) {
             
             checker.setPlayerTurns(playerInTurn, playerToFollow);
-            
             checker.checkDinamite();
+            checker.checkPrigione();
+            
+            playerInTurn.avatar.drawCards(drawpile, discardpile, playerInTurn, playerToFollow);
 //        }
     }
 }

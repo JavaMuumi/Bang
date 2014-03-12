@@ -117,10 +117,10 @@ public class Deck {
         return deck;
     }
     
-    public Card take(List<Card> discardPile) {
+    public Card take(Deck discardpile) {
         
         if (deck.isEmpty()) {
-            for (Card toBePlaced : discardPile) {
+            for (Card toBePlaced : discardpile.getDeck()) {
                 place(toBePlaced);
             }
             Collections.shuffle(deck);

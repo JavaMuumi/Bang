@@ -5,6 +5,7 @@
 package bang.banghotseat.avatars;
 
 import bang.banghotseat.cards.Deck;
+import bang.banghotseat.essentials.Player;
 
 /**
  *
@@ -18,7 +19,8 @@ public class PedroRamirez implements Avatar {
     }
 
     @Override
-    public void drawCards(Deck discardpile) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
+        playerInTurn.handCards.add(drawpile.take(discardpile));
+        playerInTurn.handCards.add(drawpile.take(discardpile));
+    } 
 }

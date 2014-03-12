@@ -23,7 +23,7 @@ public class Setup {
     public Setup() {
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
-        Runner runner = new Runner(player1, player2, drawpile, discardpile);
+        Round runner = new Round(player1, player2, drawpile, discardpile);
     }
     
     public void givePlayersAvatarsAndSetMaxHealths() {
