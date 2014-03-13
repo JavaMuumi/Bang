@@ -15,3 +15,7 @@ YHTEENSÄ: 4,5h
 13.3.
 klo 10-14
 Koodausta
+klo 16-19
+Koodausta
+YHTEENSÄ: 7h
+
