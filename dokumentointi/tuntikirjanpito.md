@@ -11,3 +11,7 @@ GitHubin kansioiden luontia ja aihemäärittelyn laatiminen
 klo 17-20
 Koodausta
 YHTEENSÄ: 4,5h
+
+13.3.
+klo 10-14
+Koodausta
