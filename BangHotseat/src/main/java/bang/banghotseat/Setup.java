@@ -7,6 +7,7 @@ package bang.banghotseat;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.AvatarRandomizer;
 import bang.banghotseat.essentials.Player;
+import bang.banghotseat.userInterface.TextInterface;
 
 /**
  *
@@ -14,26 +15,28 @@ import bang.banghotseat.essentials.Player;
  */
 public class Setup {
 
-    public Player player1 = new Player();
-    public Player player2 = new Player();
-    public AvatarRandomizer randomizer = new AvatarRandomizer();
-    public Deck drawpile;
-    public Deck discardpile;
+    private TextInterface text;
+    private Player player1 = new Player();
+    private Player player2 = new Player();
+    private AvatarRandomizer randomizer = new AvatarRandomizer();
+    private Deck drawpile;
+    private Deck discardpile;
     
-    public Setup() {
+    public Setup(TextInterface text) {
+        this.text = text;
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
         Round runner = new Round(player1, player2, drawpile, discardpile);
     }
     
-    public void givePlayersAvatarsAndSetMaxHealths() {
+    private void givePlayersAvatarsAndSetMaxHealths() {
         player1.setAvatar(randomizer);
         player1.setCurrentHealth();
         player2.setAvatar(randomizer);
         player2.setCurrentHealth();
     }
     
-    public void createDecks() {
+    private void createDecks() {
         this.drawpile = new Deck();
         drawpile.createCards();
         this.discardpile = new Deck();

@@ -40,6 +40,6 @@ public class Panico implements Card {
     
     @Override
     public String toString() {
-        return "Panico: " + number + " of " + suit;
+        return "Panico!: " + number + " of " + suit;
     }
 }

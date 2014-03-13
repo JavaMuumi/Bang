@@ -1,9 +1,13 @@
 package bang.banghotseat;
 
+import bang.banghotseat.userInterface.TextInterface;
+
 public class Main 
 {
     public static void main( String[] args )
     {
-        Setup setup = new Setup();
+        TextInterface text = new TextInterface();
+        Setup setup = new Setup(text);
+        text.go(setup);
     }
 }

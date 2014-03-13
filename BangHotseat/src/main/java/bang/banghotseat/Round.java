@@ -14,8 +14,8 @@ import bang.banghotseat.essentials.Player;
  */
 public class Round {
     
-    Player playerInTurn;
-    Player playerToFollow;
+    private Player playerInTurn;
+    private Player playerToFollow;
     
     public Round(Player player1, Player player2, Deck drawpile, Deck discardpile) {
         
