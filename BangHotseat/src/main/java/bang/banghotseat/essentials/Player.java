@@ -15,18 +15,26 @@ import java.util.List;
  */
 public class Player {
     
-    public Avatar avatar;
-    public int currentHealth;
-    public List<Card> handCards = new ArrayList<>();
-    public List<Card> frontCards = new ArrayList<>();
-    public int counter = 1;
+    private Avatar avatar;
+    private int currentHealth;
+    private List<Card> handCards = new ArrayList<>();
+    private List<Card> frontCards = new ArrayList<>();
+    private int counter = 1;
     
     public void setAvatar(AvatarRandomizer randomizer) {
         avatar = randomizer.giveAvatar();
     }
     
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
     public void setCurrentHealth() {
         currentHealth = avatar.getMaxHealth();
+    }
+    
+    public int getCurrentHealth() {
+        return currentHealth;
     }
     
     public void loseHealth(int amountToBeLost) {
@@ -35,6 +43,28 @@ public class Player {
         counter++;
         }
         counter = 1;
+    }
+    
+    public List<Card> getHandCards() {
+        return handCards;
+    }
+    
+    public Card drawSpecificHandCard(int index) {
+        Card toBeGiven = handCards.get(index);
+        handCards.remove(index);
+        return toBeGiven;
+    }
+    
+    public void putCardIntoHand(Card cardToPutIn) {
+        handCards.add(cardToPutIn);
+    }
+    
+    public List<Card> getFrontCards() {
+        return frontCards;
+    }
+    
+    public void putCardInFront(Card toBePlaced) {
+        frontCards.add(toBePlaced);
     }
     
     public void gainHealth() {

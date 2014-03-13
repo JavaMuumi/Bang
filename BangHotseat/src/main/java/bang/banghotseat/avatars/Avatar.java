@@ -14,5 +14,6 @@ import bang.banghotseat.essentials.Player;
 public interface Avatar {
     
     int getMaxHealth();
+    String getName();
     void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow);
 }

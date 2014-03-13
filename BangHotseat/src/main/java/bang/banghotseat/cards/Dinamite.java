@@ -10,8 +10,8 @@ package bang.banghotseat.cards;
  */
 public class Dinamite implements Card {
     
-    String suit;
-    int number;
+    private String suit;
+    private int number;
     
     public Dinamite(String suit, int number) {
         this.suit = suit;

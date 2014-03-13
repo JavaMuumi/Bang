@@ -10,8 +10,8 @@ package bang.banghotseat.cards;
  */
 public class Bang implements Card {
     
-    String suit;
-    int number;
+    private String suit;
+    private int number;
     
     public Bang(String suit, int number) {
         this.suit = suit;

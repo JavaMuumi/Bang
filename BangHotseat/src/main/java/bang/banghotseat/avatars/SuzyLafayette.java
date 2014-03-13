@@ -19,8 +19,13 @@ public class SuzyLafayette implements Avatar {
     }
 
     @Override
+    public String getName() {
+        return "Suzy Lafayette";
+    }
+
+    @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
-        playerInTurn.handCards.add(drawpile.take(discardpile));
-        playerInTurn.handCards.add(drawpile.take(discardpile));
+        playerInTurn.getHandCards().add(drawpile.take(discardpile));
+        playerInTurn.getHandCards().add(drawpile.take(discardpile));
     } 
 }
