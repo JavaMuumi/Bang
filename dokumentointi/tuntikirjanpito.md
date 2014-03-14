@@ -19,3 +19,7 @@ klo 16-19
 Koodausta
 YHTEENSÄ: 7h
 
+14.3.
+klo 13:30-15:30
+Koodausta (testien kanssa tappelua)
+YHTEENSÄ: 2h

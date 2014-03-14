@@ -37,7 +37,7 @@ public class Barrel implements Card {
     public int getNumber() {
         return number;
     }
-
+    
     @Override
     public String toString() {
         return "Barrel: " + number + " of " + suit;

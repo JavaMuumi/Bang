@@ -4,6 +4,7 @@
  */
 package bang.banghotseat;
 
+import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.AvatarRandomizer;
 import bang.banghotseat.essentials.Player;
@@ -33,12 +34,13 @@ public class Setup {
         this.asker = asker;
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
+        dealStartingHands();
         
-        System.out.println("Player1, your character is " + player1.getAvatar().getName());
-        System.out.println("Player2, your character is " + player2.getAvatar().getName());
-        System.out.println("");
-        
-        Round round = new Round(player1, player2, drawpile, discardpile, asker, text);
+//        System.out.println("Player1, your character is " + player1.getAvatar().getName());
+//        System.out.println("Player2, your character is " + player2.getAvatar().getName());
+//        System.out.println("");
+//        
+//        Round round = new Round(player1, player2, drawpile, discardpile, asker, text);
     }
     
     private void givePlayersAvatarsAndSetMaxHealths() {
@@ -53,4 +55,25 @@ public class Setup {
         drawpile.createCards();
         this.discardpile = new Deck();
     }
+    
+        private void dealStartingHands() {
+        
+        while (player1.getHandCards().size() < player1.getAvatar().getMaxHealth()) {
+            Card cardToBeGiven = drawpile.take(discardpile);
+            player1.putCardIntoHand(cardToBeGiven);
+        }
+        
+        while (player2.getHandCards().size() < player2.getAvatar().getMaxHealth()) {
+            Card cardToBeGiven = drawpile.take(discardpile);
+            player2.putCardIntoHand(cardToBeGiven);
+        }
+    }
+        
+        public Player getPlayer1() {
+            return player1;
+        }
+    
+        public Player getPlayer2() {
+            return player2;
+        }
 }

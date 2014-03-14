@@ -30,10 +30,7 @@ import java.util.Random;
  */
 public class AvatarRandomizer {
         
-    List<Avatar> avatars = new ArrayList<>();
-    
-    Random randomizer = new Random();
-    int avatarCounter = 14;
+    private List<Avatar> avatars = new ArrayList<>();
 
     public AvatarRandomizer() {
         
@@ -55,10 +52,12 @@ public class AvatarRandomizer {
     }
     
     public Avatar giveAvatar() {  
-        int numberOfAvatar = randomizer.nextInt(avatarCounter);
-        Avatar toBeGiven = avatars.get(numberOfAvatar);
-        avatars.remove(numberOfAvatar);
-        avatarCounter--;
+        Avatar toBeGiven = avatars.get(0);
+        avatars.remove(0);
         return toBeGiven;
+    }
+    
+    public List<Avatar> getAvatarlist() {
+        return avatars;
     }
 }
