@@ -4,8 +4,12 @@
  */
 package bang.banghotseat;
 
+import bang.banghotseat.avatars.Avatar;
+import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.Player;
 import bang.banghotseat.userInterface.TextInterface;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,6 +47,40 @@ public class SetupTest {
     }
     
     @Test
+    public void player1HasAnAvatar() {
+        List<Avatar> avatarAmountTest = new ArrayList<>();
+        avatarAmountTest.add(setup.getPlayer1().getAvatar());
+        assertEquals(1, avatarAmountTest.size());
+    }
+    
+    @Test
+    public void player2HasAnAvatar() {
+        List<Avatar> avatarAmountTest = new ArrayList<>();
+        avatarAmountTest.add(setup.getPlayer2().getAvatar());
+        assertEquals(1, avatarAmountTest.size());
+    }
+    
+    @Test
+    public void player1HasCorrectAmountOfHealth() {
+        if (setup.getPlayer1().getAvatar().getName().equals("El Gringo") || setup.getPlayer1().getAvatar().getName().equals("Paul Regret")) {
+            assertEquals(3, setup.getPlayer1().getCurrentHealth());
+        }
+        else {
+            assertEquals(4, setup.getPlayer1().getCurrentHealth());
+        }
+    }
+    
+    @Test
+    public void player2HasCorrectAmountOfHealth() {
+        if (setup.getPlayer2().getAvatar().getName().equals("El Gringo") || setup.getPlayer2().getAvatar().getName().equals("Paul Regret")) {
+            assertEquals(3, setup.getPlayer2().getCurrentHealth());
+        }
+        else {
+            assertEquals(4, setup.getPlayer2().getCurrentHealth());
+        }
+    }
+    
+    @Test
     public void player1HasHisMaxHealthAmountOfHandCards() {
         
         int numberOfPlayer1HandCards = setup.getPlayer1().getHandCards().size();
@@ -56,6 +94,32 @@ public class SetupTest {
     }
     
     @Test
-    public void player1hasAnAvatar() {
+    public void drawpileHasBeenCreated() {
+        List<Deck> drawpileexistsTest = new ArrayList<>();
+        drawpileexistsTest.add(setup.getDrawpile());
+        assertEquals(1, drawpileexistsTest.size());
+    }
+    
+    @Test
+    public void discardpileHasBeenCreated() {
+        List<Deck> discardpileexistsTest = new ArrayList<>();
+        discardpileexistsTest.add(setup.getDiscardpile());
+        assertEquals(1, discardpileexistsTest.size());
+    }
+    
+    @Test
+    public void justCreatedDrawpileHas79Cards() {
+        int cardsOnJustCreatedDeck = setup.getDrawpile().getDeck().size() + setup.getPlayer1().getHandCards().size() + setup.getPlayer2().getHandCards().size(); 
+        assertEquals(79, cardsOnJustCreatedDeck);
+    }
+    
+    public void justCreatedDiscardpileIsEmpty() {
+        assertEquals(0, setup.getDiscardpile().getDeck().size());
+    }
+    
+    @Test
+    public void dealtCardsAreRemovedFromDrawpile() {
+        int amountOfPlayerHandCards = setup.getPlayer1().getHandCards().size() + setup.getPlayer2().getHandCards().size();
+        assertEquals(79 - amountOfPlayerHandCards, setup.getDrawpile().getDeck().size());
     }
 }

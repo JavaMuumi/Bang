@@ -76,4 +76,12 @@ public class Setup {
         public Player getPlayer2() {
             return player2;
         }
+        
+        public Deck getDrawpile() {
+            return drawpile;
+        }
+        
+        public Deck getDiscardpile() {
+            return discardpile;
+        }
 }

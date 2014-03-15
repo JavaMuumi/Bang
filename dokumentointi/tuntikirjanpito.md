@@ -23,3 +23,7 @@ YHTEENSÄ: 7h
 klo 13:30-15:30
 Koodausta (testien kanssa tappelua)
 YHTEENSÄ: 2h
+
+15.3.
+klo 12-15
+Koodausta
