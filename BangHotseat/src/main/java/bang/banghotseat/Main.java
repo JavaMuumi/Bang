@@ -8,7 +8,7 @@ public class Main
     {
         
         TextInterface text = new TextInterface();
-        Setup setup = new Setup(text);
+        Setup setup = new Setup();
         text.go(setup);
     }
 }

@@ -18,20 +18,17 @@ import java.util.Scanner;
 public class Setup {
 
     private Scanner asker;
-    private TextInterface text;
     private Player player1 = new Player();
     private Player player2 = new Player();
     private AvatarRandomizer randomizer = new AvatarRandomizer();
     private Deck drawpile;
     private Deck discardpile;
     
-    public Setup(TextInterface text) {
-        this.text = text;
+    public Setup() {
     }
     
-    public void runSetup(Scanner asker) {
+    public void runSetup() {
         
-        this.asker = asker;
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
         dealStartingHands();
@@ -44,9 +41,9 @@ public class Setup {
     }
     
     private void givePlayersAvatarsAndSetMaxHealths() {
-        player1.setAvatar(randomizer);
+        player1.setAvatar(randomizer.giveAvatar());
         player1.setCurrentHealth();
-        player2.setAvatar(randomizer);
+        player2.setAvatar(randomizer.giveAvatar());
         player2.setCurrentHealth();
     }
     

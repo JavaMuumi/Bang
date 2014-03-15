@@ -21,8 +21,8 @@ public class Player {
     private List<Card> frontCards = new ArrayList<>();
     private int counter = 1;
     
-    public void setAvatar(AvatarRandomizer randomizer) {
-        avatar = randomizer.giveAvatar();
+    public void setAvatar(Avatar avatar) {
+        this.avatar = avatar;
     }
     
     public Avatar getAvatar() {

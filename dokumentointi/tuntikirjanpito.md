@@ -27,3 +27,6 @@ YHTEENSÄ: 2h
 15.3.
 klo 12-15
 Koodausta
+21-00
+Koodausta
+YHTEENSÄ: 6h

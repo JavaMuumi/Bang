@@ -56,6 +56,10 @@ public class TextInterface {
 //            System.out.println("");
 //        }
 //        }
-        setup.runSetup(asker);
+        setup.runSetup();
+    }
+    
+    public Scanner getAsker() {
+        return asker;
     }
 }

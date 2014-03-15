@@ -23,11 +23,10 @@ import static org.junit.Assert.*;
  */
 public class SetupTest {
     
-    private TextInterface text = new TextInterface();
-    private Setup setup = new Setup(text);
+    private Setup setup = new Setup();
     
     public SetupTest() {
-        text.go(setup);
+        setup.runSetup();
     }
     
     @BeforeClass
