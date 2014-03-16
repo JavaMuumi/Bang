@@ -30,3 +30,10 @@ Koodausta
 21-00
 Koodausta
 YHTEENSÄ: 6h
+
+16.3.
+klo 8-11
+Koodausta
+klo 13-14
+Koodausta
+YHTEENSÄ: 5h

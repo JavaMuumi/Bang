@@ -8,7 +8,6 @@ import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.AvatarRandomizer;
 import bang.banghotseat.essentials.Player;
-import bang.banghotseat.userInterface.TextInterface;
 import java.util.Scanner;
 
 /**

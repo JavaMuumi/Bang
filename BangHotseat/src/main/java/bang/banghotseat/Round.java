@@ -8,7 +8,6 @@ import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.Checker;
 import bang.banghotseat.essentials.Player;
-import bang.banghotseat.userInterface.TextInterface;
 import java.util.Scanner;
 
 /**
@@ -18,15 +17,13 @@ import java.util.Scanner;
 public class Round {
     
     private Scanner asker;
-    private TextInterface text;
     private Player playerInTurn;
     private Player playerToFollow;
     private boolean goOn = false;
     
-    public Round(Player player1, Player player2, Deck drawpile, Deck discardpile, Scanner asker, TextInterface text) {
+    public Round(Player player1, Player player2, Deck drawpile, Deck discardpile, Scanner asker) {
         
         this.asker = asker;
-        this.text = text;
         playerInTurn = player1;
         playerToFollow = player2;
         Checker checker = new Checker(drawpile, discardpile);

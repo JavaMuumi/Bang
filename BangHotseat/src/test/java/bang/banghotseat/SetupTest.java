@@ -6,8 +6,6 @@ package bang.banghotseat;
 
 import bang.banghotseat.avatars.Avatar;
 import bang.banghotseat.cards.Deck;
-import bang.banghotseat.essentials.Player;
-import bang.banghotseat.userInterface.TextInterface;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;

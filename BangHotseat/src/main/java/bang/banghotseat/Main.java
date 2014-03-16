@@ -1,14 +1,13 @@
 package bang.banghotseat;
 
-import bang.banghotseat.userInterface.TextInterface;
+import bang.banghotseat.userInterface.UserInterface;
+import javax.swing.SwingUtilities;
 
 public class Main 
 {
     public static void main( String[] args )
     {
-        
-        TextInterface text = new TextInterface();
-        Setup setup = new Setup();
-        text.go(setup);
+        UserInterface userInterface = new UserInterface();
+        SwingUtilities.invokeLater(userInterface);
     }
 }
