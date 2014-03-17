@@ -19,8 +19,8 @@ public class BartCassidy implements Avatar {
     }
     
     @Override
-    public String getName() {
-        return "Bart Cassidy";
+    public String getSpeciality() {
+        return "Each time he is hit, he draws a card.";
     }
 
     @Override
@@ -28,4 +28,9 @@ public class BartCassidy implements Avatar {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
     } 
+    
+    @Override
+    public String toString() {
+        return "Bart Cassidy";
+    }
 }

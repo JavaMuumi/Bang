@@ -19,13 +19,18 @@ public class CalamityJanet implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Calamity Janet";
+    public String getSpeciality() {
+        return "She can play BANG! cards as Missed! cards and vice versa.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Calamity Janet";
+    }
 }

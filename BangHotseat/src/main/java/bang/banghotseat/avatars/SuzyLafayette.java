@@ -19,13 +19,18 @@ public class SuzyLafayette implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Suzy Lafayette";
+    public String getSpeciality() {
+        return "As soon as she has no cards in hand, she draws a card.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Suzy Lafayette";
+    }
 }

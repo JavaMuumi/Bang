@@ -20,8 +20,8 @@ public class BlackJack implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Black Jack";
+    public String getSpeciality() {
+        return "He shows the second card he draws. On Heart or Diamonds, he draws one more card.";
     }
     
     @Override
@@ -37,5 +37,10 @@ public class BlackJack implements Avatar {
         else {
             playerInTurn.getHandCards().add(drawnCard);
         }
+    }
+    
+    @Override
+    public String toString() {
+        return "Black Jack";
     }
 }

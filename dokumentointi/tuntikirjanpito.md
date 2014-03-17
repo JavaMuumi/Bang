@@ -37,3 +37,10 @@ Koodausta
 klo 13-14
 Koodausta
 YHTEENSÄ: 5h
+
+17.3.
+klo 12-16
+Luokkakaavion laadintaa ja koodausta
+klo 18-20:30
+Vielä lisää koodausta
+YHTEENSÄ: 6,5h

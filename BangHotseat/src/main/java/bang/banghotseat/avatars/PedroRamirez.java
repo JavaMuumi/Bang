@@ -19,13 +19,18 @@ public class PedroRamirez implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Pedro Ramirez";
+    public String getSpeciality() {
+        return "He may draw his first card from the discard pile.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Pedro Ramirez";
+    }
 }

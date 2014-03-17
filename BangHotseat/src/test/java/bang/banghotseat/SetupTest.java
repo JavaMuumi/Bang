@@ -59,7 +59,7 @@ public class SetupTest {
     
     @Test
     public void player1HasCorrectAmountOfHealth() {
-        if (setup.getPlayer1().getAvatar().getName().equals("El Gringo") || setup.getPlayer1().getAvatar().getName().equals("Paul Regret")) {
+        if (setup.getPlayer1().getAvatar().toString().equals("El Gringo") || setup.getPlayer1().getAvatar().toString().equals("Paul Regret")) {
             assertEquals(3, setup.getPlayer1().getCurrentHealth());
         }
         else {
@@ -69,7 +69,7 @@ public class SetupTest {
     
     @Test
     public void player2HasCorrectAmountOfHealth() {
-        if (setup.getPlayer2().getAvatar().getName().equals("El Gringo") || setup.getPlayer2().getAvatar().getName().equals("Paul Regret")) {
+        if (setup.getPlayer2().getAvatar().toString().equals("El Gringo") || setup.getPlayer2().getAvatar().toString().equals("Paul Regret")) {
             assertEquals(3, setup.getPlayer2().getCurrentHealth());
         }
         else {

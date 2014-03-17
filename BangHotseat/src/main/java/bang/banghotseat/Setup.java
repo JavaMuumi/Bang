@@ -31,12 +31,6 @@ public class Setup {
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
         dealStartingHands();
-        
-//        System.out.println("Player1, your character is " + player1.getAvatar().getName());
-//        System.out.println("Player2, your character is " + player2.getAvatar().getName());
-//        System.out.println("");
-//        
-//        Round round = new Round(player1, player2, drawpile, discardpile, asker, text);
     }
     
     private void givePlayersAvatarsAndSetMaxHealths() {
@@ -79,5 +73,9 @@ public class Setup {
         
         public Deck getDiscardpile() {
             return discardpile;
+        }
+        
+        public Scanner getAsker() {
+            return asker;
         }
 }

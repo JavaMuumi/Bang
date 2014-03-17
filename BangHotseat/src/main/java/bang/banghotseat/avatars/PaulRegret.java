@@ -19,13 +19,18 @@ public class PaulRegret implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Paul Regret";
+    public String getSpeciality() {
+        return "All players see him at a distance increased by 1.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Paul Regret";
+    }
 }

@@ -11,7 +11,7 @@ import bang.banghotseat.cards.Deck;
  *
  * @author Antti Korpi
  */
-public class Checker {
+public class CheckerForEventsBeforeTurn {
     
     private int counter;
     private Player playerInTurn;
@@ -19,7 +19,7 @@ public class Checker {
     private Deck drawpile;
     private Deck discardpile;
     
-    public Checker(Deck drawpile, Deck discardpile) {
+    public CheckerForEventsBeforeTurn(Deck drawpile, Deck discardpile) {
         this.drawpile = drawpile;
         this.discardpile = discardpile;
     }
@@ -32,20 +32,14 @@ public class Checker {
     public void checkDinamite() {
         
         for (Card cardToCheck : playerInTurn.getFrontCards()) {
-            
             if (cardToCheck.toString().contains("Dinamite")) {
-                
                 Card topCard = drawpile.take(discardpile);
-                
                 if (topCard.getSuit().equals("Spades")) {
-                    
                     if (topCard.getNumber() == 2 || topCard.getNumber() == 3 || topCard.getNumber() == 4
                      || topCard.getNumber() == 5 || topCard.getNumber() == 6 || topCard.getNumber() == 7
                      || topCard.getNumber() == 8 || topCard.getNumber() == 9) {
-                        
                         System.out.println("The dynamite detonated!");
                         System.out.println("");
-                        
                         playerInTurn.loseHealth(3);
                         discardpile.place(cardToCheck);
                     }

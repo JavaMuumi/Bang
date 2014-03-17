@@ -19,13 +19,18 @@ public class WillyTheKid implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Willy The Kid";
+    public String getSpeciality() {
+        return "He can play any number of BANG! cards.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Willy The Kid";
+    }
 }

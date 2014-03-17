@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package avatarTests;
+package bang.banghotseat;
 
-import bang.banghotseat.avatars.BartCassidy;
-import bang.banghotseat.essentials.Player;
+import bang.banghotseat.Round;
+import bang.banghotseat.Setup;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,12 +17,14 @@ import static org.junit.Assert.*;
  *
  * @author Antti Korpi
  */
-public class BartCassidyTest {
+public class RoundTest {
     
-    private Player player = new Player();
+    private Setup setup = new Setup();
+    private Round round;
     
-    public BartCassidyTest() {
-        player.setAvatar(new BartCassidy());
+    public RoundTest() {
+        setup.runSetup();
+        round = new Round(setup.getPlayer1(), setup.getPlayer2(), setup.getDrawpile(), setup.getDiscardpile(), setup.getAsker());
     }
     
     @BeforeClass
@@ -39,10 +41,5 @@ public class BartCassidyTest {
     
     @After
     public void tearDown() {
-    }
-    
-    @Test
-    public void whenTakingDamageBartCassidyDrawsACard() {
-        
     }
 }

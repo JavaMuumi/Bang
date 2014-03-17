@@ -19,13 +19,18 @@ public class Jourdonnais implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Jourdonnais";
+    public String getSpeciality() {
+        return "Whenever he is the target of a BANG!, he may 'draw!': on a Heart, he is missed.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getFrontCards().add(drawpile.take(discardpile));
         playerInTurn.getFrontCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Jourdonnais";
+    }
 }

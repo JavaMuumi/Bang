@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.userInterface;
 
+import bang.banghotseat.Setup;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_NewGame;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_Rules;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_Exit;
@@ -28,9 +29,9 @@ public class MainMenu {
     private ActionListener mainMenu_Exit;
     private JFrame frame;
     
-    public MainMenu(JFrame frame) {
+    public MainMenu(JFrame frame, Setup setup) {
         this.frame = frame;
-        this.mainMenu_NewGame = new MainMenu_NewGame();
+        this.mainMenu_NewGame = new MainMenu_NewGame(frame, setup);
         this.mainMenu_Rules = new MainMenu_Rules(frame, this);
         this.mainMenu_Exit = new MainMenu_Exit(frame, this);
     }
@@ -44,14 +45,15 @@ public class MainMenu {
       welcome.setFont(new Font("Bang", Font.BOLD, 48));
       
       JButton newGame = new JButton("New Game");
-      newGame.setFont(new Font("Bang", Font.ITALIC, 40));
+      newGame.setFont(new Font("Button", Font.ITALIC, 40));
+      newGame.addActionListener(mainMenu_NewGame);
       
       JButton rules = new JButton("Rules");
-      rules.setFont(new Font("Bang", Font.ITALIC, 40));
+      rules.setFont(new Font("Button", Font.ITALIC, 40));
       rules.addActionListener(mainMenu_Rules);
       
       JButton exit = new JButton("Exit");
-      exit.setFont(new Font("Bang", Font.ITALIC, 40));
+      exit.setFont(new Font("Button", Font.ITALIC, 40));
       exit.addActionListener(mainMenu_Exit);
       
       container.add(new JLabel());

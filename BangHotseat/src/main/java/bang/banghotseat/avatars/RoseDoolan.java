@@ -19,13 +19,18 @@ public class RoseDoolan implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Rose Doolan";
+    public String getSpeciality() {
+        return "She sees all players at a distance decreased by 1.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Rose Doolan";
+    }
 }

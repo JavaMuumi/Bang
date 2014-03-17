@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.userInterface;
 
+import bang.banghotseat.Setup;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
@@ -14,8 +15,13 @@ import javax.swing.JFrame;
 
 public class UserInterface implements Runnable {
   
+    private Setup setup;
     private JFrame frame;
     private MainMenu mainMenu;
+    
+    public UserInterface(Setup setup) {
+        this.setup = setup;
+    }
     
     @Override
     public void run() {
@@ -25,7 +31,7 @@ public class UserInterface implements Runnable {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        this.mainMenu = new MainMenu(frame);
+        this.mainMenu = new MainMenu(frame, setup);
         mainMenu.createComponents(frame.getContentPane());
         
         frame.pack();

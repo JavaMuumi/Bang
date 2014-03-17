@@ -19,13 +19,18 @@ public class KitCarlson implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Kit Carlson";
+    public String getSpeciality() {
+        return "He looks at the top three cards of the deck and chooses the 2 to draw.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Kit Carlson";
+    }
 }

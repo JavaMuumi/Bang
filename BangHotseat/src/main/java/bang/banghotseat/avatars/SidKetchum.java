@@ -19,13 +19,18 @@ public class SidKetchum implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Sid Ketchum";
+    public String getSpeciality() {
+        return "He may discard 2 cards to regain one life point.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Sid Ketchum";
+    }
 }

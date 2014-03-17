@@ -21,6 +21,7 @@ import bang.banghotseat.avatars.SlabTheKiller;
 import bang.banghotseat.avatars.SuzyLafayette;
 import bang.banghotseat.avatars.WillyTheKid;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -49,6 +50,8 @@ public class AvatarRandomizer {
         avatars.add(new SlabTheKiller());
         avatars.add(new SuzyLafayette());
         avatars.add(new WillyTheKid());
+
+        Collections.shuffle(avatars);
     }
     
     public Avatar giveAvatar() {  

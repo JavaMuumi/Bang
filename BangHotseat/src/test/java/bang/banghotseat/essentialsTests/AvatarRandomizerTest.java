@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package essentialsTests;
+package bang.banghotseat.essentialsTests;
 
 import bang.banghotseat.essentials.AvatarRandomizer;
 import org.junit.After;

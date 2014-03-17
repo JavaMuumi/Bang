@@ -19,13 +19,18 @@ public class SlabTheKiller implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Slab The Killer";
+    public String getSpeciality() {
+        return "Player needs 2 Missed! cards to cancel his BANG! card.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Slab The Killer";
+    }
 }

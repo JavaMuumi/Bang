@@ -19,13 +19,18 @@ public class ElGringo implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "El Gringo";
+    public String getSpeciality() {
+        return "Each time he is hit by a player, he draws a card from the hand of that player.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "El Gringo";
+    }
 }

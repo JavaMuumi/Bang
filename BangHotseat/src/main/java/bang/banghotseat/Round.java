@@ -6,7 +6,7 @@ package bang.banghotseat;
 
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
-import bang.banghotseat.essentials.Checker;
+import bang.banghotseat.essentials.CheckerForEventsBeforeTurn;
 import bang.banghotseat.essentials.Player;
 import java.util.Scanner;
 
@@ -26,9 +26,9 @@ public class Round {
         this.asker = asker;
         playerInTurn = player1;
         playerToFollow = player2;
-        Checker checker = new Checker(drawpile, discardpile);
+        CheckerForEventsBeforeTurn checker = new CheckerForEventsBeforeTurn(drawpile, discardpile);
         
-        System.out.println(player1.getAvatar().getName() + ", you're up!");
+        System.out.println(player1.getAvatar().toString() + ", you're up!");
         System.out.println("");
         
             checker.setPlayerTurns(playerInTurn, playerToFollow);

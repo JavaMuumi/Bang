@@ -7,6 +7,7 @@ package bang.banghotseat.userInterface;
 import bang.banghotseat.userInterface.buttonListeners.Exit_BackToMainMenu;
 import bang.banghotseat.userInterface.buttonListeners.Exit_ReallyExit;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,12 +28,15 @@ public class Exit {
     
     public void createComponents(Container container) {
       
-      JLabel exit = new JLabel("You really wanna exit BANG!?");
+      JLabel exit = new JLabel("You really wanna exit BANG!?", JLabel.CENTER);
+      exit.setFont(new Font("Bang", Font.BOLD, 48));
       
       JButton reallyExit = new JButton("Yes");
+      reallyExit.setFont(new Font("Button", Font.ITALIC, 34));
       reallyExit.addActionListener(exit_ReallyExit);
       
       JButton backToMainMenu = new JButton("No");
+      backToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
       backToMainMenu.addActionListener(exit_BackToMainMenu);
       
       container.add(exit);

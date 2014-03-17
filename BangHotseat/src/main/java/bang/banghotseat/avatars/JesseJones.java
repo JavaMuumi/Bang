@@ -19,13 +19,18 @@ public class JesseJones implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Jesse Jones";
+    public String getSpeciality() {
+        return "He may draw his first card from the hand of a player.";
     }
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
-    } 
+    }
+    
+    @Override
+    public String toString() {
+        return "Jesse Jones";
+    }
 }

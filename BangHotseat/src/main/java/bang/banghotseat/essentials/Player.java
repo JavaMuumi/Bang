@@ -72,4 +72,59 @@ public class Player {
             currentHealth++;
         }
     }
+    
+    public int getDistance() {
+        
+        int distance = 1;
+        
+        for (Card frontCard : frontCards) {
+            if (frontCard.toString().contains("Mustang")) {
+            distance++;
+            }
+        }
+        if (avatar.toString().equals("Paul Regret")) {
+            distance++;    
+        }
+        return distance;
+    }
+    
+    public int getReach() {
+        int reach = 1;
+        
+        for (Card frontCard : frontCards) {
+            if (frontCard.toString().contains("Schofield")) {
+                reach++;
+            }
+            else if (frontCard.toString().contains("Remington")) {
+                reach = reach+2;
+            }
+            else if (frontCard.toString().contains("Rev.Carabine")) {
+                reach = reach+3;
+            }
+            else if (frontCard.toString().contains("Winchester")) {
+                reach = reach+4;
+            }
+            else if (frontCard.toString().contains("Mirino")) {
+                reach++;
+            }
+        }
+        if (avatar.toString().equals("Rose Doolan")) {
+            reach++;
+        }
+        return reach;
+    }
+    
+    public int getTouch() {
+        int touch = 1;
+        
+        for (Card frontCard : frontCards) {
+            if (frontCard.toString().contains("Mirino")) {
+                touch++;
+            }
+        }
+        if (avatar.toString().equals("Rose Doolan")) {
+            touch++;
+        }
+        return touch;
+    }
 }

@@ -35,6 +35,7 @@ public class Rules {
         JLabel rules = new JLabel("Rules: KILL THE OTHER PLAYER!", JLabel.CENTER);
         
         JButton backToMainMenu = new JButton("Back to Main Menu");
+        backToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
         backToMainMenu.addActionListener(rules_BackToMainMenu);
         
         container.add(new JLabel());

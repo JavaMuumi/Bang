@@ -14,26 +14,24 @@ import javax.swing.JFrame;
  *
  * @author Antti Korpi
  */
-public class MainMenu_NewGame implements ActionListener {
+public class NewGame_Continue implements ActionListener {
 
     private JFrame frame;
+    private InfoScreen newGameContinue;
     private Setup setup;
-    private InfoScreen newGame;
     
-    public MainMenu_NewGame(JFrame frame, Setup setup) {
+    public NewGame_Continue(JFrame frame, Setup setup) {
         this.frame = frame;
         this.setup = setup;
-        this.newGame = new InfoScreen(frame, setup);
+        newGameContinue = new InfoScreen(frame, setup);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        setup.runSetup();
 
         frame.getContentPane().removeAll();
         
-        newGame.newGameInfo(frame.getContentPane(), setup);
+        newGameContinue.player2PleaseLookAwayScreen(frame.getContentPane());
         frame.revalidate();
         frame.repaint();
     }

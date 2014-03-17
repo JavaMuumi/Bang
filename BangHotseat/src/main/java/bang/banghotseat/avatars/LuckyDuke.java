@@ -19,8 +19,8 @@ public class LuckyDuke implements Avatar {
     }
 
     @Override
-    public String getName() {
-        return "Lucky Duke";
+    public String getSpeciality() {
+        return "Each time he 'draws!', he flips the top two cards and chooses one.";
     }
 
     @Override
@@ -28,4 +28,9 @@ public class LuckyDuke implements Avatar {
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
         playerInTurn.getHandCards().add(drawpile.take(discardpile));
     } 
+    
+    @Override
+    public String toString() {
+        return "Lucky Duke";
+    }
 }
