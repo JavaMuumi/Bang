@@ -20,7 +20,6 @@ public class Mustang implements Card {
     
     @Override
     public void function() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     @Override

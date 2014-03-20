@@ -7,8 +7,7 @@ public class Main
 {
     public static void main( String[] args )
     {
-        Setup setup = new Setup();
-        UserInterface userInterface = new UserInterface(setup);
+        UserInterface userInterface = new UserInterface();
         SwingUtilities.invokeLater(userInterface);
     }
 }

@@ -20,7 +20,6 @@ public class Volcanic implements Card {
     
     @Override
     public void function() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     @Override

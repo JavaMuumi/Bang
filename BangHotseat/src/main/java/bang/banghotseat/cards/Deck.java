@@ -111,6 +111,8 @@ public class Deck {
         deck.add(new Dinamite("Hearts", 2));
         
         deck.add(new Mirino("Diamonds", 5));
+        
+        Collections.shuffle(deck);
     }
     
     public List<Card> getDeck() {

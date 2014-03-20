@@ -4,10 +4,12 @@
  */
 package bang.banghotseat.userInterface.buttonListeners;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.Setup;
-import bang.banghotseat.userInterface.InfoScreen;
+import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 import javax.swing.JFrame;
 
 /**
@@ -17,13 +19,11 @@ import javax.swing.JFrame;
 public class NewGame_Continue implements ActionListener {
 
     private JFrame frame;
-    private InfoScreen newGameContinue;
-    private Setup setup;
+    private VisibleScreen visibleScreen;
     
-    public NewGame_Continue(JFrame frame, Setup setup) {
-        this.frame = frame;
-        this.setup = setup;
-        newGameContinue = new InfoScreen(frame, setup);
+    public NewGame_Continue(VisibleScreen visibleScreen) {
+        this.visibleScreen = visibleScreen;
+        frame = visibleScreen.getFrame();
     }
     
     @Override
@@ -31,8 +31,11 @@ public class NewGame_Continue implements ActionListener {
 
         frame.getContentPane().removeAll();
         
-        newGameContinue.player2PleaseLookAwayScreen(frame.getContentPane());
+        visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getPlayer2());
         frame.revalidate();
         frame.repaint();
+        
+        Round round = new Round(visibleScreen.getSetup().getPlayer1(), visibleScreen.getSetup().getPlayer2(), visibleScreen.getSetup().getDrawpile(), visibleScreen.getSetup().getDiscardpile(), new Scanner(System.in));
+        round.playTheGame();
     }
 }

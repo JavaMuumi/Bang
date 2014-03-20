@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class Player {
     
+    private String name;
     private Avatar avatar;
     private int currentHealth;
     private List<Card> handCards = new ArrayList<>();

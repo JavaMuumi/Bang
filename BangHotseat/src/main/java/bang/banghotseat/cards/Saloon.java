@@ -20,7 +20,6 @@ public class Saloon implements Card {
     
     @Override
     public void function() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
     
     @Override

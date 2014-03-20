@@ -4,8 +4,7 @@
  */
 package bang.banghotseat.userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.MainMenu;
-import bang.banghotseat.userInterface.Rules;
+import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,12 +17,11 @@ import javax.swing.JFrame;
 public class MainMenu_Rules implements ActionListener {
     
     private JFrame frame;
-    private MainMenu mainMenu;
-    private Rules rules;
+    private VisibleScreen visibleScreen;
     
-    public MainMenu_Rules(JFrame frame, MainMenu mainMenu) {
-        this.frame = frame;
-        rules = new Rules(mainMenu);
+    public MainMenu_Rules(VisibleScreen visibleScreen) {
+        this.visibleScreen = visibleScreen;
+        frame = visibleScreen.getFrame();
     }
     
     @Override
@@ -31,7 +29,7 @@ public class MainMenu_Rules implements ActionListener {
         
         frame.getContentPane().removeAll();
         
-        rules.createComponents(frame.getContentPane());
+        visibleScreen.rules();
         frame.revalidate();
         frame.repaint();
     }

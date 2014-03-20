@@ -25,8 +25,8 @@ public class Jourdonnais implements Avatar {
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
-        playerInTurn.getFrontCards().add(drawpile.take(discardpile));
-        playerInTurn.getFrontCards().add(drawpile.take(discardpile));
+        playerInTurn.getHandCards().add(drawpile.take(discardpile));
+        playerInTurn.getHandCards().add(drawpile.take(discardpile));
     }
     
     @Override

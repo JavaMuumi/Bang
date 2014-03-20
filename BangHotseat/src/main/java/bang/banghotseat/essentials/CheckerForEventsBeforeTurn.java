@@ -13,7 +13,7 @@ import bang.banghotseat.cards.Deck;
  */
 public class CheckerForEventsBeforeTurn {
     
-    private int counter;
+    private int counter = 1;
     private Player playerInTurn;
     private Player playerToFollow;
     private Deck drawpile;

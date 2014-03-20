@@ -44,3 +44,7 @@ Luokkakaavion laadintaa ja koodausta
 klo 18-20:30
 Vielä lisää koodausta
 YHTEENSÄ: 6,5h
+
+18.3.
+klo 14-17
+Koodausta

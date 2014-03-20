@@ -17,10 +17,10 @@ public class UserInterface implements Runnable {
   
     private Setup setup;
     private JFrame frame;
-    private MainMenu mainMenu;
+    private VisibleScreen visibleScreen;
     
-    public UserInterface(Setup setup) {
-        this.setup = setup;
+    public UserInterface() {
+        setup = new Setup();
     }
     
     @Override
@@ -31,8 +31,8 @@ public class UserInterface implements Runnable {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        this.mainMenu = new MainMenu(frame, setup);
-        mainMenu.createComponents(frame.getContentPane());
+        this.visibleScreen = new VisibleScreen(frame, setup);
+        visibleScreen.MainMenu();
         
         frame.pack();
         frame.setVisible(true);

@@ -5,7 +5,7 @@
 package bang.banghotseat.userInterface.buttonListeners;
 
 import bang.banghotseat.Setup;
-import bang.banghotseat.userInterface.InfoScreen;
+import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -17,23 +17,21 @@ import javax.swing.JFrame;
 public class MainMenu_NewGame implements ActionListener {
 
     private JFrame frame;
-    private Setup setup;
-    private InfoScreen newGame;
+    private VisibleScreen visibleScreen;
     
-    public MainMenu_NewGame(JFrame frame, Setup setup) {
-        this.frame = frame;
-        this.setup = setup;
-        this.newGame = new InfoScreen(frame, setup);
+    public MainMenu_NewGame(VisibleScreen visibleScreen) {
+        this.visibleScreen = visibleScreen;
+        frame = visibleScreen.getFrame();
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        setup.runSetup();
+        visibleScreen.getSetup().runSetup();
 
         frame.getContentPane().removeAll();
         
-        newGame.newGameInfo(frame.getContentPane(), setup);
+        visibleScreen.newGameInfo();
         frame.revalidate();
         frame.repaint();
     }

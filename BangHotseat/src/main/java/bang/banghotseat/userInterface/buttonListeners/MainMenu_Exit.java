@@ -4,8 +4,7 @@
  */
 package bang.banghotseat.userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.MainMenu;
-import bang.banghotseat.userInterface.Exit;
+import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -17,12 +16,11 @@ import javax.swing.JFrame;
 public class MainMenu_Exit implements ActionListener {
 
     private JFrame frame;
-    private MainMenu mainMenu;
-    private Exit exit;
+    private VisibleScreen visibleScreen;
     
-    public MainMenu_Exit(JFrame frame, MainMenu mainMenu) {
-        this.frame = frame;
-        exit = new Exit(mainMenu);
+    public MainMenu_Exit(VisibleScreen visibleScreen) {
+        this.visibleScreen = visibleScreen;
+        frame = visibleScreen.getFrame();
     }
     
     @Override
@@ -30,7 +28,7 @@ public class MainMenu_Exit implements ActionListener {
         
         frame.getContentPane().removeAll();
         
-        exit.createComponents(frame.getContentPane());
+        visibleScreen.exit();
         frame.revalidate();
         frame.repaint();
     }
