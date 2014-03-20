@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.avatarTests;
+package bang.banghotseat.avatars;
 
 import bang.banghotseat.avatars.BlackJack;
 import bang.banghotseat.cards.Bang;
