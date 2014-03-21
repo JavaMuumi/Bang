@@ -5,6 +5,7 @@
 package bang.banghotseat.essentials;
 
 import bang.banghotseat.avatars.PaulRegret;
+import bang.banghotseat.avatars.PaulRegretTest;
 import bang.banghotseat.avatars.RoseDoolan;
 import bang.banghotseat.cards.Mirino;
 import bang.banghotseat.cards.Mustang;
