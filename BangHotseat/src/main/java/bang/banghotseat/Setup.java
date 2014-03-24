@@ -22,15 +22,14 @@ public class Setup {
     private AvatarRandomizer randomizer = new AvatarRandomizer();
     private Deck drawpile;
     private Deck discardpile;
-    
-    public Setup() {
-    }
+    private Round round;
     
     public void runSetup() {
         
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
         dealStartingHands();
+        round = new Round(player1, player2, drawpile, discardpile, asker);
     }
     
     private void givePlayersAvatarsAndSetMaxHealths() {
@@ -73,6 +72,10 @@ public class Setup {
         
         public Deck getDiscardpile() {
             return discardpile;
+        }
+        
+        public Round getRound() {
+            return round;
         }
         
         public Scanner getAsker() {

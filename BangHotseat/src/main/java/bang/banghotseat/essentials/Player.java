@@ -64,6 +64,12 @@ public class Player {
         return frontCards;
     }
     
+    public Card drawSpecificFrontCard(int index) {
+        Card toBeGiven = frontCards.get(index);
+        frontCards.remove(index);
+        return toBeGiven;
+    }
+    
     public void putCardInFront(Card toBePlaced) {
         frontCards.add(toBePlaced);
     }

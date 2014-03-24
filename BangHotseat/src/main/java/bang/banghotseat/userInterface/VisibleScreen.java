@@ -5,6 +5,7 @@
 package bang.banghotseat.userInterface;
 
 import bang.banghotseat.Setup;
+import bang.banghotseat.cards.Card;
 import bang.banghotseat.essentials.Player;
 import bang.banghotseat.userInterface.buttonListeners.Exit_BackToMainMenu;
 import bang.banghotseat.userInterface.buttonListeners.Exit_ReallyExit;
@@ -12,14 +13,22 @@ import bang.banghotseat.userInterface.buttonListeners.MainMenu_Exit;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_NewGame;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_Rules;
 import bang.banghotseat.userInterface.buttonListeners.NewGame_Continue;
+import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_UseCard;
+import bang.banghotseat.userInterface.buttonListeners.PlayerXLookAwayToPlayerYTurn;
 import bang.banghotseat.userInterface.buttonListeners.Rules_BackToMainMenu;
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -27,6 +36,7 @@ import javax.swing.JLabel;
  */
 public class VisibleScreen {
     
+    private List<JRadioButton> handCards;
     private JFrame frame;
     private Container container;
     private Setup setup;
@@ -37,6 +47,8 @@ public class VisibleScreen {
     private ActionListener exit_BackToMainMenu;
     private ActionListener exit_ReallyExit;
     private ActionListener newGame_Continue;
+    private ActionListener playerXLookAwayToPlayerYTurn;
+    private ActionListener playerXScreen_UseCard;
     
     public VisibleScreen(JFrame frame, Setup setup) {
         this.frame = frame;
@@ -50,6 +62,8 @@ public class VisibleScreen {
         exit_BackToMainMenu = new Exit_BackToMainMenu(this);
         exit_ReallyExit = new Exit_ReallyExit(this);
         newGame_Continue = new NewGame_Continue(this);
+        playerXLookAwayToPlayerYTurn = new PlayerXLookAwayToPlayerYTurn(this);
+        playerXScreen_UseCard = new PlayerXScreen_UseCard(this);
     }
     
     public void MainMenu() {
@@ -155,14 +169,70 @@ public class VisibleScreen {
     
     public void playerXPleaseLookAwayScreen(Player playerWhoShouldLookAway) {
         
-        JLabel player2PleaseLookAway = new JLabel(playerWhoShouldLookAway.getAvatar().toString() + ", please look away now", JLabel.CENTER);
-        player2PleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
+        JLabel playerXPleaseLookAway = new JLabel(playerWhoShouldLookAway.getAvatar().toString() + ", please look away now", JLabel.CENTER);
+        playerXPleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
         
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(playerXLookAwayToPlayerYTurn);
         
-        frame.add(player2PleaseLookAway);
+        frame.add(playerXPleaseLookAway);
         frame.add(next);
+    }
+    
+    public void playerXScreen() {
+        
+        BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
+        BoxLayout xPlane = new BoxLayout(container, BoxLayout.X_AXIS);
+        container.setLayout(yPlane);
+        
+        String enemyInfo = "<html>Enemy: " + setup.getRound().getPlayerToFollow().getAvatar().toString() +
+                "<br>" + setup.getRound().getPlayerToFollow().getAvatar().getSpeciality() + 
+                "<br>" +
+                "<br>Enemy health: " + setup.getRound().getPlayerToFollow().getCurrentHealth() +
+                "<br>" + "<br></html>";
+        
+        String enemyFrontCards = "<html><br>Enemy front cards:";
+        for(Card toBeShown : setup.getRound().getPlayerToFollow().getFrontCards()) {
+            enemyFrontCards = enemyFrontCards + "<br>" + toBeShown.toString();
+        }
+        enemyFrontCards = enemyFrontCards + "</html>";
+        
+        container.add(new JLabel(enemyInfo));
+        container.add(new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards"));
+        container.add(new JLabel(enemyFrontCards));
+        
+        String playerInfo = "<html><br>You: " + setup.getRound().getPlayerInTurn().getAvatar().toString() +
+                "<br>" + setup.getRound().getPlayerInTurn().getAvatar().getSpeciality() +
+                "<br>" +
+                "<br>Your health: " + setup.getRound().getPlayerInTurn().getCurrentHealth() +
+                "<br>" + "<br></html>";
+        
+        container.add(new JLabel(playerInfo));
+        
+        String playerFrontCards = "<html>Your front cards:";
+        for(Card toBeShown : setup.getRound().getPlayerInTurn().getFrontCards()) {
+            playerFrontCards = playerFrontCards + "<br>" + toBeShown.toString();
+        }
+        playerFrontCards = playerFrontCards + "<br>" + "<br></html>";
+        container.add(new JLabel(playerFrontCards));
+        
+        container.add(new JLabel("Your hand cards:"));
+        
+        ButtonGroup playerHandCards = new ButtonGroup();
+        
+        handCards = new ArrayList<>();
+        
+        for (int i = 0; i < setup.getRound().getPlayerInTurn().getHandCards().size(); i++) {
+            handCards.add(new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(i).toString()));
+        }
+        for (JRadioButton toBeAdded : handCards) {
+            playerHandCards.add(toBeAdded);
+            container.add(toBeAdded);
+        }
+        JButton useCard = new JButton("Use card");
+        useCard.addActionListener(playerXScreen_UseCard);
+        container.add(useCard);
     }
     
     public JFrame getFrame() {
@@ -171,5 +241,14 @@ public class VisibleScreen {
     
     public Setup getSetup() {
         return setup;
+    }
+    
+    public int getIndex() {
+        for (JRadioButton isThisSelected : handCards) {
+            if (isThisSelected.isSelected()) {
+                return handCards.indexOf(isThisSelected);
+            }
+        }
+        return -1;
     }
 }

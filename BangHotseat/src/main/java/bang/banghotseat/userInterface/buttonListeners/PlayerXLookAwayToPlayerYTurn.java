@@ -4,24 +4,21 @@
  */
 package bang.banghotseat.userInterface.buttonListeners;
 
-import bang.banghotseat.Round;
-import bang.banghotseat.Setup;
 import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 import javax.swing.JFrame;
 
 /**
  *
  * @author Antti Korpi
  */
-public class NewGame_Continue implements ActionListener {
-
+public class PlayerXLookAwayToPlayerYTurn implements ActionListener {
+    
     private JFrame frame;
     private VisibleScreen visibleScreen;
     
-    public NewGame_Continue(VisibleScreen visibleScreen) {
+    public PlayerXLookAwayToPlayerYTurn(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
@@ -31,10 +28,8 @@ public class NewGame_Continue implements ActionListener {
 
         frame.getContentPane().removeAll();
         
-        visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getPlayer2());
+        visibleScreen.playerXScreen();
         frame.revalidate();
         frame.repaint();
-       
-        visibleScreen.getSetup().getRound().playTheGame();
     }
 }

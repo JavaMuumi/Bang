@@ -4,13 +4,17 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.essentials.Player;
+import java.util.Scanner;
+
 /**
  *
  * @author Antti Korpi
  */
 public interface Card {
     
-    void function();
+    void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile, Scanner asker);
+    String getName();
     String getSuit();
     String getType();
     int getNumber();

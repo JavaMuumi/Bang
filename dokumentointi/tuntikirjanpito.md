@@ -48,3 +48,14 @@ YHTEENSÄ: 6,5h
 18.3.
 klo 14-17
 Koodausta
+YHTEENSÄ: 3h
+
+21.3.
+klo 11-13
+Koodia & testejä
+YHTEENSÄ: 2h
+
+24.3.
+klo 20-22:30
+Koodia isolla-K:lla
+YHTEENSÄ: 2,5h

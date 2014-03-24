@@ -4,6 +4,9 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.essentials.Player;
+import java.util.Scanner;
+
 /**
  *
  * @author Antti Korpi
@@ -19,7 +22,15 @@ public class WellsFargo implements Card {
     }
     
     @Override
-    public void function() {
+    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile, Scanner asker) {
+        playerInTurn.putCardIntoHand(drawpile.take(discardpile));
+        playerInTurn.putCardIntoHand(drawpile.take(discardpile));
+        playerInTurn.putCardIntoHand(drawpile.take(discardpile));
+    }
+    
+    @Override
+    public String getName() {
+        return "Wells Fargo";
     }
     
     @Override

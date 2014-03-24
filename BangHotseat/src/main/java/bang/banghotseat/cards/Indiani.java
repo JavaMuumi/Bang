@@ -4,6 +4,9 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.essentials.Player;
+import java.util.Scanner;
+
 /**
  *
  * @author Antti Korpi
@@ -19,7 +22,12 @@ public class Indiani implements Card {
     }
     
     @Override
-    public void function() {
+    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile, Scanner asker) {
+    }
+    
+    @Override
+    public String getName() {
+        return "Indiani!";
     }
     
     @Override
