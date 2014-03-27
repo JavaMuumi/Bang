@@ -23,6 +23,7 @@ public class Dinamite implements Card {
     
     @Override
     public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile) {
+        playerInTurn.loseHealth(3);
     }
     
     @Override

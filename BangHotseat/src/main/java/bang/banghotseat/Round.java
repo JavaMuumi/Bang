@@ -5,7 +5,6 @@
 package bang.banghotseat;
 
 import bang.banghotseat.cards.Deck;
-import bang.banghotseat.essentials.CheckerForAvatarSpeciality;
 import bang.banghotseat.essentials.CheckerForEventsBeforeTurn;
 import bang.banghotseat.essentials.CheckerForPlayedCard;
 import bang.banghotseat.essentials.Player;
@@ -21,7 +20,6 @@ public class Round {
     private Deck drawpile;
     private Deck discardpile;
     private CheckerForEventsBeforeTurn checkerForEventsBeforeTurn;
-    private CheckerForAvatarSpeciality checkerForAvatarSpeciality;
     private CheckerForPlayedCard checkerForPlayedCard;
     private Player statsDepository = new Player();
     private boolean goOn = false;
@@ -34,7 +32,6 @@ public class Round {
         this.drawpile = drawpile;
         this.discardpile = discardpile;
         checkerForEventsBeforeTurn = new CheckerForEventsBeforeTurn(drawpile, discardpile);
-        checkerForAvatarSpeciality = new CheckerForAvatarSpeciality();
         checkerForPlayedCard = new CheckerForPlayedCard(this);
     }
     
@@ -72,10 +69,6 @@ public class Round {
     
     public CheckerForEventsBeforeTurn getCheckerForEventsBeforeTurn() {
         return checkerForEventsBeforeTurn;
-    }
-    
-    public CheckerForAvatarSpeciality getCheckerForAvatarSpeciality() {
-        return checkerForAvatarSpeciality;
     }
     
     public CheckerForPlayedCard getCheckerForPlayedCard() {

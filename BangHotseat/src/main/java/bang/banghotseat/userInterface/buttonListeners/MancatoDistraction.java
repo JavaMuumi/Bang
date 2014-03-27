@@ -13,24 +13,24 @@ import javax.swing.JFrame;
  *
  * @author Antti Korpi
  */
-public class MainMenu_NewGame implements ActionListener {
-
-    private JFrame frame;
-    private VisibleScreen visibleScreen;
+public class MancatoDistraction implements ActionListener {
     
-    public MainMenu_NewGame(VisibleScreen visibleScreen) {
+    private VisibleScreen visibleScreen;
+    private JFrame frame;
+    
+    public MancatoDistraction(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        visibleScreen.getSetup().runSetup();
-
         frame.getContentPane().removeAll();
         
-        visibleScreen.newGameInfo();
+        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+        visibleScreen.clickToPretendYouHadMancato();
+        
         frame.revalidate();
         frame.repaint();
     }

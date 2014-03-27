@@ -13,24 +13,23 @@ import javax.swing.JFrame;
  *
  * @author Antti Korpi
  */
-public class MainMenu_NewGame implements ActionListener {
-
+public class ContinueToPlayerXScreen implements ActionListener {
+    
     private JFrame frame;
     private VisibleScreen visibleScreen;
     
-    public MainMenu_NewGame(VisibleScreen visibleScreen) {
+    public ContinueToPlayerXScreen(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        visibleScreen.getSetup().runSetup();
 
         frame.getContentPane().removeAll();
         
-        visibleScreen.newGameInfo();
+        visibleScreen.playerXScreen();
+        
         frame.revalidate();
         frame.repaint();
     }

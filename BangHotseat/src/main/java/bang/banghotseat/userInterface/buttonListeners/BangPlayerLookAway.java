@@ -13,25 +13,17 @@ import javax.swing.JFrame;
  *
  * @author Antti Korpi
  */
-public class PlayerXLookAwayToPlayerYTurn implements ActionListener {
-    
-    private JFrame frame;
+public class BangPlayerLookAway implements ActionListener {
+
     private VisibleScreen visibleScreen;
-    
-    public PlayerXLookAwayToPlayerYTurn(VisibleScreen visibleScreen) {
+    private JFrame frame;
+
+    public BangPlayerLookAway(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        frame.getContentPane().removeAll();
-        
-        visibleScreen.getSetup().getRound().playTurn();
-        
-        visibleScreen.playerXScreen();
-        frame.revalidate();
-        frame.repaint();
     }
 }

@@ -20,7 +20,6 @@ public class Player {
     private int currentHealth;
     private List<Card> handCards = new ArrayList<>();
     private List<Card> frontCards = new ArrayList<>();
-    private int counter = 1;
     
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
@@ -39,11 +38,13 @@ public class Player {
     }
     
     public void loseHealth(int amountToBeLost) {
+        
+        int counter = 1;
+        
         while (counter <= amountToBeLost) {
         currentHealth--;
         counter++;
         }
-        counter = 1;
     }
     
     public List<Card> getHandCards() {

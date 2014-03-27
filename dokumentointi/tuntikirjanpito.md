@@ -69,3 +69,10 @@ YHTEENSÄ: 4h
 klo 14-16
 Koodia ja testejä
 YHTEENSÄ: 2h
+
+27.3.
+klo 10-17:30
+Pakko koodata kun ei muuten toimi
+17:30-18
+Luokkakaavion hienosäätöä
+YHTEENSÄ: 8h
