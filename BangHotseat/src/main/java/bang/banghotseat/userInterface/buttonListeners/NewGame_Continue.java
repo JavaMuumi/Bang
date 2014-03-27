@@ -34,7 +34,5 @@ public class NewGame_Continue implements ActionListener {
         visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getPlayer2());
         frame.revalidate();
         frame.repaint();
-       
-        visibleScreen.getSetup().getRound().playTheGame();
     }
 }

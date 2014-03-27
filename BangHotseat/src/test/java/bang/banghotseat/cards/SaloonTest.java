@@ -53,7 +53,7 @@ public class SaloonTest {
     public void whenPlayerIsWoundedAndEnemyIsAtFullHealthSaloonHealsOnlyPlayerForOneHealthPoint() {
         
         player.loseHealth(3);
-        saloon.function(player, enemy, null, null, null);
+        saloon.function(player, enemy, null, null);
         
         String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
         assertEquals("Player: 2, Enemy: 4", healthCheck);
@@ -63,7 +63,7 @@ public class SaloonTest {
     public void whenEnemyIsWoundedAndPlayerIsAtFullHealthSaloonHealsOnlyEnemyForOneHealthPoint() {
         
         enemy.loseHealth(3);
-        saloon.function(player, enemy, null, null, null);
+        saloon.function(player, enemy, null, null);
         
         String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
         assertEquals("Player: 4, Enemy: 2", healthCheck);
@@ -72,7 +72,7 @@ public class SaloonTest {
     @Test
     public void whenBothPlayersAreAtFullHealthSaloonHealsNeither() {
         
-        saloon.function(player, enemy, null, null, null);
+        saloon.function(player, enemy, null, null);
         
         String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
         assertEquals("Player: 4, Enemy: 4", healthCheck);
@@ -83,7 +83,7 @@ public class SaloonTest {
         
         player.loseHealth(3);
         enemy.loseHealth(3);
-        saloon.function(player, enemy, null, null, null);
+        saloon.function(player, enemy, null, null);
         
         String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
         assertEquals("Player: 2, Enemy: 2", healthCheck);

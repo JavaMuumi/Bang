@@ -28,6 +28,8 @@ public class PlayerXLookAwayToPlayerYTurn implements ActionListener {
 
         frame.getContentPane().removeAll();
         
+        visibleScreen.getSetup().getRound().playTurn();
+        
         visibleScreen.playerXScreen();
         frame.revalidate();
         frame.repaint();

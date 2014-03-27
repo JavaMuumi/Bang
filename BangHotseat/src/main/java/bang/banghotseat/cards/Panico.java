@@ -22,12 +22,12 @@ public class Panico implements Card {
     }
     
     @Override
-    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile, Scanner asker) {
+    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile) {
     }
     
     @Override
     public String getName() {
-        return "Panico";
+        return "Panico!";
     }
     
     @Override

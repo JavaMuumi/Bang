@@ -59,3 +59,13 @@ YHTEENSÄ: 2h
 klo 20-22:30
 Koodia isolla-K:lla
 YHTEENSÄ: 2,5h
+
+25.3.
+klo 14-18
+Koodia ja testejä
+YHTEENSÄ: 4h
+
+26.3.
+klo 14-16
+Koodia ja testejä
+YHTEENSÄ: 2h

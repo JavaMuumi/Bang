@@ -7,6 +7,7 @@ package bang.banghotseat.userInterface;
 import bang.banghotseat.Setup;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.essentials.Player;
+import bang.banghotseat.userInterface.buttonListeners.DiscardCards_Discard;
 import bang.banghotseat.userInterface.buttonListeners.Exit_BackToMainMenu;
 import bang.banghotseat.userInterface.buttonListeners.Exit_ReallyExit;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_Exit;
@@ -15,8 +16,8 @@ import bang.banghotseat.userInterface.buttonListeners.MainMenu_Rules;
 import bang.banghotseat.userInterface.buttonListeners.NewGame_Continue;
 import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_UseCard;
 import bang.banghotseat.userInterface.buttonListeners.PlayerXLookAwayToPlayerYTurn;
+import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_EndTurn;
 import bang.banghotseat.userInterface.buttonListeners.Rules_BackToMainMenu;
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -49,8 +50,11 @@ public class VisibleScreen {
     private ActionListener newGame_Continue;
     private ActionListener playerXLookAwayToPlayerYTurn;
     private ActionListener playerXScreen_UseCard;
+    private ActionListener playerXScreen_EndTurn;
+    private ActionListener discardCards_Discard;
     
     public VisibleScreen(JFrame frame, Setup setup) {
+        
         this.frame = frame;
         container = frame.getContentPane();
         this.setup = setup;
@@ -64,6 +68,8 @@ public class VisibleScreen {
         newGame_Continue = new NewGame_Continue(this);
         playerXLookAwayToPlayerYTurn = new PlayerXLookAwayToPlayerYTurn(this);
         playerXScreen_UseCard = new PlayerXScreen_UseCard(this);
+        playerXScreen_EndTurn = new PlayerXScreen_EndTurn(this);
+        discardCards_Discard = new DiscardCards_Discard(this);
     }
     
     public void MainMenu() {
@@ -104,24 +110,15 @@ public class VisibleScreen {
     
     public void rules() {
         
-        GridLayout layout = new GridLayout(4,3);
-        container.setLayout(layout);
         JLabel rules = new JLabel("Rules: KILL THE OTHER PLAYER!", JLabel.CENTER);
+        rules.setFont(new Font("Rules", Font.BOLD, 48));
         
         JButton backToMainMenu = new JButton("Back to Main Menu");
         backToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
         backToMainMenu.addActionListener(rules_BackToMainMenu);
         
-        container.add(new JLabel());
-        container.add(new JLabel());
-        container.add(new JLabel());
-        container.add(new JLabel());
         container.add(rules);
-        container.add(new JLabel());
-
-        container.add(new JLabel());
         container.add(backToMainMenu);
-        container.add(new JLabel());
     }
     
     public void exit() {
@@ -169,6 +166,8 @@ public class VisibleScreen {
     
     public void playerXPleaseLookAwayScreen(Player playerWhoShouldLookAway) {
         
+        container.setLayout(new GridLayout(3,3));
+        
         JLabel playerXPleaseLookAway = new JLabel(playerWhoShouldLookAway.getAvatar().toString() + ", please look away now", JLabel.CENTER);
         playerXPleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
         
@@ -183,7 +182,6 @@ public class VisibleScreen {
     public void playerXScreen() {
         
         BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
-        BoxLayout xPlane = new BoxLayout(container, BoxLayout.X_AXIS);
         container.setLayout(yPlane);
         
         String enemyInfo = "<html>Enemy: " + setup.getRound().getPlayerToFollow().getAvatar().toString() +
@@ -220,7 +218,6 @@ public class VisibleScreen {
         container.add(new JLabel("Your hand cards:"));
         
         ButtonGroup playerHandCards = new ButtonGroup();
-        
         handCards = new ArrayList<>();
         
         for (int i = 0; i < setup.getRound().getPlayerInTurn().getHandCards().size(); i++) {
@@ -233,6 +230,33 @@ public class VisibleScreen {
         JButton useCard = new JButton("Use card");
         useCard.addActionListener(playerXScreen_UseCard);
         container.add(useCard);
+        
+        JButton endTurn = new JButton("End turn");
+        endTurn.addActionListener(playerXScreen_EndTurn);
+        container.add(endTurn);
+    }
+    
+    public void discardCards() {
+        
+        BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
+        container.setLayout(yPlane);
+        
+        frame.add(new JLabel("You may only hold in your hand as many cards as you have health left"));
+        frame.add(new JLabel("Choose a card to discard"));
+        
+        handCards = new ArrayList<>();
+        ButtonGroup cardsToBeDiscarded = new ButtonGroup();
+        
+        for (int i = 0; i < setup.getRound().getPlayerInTurn().getHandCards().size(); i++) {
+            handCards.add(new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(i).toString()));
+        }
+        for (JRadioButton toBeDiscarded : handCards) {
+            container.add(toBeDiscarded);
+            cardsToBeDiscarded.add(toBeDiscarded);
+        }
+        JButton discardCards = new JButton("Discard");
+        discardCards.addActionListener(discardCards_Discard);
+        container.add(discardCards);
     }
     
     public JFrame getFrame() {

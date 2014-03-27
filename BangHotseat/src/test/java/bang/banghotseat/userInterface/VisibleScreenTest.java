@@ -5,7 +5,9 @@
 package bang.banghotseat.userInterface;
 
 import bang.banghotseat.Setup;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -31,11 +33,11 @@ public class VisibleScreenTest {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        this.visibleScreen = new VisibleScreen(frame, setup);
-        visibleScreen.MainMenu();
+        setup = new Setup();
         
-        frame.pack();
-        frame.setVisible(true);
+        this.visibleScreen = new VisibleScreen(frame, setup);
+        visibleScreen.getSetup().runSetup();
+        visibleScreen.MainMenu();
     }
     
     @BeforeClass
@@ -55,6 +57,43 @@ public class VisibleScreenTest {
     }
     
     @Test
-    public void mainMenuContainsCorrectAmountOfComponents() {
+    public void mainMenuHas11Components() {
+        assertEquals(11, frame.getContentPane().getComponentCount());
+    }
+    
+    @Test
+    public void rulesHas2Componenets() {
+        
+        frame.getContentPane().removeAll();
+        visibleScreen.rules();
+        
+        assertEquals(2, frame.getContentPane().getComponentCount());
+    }
+    
+    @Test
+    public void exitScreenHas3Components() {
+        
+        frame.getContentPane().removeAll();
+        visibleScreen.exit();
+        
+        assertEquals(3, frame.getContentPane().getComponentCount());
+    }
+    
+    @Test
+    public void newGameInfoHas5Components() {
+        
+        frame.getContentPane().removeAll();
+        visibleScreen.newGameInfo();
+        
+        assertEquals(5, frame.getContentPane().getComponentCount());
+    }
+    
+    @Test
+    public void playerXLookAwayToPlayerYTurnHas2Components() {
+        
+        frame.getContentPane().removeAll();
+        visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getRound().getPlayerToFollow());
+        
+        assertEquals(2, frame.getContentPane().getComponentCount());
     }
 }

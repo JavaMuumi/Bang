@@ -17,7 +17,11 @@ import static org.junit.Assert.*;
  */
 public class UserInterfaceTest {
     
+    private UserInterface userInterface;
+    
     public UserInterfaceTest() {
+        
+        userInterface = new UserInterface();
     }
     
     @BeforeClass
@@ -35,9 +39,4 @@ public class UserInterfaceTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

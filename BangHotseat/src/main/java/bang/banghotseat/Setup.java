@@ -8,7 +8,6 @@ import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.AvatarRandomizer;
 import bang.banghotseat.essentials.Player;
-import java.util.Scanner;
 
 /**
  *
@@ -16,7 +15,6 @@ import java.util.Scanner;
  */
 public class Setup {
 
-    private Scanner asker;
     private Player player1 = new Player();
     private Player player2 = new Player();
     private AvatarRandomizer randomizer = new AvatarRandomizer();
@@ -29,7 +27,7 @@ public class Setup {
         givePlayersAvatarsAndSetMaxHealths();
         createDecks();
         dealStartingHands();
-        round = new Round(player1, player2, drawpile, discardpile, asker);
+        round = new Round(player1, player2, drawpile, discardpile);
     }
     
     private void givePlayersAvatarsAndSetMaxHealths() {
@@ -51,7 +49,6 @@ public class Setup {
             Card cardToBeGiven = drawpile.take(discardpile);
             player1.putCardIntoHand(cardToBeGiven);
         }
-        
         while (player2.getHandCards().size() < player2.getAvatar().getMaxHealth()) {
             Card cardToBeGiven = drawpile.take(discardpile);
             player2.putCardIntoHand(cardToBeGiven);
@@ -76,9 +73,5 @@ public class Setup {
         
         public Round getRound() {
             return round;
-        }
-        
-        public Scanner getAsker() {
-            return asker;
         }
 }

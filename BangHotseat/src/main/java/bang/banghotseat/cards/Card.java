@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public interface Card {
     
-    void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile, Scanner asker);
+    void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile);
     String getName();
     String getSuit();
     String getType();

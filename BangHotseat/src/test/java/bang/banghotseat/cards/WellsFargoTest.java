@@ -50,7 +50,7 @@ public class WellsFargoTest {
     
     @Test
     public void afterPlayingWellsFargoPlayerHas3HandCards() {
-        wellsFargo.function(player, null, drawpile, discardpile, null);
+        wellsFargo.function(player, null, drawpile, discardpile);
         assertEquals(3, player.getHandCards().size());
     }
 }

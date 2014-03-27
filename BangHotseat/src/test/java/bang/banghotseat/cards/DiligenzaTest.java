@@ -50,7 +50,7 @@ public class DiligenzaTest {
     
     @Test
     public void afterPlayingDiligenzaPlayerHas2HandCards() {
-        diligenza.function(player, null, drawpile, discardpile, null);
+        diligenza.function(player, null, drawpile, discardpile);
         assertEquals(2, player.getHandCards().size());
     }
 }

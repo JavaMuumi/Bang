@@ -5,7 +5,7 @@
 package bang.banghotseat.cards;
 
 import bang.banghotseat.avatars.PaulRegret;
-import bang.banghotseat.avatars.SuzyLafayette;
+import bang.banghotseat.avatars.PedroRamirez;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -29,13 +29,15 @@ public class BangTest {
     public BangTest() {
         
         player = new Player();
-        player.setAvatar(new SuzyLafayette());
+        player.setAvatar(new PedroRamirez());
         player.setCurrentHealth();
         enemy = new Player();
-        enemy.setAvatar(new SuzyLafayette());
+        enemy.setAvatar(new PedroRamirez());
         enemy.setCurrentHealth();
         drawpile = new Deck();
         discardpile = new Deck();
+        bang = new Bang("Hearts", 1);
+        player.putCardIntoHand(bang);
     }
     
     @BeforeClass
@@ -55,12 +57,50 @@ public class BangTest {
     }
     
     @Test
-    public void ifEnemyIsOutOfRangePlayerCannotShootABang() {
+    public void ifEnemyHasNoMancatoHeWillLose1HealthPoint() {
         
-//        enemy.setAvatar(new PaulRegret());
-//        bang.function(player, enemy, null, null, null);
-//        
-//        assertEquals(4, enemy.getCurrentHealth());
+        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        
+        assertEquals(3, enemy.getCurrentHealth());
     }
     
+    @Test
+    public void ifEnemyHasAMancatoHeWontLoseHealth() {
+        
+        enemy.putCardIntoHand(new Mancato("Hearts", 1));
+        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        
+        assertEquals(4, enemy.getCurrentHealth());
+    }
+    
+    @Test
+    public void ifEnemyHasNoMancatoHeWillNotLoseAnyCards() {
+        
+        while (enemy.getHandCards().size() < enemy.getCurrentHealth()) {
+        enemy.putCardIntoHand(new Bang("Hearts", 1));
+        }
+        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        
+        assertEquals(4, enemy.getHandCards().size());
+    }
+    
+    @Test
+    public void ifEnemyHaAMancatoHeWillLoseIt() {
+        
+        enemy.putCardIntoHand(new Mancato("Hearts", 1));
+        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        
+        assertEquals(0, enemy.getHandCards().size());
+    }
+    
+    @Test
+    public void ifEnemyHasMultipleMancatosHeWillLoseOnlyOne() {
+        
+        while (enemy.getHandCards().size() < enemy.getCurrentHealth()) {
+            enemy.getHandCards().add(new Mancato("Hearts", 1));
+        }
+        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        
+        assertEquals(3, enemy.getHandCards().size());
+    }
 }

@@ -22,7 +22,7 @@ public class WellsFargo implements Card {
     }
     
     @Override
-    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile, Scanner asker) {
+    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile) {
         playerInTurn.putCardIntoHand(drawpile.take(discardpile));
         playerInTurn.putCardIntoHand(drawpile.take(discardpile));
         playerInTurn.putCardIntoHand(drawpile.take(discardpile));

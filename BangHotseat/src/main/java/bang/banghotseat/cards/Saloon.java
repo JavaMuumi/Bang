@@ -22,7 +22,7 @@ public class Saloon implements Card {
     }
     
     @Override
-    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile, Scanner asker) {    
+    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile) {    
         playerInTurn.gainHealth();
         playerToFollow.gainHealth();
     }

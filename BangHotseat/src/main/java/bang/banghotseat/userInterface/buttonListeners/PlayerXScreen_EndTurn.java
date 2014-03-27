@@ -4,7 +4,6 @@
  */
 package bang.banghotseat.userInterface.buttonListeners;
 
-import bang.banghotseat.Round;
 import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,12 +13,12 @@ import javax.swing.JFrame;
  *
  * @author Antti Korpi
  */
-public class PlayerXScreen_UseCard implements ActionListener {
+public class PlayerXScreen_EndTurn implements ActionListener {
     
-    private JFrame frame;
     private VisibleScreen visibleScreen;
+    private JFrame frame;
     
-    public PlayerXScreen_UseCard(VisibleScreen visibleScreen) {
+    public PlayerXScreen_EndTurn(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
@@ -27,14 +26,19 @@ public class PlayerXScreen_UseCard implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        if (visibleScreen.getIndex() == -1) {
-        }
-        else {    
+        if(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().size() > visibleScreen.getSetup().getRound().getPlayerInTurn().getCurrentHealth()) {
             frame.getContentPane().removeAll();
             
-            visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+            visibleScreen.discardCards();
             
-            visibleScreen.playerXScreen();
+            frame.revalidate();
+            frame.repaint();
+        }
+        else {
+            frame.getContentPane().removeAll();
+            
+            visibleScreen.getSetup().getRound().endTurn();
+            visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getRound().getPlayerToFollow());
             
             frame.revalidate();
             frame.repaint();

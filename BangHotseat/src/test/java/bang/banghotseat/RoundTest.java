@@ -6,6 +6,9 @@ package bang.banghotseat;
 
 import bang.banghotseat.Round;
 import bang.banghotseat.Setup;
+import bang.banghotseat.avatars.SuzyLafayette;
+import bang.banghotseat.avatars.WillyTheKid;
+import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -24,7 +27,7 @@ public class RoundTest {
     
     public RoundTest() {
         setup.runSetup();
-        round = new Round(setup.getPlayer1(), setup.getPlayer2(), setup.getDrawpile(), setup.getDiscardpile(), setup.getAsker());
+        round = new Round(setup.getPlayer1(), setup.getPlayer2(), setup.getDrawpile(), setup.getDiscardpile());
     }
     
     @BeforeClass
@@ -41,5 +44,37 @@ public class RoundTest {
     
     @After
     public void tearDown() {
+    }
+    
+    @Test
+    public void player1InSetupIsPlayerInTurnWhenRoundIsConstructed() {
+        assertEquals(setup.getPlayer1(), round.getPlayerInTurn());
+    }
+    
+    @Test
+    public void player2InSetupIsPlayerToFollowWhenRoundIsConstructed() {
+        assertEquals(setup.getPlayer2(), round.getPlayerToFollow());
+    }
+    
+    @Test
+    public void whenPlayTurnMethodIsPlayedPlayerDrawsCards() {
+        
+        round.getPlayerInTurn().setAvatar(new SuzyLafayette());
+        round.getPlayerInTurn().setCurrentHealth();
+        
+        round.playTurn();
+        
+        assertEquals(6, round.getPlayerInTurn().getHandCards().size());
+    }
+    
+    @Test
+    public void whenEndTurnMethodIsPlayedPlayerInTurnAndPlayerToFollowAreSwitched() {
+        
+        round.getPlayerInTurn().setAvatar(new SuzyLafayette());
+        round.getPlayerToFollow().setAvatar(new WillyTheKid());
+        
+        round.endTurn();
+        
+        assertEquals("Willy The Kid, Suzy Lafayette", round.getPlayerInTurn().getAvatar().toString() + ", " + round.getPlayerToFollow().getAvatar().toString());
     }
 }
