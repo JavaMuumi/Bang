@@ -6,7 +6,6 @@ package bang.banghotseat.essentials;
 
 import bang.banghotseat.Round;
 import bang.banghotseat.cards.Card;
-import bang.banghotseat.userInterface.VisibleScreen;
 
 /**
  *
@@ -28,8 +27,8 @@ public class CheckerForPlayedCard {
         this.playedCard = round.getPlayerInTurn().getHandCards().get(index);
 
         if (playedCard.getType().equals("Orange")) {
-            if (playedCard.getName().contains("BANG!")) {
-                playingBang();
+            if (playedCard.getName().contains("BANG!") || playedCard.getName().contains("Gatling")) {
+                playingBangOrGatling(playedCard);
 
             } else if (playedCard.getName().contains("Mancato!")) {
             } else if (playedCard.getName().contains("Cat Balou")) {
@@ -79,27 +78,16 @@ public class CheckerForPlayedCard {
                 round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index));
             }
         }
+        round.getCheckerForAvatarSpeciality().checkSuzyForEmptyHand(round.getPlayerInTurn());
     }
 
-    public void playingBang() {
+    public void playingBangOrGatling(Card bangOrGatling) {
 
-        if (bangCanBePlayed()) {
+        if (bangOrGatling.getName().contains("BANG!") && bangCanBePlayed()) {
             round.setBangHasBeenPlayed(true);
             round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
         }
-    }
-
-    public void playingCatBalou() {
-
-        round.getPlayerInTurn().getHandCards().get(index).function(round.getPlayerInTurn(), round.getPlayerToFollow(), round.getDrawpile(), round.getDiscardpile());
-        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
-    }
-
-    public void playingPanico() {
-
-        if (canPlayerInTurnTouchPlayerToFollow() == false) {
-        } else {
-            round.getPlayerInTurn().getHandCards().get(index).function(round.getPlayerInTurn(), round.getPlayerToFollow(), round.getDrawpile(), round.getDiscardpile());
+        else if (bangOrGatling.getName().contains("Gatling")) {
             round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
         }
     }
@@ -122,6 +110,39 @@ public class CheckerForPlayedCard {
             return true;
         }
         return false;
+    }
+
+    public boolean thereIsaBarrel() {
+
+        boolean thereIsABarrel = false;
+
+        for (Card isItBarrel : round.getPlayerToFollow().getFrontCards()) {
+            if (isItBarrel.getName().contains("Barrel")) {
+                thereIsABarrel = true;
+            }
+        }
+        if (thereIsABarrel) {
+            Card topCard = round.getDrawpile().take(round.getDiscardpile());
+            round.getPlayerInTurn().setLastCheckedCard(topCard);
+            round.getDiscardpile().place(topCard);
+            return true;
+        }
+        return false;
+    }
+
+    public void playingCatBalou() {
+
+        round.getPlayerInTurn().getHandCards().get(index).function(round.getPlayerInTurn(), round.getPlayerToFollow(), round.getDrawpile(), round.getDiscardpile());
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
+    }
+
+    public void playingPanico() {
+
+        if (canPlayerInTurnTouchPlayerToFollow() == false) {
+        } else {
+            round.getPlayerInTurn().getHandCards().get(index).function(round.getPlayerInTurn(), round.getPlayerToFollow(), round.getDrawpile(), round.getDiscardpile());
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
+        }
     }
 
     public boolean playerToFollowHasMancato() {

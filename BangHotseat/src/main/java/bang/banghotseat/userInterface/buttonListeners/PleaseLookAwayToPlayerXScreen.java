@@ -4,7 +4,6 @@
  */
 package bang.banghotseat.userInterface.buttonListeners;
 
-import bang.banghotseat.essentials.Player;
 import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

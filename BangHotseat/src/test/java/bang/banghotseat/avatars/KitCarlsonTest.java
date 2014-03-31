@@ -48,10 +48,4 @@ public class KitCarlsonTest {
     @After
     public void tearDown() {
     }
-
-    @Test
-    public void kitCarlsonDrawsTwoCards() {
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
-        assertEquals(2, player.getHandCards().size());
-    }
 }

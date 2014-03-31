@@ -42,6 +42,7 @@ public class CheckerForEventsBeforeTurn {
                 thereWasADinamite = true;
 
                 Card topCard = drawpile.take(discardpile);
+                playerInTurn.setLastCheckedCard(topCard);
                 discardpile.place(topCard);
 
                 if (topCard.getSuit().equals("Spades") && topCard.getNumber() > 1 && topCard.getNumber() < 10) {
@@ -54,7 +55,12 @@ public class CheckerForEventsBeforeTurn {
             if (dinamiteDetonated) {
                 discardpile.place(playerInTurn.drawSpecificFrontCard(indexOfDinamite));
             } else {
-                playerToFollow.putCardInFront(playerInTurn.drawSpecificFrontCard(indexOfDinamite));
+                if (playerToFollow.getFrontCards().isEmpty()) {
+                    playerToFollow.putCardInFront(playerInTurn.drawSpecificFrontCard(indexOfDinamite));
+                } else if (playerToFollow.getFrontCards().get(playerToFollow.getFrontCards().size() - 1).getName().contains("Dinamite")) {
+                } else {
+                    playerToFollow.putCardInFront(playerInTurn.drawSpecificFrontCard(indexOfDinamite));
+                }
             }
         }
     }

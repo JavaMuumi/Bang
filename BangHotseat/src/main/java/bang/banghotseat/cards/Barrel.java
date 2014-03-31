@@ -5,7 +5,6 @@
 package bang.banghotseat.cards;
 
 import bang.banghotseat.essentials.Player;
-import java.util.Scanner;
 
 /**
  *

@@ -4,14 +4,17 @@
  */
 package bang.banghotseat.avatars;
 
+import bang.banghotseat.Round;
+import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Deck;
+import bang.banghotseat.cards.Mancato;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -19,18 +22,13 @@ import static org.junit.Assert.*;
  */
 public class SuzyLafayetteTest {
     
-    private Player player;
-    private Player enemy;
-    private Deck drawpile;
-    private Deck discardpile;
+    private Round round;
+
     
     public SuzyLafayetteTest() {
-        player = new Player();
-        player.setAvatar(new SuzyLafayette());
-        enemy = new Player();
-        drawpile = new Deck();
-        drawpile.createCards();
-        discardpile = new Deck();
+        
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getPlayerInTurn().setAvatar(new SuzyLafayette());
     }
     
     @BeforeClass
@@ -50,8 +48,22 @@ public class SuzyLafayetteTest {
     }
     
     @Test
-    public void suzyLafayetteDrawsTwoCards() {
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
-        assertEquals(2, player.getHandCards().size());
+    public void suzyDrawsTwoCards() {
+        
+        round.getDrawpile().createCards();
+        
+        round.getPlayerInTurn().getAvatar().drawCards(round.getDrawpile(), round.getDiscardpile(), round.getPlayerInTurn(), round.getPlayerToFollow());
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
+    }
+    
+    @Test
+    public void ifSuzyPlaysHerLastCardOnHerTurnSheWillDrawAnotherone() {
+        
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+        round.getDrawpile().place(new Mancato("Hearts", 1));
+        
+        round.getCheckerForPlayedCard().playingCard(0);
+        
+        assertEquals("Mancato!", round.getPlayerInTurn().getHandCards().get(0).getName());
     }
 }

@@ -20,6 +20,7 @@ public class Player {
     private int currentHealth;
     private List<Card> handCards = new ArrayList<>();
     private List<Card> frontCards = new ArrayList<>();
+    private Card lastCheckedCard;
     
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
@@ -134,5 +135,13 @@ public class Player {
             touch++;
         }
         return touch;
+    }
+    
+    public void setLastCheckedCard(Card lastCheckedCard) {
+        this.lastCheckedCard = lastCheckedCard;
+    }
+    
+    public Card getLastCheckedCard() {
+        return lastCheckedCard;
     }
 }

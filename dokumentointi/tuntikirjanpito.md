@@ -76,3 +76,13 @@ Pakko koodata kun ei muuten toimi
 17:30-18
 Luokkakaavion hienosäätöä
 YHTEENSÄ: 8h
+
+28.3.
+klo 12-17
+Koodia ja testejä
+YHTEENSÄ: 5h
+
+31.3.
+klo 18-21
+Koodeja ja testejä taas
+YHTEENSÄ: 3h

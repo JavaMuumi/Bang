@@ -13,22 +13,24 @@ import javax.swing.JFrame;
  *
  * @author Antti Korpi
  */
-public class MainMenu_Rules implements ActionListener {
+public class ToYouHaveNoMancato implements ActionListener {
     
-    private JFrame frame;
     private VisibleScreen visibleScreen;
+    private JFrame frame;
     
-    public MainMenu_Rules(VisibleScreen visibleScreen) {
+    public ToYouHaveNoMancato(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
-    
+
     @Override
-    public void actionPerformed(ActionEvent rulesButton) {
+    public void actionPerformed(ActionEvent e) {
         
         frame.getContentPane().removeAll();
         
-        visibleScreen.rules();
+        visibleScreen.bangAndNoHandCards();
+        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+        
         frame.revalidate();
         frame.repaint();
     }

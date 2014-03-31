@@ -4,12 +4,9 @@
  */
 package bang.banghotseat.userInterface.buttonListeners;
 
-import bang.banghotseat.Round;
-import bang.banghotseat.Setup;
 import bang.banghotseat.userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 import javax.swing.JFrame;
 
 /**

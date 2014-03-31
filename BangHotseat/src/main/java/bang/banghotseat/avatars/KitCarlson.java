@@ -25,8 +25,6 @@ public class KitCarlson implements Avatar {
 
     @Override
     public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
-        playerInTurn.getHandCards().add(drawpile.take(discardpile));
-        playerInTurn.getHandCards().add(drawpile.take(discardpile));
     }
     
     @Override

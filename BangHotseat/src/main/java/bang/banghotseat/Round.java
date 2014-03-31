@@ -5,6 +5,7 @@
 package bang.banghotseat;
 
 import bang.banghotseat.cards.Deck;
+import bang.banghotseat.essentials.CheckerForAvatarSpeciality;
 import bang.banghotseat.essentials.CheckerForEventsBeforeTurn;
 import bang.banghotseat.essentials.CheckerForPlayedCard;
 import bang.banghotseat.essentials.Player;
@@ -21,8 +22,8 @@ public class Round {
     private Deck discardpile;
     private CheckerForEventsBeforeTurn checkerForEventsBeforeTurn;
     private CheckerForPlayedCard checkerForPlayedCard;
+    private CheckerForAvatarSpeciality checkerForAvatarSpeciality;
     private Player statsDepository = new Player();
-    private boolean goOn = false;
     private boolean bangHasBeenPlayed = false;
     
     public Round(Player player1, Player player2, Deck drawpile, Deck discardpile) {
@@ -33,6 +34,7 @@ public class Round {
         this.discardpile = discardpile;
         checkerForEventsBeforeTurn = new CheckerForEventsBeforeTurn(drawpile, discardpile);
         checkerForPlayedCard = new CheckerForPlayedCard(this);
+        checkerForAvatarSpeciality = new CheckerForAvatarSpeciality(this);
     }
     
     public void playTurn() {
@@ -73,6 +75,10 @@ public class Round {
     
     public CheckerForPlayedCard getCheckerForPlayedCard() {
         return checkerForPlayedCard;
+    }
+    
+    public CheckerForAvatarSpeciality getCheckerForAvatarSpeciality() {
+        return checkerForAvatarSpeciality;
     }
     
     public boolean getBangHasBeenPlayed() {

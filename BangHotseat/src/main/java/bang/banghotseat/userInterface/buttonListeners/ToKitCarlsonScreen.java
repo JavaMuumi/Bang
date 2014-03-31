@@ -13,17 +13,23 @@ import javax.swing.JFrame;
  *
  * @author Antti Korpi
  */
-public class BangPlayerLookAway implements ActionListener {
-
-    private VisibleScreen visibleScreen;
+public class ToKitCarlsonScreen implements ActionListener {
+    
     private JFrame frame;
-
-    public BangPlayerLookAway(VisibleScreen visibleScreen) {
+    private VisibleScreen visibleScreen;
+    
+    public ToKitCarlsonScreen(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
+        frame.getContentPane().removeAll();
+        
+        visibleScreen.kitCarlsonDrawScreen();
+        
+        frame.revalidate();
+        frame.repaint();
     }
 }

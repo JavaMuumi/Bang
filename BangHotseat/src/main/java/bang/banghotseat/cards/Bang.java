@@ -5,7 +5,6 @@
 package bang.banghotseat.cards;
 
 import bang.banghotseat.essentials.Player;
-import java.util.Scanner;
 
 /**
  *
@@ -36,10 +35,6 @@ public class Bang implements Card {
         if (thereWasAMancato == false) {
             playerToFollow.loseHealth(1);
         }
-    }
-    
-    public void theBangWasDodged() {
-        
     }
 
     @Override
