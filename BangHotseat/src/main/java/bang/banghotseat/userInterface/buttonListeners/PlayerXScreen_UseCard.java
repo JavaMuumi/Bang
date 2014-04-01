@@ -35,16 +35,11 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.moreBangCardsCannotBePlayed();
 
-                frame.revalidate();
-                frame.repaint();
             } else if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnReachPlayerToFollow() == false) {
 
                 frame.getContentPane().removeAll();
 
                 visibleScreen.enemyIsOutOfReach();
-
-                frame.revalidate();
-                frame.repaint();
 
             } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
 
@@ -58,8 +53,6 @@ public class PlayerXScreen_UseCard implements ActionListener {
                     visibleScreen.bangAndNoHandCards();
                     visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
                 }
-                frame.revalidate();
-                frame.repaint();
 
             } else {
 
@@ -72,8 +65,6 @@ public class PlayerXScreen_UseCard implements ActionListener {
                 } else {
                     visibleScreen.bangPlayerPleaseLookAway();
                 }
-                frame.revalidate();
-                frame.repaint();
             }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Gatling")) {
             if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
@@ -88,8 +79,6 @@ public class PlayerXScreen_UseCard implements ActionListener {
                     visibleScreen.bangAndNoHandCards();
                     visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
                 }
-                frame.revalidate();
-                frame.repaint();
 
             } else {
 
@@ -102,8 +91,6 @@ public class PlayerXScreen_UseCard implements ActionListener {
                 } else {
                     visibleScreen.bangPlayerPleaseLookAway();
                 }
-                frame.revalidate();
-                frame.repaint();
             }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Panico!")) {
 
@@ -113,18 +100,18 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.enemyIsOutOfReach();
 
-                frame.revalidate();
-                frame.repaint();
+            } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
+
+                frame.getContentPane().removeAll();
+
+                visibleScreen.playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()));
             } else {
 
                 frame.getContentPane().removeAll();
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                visibleScreen.playerXScreen();
-
-                frame.revalidate();
-                frame.repaint();
+                visibleScreen.panicoScreen();
             }
         } else {
             frame.getContentPane().removeAll();
@@ -132,9 +119,8 @@ public class PlayerXScreen_UseCard implements ActionListener {
             visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
             visibleScreen.playerXScreen();
-
-            frame.revalidate();
-            frame.repaint();
         }
+        frame.revalidate();
+        frame.repaint();
     }
 }

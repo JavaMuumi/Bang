@@ -5,21 +5,20 @@
 package bang.banghotseat.essentials;
 
 import bang.banghotseat.avatars.PaulRegret;
-import bang.banghotseat.avatars.PaulRegretTest;
 import bang.banghotseat.avatars.RoseDoolan;
+import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Mirino;
 import bang.banghotseat.cards.Mustang;
 import bang.banghotseat.cards.Remington;
 import bang.banghotseat.cards.RevCarabine;
 import bang.banghotseat.cards.Schofield;
 import bang.banghotseat.cards.Winchester;
-import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -47,6 +46,42 @@ public class PlayerTest {
     
     @After
     public void tearDown() {
+    }
+    
+    @Test
+    public void methodDrawSpecificHandCardWillReturnTheCorrectHandCard() {
+        
+        for (int i = 0; i < 5; i++) {
+            player.putCardIntoHand(new Bang("Hearts", i));
+        }
+        assertEquals("BANG!: 3 of Hearts", player.drawSpecificHandCard(3).toString());
+    }
+    
+    @Test
+    public void methodDrawSpecificHandCardWillRemoveTheDrawnCardFromPlayersHand() {
+        
+        player.putCardIntoHand(new Bang("Hearts", 1));
+        player.drawSpecificHandCard(0);
+        
+        assertEquals("Player hand cards: 0", "Player hand cards: " + player.getHandCards().size());
+    }
+    
+    @Test
+    public void methodDrawSpecificFrontCardWillReturnTheCorrectHandCard() {
+        
+        for (int i = 0; i < 5; i++) {
+            player.putCardInFront(new Bang("Hearts", i));
+        }
+        assertEquals("BANG!: 3 of Hearts", player.drawSpecificFrontCard(3).toString());
+    }
+    
+    @Test
+    public void methodDrawSpecificFrontCardWillRemoveTheDrawnCardFromPlayerFront() {
+        
+        player.putCardInFront(new Bang("Hearts", 1));
+        player.drawSpecificFrontCard(0);
+        
+        assertEquals("Player front cards: 0", "Player front cards: " + player.getFrontCards().size());
     }
     
     @Test

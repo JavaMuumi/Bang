@@ -20,7 +20,7 @@ public class CheckerForAvatarSpeciality {
     
     public void checkSuzyForEmptyHand(Player playerToCheck) {
         
-        if (playerToCheck.getHandCards().isEmpty()) {
+        if (playerToCheck.getAvatar().toString().equals("Suzy Lafayette") && playerToCheck.getHandCards().isEmpty()) {
             playerToCheck.putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
         }
     }

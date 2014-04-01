@@ -15,6 +15,7 @@ import bang.banghotseat.cards.Deck;
 import bang.banghotseat.cards.Mancato;
 import bang.banghotseat.cards.Mirino;
 import bang.banghotseat.cards.Panico;
+import bang.banghotseat.cards.Saloon;
 import bang.banghotseat.cards.Schofield;
 import bang.banghotseat.cards.Volcanic;
 import org.junit.After;
@@ -58,6 +59,23 @@ public class CheckerForPlayedCardTest {
     }
 
     @Test
+    public void anOrangeCardIsDeletedAfterItHasBeenPlayed() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Saloon("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals(true, round.getPlayerInTurn().getHandCards().isEmpty());
+    }
+
+    public void anOrangeCardIsPlacedInDiscardpileAfterItHasBeenPlayed() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Saloon("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Saloon", round.getDiscardpile().getDeck().get(round.getDiscardpile().getDeck().size() - 1).getName());
+    }
+
+    @Test
     public void whenPlayingBangAgainstEnemyOutOfReachEnemyWillNotLoseHealth() {
 
         round.getPlayerToFollow().setAvatar(new PaulRegret());
@@ -95,10 +113,10 @@ public class CheckerForPlayedCardTest {
         }
         assertEquals("Player hand cards: 0", "Player hand cards: " + round.getPlayerInTurn().getHandCards().size());
     }
-    
+
     @Test
     public void playerWithAVolcanicInFrontCanPlayAnyNumberOfBangs() {
-        
+
         round.getPlayerInTurn().putCardInFront(new Volcanic("Hearts", 1));
 
         for (int i = 0; i < 4; i++) {

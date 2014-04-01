@@ -4,15 +4,14 @@
  */
 package bang.banghotseat.cards;
 
-import bang.banghotseat.avatars.PaulRegret;
 import bang.banghotseat.avatars.PedroRamirez;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -85,7 +84,7 @@ public class BangTest {
     }
     
     @Test
-    public void ifEnemyHaAMancatoHeWillLoseIt() {
+    public void ifEnemyHasAMancatoHeWillLoseIt() {
         
         enemy.putCardIntoHand(new Mancato("Hearts", 1));
         player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);

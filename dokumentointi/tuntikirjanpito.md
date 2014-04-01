@@ -86,3 +86,8 @@ YHTEENSÄ: 5h
 klo 18-21
 Koodeja ja testejä taas
 YHTEENSÄ: 3h
+
+1.4.
+klo 14-18
+Koodia ja testejä
+Yhteensä: 4h

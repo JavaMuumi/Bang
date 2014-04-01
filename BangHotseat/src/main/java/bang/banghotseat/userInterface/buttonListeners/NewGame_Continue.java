@@ -17,18 +17,19 @@ public class NewGame_Continue implements ActionListener {
 
     private JFrame frame;
     private VisibleScreen visibleScreen;
-    
+
     public NewGame_Continue(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         frame.getContentPane().removeAll();
-        
+
         visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getPlayer2());
+
         frame.revalidate();
         frame.repaint();
     }

@@ -7,6 +7,7 @@ package bang.banghotseat.essentials;
 import bang.banghotseat.avatars.Avatar;
 import bang.banghotseat.cards.Card;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -14,18 +15,18 @@ import java.util.List;
  * @author Antti Korpi
  */
 public class Player {
-    
+
     private String name;
     private Avatar avatar;
     private int currentHealth;
     private List<Card> handCards = new ArrayList<>();
     private List<Card> frontCards = new ArrayList<>();
     private Card lastCheckedCard;
-    
+
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
-    
+
     public Avatar getAvatar() {
         return avatar;
     }
@@ -33,87 +34,91 @@ public class Player {
     public void setCurrentHealth() {
         currentHealth = avatar.getMaxHealth();
     }
-    
+
     public int getCurrentHealth() {
         return currentHealth;
     }
-    
+
     public void loseHealth(int amountToBeLost) {
-        
+
         int counter = 1;
-        
+
         while (counter <= amountToBeLost) {
-        currentHealth--;
-        counter++;
+            currentHealth--;
+            counter++;
         }
     }
-    
+
     public List<Card> getHandCards() {
         return handCards;
     }
-    
+
     public Card drawSpecificHandCard(int index) {
+
         Card toBeGiven = handCards.get(index);
         handCards.remove(index);
         return toBeGiven;
     }
-    
+
+    public Card drawRandomHangCard() {
+        
+        Collections.shuffle(handCards);
+        Card toBeGiven = drawSpecificHandCard(0);
+        return toBeGiven;
+    }
+
     public void putCardIntoHand(Card cardToPutIn) {
         handCards.add(cardToPutIn);
     }
-    
+
     public List<Card> getFrontCards() {
         return frontCards;
     }
-    
+
     public Card drawSpecificFrontCard(int index) {
         Card toBeGiven = frontCards.get(index);
         frontCards.remove(index);
         return toBeGiven;
     }
-    
+
     public void putCardInFront(Card toBePlaced) {
         frontCards.add(toBePlaced);
     }
-    
+
     public void gainHealth() {
         if (currentHealth < avatar.getMaxHealth()) {
             currentHealth++;
         }
     }
-    
+
     public int getDistance() {
-        
+
         int distance = 1;
-        
+
         for (Card frontCard : frontCards) {
             if (frontCard.toString().contains("Mustang")) {
-            distance++;
+                distance++;
             }
         }
         if (avatar.toString().equals("Paul Regret")) {
-            distance++;    
+            distance++;
         }
         return distance;
     }
-    
+
     public int getReach() {
         int reach = 1;
-        
+
         for (Card frontCard : frontCards) {
             if (frontCard.toString().contains("Schofield")) {
                 reach++;
-            }
-            else if (frontCard.toString().contains("Remington")) {
-                reach = reach+2;
-            }
-            else if (frontCard.toString().contains("Rev.Carabine")) {
-                reach = reach+3;
-            }
-            else if (frontCard.toString().contains("Winchester")) {
-                reach = reach+4;
-            }
-            else if (frontCard.toString().contains("Mirino")) {
+            } else if (frontCard.toString().contains("Remington")) {
+                reach = reach + 2;
+            } else if (frontCard.toString().contains("Rev.Carabine")) {
+                reach = reach + 3;
+            } else if (frontCard.toString().contains("Winchester")) {
+                reach = reach + 4;
+            } else if (frontCard.toString().contains("Mirino")) {
                 reach++;
             }
         }
@@ -122,10 +127,10 @@ public class Player {
         }
         return reach;
     }
-    
+
     public int getTouch() {
         int touch = 1;
-        
+
         for (Card frontCard : frontCards) {
             if (frontCard.toString().contains("Mirino")) {
                 touch++;
@@ -136,11 +141,11 @@ public class Player {
         }
         return touch;
     }
-    
+
     public void setLastCheckedCard(Card lastCheckedCard) {
         this.lastCheckedCard = lastCheckedCard;
     }
-    
+
     public Card getLastCheckedCard() {
         return lastCheckedCard;
     }

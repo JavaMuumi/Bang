@@ -20,6 +20,7 @@ import bang.banghotseat.userInterface.buttonListeners.MainMenu_NewGame;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_Rules;
 import bang.banghotseat.userInterface.buttonListeners.MancatoDistraction;
 import bang.banghotseat.userInterface.buttonListeners.NewGame_Continue;
+import bang.banghotseat.userInterface.buttonListeners.PanicoScreen_StealNow;
 import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_EndTurn;
 import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_UseCard;
 import bang.banghotseat.userInterface.buttonListeners.PleaseLookAwayToPlayerXScreen;
@@ -70,6 +71,7 @@ public class VisibleScreen {
     private ActionListener mancatoDistraction;
     private ActionListener doYouWannaPlayMancato_No;
     private ActionListener doYouWannaPlayMancato_Yes;
+    private ActionListener panicoScreen_StealNow;
 
     public VisibleScreen(JFrame frame, Setup setup) {
 
@@ -98,6 +100,7 @@ public class VisibleScreen {
         mancatoDistraction = new MancatoDistraction(this);
         doYouWannaPlayMancato_No = new DoYouWannaPlayMancato_No(this);
         doYouWannaPlayMancato_Yes = new DoYouWannaPlayMancato_Yes(this);
+        panicoScreen_StealNow = new PanicoScreen_StealNow(this);
     }
 
     public void MainMenu() {
@@ -316,6 +319,66 @@ public class VisibleScreen {
         }
     }
 
+    public void panicoScreen() {
+
+        JLabel wichCardWillYouSteal = new JLabel("Wich card will you take?", JLabel.CENTER);
+        wichCardWillYouSteal.setFont(new Font("Bang", Font.BOLD, 48));
+
+        ButtonGroup panicoChoice = new ButtonGroup();
+        cardList.clear();
+
+        for (int i = 0; i < setup.getRound().getPlayerToFollow().getFrontCards().size(); i++) {
+            cardList.add(new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString()));
+        }
+        if (!setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+            cardList.add(new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")"));
+        }
+        for (JRadioButton toBeAdded : cardList) {
+            panicoChoice.add(toBeAdded);
+            container.add(toBeAdded);
+        }
+        JButton steal = new JButton("Steal now!");
+        steal.addActionListener(panicoScreen_StealNow);
+        container.add(steal);
+    }
+
+    public void panicoStoleRandomHandCard() {
+
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel stolenCard = new JLabel("You stole " + setup.getRound().getPlayerInTurn().getLastCheckedCard().toString(), JLabel.CENTER);
+        stolenCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(continueToPlayerXScreen);
+
+        container.add(stolenCard);
+        container.add(next);
+    }
+    
+    public void catBalouScreen() {
+    }
+    
+    public void playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(Card panicoOrCatBalou) {
+        
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel enemyHasNoCards = new JLabel("The other player has no cards,", JLabel.CENTER);
+        enemyHasNoCards.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel youCannotPlayThisCard = new JLabel("you cannot play " + panicoOrCatBalou.getName(), JLabel.CENTER);
+        youCannotPlayThisCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(continueToPlayerXScreen);
+
+        container.add(enemyHasNoCards);
+        container.add(youCannotPlayThisCard);
+        container.add(next);
+    }
+
     public void kitCarlsonDrawScreen() {
 
         BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
@@ -516,6 +579,17 @@ public class VisibleScreen {
     public int getIndex() {
         for (JRadioButton isThisSelected : cardList) {
             if (isThisSelected.isSelected()) {
+                return cardList.indexOf(isThisSelected);
+            }
+        }
+        return -1;
+    }
+
+    public int getPanicoIndex() {
+        for (JRadioButton isThisSelected : cardList) {
+            if (isThisSelected.isSelected() && cardList.indexOf(isThisSelected) == cardList.size() - 1) {
+                return -2;
+            } else if (isThisSelected.isSelected()) {
                 return cardList.indexOf(isThisSelected);
             }
         }

@@ -4,15 +4,14 @@
  */
 package bang.banghotseat.avatars;
 
-import bang.banghotseat.avatars.BartCassidy;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
