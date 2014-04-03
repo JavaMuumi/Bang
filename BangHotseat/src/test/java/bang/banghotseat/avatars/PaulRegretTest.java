@@ -27,26 +27,41 @@ public class PaulRegretTest {
         round.getPlayerInTurn().setAvatar(new PaulRegret());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void paulRegretSetsMaxHealthTo3() {
+        assertEquals(3, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForPaulRegret() {
+        assertEquals("All players see him at a distance increased by 1.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void paulRegretDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);
         assertEquals(2, round.getPlayerInTurn().getHandCards().size());
+    }
+    
+    @Test
+    public void paulRegretIsNormallyAtDistanceOf2() {
+        assertEquals(2, round.getPlayerInTurn().getDistance());
     }
 }

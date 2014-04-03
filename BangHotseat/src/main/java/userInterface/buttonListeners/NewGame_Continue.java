@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.userInterface.buttonListeners;
+package userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.VisibleScreen;
+import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -19,7 +19,6 @@ import javax.swing.JFrame;
  */
 public class NewGame_Continue implements ActionListener {
 
-    private JFrame frame;
     private VisibleScreen visibleScreen;
 
     /**
@@ -28,17 +27,16 @@ public class NewGame_Continue implements ActionListener {
      */
     public NewGame_Continue(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
-        frame = visibleScreen.getFrame();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        frame.getContentPane().removeAll();
+        visibleScreen.getFrame().getContentPane().removeAll();
 
         visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getPlayer2());
 
-        frame.revalidate();
-        frame.repaint();
+        visibleScreen.getFrame().revalidate();
+        visibleScreen.getFrame().repaint();
     }
 }

@@ -45,6 +45,16 @@ public class CalamityJanetTest {
     }
 
     @Test
+    public void calamityJanetSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
+    
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForCalamityJanet() {
+        assertEquals("She can play BANG! cards as Missed! cards and vice versa.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
+    @Test
     public void calamityJanetDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);
         assertEquals(2, round.getPlayerInTurn().getHandCards().size());

@@ -19,31 +19,41 @@ import org.junit.Test;
  * @author Antti Korpi
  */
 public class BartCassidyTest {
-    
+
     private Round round;
-    
+
     public BartCassidyTest() {
         round = new Round(new Player(), new Player(), new Deck(), new Deck());
         round.getPlayerInTurn().setAvatar(new BartCassidy());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void bartCassidySetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForBartCassidy() {
+        assertEquals("Each time he is hit, he draws a card.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void bartCassidyDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);

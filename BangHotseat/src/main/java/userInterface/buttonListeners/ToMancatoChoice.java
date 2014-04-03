@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.userInterface.buttonListeners;
+package userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.VisibleScreen;
+import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -14,29 +14,28 @@ import javax.swing.JFrame;
  * @author Antti Korpi
  * 
  * Luokka on ActionListener, jolla varustettu nappula
- * vie Kit Carlson -avatarin korttienvalinta-ruutuun.
+ * vie valintaan, haluaako pelaaja kayttaa vaistokorttia.
  */
-public class ToKitCarlsonScreen implements ActionListener {
+public class ToMancatoChoice implements ActionListener {
     
-    private JFrame frame;
     private VisibleScreen visibleScreen;
     
     /**
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ToKitCarlsonScreen(VisibleScreen visibleScreen) {
+    public ToMancatoChoice(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
-        frame = visibleScreen.getFrame();
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        frame.getContentPane().removeAll();
         
-        visibleScreen.kitCarlsonDrawScreen();
+        visibleScreen.getFrame().getContentPane().removeAll();
         
-        frame.revalidate();
-        frame.repaint();
+        visibleScreen.doYouWannaPlayMancato();
+        
+        visibleScreen.getFrame().revalidate();
+        visibleScreen.getFrame().repaint();
     }
 }

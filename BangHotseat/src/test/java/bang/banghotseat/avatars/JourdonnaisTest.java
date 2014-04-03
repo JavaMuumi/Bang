@@ -27,23 +27,33 @@ public class JourdonnaisTest {
         round.getPlayerInTurn().setAvatar(new Jourdonnais());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void jourdonnaisSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForJourdonnais() {
+        assertEquals("Whenever he is the target of a BANG!, he may 'draw!': on a Heart, he is missed.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void jourdonnaisDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);

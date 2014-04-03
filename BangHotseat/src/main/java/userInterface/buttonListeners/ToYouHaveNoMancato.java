@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.userInterface.buttonListeners;
+package userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.VisibleScreen;
+import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -21,7 +21,6 @@ import javax.swing.JFrame;
 public class ToYouHaveNoMancato implements ActionListener {
     
     private VisibleScreen visibleScreen;
-    private JFrame frame;
     
     /**
      *
@@ -29,18 +28,17 @@ public class ToYouHaveNoMancato implements ActionListener {
      */
     public ToYouHaveNoMancato(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
-        frame = visibleScreen.getFrame();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         
-        frame.getContentPane().removeAll();
+        visibleScreen.getFrame().getContentPane().removeAll();
         
         visibleScreen.bangAndNoHandCards();
         visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
         
-        frame.revalidate();
-        frame.repaint();
+        visibleScreen.getFrame().revalidate();
+        visibleScreen.getFrame().repaint();
     }
 }

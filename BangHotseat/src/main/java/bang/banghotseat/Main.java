@@ -1,7 +1,7 @@
 package bang.banghotseat;
 
-import bang.banghotseat.userInterface.UserInterface;
 import javax.swing.SwingUtilities;
+import userInterface.UserInterface;
 
 /**
  *

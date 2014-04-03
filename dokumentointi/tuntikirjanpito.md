@@ -98,3 +98,8 @@ Sekvenssikaavioita
 klo 15-19
 Sekvenssikaavioita ja JavaDoceja
 YHTEENSA: 8h
+
+3.4.
+klo 9-14
+Mutanttien tappoa, testejä ja JavaDoceja
+YHTEENSÄ: 5h

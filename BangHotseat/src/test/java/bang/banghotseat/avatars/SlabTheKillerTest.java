@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author Antti Korpi
  */
 public class SlabTheKillerTest {
-    
+
     private Round round;
 
     public SlabTheKillerTest() {
@@ -27,23 +27,33 @@ public class SlabTheKillerTest {
         round.getPlayerInTurn().setAvatar(new SlabTheKiller());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void slabTheKillerSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForSlabTheKiller() {
+        assertEquals("Player needs 2 Missed! cards to cancel his BANG! card.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void slabTheKillerDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);

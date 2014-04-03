@@ -136,7 +136,7 @@ public class CheckerForPlayedCard {
      *
      * @return  totuusarvo onko vastustajan edessa Barrel
      */
-    public boolean thereIsaBarrel() {
+    public boolean thereIsABarrel() {
 
         boolean thereIsABarrel = false;
 

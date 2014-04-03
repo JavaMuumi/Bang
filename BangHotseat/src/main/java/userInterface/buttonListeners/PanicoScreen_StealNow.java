@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.userInterface.buttonListeners;
+package userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.VisibleScreen;
+import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -20,7 +20,6 @@ import javax.swing.JFrame;
  */
 public class PanicoScreen_StealNow implements ActionListener {
 
-    private JFrame frame;
     private VisibleScreen visibleScreen;
 
     /**
@@ -29,7 +28,6 @@ public class PanicoScreen_StealNow implements ActionListener {
      */
     public PanicoScreen_StealNow(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
-        frame = visibleScreen.getFrame();
     }
 
     @Override
@@ -37,16 +35,16 @@ public class PanicoScreen_StealNow implements ActionListener {
 
         if (visibleScreen.getPanicoIndex() == -1) {
         } else if (visibleScreen.getPanicoIndex() == -2) {
-            frame.getContentPane().removeAll();
+            visibleScreen.getFrame().getContentPane().removeAll();
             visibleScreen.getSetup().getRound().getPlayerInTurn().setLastCheckedCard(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHangCard());
             visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard());
             visibleScreen.panicoStoleRandomHandCard();
         } else {
-            frame.getContentPane().removeAll();
+            visibleScreen.getFrame().getContentPane().removeAll();
             visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificFrontCard(visibleScreen.getPanicoIndex()));
             visibleScreen.playerXScreen();
         }
-        frame.revalidate();
-        frame.repaint();
+        visibleScreen.getFrame().revalidate();
+        visibleScreen.getFrame().repaint();
     }
 }

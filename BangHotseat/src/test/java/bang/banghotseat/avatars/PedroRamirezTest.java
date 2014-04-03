@@ -27,23 +27,33 @@ public class PedroRamirezTest {
         round.getPlayerInTurn().setAvatar(new PedroRamirez());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void pedroRamirezSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForPedroRamirez() {
+        assertEquals("He may draw his first card from the discard pile.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void pedroRamirezDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);

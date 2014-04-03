@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author Antti Korpi
  */
 public class SidKetchumTest {
-    
+
     private Round round;
 
     public SidKetchumTest() {
@@ -27,23 +27,33 @@ public class SidKetchumTest {
         round.getPlayerInTurn().setAvatar(new SidKetchum());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void sidKetchumSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForSidKetchum() {
+        assertEquals("He may discard 2 cards to regain one life point.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void sidKetchumDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);

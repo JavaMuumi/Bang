@@ -27,21 +27,31 @@ public class LuckyDukeTest {
         round.getPlayerInTurn().setAvatar(new LuckyDuke());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
+    }
+
+    @Test
+    public void luckyDukeSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
+    
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForLuckyDuke() {
+        assertEquals("Each time he 'draws!', he flips the top two cards and chooses one.", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
 
     @Test

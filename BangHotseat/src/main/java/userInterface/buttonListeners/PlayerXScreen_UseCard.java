@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.userInterface.buttonListeners;
+package userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.VisibleScreen;
+import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -55,7 +55,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsaBarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
                     visibleScreen.bangAndNoHandCards();
@@ -68,7 +68,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsaBarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
                     visibleScreen.bangPlayerPleaseLookAway();
@@ -81,7 +81,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsaBarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
                     visibleScreen.bangAndNoHandCards();
@@ -94,7 +94,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsaBarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
                     visibleScreen.bangPlayerPleaseLookAway();

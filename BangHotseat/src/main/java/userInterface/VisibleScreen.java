@@ -2,31 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.userInterface;
+package userInterface;
 
 import bang.banghotseat.Setup;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.essentials.Player;
-import bang.banghotseat.userInterface.buttonListeners.BackToMainMenu;
-import bang.banghotseat.userInterface.buttonListeners.ContinueToNewRound;
-import bang.banghotseat.userInterface.buttonListeners.ContinueToPlayerXScreen;
-import bang.banghotseat.userInterface.buttonListeners.DiscardCards_Discard;
-import bang.banghotseat.userInterface.buttonListeners.DoYouWannaPlayMancato_No;
-import bang.banghotseat.userInterface.buttonListeners.DoYouWannaPlayMancato_Yes;
-import bang.banghotseat.userInterface.buttonListeners.Exit_ReallyExit;
-import bang.banghotseat.userInterface.buttonListeners.KitCarlsonPutCardBack;
-import bang.banghotseat.userInterface.buttonListeners.MainMenu_Exit;
-import bang.banghotseat.userInterface.buttonListeners.MainMenu_NewGame;
-import bang.banghotseat.userInterface.buttonListeners.MainMenu_Rules;
-import bang.banghotseat.userInterface.buttonListeners.MancatoDistraction;
-import bang.banghotseat.userInterface.buttonListeners.NewGame_Continue;
-import bang.banghotseat.userInterface.buttonListeners.PanicoScreen_StealNow;
-import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_EndTurn;
-import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_UseCard;
-import bang.banghotseat.userInterface.buttonListeners.PleaseLookAwayToPlayerXScreen;
-import bang.banghotseat.userInterface.buttonListeners.ToKitCarlsonScreen;
-import bang.banghotseat.userInterface.buttonListeners.ToMancatoChoice;
-import bang.banghotseat.userInterface.buttonListeners.ToYouHaveNoMancato;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -39,6 +19,26 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
+import userInterface.buttonListeners.BackToMainMenu;
+import userInterface.buttonListeners.ContinueToNewRound;
+import userInterface.buttonListeners.ContinueToPlayerXScreen;
+import userInterface.buttonListeners.DiscardCards_Discard;
+import userInterface.buttonListeners.DoYouWannaPlayMancato_No;
+import userInterface.buttonListeners.DoYouWannaPlayMancato_Yes;
+import userInterface.buttonListeners.Exit_ReallyExit;
+import userInterface.buttonListeners.KitCarlsonPutCardBack;
+import userInterface.buttonListeners.MainMenu_Exit;
+import userInterface.buttonListeners.MainMenu_NewGame;
+import userInterface.buttonListeners.MainMenu_Rules;
+import userInterface.buttonListeners.MancatoDistraction;
+import userInterface.buttonListeners.NewGame_Continue;
+import userInterface.buttonListeners.PanicoScreen_StealNow;
+import userInterface.buttonListeners.PlayerXScreen_EndTurn;
+import userInterface.buttonListeners.PlayerXScreen_UseCard;
+import userInterface.buttonListeners.PleaseLookAwayToPlayerXScreen;
+import userInterface.buttonListeners.ToKitCarlsonScreen;
+import userInterface.buttonListeners.ToMancatoChoice;
+import userInterface.buttonListeners.ToYouHaveNoMancato;
 
 /**
  * 
@@ -79,7 +79,7 @@ public class VisibleScreen {
     /**
      *
      * @param frame kayttoliityman raamit
-     * @param setup peliin kaytetty alkuvalmistelija
+     * @param setup peliin kaytettava alkuvalmistelija
      */
     public VisibleScreen(JFrame frame, Setup setup) {
 
@@ -340,18 +340,19 @@ public class VisibleScreen {
             JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
             barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
             container.add(barrelDidNotWork);
+            
+            JButton next = new JButton("Continue");
+            next.setFont(new Font("Button", Font.ITALIC, 34));
 
             if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-                JButton next = new JButton("Continue");
-                next.setFont(new Font("Button", Font.ITALIC, 34));
                 next.addActionListener(toYouHaveNoMancato);
-                container.add(next);
-            } else {
-                JButton next = new JButton("Continue");
-                next.setFont(new Font("Button", Font.ITALIC, 34));
+            } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
                 next.addActionListener(toMancatoChoice);
-                container.add(next);
             }
+            else {
+                next.addActionListener(mancatoDistraction);
+            }
+            container.add(next);
         }
     }
 
@@ -397,12 +398,6 @@ public class VisibleScreen {
 
         container.add(stolenCard);
         container.add(next);
-    }
-    
-    /**
-     *
-     */
-    public void catBalouScreen() {
     }
     
     /**

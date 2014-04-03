@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package bang.banghotseat.userInterface.buttonListeners;
+package userInterface.buttonListeners;
 
-import bang.banghotseat.userInterface.VisibleScreen;
+import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
@@ -19,7 +19,6 @@ import javax.swing.JFrame;
 public class DiscardCards_Discard implements ActionListener {
     
     private VisibleScreen visibleScreen;
-    private JFrame frame;
     
     /**
      *
@@ -27,7 +26,6 @@ public class DiscardCards_Discard implements ActionListener {
      */
     public DiscardCards_Discard(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
-        frame = visibleScreen.getFrame();
     }
 
     @Override
@@ -39,21 +37,21 @@ public class DiscardCards_Discard implements ActionListener {
             visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getIndex()));
         }
         if(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().size() > visibleScreen.getSetup().getRound().getPlayerInTurn().getCurrentHealth()) {
-            frame.getContentPane().removeAll();
+            visibleScreen.getFrame().getContentPane().removeAll();
             
             visibleScreen.discardCards();
             
-            frame.revalidate();
-            frame.repaint();
+            visibleScreen.getFrame().revalidate();
+            visibleScreen.getFrame().repaint();
         }
         else {
-            frame.getContentPane().removeAll();
+            visibleScreen.getFrame().getContentPane().removeAll();
             
             visibleScreen.getSetup().getRound().endTurn();
             visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getRound().getPlayerToFollow());
             
-            frame.revalidate();
-            frame.repaint();
+            visibleScreen.getFrame().revalidate();
+            visibleScreen.getFrame().repaint();
         }
     }
 }

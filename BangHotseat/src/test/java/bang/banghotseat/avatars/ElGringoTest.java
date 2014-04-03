@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author Antti Korpi
  */
 public class ElGringoTest {
-    
+
     private Round round;
 
     public ElGringoTest() {
@@ -27,23 +27,33 @@ public class ElGringoTest {
         round.getPlayerInTurn().setAvatar(new ElGringo());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void elGringoSetsMaxHealthTo3() {
+        assertEquals(3, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForELGringo() {
+        assertEquals("Each time he is hit by a player, he draws a card from the hand of that player.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void elGringoDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);

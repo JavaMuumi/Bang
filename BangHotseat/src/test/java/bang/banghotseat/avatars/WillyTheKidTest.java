@@ -19,7 +19,7 @@ import org.junit.Test;
  * @author Antti Korpi
  */
 public class WillyTheKidTest {
-    
+
     private Round round;
 
     public WillyTheKidTest() {
@@ -27,23 +27,33 @@ public class WillyTheKidTest {
         round.getPlayerInTurn().setAvatar(new WillyTheKid());
         round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
+
+    @Test
+    public void willyTheKidSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
+    }
     
+    @Test
+    public void getSpecialityReturnsCorrectDescriptionForWillyTheKid() {
+        assertEquals("He can play any number of BANG! cards.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
     @Test
     public void willyTheKidDrawsTwoCards() {
         round.getPlayerInTurn().getAvatar().drawCards(round);

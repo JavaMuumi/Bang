@@ -21,48 +21,58 @@ import org.junit.Test;
  * @author Antti Korpi
  */
 public class SuzyLafayetteTest {
-    
+
     private Round round;
-    
+
     public SuzyLafayetteTest() {
-        
+
         round = new Round(new Player(), new Player(), new Deck(), new Deck());
         round.getPlayerInTurn().setAvatar(new SuzyLafayette());
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
-    public void suzyDrawsTwoCards() {
-        
-        round.getDrawpile().createCards();
-        
-        round.getPlayerInTurn().getAvatar().drawCards(round);
-        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
+    public void suzyLafayetteSetsMaxHealthTo4() {
+        assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
     }
     
     @Test
-    public void ifSuzyPlaysHerLastCardOnHerTurnSheWillDrawAnotherone() {
-        
+    public void getSpecialityReturnsCorrectDescriptionForSuzyLafayette() {
+        assertEquals("As soon as she has no cards in hand, she draws a card.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }
+
+    @Test
+    public void suzyLafayetteDrawsTwoCards() {
+
+        round.getDrawpile().createCards();
+
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
+    }
+
+    @Test
+    public void ifSuzyLafayettePlaysHerLastCardOnHerTurnSheWillDrawAnotherone() {
+
         round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
         round.getDrawpile().place(new Mancato("Hearts", 1));
-        
+
         round.getCheckerForPlayedCard().playingCard(0);
-        
+
         assertEquals("Mancato!", round.getPlayerInTurn().getHandCards().get(0).getName());
     }
 }
