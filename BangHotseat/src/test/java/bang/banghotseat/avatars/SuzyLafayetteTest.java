@@ -23,7 +23,6 @@ import org.junit.Test;
 public class SuzyLafayetteTest {
     
     private Round round;
-
     
     public SuzyLafayetteTest() {
         
@@ -52,7 +51,7 @@ public class SuzyLafayetteTest {
         
         round.getDrawpile().createCards();
         
-        round.getPlayerInTurn().getAvatar().drawCards(round.getDrawpile(), round.getDiscardpile(), round.getPlayerInTurn(), round.getPlayerToFollow());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
         assertEquals(2, round.getPlayerInTurn().getHandCards().size());
     }
     

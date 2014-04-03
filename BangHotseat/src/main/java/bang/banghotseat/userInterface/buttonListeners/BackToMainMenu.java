@@ -10,15 +10,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka on ActionListener, jolla varustettu nappula
+ * vie takaisin alkuvalikko-ruutuun.
  */
-public class Exit_BackToMainMenu implements ActionListener {
+public class BackToMainMenu implements ActionListener {
     
     private JFrame frame;
     private VisibleScreen visibleScreen;
     
-    public Exit_BackToMainMenu(VisibleScreen visibleScreen) {
+    /**
+     *
+     * @param visibleScreen nakyman luova luokka
+     */
+    public BackToMainMenu(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
@@ -28,6 +35,7 @@ public class Exit_BackToMainMenu implements ActionListener {
         frame.getContentPane().removeAll();
         
         visibleScreen.MainMenu();
+        
         frame.revalidate();
         frame.repaint();
     }

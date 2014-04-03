@@ -10,14 +10,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka on ActionListener, jolla varustettu nappula
+ * vie valintaan, haluaako pelaaja kayttaa vaistokorttia.
  */
 public class ToMancatoChoice implements ActionListener {
     
     private VisibleScreen visibleScreen;
     private JFrame frame;
     
+    /**
+     *
+     * @param visibleScreen nakyman luova luokka
+     */
     public ToMancatoChoice(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();

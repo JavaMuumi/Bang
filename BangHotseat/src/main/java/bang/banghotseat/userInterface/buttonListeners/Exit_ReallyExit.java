@@ -10,14 +10,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka on ActionListener, jolla varustettu nappula
+ * suostuu lopettamaan ohjelman ja se suljetaan.
  */
 public class Exit_ReallyExit implements ActionListener {
-    
+
     private JFrame frame;
     private VisibleScreen visibleScreen;
     
+    /**
+     *
+     * @param visibleScreen nakyman luova luokka
+     */
     public Exit_ReallyExit(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();

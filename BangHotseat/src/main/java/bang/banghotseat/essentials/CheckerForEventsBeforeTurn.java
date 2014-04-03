@@ -4,67 +4,81 @@
  */
 package bang.banghotseat.essentials;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.cards.Card;
-import bang.banghotseat.cards.Deck;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka tarkastaa, tapahtuuko ennen vuoron
+ * aloittamista jotakin erikoista.
  */
 public class CheckerForEventsBeforeTurn {
 
-    private Player playerInTurn;
-    private Player playerToFollow;
-    private Deck drawpile;
-    private Deck discardpile;
+    private Round round;
 
-    public CheckerForEventsBeforeTurn(Deck drawpile, Deck discardpile) {
-        this.drawpile = drawpile;
-        this.discardpile = discardpile;
+    /**
+     *
+     * @param round pelattava kierros
+     */
+    public CheckerForEventsBeforeTurn(Round round) {
+        this.round = round;
     }
 
+    /**
+     *
+     * @param playerInTurn      vuorossa oleva pelaaja
+     * @param playerToFollow    seuraavana vuorossa oleva pelaaja
+     */
     public void setPlayerTurns(Player playerInTurn, Player playerToFollow) {
-        this.playerInTurn = playerInTurn;
-        this.playerToFollow = playerToFollow;
+        round.setPlayerInTurn(playerInTurn);
+        round.setPlayerToFollow(playerToFollow);
     }
 
+    /**
+     *
+     */
     public void checkDinamite() {
 
         boolean thereWasADinamite = false;
         boolean dinamiteDetonated = false;
         int indexOfDinamite = 0;
 
-        for (Card cardToCheck : playerInTurn.getFrontCards()) {
+        for (Card cardToCheck : round.getPlayerInTurn().getFrontCards()) {
 
             if (cardToCheck.toString().contains("Dinamite")) {
 
-                indexOfDinamite = playerInTurn.getFrontCards().indexOf(cardToCheck);
+                indexOfDinamite = round.getPlayerInTurn().getFrontCards().indexOf(cardToCheck);
                 thereWasADinamite = true;
 
-                Card topCard = drawpile.take(discardpile);
-                playerInTurn.setLastCheckedCard(topCard);
-                discardpile.place(topCard);
+                Card topCard = round.getDrawpile().take(round.getDiscardpile());
+                round.getPlayerInTurn().setLastCheckedCard(topCard);
+                round.getDiscardpile().place(topCard);
 
                 if (topCard.getSuit().equals("Spades") && topCard.getNumber() > 1 && topCard.getNumber() < 10) {
-                    cardToCheck.function(playerInTurn, playerToFollow, drawpile, discardpile);
+                    cardToCheck.function(round);
                     dinamiteDetonated = true;
                 }
             }
         }
         if (thereWasADinamite) {
             if (dinamiteDetonated) {
-                discardpile.place(playerInTurn.drawSpecificFrontCard(indexOfDinamite));
+                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
             } else {
-                if (playerToFollow.getFrontCards().isEmpty()) {
-                    playerToFollow.putCardInFront(playerInTurn.drawSpecificFrontCard(indexOfDinamite));
-                } else if (playerToFollow.getFrontCards().get(playerToFollow.getFrontCards().size() - 1).getName().contains("Dinamite")) {
+                if (round.getPlayerToFollow().getFrontCards().isEmpty()) {
+                    round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
+                } else if (round.getPlayerToFollow().getFrontCards().get(round.getPlayerToFollow().getFrontCards().size() - 1).getName().contains("Dinamite")) {
                 } else {
-                    playerToFollow.putCardInFront(playerInTurn.drawSpecificFrontCard(indexOfDinamite));
+                    round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
                 }
             }
         }
     }
 
+    /**
+     *
+     */
     public void checkPrigione() {
     }
 }

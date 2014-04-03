@@ -9,8 +9,11 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka luo kauttoliittyman, jolla
+ * pelaajat ohjaavat pelia.
  */
 
 public class UserInterface implements Runnable {
@@ -19,6 +22,9 @@ public class UserInterface implements Runnable {
     private JFrame frame;
     private VisibleScreen visibleScreen;
     
+    /**
+     *
+     */
     public UserInterface() {
         setup = new Setup();
     }
@@ -38,7 +44,11 @@ public class UserInterface implements Runnable {
         frame.setVisible(true);
   }
 
-  public JFrame getFrame() {
+    /**
+     *
+     * @return  kayttoliittyman raamit
+     */
+    public JFrame getFrame() {
       return frame;
   }
 }

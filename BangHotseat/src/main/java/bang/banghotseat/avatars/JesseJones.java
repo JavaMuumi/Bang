@@ -4,29 +4,39 @@
  */
 package bang.banghotseat.avatars;
 
-import bang.banghotseat.cards.Deck;
-import bang.banghotseat.essentials.Player;
+import bang.banghotseat.Round;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka mallintaa Jesse Jonesin ominaisuuksia.
+ * 
  */
 public class JesseJones implements Avatar {
 
+    /**
+     *
+     * @return hahmon maksimikestot
+     */
     @Override
     public int getMaxHealth() {
         return 4;
     }
 
+    /**
+     *
+     * @return kuvaus avatarin kyvysta
+     */
     @Override
     public String getSpeciality() {
         return "He may draw his first card from the hand of a player.";
     }
 
     @Override
-    public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
-        playerInTurn.getHandCards().add(drawpile.take(discardpile));
-        playerInTurn.getHandCards().add(drawpile.take(discardpile));
+    public void drawCards(Round round) {
+        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
     
     @Override

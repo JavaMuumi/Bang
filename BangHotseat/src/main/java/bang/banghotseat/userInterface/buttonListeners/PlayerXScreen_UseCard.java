@@ -10,14 +10,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka on ActionListener, jolla varustettu nappula
+ * kayttaa pelaajaan kasikorttien luettelosta valittua
+ * korttia. Kayttotapa vaihtelee kortin mukaan.
  */
 public class PlayerXScreen_UseCard implements ActionListener {
 
     private JFrame frame;
     private VisibleScreen visibleScreen;
 
+    /**
+     *
+     * @param visibleScreen nakyman luova luokka
+     */
     public PlayerXScreen_UseCard(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();

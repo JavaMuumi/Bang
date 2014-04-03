@@ -7,12 +7,12 @@ package bang.banghotseat.userInterface;
 import bang.banghotseat.Setup;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.essentials.Player;
+import bang.banghotseat.userInterface.buttonListeners.BackToMainMenu;
 import bang.banghotseat.userInterface.buttonListeners.ContinueToNewRound;
 import bang.banghotseat.userInterface.buttonListeners.ContinueToPlayerXScreen;
 import bang.banghotseat.userInterface.buttonListeners.DiscardCards_Discard;
 import bang.banghotseat.userInterface.buttonListeners.DoYouWannaPlayMancato_No;
 import bang.banghotseat.userInterface.buttonListeners.DoYouWannaPlayMancato_Yes;
-import bang.banghotseat.userInterface.buttonListeners.Exit_BackToMainMenu;
 import bang.banghotseat.userInterface.buttonListeners.Exit_ReallyExit;
 import bang.banghotseat.userInterface.buttonListeners.KitCarlsonPutCardBack;
 import bang.banghotseat.userInterface.buttonListeners.MainMenu_Exit;
@@ -24,7 +24,6 @@ import bang.banghotseat.userInterface.buttonListeners.PanicoScreen_StealNow;
 import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_EndTurn;
 import bang.banghotseat.userInterface.buttonListeners.PlayerXScreen_UseCard;
 import bang.banghotseat.userInterface.buttonListeners.PleaseLookAwayToPlayerXScreen;
-import bang.banghotseat.userInterface.buttonListeners.Rules_BackToMainMenu;
 import bang.banghotseat.userInterface.buttonListeners.ToKitCarlsonScreen;
 import bang.banghotseat.userInterface.buttonListeners.ToMancatoChoice;
 import bang.banghotseat.userInterface.buttonListeners.ToYouHaveNoMancato;
@@ -42,8 +41,13 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka luo kayttoliittymaan kulloinkin
+ * tarvittavat komponentit, jotta pelaajat
+ * tietavat mita on tapahtunut ja voivat
+ * ohjata pelia eteenpain.
  */
 public class VisibleScreen {
 
@@ -54,8 +58,7 @@ public class VisibleScreen {
     private ActionListener mainMenu_NewGame;
     private ActionListener mainMenu_Rules;
     private ActionListener mainMenu_Exit;
-    private ActionListener rules_BackToMainMenu;
-    private ActionListener exit_BackToMainMenu;
+    private ActionListener backToMainMenu;
     private ActionListener exit_ReallyExit;
     private ActionListener newGame_Continue;
     private ActionListener continueToNewRound;
@@ -73,6 +76,11 @@ public class VisibleScreen {
     private ActionListener doYouWannaPlayMancato_Yes;
     private ActionListener panicoScreen_StealNow;
 
+    /**
+     *
+     * @param frame kayttoliityman raamit
+     * @param setup peliin kaytetty alkuvalmistelija
+     */
     public VisibleScreen(JFrame frame, Setup setup) {
 
         this.frame = frame;
@@ -83,8 +91,7 @@ public class VisibleScreen {
         mainMenu_NewGame = new MainMenu_NewGame(this);
         mainMenu_Rules = new MainMenu_Rules(this);
         mainMenu_Exit = new MainMenu_Exit(this);
-        rules_BackToMainMenu = new Rules_BackToMainMenu(this);
-        exit_BackToMainMenu = new Exit_BackToMainMenu(this);
+        backToMainMenu = new BackToMainMenu(this);
         exit_ReallyExit = new Exit_ReallyExit(this);
         newGame_Continue = new NewGame_Continue(this);
         continueToNewRound = new ContinueToNewRound(this);
@@ -103,6 +110,9 @@ public class VisibleScreen {
         panicoScreen_StealNow = new PanicoScreen_StealNow(this);
     }
 
+    /**
+     *
+     */
     public void MainMenu() {
 
         GridLayout layout = new GridLayout(4, 3);
@@ -139,19 +149,25 @@ public class VisibleScreen {
         container.add(exit);
     }
 
+    /**
+     *
+     */
     public void rules() {
 
         JLabel rules = new JLabel("Rules: KILL THE OTHER PLAYER!", JLabel.CENTER);
         rules.setFont(new Font("Rules", Font.BOLD, 48));
 
-        JButton backToMainMenu = new JButton("Back to Main Menu");
-        backToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
-        backToMainMenu.addActionListener(rules_BackToMainMenu);
+        JButton goBackToMainMenu = new JButton("Back to Main Menu");
+        goBackToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
+        goBackToMainMenu.addActionListener(backToMainMenu);
 
         container.add(rules);
-        container.add(backToMainMenu);
+        container.add(goBackToMainMenu);
     }
 
+    /**
+     *
+     */
     public void exit() {
 
         JLabel exit = new JLabel("You really wanna exit BANG!?", JLabel.CENTER);
@@ -161,15 +177,18 @@ public class VisibleScreen {
         reallyExit.setFont(new Font("Button", Font.ITALIC, 34));
         reallyExit.addActionListener(exit_ReallyExit);
 
-        JButton backToMainMenu = new JButton("No");
-        backToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
-        backToMainMenu.addActionListener(exit_BackToMainMenu);
+        JButton goBackToMainMenu = new JButton("No");
+        goBackToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
+        goBackToMainMenu.addActionListener(backToMainMenu);
 
         container.add(exit);
         container.add(reallyExit);
-        container.add(backToMainMenu);
+        container.add(goBackToMainMenu);
     }
 
+    /**
+     *
+     */
     public void newGameInfo() {
 
         GridLayout layout = new GridLayout(5, 4);
@@ -195,6 +214,10 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     * @param playerWhoShouldLookAway   pelaaja, joka luovuttaa vuoronsa
+     */
     public void playerXPleaseLookAwayScreen(Player playerWhoShouldLookAway) {
 
         container.setLayout(new GridLayout(3, 3));
@@ -210,6 +233,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void pleaseLookAway() {
 
         container.setLayout(new GridLayout(3, 3));
@@ -226,6 +252,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void bangPlayerPleaseLookAway() {
 
         container.setLayout(new GridLayout(3, 3));
@@ -245,6 +274,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void dinamiteScreen() {
 
         container.setLayout(new GridLayout(4, 3));
@@ -270,12 +302,16 @@ public class VisibleScreen {
         next.setFont(new Font("Button", Font.ITALIC, 34));
         if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
             next.addActionListener(toKitCarlsonScreen);
+            container.add(next);
         } else {
             next.addActionListener(continueToPlayerXScreen);
             container.add(next);
         }
     }
 
+    /**
+     *
+     */
     public void barrelScreen() {
 
         container.setLayout(new GridLayout(4, 3));
@@ -319,6 +355,9 @@ public class VisibleScreen {
         }
     }
 
+    /**
+     *
+     */
     public void panicoScreen() {
 
         JLabel wichCardWillYouSteal = new JLabel("Wich card will you take?", JLabel.CENTER);
@@ -342,6 +381,9 @@ public class VisibleScreen {
         container.add(steal);
     }
 
+    /**
+     *
+     */
     public void panicoStoleRandomHandCard() {
 
         container.setLayout(new GridLayout(3, 3));
@@ -357,9 +399,16 @@ public class VisibleScreen {
         container.add(next);
     }
     
+    /**
+     *
+     */
     public void catBalouScreen() {
     }
     
+    /**
+     *
+     * @param panicoOrCatBalou  kortti, joka yritettiin pelata
+     */
     public void playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(Card panicoOrCatBalou) {
         
         container.setLayout(new GridLayout(3, 3));
@@ -379,6 +428,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void kitCarlsonDrawScreen() {
 
         BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
@@ -402,6 +454,9 @@ public class VisibleScreen {
         container.add(putCardBack);
     }
 
+    /**
+     *
+     */
     public void playerXScreen() {
 
         BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
@@ -459,6 +514,9 @@ public class VisibleScreen {
         container.add(endTurn);
     }
 
+    /**
+     *
+     */
     public void enemyIsOutOfReach() {
 
         container.setLayout(new GridLayout(3, 3));
@@ -474,6 +532,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void moreBangCardsCannotBePlayed() {
 
         container.setLayout(new GridLayout(3, 3));
@@ -489,6 +550,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void clickToPretendYouHadMancato() {
 
         container.setLayout(new GridLayout(3, 3));
@@ -508,6 +572,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void doYouWannaPlayMancato() {
 
         JLabel willYouUseAMancato = new JLabel("Will you use a Mancato! to cancel a hit?", JLabel.CENTER);
@@ -526,6 +593,9 @@ public class VisibleScreen {
         container.add(doNotUseMancato);
     }
 
+    /**
+     *
+     */
     public void bangAndNoHandCards() {
 
         container.setLayout(new GridLayout(3, 3));
@@ -545,6 +615,9 @@ public class VisibleScreen {
         container.add(next);
     }
 
+    /**
+     *
+     */
     public void discardCards() {
 
         BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
@@ -568,14 +641,26 @@ public class VisibleScreen {
         container.add(discardCards);
     }
 
+    /**
+     *
+     * @return  kayttoliittyman raamit
+     */
     public JFrame getFrame() {
         return frame;
     }
 
+    /**
+     *
+     * @return  peliin kaytetty esivalmistelija
+     */
     public Setup getSetup() {
         return setup;
     }
 
+    /**
+     *
+     * @return  listasta valitun kortin indeksi tai merkki, etta mitaan ei ole valittu
+     */
     public int getIndex() {
         for (JRadioButton isThisSelected : cardList) {
             if (isThisSelected.isSelected()) {
@@ -585,6 +670,10 @@ public class VisibleScreen {
         return -1;
     }
 
+    /**
+     *
+     * @return  listasta valitun kortin indeksi tai merkki, etta mitaan ei ole valittu
+     */
     public int getPanicoIndex() {
         for (JRadioButton isThisSelected : cardList) {
             if (isThisSelected.isSelected() && cardList.indexOf(isThisSelected) == cardList.size() - 1) {

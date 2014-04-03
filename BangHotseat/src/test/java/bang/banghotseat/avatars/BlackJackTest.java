@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.avatars;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.Player;
@@ -20,17 +21,11 @@ import org.junit.Test;
  */
 public class BlackJackTest {
     
-    private Player player;
-    private Player enemy;
-    private Deck drawpile;
-    private Deck discardpile;
+    private Round round;
     
     public BlackJackTest() {
-        player = new Player();
-        enemy = new Player();
-        drawpile = new Deck();
-        discardpile = new Deck();
-        player.setAvatar(new BlackJack());
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getPlayerInTurn().setAvatar(new BlackJack());
     }
     
     @BeforeClass
@@ -52,45 +47,49 @@ public class BlackJackTest {
 
     @Test
     public void whenSecondCardIsSpadesBlackJackGetsFirstAndSecondCardButNotThird() {
-        drawpile.getDeck().add(new Bang("Hearts", 1));
-        drawpile.getDeck().add(new Bang("Spades", 1));
-        drawpile.getDeck().add(new Bang("Hearts", 1));
         
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
+        round.getDrawpile().place(new Bang("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
         
-        assertEquals(2, player.getHandCards().size());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
     }
     
     @Test
     public void whenSecondCardIsClubsBlackJackGetsFirstAndSecondCardButNotThird() {
-        drawpile.getDeck().add(new Bang("Hearts", 1));
-        drawpile.getDeck().add(new Bang("Clubs", 1));
-        drawpile.getDeck().add(new Bang("Hearts", 1));
         
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
+        round.getDrawpile().getDeck().add(new Bang("Hearts", 1));
+        round.getDrawpile().getDeck().add(new Bang("Clubs", 1));
+        round.getDrawpile().getDeck().add(new Bang("Hearts", 1));
         
-        assertEquals(2, player.getHandCards().size());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
     }
     
     @Test
     public void whenSecondCardIsHeartsBlackJackGetsFirstAndSecondCardAndOneMore() {
-        drawpile.getDeck().add(new Bang("Hearts", 1));
-        drawpile.getDeck().add(new Bang("Hearts", 1));
-        drawpile.getDeck().add(new Bang("Hearts", 1));
         
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
+        round.getDrawpile().getDeck().add(new Bang("Hearts", 1));
+        round.getDrawpile().getDeck().add(new Bang("Hearts", 1));
+        round.getDrawpile().getDeck().add(new Bang("Hearts", 1));
         
-        assertEquals(3, player.getHandCards().size());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        
+        assertEquals(3, round.getPlayerInTurn().getHandCards().size());
     }
     
     @Test
     public void whenSecondCardIsDiamondsBlackJackGetsFirstAndSecondCardAndOneMore() {
-        drawpile.getDeck().add(new Bang("Hearts", 1));
-        drawpile.getDeck().add(new Bang("Diamonds", 1));
-        drawpile.getDeck().add(new Bang("Hearts", 1));
         
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
+        round.getDrawpile().getDeck().add(new Bang("Hearts", 1));
+        round.getDrawpile().getDeck().add(new Bang("Diamonds", 1));
+        round.getDrawpile().getDeck().add(new Bang("Hearts", 1));
         
-        assertEquals(3, player.getHandCards().size());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        
+        assertEquals(3, round.getPlayerInTurn().getHandCards().size());
     }
 }

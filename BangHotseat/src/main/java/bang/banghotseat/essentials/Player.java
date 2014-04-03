@@ -11,8 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka sisaltaa pelaajan tiedot ja hanen
+ * korttiensa hallinnoinnin.
  */
 public class Player {
 
@@ -23,22 +26,41 @@ public class Player {
     private List<Card> frontCards = new ArrayList<>();
     private Card lastCheckedCard;
 
+    /**
+     *
+     * @param avatar    pelaajalle asetettava avatar
+     */
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
     }
 
+    /**
+     *
+     * @return  pelaajan avatar
+     */
     public Avatar getAvatar() {
         return avatar;
     }
 
+    /**
+     *
+     */
     public void setCurrentHealth() {
         currentHealth = avatar.getMaxHealth();
     }
 
+    /**
+     *
+     * @return  pelaajan tuonhetkiset kestot
+     */
     public int getCurrentHealth() {
         return currentHealth;
     }
 
+    /**
+     *
+     * @param amountToBeLost    menetettavien kestojen maara
+     */
     public void loseHealth(int amountToBeLost) {
 
         int counter = 1;
@@ -49,10 +71,19 @@ public class Player {
         }
     }
 
+    /**
+     *
+     * @return  lista pelaajan kasikorteista
+     */
     public List<Card> getHandCards() {
         return handCards;
     }
 
+    /**
+     *
+     * @param index vedettavan kasikortin indeksi
+     * @return  vedetty kortti
+     */
     public Card drawSpecificHandCard(int index) {
 
         Card toBeGiven = handCards.get(index);
@@ -60,6 +91,10 @@ public class Player {
         return toBeGiven;
     }
 
+    /**
+     *
+     * @return  vedetty kortti
+     */
     public Card drawRandomHangCard() {
         
         Collections.shuffle(handCards);
@@ -67,30 +102,54 @@ public class Player {
         return toBeGiven;
     }
 
+    /**
+     *
+     * @param cardToPutIn   asetettava kortti
+     */
     public void putCardIntoHand(Card cardToPutIn) {
         handCards.add(cardToPutIn);
     }
 
+    /**
+     *
+     * @return  lista pelaajan etukorteista
+     */
     public List<Card> getFrontCards() {
         return frontCards;
     }
 
+    /**
+     *
+     * @param index vedettavan kortin indeksi
+     * @return  vedetty kortti
+     */
     public Card drawSpecificFrontCard(int index) {
         Card toBeGiven = frontCards.get(index);
         frontCards.remove(index);
         return toBeGiven;
     }
 
+    /**
+     *
+     * @param toBePlaced    asetettava kortti
+     */
     public void putCardInFront(Card toBePlaced) {
         frontCards.add(toBePlaced);
     }
 
+    /**
+     *
+     */
     public void gainHealth() {
         if (currentHealth < avatar.getMaxHealth()) {
             currentHealth++;
         }
     }
 
+    /**
+     *
+     * @return  pelaajan etaisyys vastustajaan
+     */
     public int getDistance() {
 
         int distance = 1;
@@ -106,6 +165,10 @@ public class Player {
         return distance;
     }
 
+    /**
+     *
+     * @return  pelaajan kantama
+     */
     public int getReach() {
         int reach = 1;
 
@@ -128,6 +191,10 @@ public class Player {
         return reach;
     }
 
+    /**
+     *
+     * @return  pelaajan kosketuksen kantama
+     */
     public int getTouch() {
         int touch = 1;
 
@@ -142,10 +209,18 @@ public class Player {
         return touch;
     }
 
+    /**
+     *
+     * @param lastCheckedCard   pakasta viimeksi taskistettu kortti
+     */
     public void setLastCheckedCard(Card lastCheckedCard) {
         this.lastCheckedCard = lastCheckedCard;
     }
 
+    /**
+     *
+     * @return  pakasta viimeksi tarkistettu kortti
+     */
     public Card getLastCheckedCard() {
         return lastCheckedCard;
     }

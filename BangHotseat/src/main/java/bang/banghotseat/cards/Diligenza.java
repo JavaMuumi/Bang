@@ -4,43 +4,71 @@
  */
 package bang.banghotseat.cards;
 
-import bang.banghotseat.essentials.Player;
+import bang.banghotseat.Round;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka mallintaa korttia, jonka pelaamalla
+ * saa nostaa kaksi uutta korttia kateen.
  */
 public class Diligenza implements Card {
     
     private String suit;
     private int number;
     
+    /**
+     *
+     * @param suit      kortin maa
+     * @param number    kortin suuruus
+     */
     public Diligenza(String suit, int number) {
         this.suit = suit;
         this.number = number;
     }
     
+    /**
+     *
+     * @param round     pelattava kierros
+     */
     @Override
-    public void function(Player playerInTurn, Player playerToFollow, Deck drawpile, Deck discardpile) {
-        playerInTurn.putCardIntoHand(drawpile.take(discardpile));
-        playerInTurn.putCardIntoHand(drawpile.take(discardpile));
+    public void function(Round round) {
+        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
     }
     
+    /**
+     *
+     * @return  kortin nimi
+     */
     @Override
     public String getName() {
         return "Diligenza";
     }
     
+    /**
+     *
+     * @return  kortin maa
+     */
     @Override
     public String getSuit() {
         return suit;
     }
     
+    /**
+     *
+     * @return  kortin tyyppi
+     */
     @Override
     public String getType() {
         return "Orange";
     }
     
+    /**
+     *
+     * @return  kortin suuruus
+     */
     @Override
     public int getNumber() {
         return number;

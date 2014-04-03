@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,18 +19,14 @@ import static org.junit.Assert.*;
  */
 public class DiligenzaTest {
     
+    private Round round;
     private Card diligenza;
-    private Player player;
-    private Deck drawpile;
-    private Deck discardpile;
     
     public DiligenzaTest() {
         
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getDrawpile().createCards();
         diligenza = new Diligenza("Hearts", 1);
-        player = new Player();
-        drawpile = new Deck();
-        drawpile.createCards();
-        discardpile = new Deck();
     }
     
     @BeforeClass
@@ -50,7 +47,7 @@ public class DiligenzaTest {
     
     @Test
     public void afterPlayingDiligenzaPlayerHas2HandCards() {
-        diligenza.function(player, null, drawpile, discardpile);
-        assertEquals(2, player.getHandCards().size());
+        diligenza.function(round);
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
     }
 }

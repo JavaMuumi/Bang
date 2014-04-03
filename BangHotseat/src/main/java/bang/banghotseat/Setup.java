@@ -10,8 +10,11 @@ import bang.banghotseat.essentials.AvatarRandomizer;
 import bang.banghotseat.essentials.Player;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Uuden pelin valmisteleva luokka, joka luo pelaajat
+ * ja pakat.
  */
 public class Setup {
 
@@ -22,6 +25,9 @@ public class Setup {
     private Deck discardpile;
     private Round round;
     
+    /**
+     *
+     */
     public void runSetup() {
         
         givePlayersAvatarsAndSetMaxHealths();
@@ -55,23 +61,43 @@ public class Setup {
         }
     }
         
-        public Player getPlayer1() {
+        /**
+     *
+     * @return ensimmaisena pelaava pelaaja
+     */
+    public Player getPlayer1() {
             return player1;
         }
     
-        public Player getPlayer2() {
+        /**
+     *
+     * @return toisena pelaava pelaaja
+     */
+    public Player getPlayer2() {
             return player2;
         }
         
-        public Deck getDrawpile() {
+        /**
+     *
+     * @return pakka, josta nostetaan
+     */
+    public Deck getDrawpile() {
             return drawpile;
         }
         
-        public Deck getDiscardpile() {
+        /**
+     *
+     * @return pakka, johon poistetaan
+     */
+    public Deck getDiscardpile() {
             return discardpile;
         }
         
-        public Round getRound() {
+        /**
+     *
+     * @return kierroksen tiedot sisaltava luokka
+     */
+    public Round getRound() {
             return round;
         }
 }

@@ -8,8 +8,12 @@ import bang.banghotseat.Round;
 import bang.banghotseat.cards.Card;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka tarkastaa, mika kortti juuri pelattiin,
+ * mita se aiheuttaa ja miten sita kasitellaan
+ * taman jalkeen.
  */
 public class CheckerForPlayedCard {
 
@@ -17,10 +21,18 @@ public class CheckerForPlayedCard {
     private Round round;
     private int index;
 
+    /**
+     *
+     * @param round pelattava kierros
+     */
     public CheckerForPlayedCard(Round round) {
         this.round = round;
     }
 
+    /**
+     *
+     * @param index pelatun kortin indeksi pelaajan kadessa
+     */
     public void playingCard(int index) {
 
         this.index = index;
@@ -38,7 +50,7 @@ public class CheckerForPlayedCard {
                     playingPanico();
                 }
             } else {
-                playedCard.function(round.getPlayerInTurn(), round.getPlayerToFollow(), round.getDrawpile(), round.getDiscardpile());
+                playedCard.function(round);
                 round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
             }
         } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Blue")) {
@@ -81,6 +93,10 @@ public class CheckerForPlayedCard {
         round.getCheckerForAvatarSpeciality().checkSuzyForEmptyHand(round.getPlayerInTurn());
     }
 
+    /**
+     *
+     * @param bangOrGatling pelattu kortti
+     */
     public void playingBangOrGatling(Card bangOrGatling) {
 
         if (bangOrGatling.getName().contains("BANG!") && bangCanBePlayed()) {
@@ -92,6 +108,10 @@ public class CheckerForPlayedCard {
         }
     }
 
+    /**
+     *
+     * @return  totuusarvo voiko pelaaja enaa talla vuorolla kayttaa BANG!
+     */
     public boolean bangCanBePlayed() {
 
         boolean thereIsAVolcanic = false;
@@ -112,6 +132,10 @@ public class CheckerForPlayedCard {
         return false;
     }
 
+    /**
+     *
+     * @return  totuusarvo onko vastustajan edessa Barrel
+     */
     public boolean thereIsaBarrel() {
 
         boolean thereIsABarrel = false;
@@ -130,21 +154,31 @@ public class CheckerForPlayedCard {
         return false;
     }
 
+    /**
+     *
+     */
     public void playingCatBalou() {
 
-        round.getPlayerInTurn().getHandCards().get(index).function(round.getPlayerInTurn(), round.getPlayerToFollow(), round.getDrawpile(), round.getDiscardpile());
+        round.getPlayerInTurn().getHandCards().get(index).function(round);
         round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
     }
 
+    /**
+     *
+     */
     public void playingPanico() {
 
         if (canPlayerInTurnTouchPlayerToFollow() == false) {
         } else {
-            round.getPlayerInTurn().getHandCards().get(index).function(round.getPlayerInTurn(), round.getPlayerToFollow(), round.getDrawpile(), round.getDiscardpile());
+            round.getPlayerInTurn().getHandCards().get(index).function(round);
             round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
         }
     }
 
+    /**
+     *
+     * @return  totuusarvo onko vastustajalla Mancato!
+     */
     public boolean playerToFollowHasMancato() {
 
         boolean thereWasAMancato = false;
@@ -160,6 +194,10 @@ public class CheckerForPlayedCard {
         return false;
     }
 
+    /**
+     *
+     * @return  totuusarvo riittaako pelaajan kantama vastustajaan
+     */
     public boolean canPlayerInTurnReachPlayerToFollow() {
 
         if (round.getPlayerInTurn().getReach() < round.getPlayerToFollow().getDistance()) {
@@ -169,6 +207,10 @@ public class CheckerForPlayedCard {
         }
     }
 
+    /**
+     *
+     * @return  totuusarvo paaseeko pelaaja koskettamaan vastustajaa
+     */
     public boolean canPlayerInTurnTouchPlayerToFollow() {
 
         if (round.getPlayerInTurn().getTouch() < round.getPlayerToFollow().getDistance()) {

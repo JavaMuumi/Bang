@@ -9,13 +9,19 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka mallintaa pakkaa, joka sisaltaa pelattavia kortteja.
+ * Pakka voi olla nosto- tai poistopakka.
  */
 public class Deck {
                     
     List<Card> deck = new ArrayList<>();
     
+    /**
+     *
+     */
     public void createCards() {
         
         deck.add(new Bang("Hearts", 1));
@@ -115,10 +121,19 @@ public class Deck {
         Collections.shuffle(deck);
     }
     
+    /**
+     *
+     * @return lista pakan korteista
+     */
     public List<Card> getDeck() {
         return deck;
     }
     
+    /**
+     *
+     * @param discardpile   pakka, joka sekoitetaan uudeksi nostopakaksi vanhan loppuessa
+     * @return  annettava kortti
+     */
     public Card take(Deck discardpile) {
         
         if (deck.isEmpty()) {
@@ -132,6 +147,10 @@ public class Deck {
         return cardToBeGiven;
     }
 
+    /**
+     *
+     * @param toBePlaced    asetettava kortti
+     */
     public void place(Card toBePlaced) {
         deck.add(toBePlaced);
     }

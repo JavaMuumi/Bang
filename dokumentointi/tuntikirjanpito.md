@@ -91,3 +91,10 @@ YHTEENSÄ: 3h
 klo 14-18
 Koodia ja testejä
 Yhteensä: 4h
+
+2.4.
+klo 10-14
+Sekvenssikaavioita
+klo 15-19
+Sekvenssikaavioita ja JavaDoceja
+YHTEENSA: 8h

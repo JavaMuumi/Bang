@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.avatars;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
@@ -19,39 +20,33 @@ import org.junit.Test;
  */
 public class JesseJonesTest {
 
-    private Player player;
-    private Player enemy;
-    private Deck drawpile;
-    private Deck discardpile;
-    
+    private Round round;
+
     public JesseJonesTest() {
-        player = new Player();
-        player.setAvatar(new JesseJones());
-        enemy = new Player();
-        drawpile = new Deck();
-        drawpile.createCards();
-        discardpile = new Deck();
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getPlayerInTurn().setAvatar(new JesseJones());
+        round.getDrawpile().createCards();
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
+
     @Test
     public void jesseJonesDrawsTwoCards() {
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
-        assertEquals(2, player.getHandCards().size());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
     }
 }

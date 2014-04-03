@@ -10,14 +10,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka on ActionListener, jolla varustettu nappula
+ * lopettaa pelaajan vuoron ja siirtyy joko korttien
+ * hylkaamiseen tai kehotukseen katsoa pois.
  */
 public class PlayerXScreen_EndTurn implements ActionListener {
     
     private VisibleScreen visibleScreen;
     private JFrame frame;
     
+    /**
+     *
+     * @param visibleScreen nakyman luova luokka
+     */
     public PlayerXScreen_EndTurn(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();

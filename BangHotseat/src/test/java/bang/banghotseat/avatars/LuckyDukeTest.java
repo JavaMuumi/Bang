@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.avatars;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
@@ -19,18 +20,12 @@ import org.junit.Test;
  */
 public class LuckyDukeTest {
 
-    private Player player;
-    private Player enemy;
-    private Deck drawpile;
-    private Deck discardpile;
-    
+    private Round round;
+
     public LuckyDukeTest() {
-        player = new Player();
-        player.setAvatar(new LuckyDuke());
-        enemy = new Player();
-        drawpile = new Deck();
-        drawpile.createCards();
-        discardpile = new Deck();
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getPlayerInTurn().setAvatar(new LuckyDuke());
+        round.getDrawpile().createCards();
     }
     
     @BeforeClass
@@ -51,7 +46,7 @@ public class LuckyDukeTest {
 
     @Test
     public void luckyDukeDrawsTwoCards() {
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
-        assertEquals(2, player.getHandCards().size());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
     }
 }

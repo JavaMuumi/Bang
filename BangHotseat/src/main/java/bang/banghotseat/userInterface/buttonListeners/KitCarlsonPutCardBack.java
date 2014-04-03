@@ -10,14 +10,22 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka on ActionListener, jolla varustettu nappula
+ * asettaa tarjotuista vaihtoehdoista valitun kortin
+ * takaisin nostopakkaan ja siirtyy pelaajan ruutuun.
  */
 public class KitCarlsonPutCardBack implements ActionListener {
 
     private JFrame frame;
     private VisibleScreen visibleScreen;
 
+    /**
+     *
+     * @param visibleScreen nakyman luova luokka
+     */
     public KitCarlsonPutCardBack(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();

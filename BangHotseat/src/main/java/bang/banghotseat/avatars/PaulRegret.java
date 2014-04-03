@@ -4,29 +4,39 @@
  */
 package bang.banghotseat.avatars;
 
-import bang.banghotseat.cards.Deck;
-import bang.banghotseat.essentials.Player;
+import bang.banghotseat.Round;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka mallintaa Paul Regretin ominaisuuksia.
+ * 
  */
 public class PaulRegret implements Avatar {
 
+    /**
+     *
+     * @return hahmon maksimikestot
+     */
     @Override
     public int getMaxHealth() {
         return 3;
     }
 
+    /**
+     *
+     * @return kuvaus avatarin kyvysta
+     */
     @Override
     public String getSpeciality() {
         return "All players see him at a distance increased by 1.";
     }
 
     @Override
-    public void drawCards(Deck drawpile, Deck discardpile, Player playerInTurn, Player playerToFollow) {
-        playerInTurn.getHandCards().add(drawpile.take(discardpile));
-        playerInTurn.getHandCards().add(drawpile.take(discardpile));
+    public void drawCards(Round round) {
+        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
     
     @Override

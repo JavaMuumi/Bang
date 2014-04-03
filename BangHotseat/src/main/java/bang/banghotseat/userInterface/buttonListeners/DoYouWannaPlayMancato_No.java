@@ -10,14 +10,23 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 /**
- *
+ * 
  * @author Antti Korpi
+ * 
+ * Luokka on ActionListener, jolla varustettu nappula
+ * kieltaytyy kayttamasta vaistokorttia vaikka siihen
+ * olisi mahdollisuus, jolloin pelaaja menettaa yhden
+ * keston.
  */
 public class DoYouWannaPlayMancato_No implements ActionListener{
 
     private VisibleScreen visibleScreen;
     private JFrame frame;
     
+    /**
+     *
+     * @param visibleScreen nakyman luova luokka
+     */
     public DoYouWannaPlayMancato_No(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();

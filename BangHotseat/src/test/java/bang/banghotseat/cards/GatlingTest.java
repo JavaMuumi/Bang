@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.avatars.PedroRamirez;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
@@ -19,24 +20,18 @@ import org.junit.Test;
  */
 public class GatlingTest {
     
+    private Round round;
     private Card gatling;
-    private Player player;
-    private Player enemy;
-    private Deck drawpile;
-    private Deck discardpile;
     
     public GatlingTest() {
         
-        player = new Player();
-        player.setAvatar(new PedroRamirez());
-        player.setCurrentHealth();
-        enemy = new Player();
-        enemy.setAvatar(new PedroRamirez());
-        enemy.setCurrentHealth();
-        drawpile = new Deck();
-        discardpile = new Deck();
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getPlayerInTurn().setAvatar(new PedroRamirez());
+        round.getPlayerInTurn().setCurrentHealth();
+        round.getPlayerToFollow().setAvatar(new PedroRamirez());
+        round.getPlayerToFollow().setCurrentHealth();
         gatling = new Gatling("Hearts", 1);
-        player.putCardIntoHand(gatling);
+        round.getPlayerInTurn().putCardIntoHand(gatling);
     }
     
     @BeforeClass
@@ -58,48 +53,48 @@ public class GatlingTest {
     @Test
     public void ifEnemyHasNoMancatoHeWillLose1HealthPoint() {
         
-        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        round.getPlayerInTurn().getHandCards().get(0).function(round);
         
-        assertEquals(3, enemy.getCurrentHealth());
+        assertEquals(3, round.getPlayerToFollow().getCurrentHealth());
     }
     
     @Test
     public void ifEnemyHasAMancatoHeWontLoseHealth() {
         
-        enemy.putCardIntoHand(new Mancato("Hearts", 1));
-        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        round.getPlayerToFollow().putCardIntoHand(new Mancato("Hearts", 1));
+        round.getPlayerInTurn().getHandCards().get(0).function(round);
         
-        assertEquals(4, enemy.getCurrentHealth());
+        assertEquals(4, round.getPlayerToFollow().getCurrentHealth());
     }
     
     @Test
     public void ifEnemyHasNoMancatoHeWillNotLoseAnyCards() {
         
-        while (enemy.getHandCards().size() < enemy.getCurrentHealth()) {
-        enemy.putCardIntoHand(new Bang("Hearts", 1));
+        while (round.getPlayerToFollow().getHandCards().size() < round.getPlayerToFollow().getCurrentHealth()) {
+        round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
         }
-        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        round.getPlayerInTurn().getHandCards().get(0).function(round);
         
-        assertEquals(4, enemy.getHandCards().size());
+        assertEquals(4, round.getPlayerToFollow().getHandCards().size());
     }
     
     @Test
     public void ifEnemyHasAMancatoHeWillLoseIt() {
         
-        enemy.putCardIntoHand(new Mancato("Hearts", 1));
-        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        round.getPlayerToFollow().putCardIntoHand(new Mancato("Hearts", 1));
+        round.getPlayerInTurn().getHandCards().get(0).function(round);
         
-        assertEquals(0, enemy.getHandCards().size());
+        assertEquals(0, round.getPlayerToFollow().getHandCards().size());
     }
     
     @Test
     public void ifEnemyHasMultipleMancatosHeWillLoseOnlyOne() {
         
-        while (enemy.getHandCards().size() < enemy.getCurrentHealth()) {
-            enemy.getHandCards().add(new Mancato("Hearts", 1));
+        while (round.getPlayerToFollow().getHandCards().size() < round.getPlayerToFollow().getCurrentHealth()) {
+            round.getPlayerToFollow().getHandCards().add(new Mancato("Hearts", 1));
         }
-        player.getHandCards().get(0).function(player, enemy, drawpile, discardpile);
+        round.getPlayerInTurn().getHandCards().get(0).function(round);
         
-        assertEquals(3, enemy.getHandCards().size());
+        assertEquals(3, round.getPlayerToFollow().getHandCards().size());
     }
 }

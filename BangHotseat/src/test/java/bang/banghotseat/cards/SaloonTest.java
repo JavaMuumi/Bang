@@ -4,6 +4,8 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.Round;
+import bang.banghotseat.avatars.SlabTheKiller;
 import bang.banghotseat.avatars.SuzyLafayette;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
@@ -19,18 +21,17 @@ import static org.junit.Assert.*;
  */
 public class SaloonTest {
     
+    private Round round;
     private Card saloon;
-    private Player player;
-    private Player enemy;
     
     public SaloonTest() {
+        
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getPlayerInTurn().setAvatar(new SlabTheKiller());
+        round.getPlayerInTurn().setCurrentHealth();
+        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
+        round.getPlayerToFollow().setCurrentHealth();
         saloon = new Saloon("Hearts", 1);
-        player = new Player();
-        player.setAvatar(new SuzyLafayette());
-        player.setCurrentHealth();
-        enemy = new Player();
-        enemy.setAvatar(new SuzyLafayette());
-        enemy.setCurrentHealth();
     }
     
     @BeforeClass
@@ -52,40 +53,40 @@ public class SaloonTest {
     @Test
     public void whenPlayerIsWoundedAndEnemyIsAtFullHealthSaloonHealsOnlyPlayerForOneHealthPoint() {
         
-        player.loseHealth(3);
-        saloon.function(player, enemy, null, null);
+        round.getPlayerInTurn().loseHealth(3);
+        saloon.function(round);
         
-        String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
+        String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();
         assertEquals("Player: 2, Enemy: 4", healthCheck);
     }
     
     @Test
     public void whenEnemyIsWoundedAndPlayerIsAtFullHealthSaloonHealsOnlyEnemyForOneHealthPoint() {
         
-        enemy.loseHealth(3);
-        saloon.function(player, enemy, null, null);
+        round.getPlayerToFollow().loseHealth(3);
+        saloon.function(round);
         
-        String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
+        String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();
         assertEquals("Player: 4, Enemy: 2", healthCheck);
     }
     
     @Test
     public void whenBothPlayersAreAtFullHealthSaloonHealsNeither() {
         
-        saloon.function(player, enemy, null, null);
+        saloon.function(round);
         
-        String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
+        String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();
         assertEquals("Player: 4, Enemy: 4", healthCheck);
     }
     
     @Test
     public void whenBothPlayersAreWoundedSaloonHealsBothForOneHealthPoint() {
         
-        player.loseHealth(3);
-        enemy.loseHealth(3);
-        saloon.function(player, enemy, null, null);
+        round.getPlayerInTurn().loseHealth(3);
+        round.getPlayerToFollow().loseHealth(3);
+        saloon.function(round);
         
-        String healthCheck = "Player: " + player.getCurrentHealth() + ", Enemy: " + enemy.getCurrentHealth();
+        String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();
         assertEquals("Player: 2, Enemy: 2", healthCheck);
     }
 }

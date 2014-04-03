@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.avatars;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
@@ -19,18 +20,12 @@ import org.junit.Test;
  */
 public class BartCassidyTest {
     
-    private Player player;
-    private Player enemy;
-    private Deck drawpile;
-    private Deck discardpile;
+    private Round round;
     
     public BartCassidyTest() {
-        player = new Player();
-        player.setAvatar(new BartCassidy());
-        enemy = new Player();
-        drawpile = new Deck();
-        drawpile.createCards();
-        discardpile = new Deck();
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
+        round.getPlayerInTurn().setAvatar(new BartCassidy());
+        round.getDrawpile().createCards();
     }
     
     @BeforeClass
@@ -50,12 +45,8 @@ public class BartCassidyTest {
     }
     
     @Test
-    public void whenTakingDamageBartCassidyDrawsACard() {
-    }
-    
-    @Test
     public void bartCassidyDrawsTwoCards() {
-        player.getAvatar().drawCards(drawpile, discardpile, player, enemy);
-        assertEquals(2, player.getHandCards().size());
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
     }
 }
