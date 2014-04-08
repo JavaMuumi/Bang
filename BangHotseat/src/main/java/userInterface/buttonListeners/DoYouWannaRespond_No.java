@@ -4,29 +4,28 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
  * 
  * @author Antti Korpi
  * 
  * Luokka on ActionListener, jolla varustettu nappula
- * vie ruutuun, joka ilmoittaa vastustajan olemaan
- * kykenematon vaistamaan, koska hanella ei ole yhtaan
- * kasikorttia.
+ * kieltaytyy kayttamasta vaistokorttia vaikka siihen
+ * olisi mahdollisuus, jolloin pelaaja menettaa yhden
+ * keston.
  */
-public class ToYouHaveNoMancato implements ActionListener {
-    
+public class DoYouWannaRespond_No implements ActionListener{
+
     private VisibleScreen visibleScreen;
     
     /**
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ToYouHaveNoMancato(VisibleScreen visibleScreen) {
+    public DoYouWannaRespond_No(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -35,8 +34,9 @@ public class ToYouHaveNoMancato implements ActionListener {
         
         visibleScreen.getFrame().getContentPane().removeAll();
         
-        visibleScreen.takingDamageAndNoHandCards();
         visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+        
+        visibleScreen.pleaseLookAway();
         
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

@@ -8,12 +8,11 @@ import bang.banghotseat.Round;
 import bang.banghotseat.cards.Card;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka tarkastaa, mika kortti juuri pelattiin,
- * mita se aiheuttaa ja miten sita kasitellaan
- * taman jalkeen.
+ *
+ * Luokka tarkastaa, mika kortti juuri pelattiin, mita se aiheuttaa ja miten
+ * sita kasitellaan taman jalkeen.
  */
 public class CheckerForPlayedCard {
 
@@ -42,6 +41,8 @@ public class CheckerForPlayedCard {
             if (playedCard.getName().contains("BANG!") || playedCard.getName().contains("Gatling")) {
                 playingBangOrGatling(playedCard);
 
+            } else if (playedCard.getName().contains("Indiani!")) {
+                playingIndiani();
             } else if (playedCard.getName().contains("Mancato!")) {
             } else if (playedCard.getName().contains("Cat Balou")) {
                 playingCatBalou();
@@ -99,18 +100,18 @@ public class CheckerForPlayedCard {
      */
     public void playingBangOrGatling(Card bangOrGatling) {
 
+        round.getPlayerInTurn().setCardWaitingForAReply(bangOrGatling);
         if (bangOrGatling.getName().contains("BANG!") && bangCanBePlayed()) {
             round.setBangHasBeenPlayed(true);
             round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
-        }
-        else if (bangOrGatling.getName().contains("Gatling")) {
+        } else if (bangOrGatling.getName().contains("Gatling")) {
             round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
         }
     }
 
     /**
      *
-     * @return  totuusarvo voiko pelaaja enaa talla vuorolla kayttaa BANG!
+     * @return totuusarvo voiko pelaaja enaa talla vuorolla kayttaa BANG!
      */
     public boolean bangCanBePlayed() {
 
@@ -134,7 +135,7 @@ public class CheckerForPlayedCard {
 
     /**
      *
-     * @return  totuusarvo onko vastustajan edessa Barrel
+     * @return totuusarvo onko vastustajan edessa Barrel
      */
     public boolean thereIsABarrel() {
 
@@ -145,13 +146,30 @@ public class CheckerForPlayedCard {
                 thereIsABarrel = true;
             }
         }
-        if (thereIsABarrel) {
+        if (thereIsABarrel && round.getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
+            for (int i = 0; i < 2; i++) {
+                Card topCard = round.getDrawpile().take(round.getDiscardpile());
+                round.getPlayerInTurn().setLastCheckedCard(topCard);
+                round.getDiscardpile().place(topCard);
+            }
+            return true;
+
+        } else if (thereIsABarrel) {
+
             Card topCard = round.getDrawpile().take(round.getDiscardpile());
             round.getPlayerInTurn().setLastCheckedCard(topCard);
             round.getDiscardpile().place(topCard);
             return true;
         }
         return false;
+    }
+
+    /**
+     *
+     */
+    public void playingIndiani() {
+        round.getPlayerInTurn().setCardWaitingForAReply(playedCard);
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index));
     }
 
     /**
@@ -177,7 +195,7 @@ public class CheckerForPlayedCard {
 
     /**
      *
-     * @return  totuusarvo onko vastustajalla Mancato!
+     * @return totuusarvo onko vastustajalla Mancato!
      */
     public boolean playerToFollowHasMancato() {
 
@@ -196,7 +214,26 @@ public class CheckerForPlayedCard {
 
     /**
      *
-     * @return  totuusarvo riittaako pelaajan kantama vastustajaan
+     * @return totuusarvo onko vastustajalla BANG!
+     */
+    public boolean playerToFollowHasBang() {
+
+        boolean thereWasABang = false;
+
+        for (Card isItMancato : round.getPlayerToFollow().getHandCards()) {
+            if (isItMancato.getName().contains("BANG!")) {
+                thereWasABang = true;
+            }
+        }
+        if (thereWasABang) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return totuusarvo riittaako pelaajan kantama vastustajaan
      */
     public boolean canPlayerInTurnReachPlayerToFollow() {
 
@@ -209,7 +246,7 @@ public class CheckerForPlayedCard {
 
     /**
      *
-     * @return  totuusarvo paaseeko pelaaja koskettamaan vastustajaa
+     * @return totuusarvo paaseeko pelaaja koskettamaan vastustajaa
      */
     public boolean canPlayerInTurnTouchPlayerToFollow() {
 

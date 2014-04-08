@@ -34,19 +34,6 @@ public class Bang implements Card {
      */
     @Override
     public void function(Round round) {
-
-        boolean thereWasAMancato = false;
-        for (Card isItMancato : round.getPlayerToFollow().getHandCards()) {
-
-            if (isItMancato.getName().contains("Mancato!")) {
-                round.getDiscardpile().place(round.getPlayerToFollow().drawSpecificHandCard(round.getPlayerToFollow().getHandCards().indexOf(isItMancato)));
-                thereWasAMancato = true;
-                break;
-            }
-        }
-        if (thereWasAMancato == false) {
-            round.getPlayerToFollow().loseHealth(1);
-        }
     }
 
     /**

@@ -13,41 +13,15 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import userInterface.buttonListeners.BackToMainMenu;
-import userInterface.buttonListeners.ContinueToNewRound;
-import userInterface.buttonListeners.ContinueToPlayerXScreen;
-import userInterface.buttonListeners.DiscardCards_Discard;
-import userInterface.buttonListeners.DoYouWannaPlayMancato_No;
-import userInterface.buttonListeners.DoYouWannaPlayMancato_Yes;
-import userInterface.buttonListeners.Exit_ReallyExit;
-import userInterface.buttonListeners.KitCarlsonPutCardBack;
-import userInterface.buttonListeners.MainMenu_Exit;
-import userInterface.buttonListeners.MainMenu_NewGame;
-import userInterface.buttonListeners.MainMenu_Rules;
-import userInterface.buttonListeners.MancatoDistraction;
-import userInterface.buttonListeners.NewGame_Continue;
-import userInterface.buttonListeners.PanicoScreen_StealNow;
-import userInterface.buttonListeners.PlayerXScreen_EndTurn;
-import userInterface.buttonListeners.PlayerXScreen_UseCard;
-import userInterface.buttonListeners.PleaseLookAwayToPlayerXScreen;
-import userInterface.buttonListeners.ToKitCarlsonScreen;
-import userInterface.buttonListeners.ToMancatoChoice;
-import userInterface.buttonListeners.ToYouHaveNoMancato;
+import javax.swing.*;
+import userInterface.buttonListeners.*;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka luo kayttoliittymaan kulloinkin
- * tarvittavat komponentit, jotta pelaajat
- * tietavat mita on tapahtunut ja voivat
- * ohjata pelia eteenpain.
+ *
+ * Luokka luo kayttoliittymaan kulloinkin tarvittavat komponentit, jotta
+ * pelaajat tietavat mita on tapahtunut ja voivat ohjata pelia eteenpain.
  */
 public class VisibleScreen {
 
@@ -71,10 +45,12 @@ public class VisibleScreen {
     private ActionListener pleaseLookAwayToPlayerXScreen;
     private ActionListener toMancatoChoice;
     private ActionListener toYouHaveNoMancato;
-    private ActionListener mancatoDistraction;
-    private ActionListener doYouWannaPlayMancato_No;
-    private ActionListener doYouWannaPlayMancato_Yes;
+    private ActionListener distractionReply;
+    private ActionListener doYouWannaRespond_No;
+    private ActionListener doYouWannaRespond_Yes;
+    private ActionListener toBangAsAReplyChoice;
     private ActionListener panicoScreen_StealNow;
+    private ActionListener catBalouScreen_RemoveNow;
 
     /**
      *
@@ -104,10 +80,12 @@ public class VisibleScreen {
         pleaseLookAwayToPlayerXScreen = new PleaseLookAwayToPlayerXScreen(this);
         toMancatoChoice = new ToMancatoChoice(this);
         toYouHaveNoMancato = new ToYouHaveNoMancato(this);
-        mancatoDistraction = new MancatoDistraction(this);
-        doYouWannaPlayMancato_No = new DoYouWannaPlayMancato_No(this);
-        doYouWannaPlayMancato_Yes = new DoYouWannaPlayMancato_Yes(this);
+        distractionReply = new DistractionReply(this);
+        doYouWannaRespond_No = new DoYouWannaRespond_No(this);
+        doYouWannaRespond_Yes = new DoYouWannaRespond_Yes(this);
+        toBangAsAReplyChoice = new ToBangAsAReplyChoice(this);
         panicoScreen_StealNow = new PanicoScreen_StealNow(this);
+        catBalouScreen_RemoveNow = new CatBalouScreen_RemoveNow(this);
     }
 
     /**
@@ -216,7 +194,7 @@ public class VisibleScreen {
 
     /**
      *
-     * @param playerWhoShouldLookAway   pelaaja, joka luovuttaa vuoronsa
+     * @param playerWhoShouldLookAway pelaaja, joka luovuttaa vuoronsa
      */
     public void playerXPleaseLookAwayScreen(Player playerWhoShouldLookAway) {
 
@@ -255,20 +233,28 @@ public class VisibleScreen {
     /**
      *
      */
-    public void bangPlayerPleaseLookAway() {
+    public void attackingPlayerPleaseLookAway() {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel playerXPleaseLookAway = new JLabel("Please look away now, the other player may dodge", JLabel.CENTER);
+        JLabel playerXPleaseLookAway = new JLabel("Please look away now, the other player may reply", JLabel.CENTER);
         playerXPleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
-        if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
-            next.addActionListener(toMancatoChoice);
-        } else {
-            next.addActionListener(mancatoDistraction);
+        if (setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling")) {
+            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
+                next.addActionListener(toMancatoChoice);
+            } else {
+                next.addActionListener(distractionReply);
+            }
+        } else if (setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Indiani!")) {
+            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang()) {
+                next.addActionListener(toBangAsAReplyChoice);
+            } else {
+                next.addActionListener(distractionReply);
+            }
         }
         container.add(playerXPleaseLookAway);
         container.add(next);
@@ -314,46 +300,90 @@ public class VisibleScreen {
      */
     public void barrelScreen() {
 
-        container.setLayout(new GridLayout(4, 3));
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
 
-        JLabel thereIsABarrel = new JLabel("The enemy has a barrel", JLabel.CENTER);
-        thereIsABarrel.setFont(new Font("Bang", Font.BOLD, 48));
-        container.add(thereIsABarrel);
+        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
 
-        JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
-        drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
-        container.add(drawnCard);
+            container.setLayout(new GridLayout(6, 3));
+            JLabel thereIsABarrel = new JLabel("The enemy has a barrel and he is Lucky Duke", JLabel.CENTER);
+            thereIsABarrel.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(thereIsABarrel);
 
-        if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+            JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
+            drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard1);
 
-            JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
-            barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(barrelWorked);
+            JLabel and = new JLabel("and", JLabel.CENTER);
+            and.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(and);
 
-            JButton next = new JButton("Continue");
-            next.setFont(new Font("Button", Font.ITALIC, 34));
-            next.addActionListener(continueToPlayerXScreen);
-            container.add(next);
+            JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString(), JLabel.CENTER);
+            drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard2);
 
+
+
+            if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts") || setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).getSuit().equals("Hearts")) {
+
+                JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
+                barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelWorked);
+
+                next.addActionListener(continueToPlayerXScreen);
+
+            } else {
+
+                JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelDidNotWork);
+
+                if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                    next.addActionListener(toYouHaveNoMancato);
+                } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
+                    next.addActionListener(toMancatoChoice);
+                } else {
+                    next.addActionListener(distractionReply);
+                }
+            }
         } else {
+            container.setLayout(new GridLayout(4, 3));
 
-            JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
-            barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(barrelDidNotWork);
-            
-            JButton next = new JButton("Continue");
-            next.setFont(new Font("Button", Font.ITALIC, 34));
+            JLabel thereIsABarrel = new JLabel("The enemy has a barrel", JLabel.CENTER);
+            thereIsABarrel.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(thereIsABarrel);
 
-            if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-                next.addActionListener(toYouHaveNoMancato);
-            } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
-                next.addActionListener(toMancatoChoice);
+            JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+            drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard);
+
+            if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+
+                JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
+                barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelWorked);
+
+                next.setFont(new Font("Button", Font.ITALIC, 34));
+                next.addActionListener(continueToPlayerXScreen);
+
+            } else {
+
+                JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelDidNotWork);
+
+                next.setFont(new Font("Button", Font.ITALIC, 34));
+
+                if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                    next.addActionListener(toYouHaveNoMancato);
+                } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
+                    next.addActionListener(toMancatoChoice);
+                } else {
+                    next.addActionListener(distractionReply);
+                }
             }
-            else {
-                next.addActionListener(mancatoDistraction);
-            }
-            container.add(next);
         }
+        container.add(next);
     }
 
     /**
@@ -399,13 +429,57 @@ public class VisibleScreen {
         container.add(stolenCard);
         container.add(next);
     }
-    
+
     /**
      *
-     * @param panicoOrCatBalou  kortti, joka yritettiin pelata
+     */
+    public void catBalouScreen() {
+
+        JLabel wichCardWillYouRemove = new JLabel("Wich card will you remove?", JLabel.CENTER);
+        wichCardWillYouRemove.setFont(new Font("Bang", Font.BOLD, 48));
+
+        ButtonGroup catBalouChoice = new ButtonGroup();
+        cardList.clear();
+
+        for (int i = 0; i < setup.getRound().getPlayerToFollow().getFrontCards().size(); i++) {
+            cardList.add(new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString()));
+        }
+        if (!setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+            cardList.add(new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")"));
+        }
+        for (JRadioButton toBeAdded : cardList) {
+            catBalouChoice.add(toBeAdded);
+            container.add(toBeAdded);
+        }
+        JButton remove = new JButton("Remove now!");
+        remove.addActionListener(catBalouScreen_RemoveNow);
+        container.add(remove);
+    }
+
+    /**
+     *
+     */
+    public void catBalouRemovedRandomHandCard() {
+
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel removedCard = new JLabel("You removed " + setup.getRound().getPlayerInTurn().getLastCheckedCard().toString(), JLabel.CENTER);
+        removedCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(continueToPlayerXScreen);
+
+        container.add(removedCard);
+        container.add(next);
+    }
+
+    /**
+     *
+     * @param panicoOrCatBalou kortti, joka yritettiin pelata
      */
     public void playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(Card panicoOrCatBalou) {
-        
+
         container.setLayout(new GridLayout(3, 3));
 
         JLabel enemyHasNoCards = new JLabel("The other player has no cards,", JLabel.CENTER);
@@ -548,14 +622,14 @@ public class VisibleScreen {
     /**
      *
      */
-    public void clickToPretendYouHadMancato() {
+    public void clickToPretendYouCouldReply() {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel youHaveNoMancato = new JLabel("You have no Mancato! cards and will take a hit", JLabel.CENTER);
+        JLabel youHaveNoMancato = new JLabel("You have no cards to reply with and will lose health!", JLabel.CENTER);
         youHaveNoMancato.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel clickToDistract = new JLabel("Click so it looks like you might have a Mancato!", JLabel.CENTER);
+        JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
         clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
@@ -571,42 +645,62 @@ public class VisibleScreen {
      *
      */
     public void doYouWannaPlayMancato() {
-
+        
+        container.setLayout(new GridLayout(4,3));
+        
         JLabel willYouUseAMancato = new JLabel("Will you use a Mancato! to cancel a hit?", JLabel.CENTER);
         willYouUseAMancato.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton useMancato = new JButton("Yes");
         useMancato.setFont(new Font("Button", Font.ITALIC, 34));
-        useMancato.addActionListener(doYouWannaPlayMancato_Yes);
+        useMancato.addActionListener(doYouWannaRespond_Yes);
 
         JButton doNotUseMancato = new JButton("No");
         doNotUseMancato.setFont(new Font("Button", Font.ITALIC, 34));
-        doNotUseMancato.addActionListener(doYouWannaPlayMancato_No);
+        doNotUseMancato.addActionListener(doYouWannaRespond_No);
 
         container.add(willYouUseAMancato);
         container.add(useMancato);
         container.add(doNotUseMancato);
     }
 
+    public void doYouWannaReplyWithBang() {
+
+        JLabel willYouUseABang = new JLabel("Will you use a Bang! to cancel a hit?", JLabel.CENTER);
+        willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton useBang = new JButton("Yes");
+        useBang.setFont(new Font("Button", Font.ITALIC, 34));
+        useBang.addActionListener(doYouWannaRespond_Yes);
+
+        JButton doNotUseBang = new JButton("No");
+        doNotUseBang.setFont(new Font("Button", Font.ITALIC, 34));
+        doNotUseBang.addActionListener(doYouWannaRespond_No);
+
+        container.add(willYouUseABang);
+        container.add(useBang);
+        container.add(doNotUseBang);
+    }
+
     /**
      *
      */
-    public void bangAndNoHandCards() {
+    public void takingDamageAndNoHandCards() {
 
         container.setLayout(new GridLayout(3, 3));
 
         JLabel enemyHasNoHandCards = new JLabel("The other player has no hand cards,", JLabel.CENTER);
         enemyHasNoHandCards.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel enemyCannotDodge = new JLabel("the hit cannot be avoided!", JLabel.CENTER);
-        enemyCannotDodge.setFont(new Font("Bang", Font.BOLD, 48));
+        JLabel enemyCannotReply = new JLabel("the damage cannot be avoided!", JLabel.CENTER);
+        enemyCannotReply.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToPlayerXScreen);
 
         container.add(enemyHasNoHandCards);
-        container.add(enemyCannotDodge);
+        container.add(enemyCannotReply);
         container.add(next);
     }
 
@@ -638,7 +732,7 @@ public class VisibleScreen {
 
     /**
      *
-     * @return  kayttoliittyman raamit
+     * @return kayttoliittyman raamit
      */
     public JFrame getFrame() {
         return frame;
@@ -646,7 +740,7 @@ public class VisibleScreen {
 
     /**
      *
-     * @return  peliin kaytetty esivalmistelija
+     * @return peliin kaytetty esivalmistelija
      */
     public Setup getSetup() {
         return setup;
@@ -654,7 +748,8 @@ public class VisibleScreen {
 
     /**
      *
-     * @return  listasta valitun kortin indeksi tai merkki, etta mitaan ei ole valittu
+     * @return listasta valitun kortin indeksi tai merkki, etta mitaan ei ole
+     * valittu
      */
     public int getIndex() {
         for (JRadioButton isThisSelected : cardList) {
@@ -667,9 +762,10 @@ public class VisibleScreen {
 
     /**
      *
-     * @return  listasta valitun kortin indeksi tai merkki, etta mitaan ei ole valittu
+     * @return listasta valitun kortin indeksi tai merkki, etta mitaan ei ole
+     * valittu
      */
-    public int getPanicoIndex() {
+    public int getPanicoOrCatBalouIndex() {
         for (JRadioButton isThisSelected : cardList) {
             if (isThisSelected.isSelected() && cardList.indexOf(isThisSelected) == cardList.size() - 1) {
                 return -2;

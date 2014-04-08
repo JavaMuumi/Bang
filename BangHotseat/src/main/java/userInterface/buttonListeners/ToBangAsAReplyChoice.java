@@ -4,20 +4,19 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
  * 
  * @author Antti Korpi
  * 
  * Luokka on ActionListener, jolla varustettu nappula
- * vie ruutuun, jolla hamataan vastustajaa luulemaan,
- * etta pelaajalla saattaisi olla vaistokortti.
+ * vie valintaan, haluaako pelaaja kayttaa BANG!ia
+ * intiaaneja vastaan.
  */
-public class MancatoDistraction implements ActionListener {
+public class ToBangAsAReplyChoice implements ActionListener {
     
     private VisibleScreen visibleScreen;
     
@@ -25,7 +24,7 @@ public class MancatoDistraction implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public MancatoDistraction(VisibleScreen visibleScreen) {
+    public ToBangAsAReplyChoice(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -34,8 +33,7 @@ public class MancatoDistraction implements ActionListener {
         
         visibleScreen.getFrame().getContentPane().removeAll();
         
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
-        visibleScreen.clickToPretendYouHadMancato();
+        visibleScreen.doYouWannaReplyWithBang();
         
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

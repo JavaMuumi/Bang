@@ -4,22 +4,7 @@
  */
 package bang.banghotseat.essentials;
 
-import bang.banghotseat.avatars.Avatar;
-import bang.banghotseat.avatars.BartCassidy;
-import bang.banghotseat.avatars.BlackJack;
-import bang.banghotseat.avatars.CalamityJanet;
-import bang.banghotseat.avatars.ElGringo;
-import bang.banghotseat.avatars.JesseJones;
-import bang.banghotseat.avatars.Jourdonnais;
-import bang.banghotseat.avatars.KitCarlson;
-import bang.banghotseat.avatars.LuckyDuke;
-import bang.banghotseat.avatars.PaulRegret;
-import bang.banghotseat.avatars.PedroRamirez;
-import bang.banghotseat.avatars.RoseDoolan;
-import bang.banghotseat.avatars.SidKetchum;
-import bang.banghotseat.avatars.SlabTheKiller;
-import bang.banghotseat.avatars.SuzyLafayette;
-import bang.banghotseat.avatars.WillyTheKid;
+import bang.banghotseat.avatars.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -50,13 +50,13 @@ public class BangTest {
     public void tearDown() {
     }
     
-    @Test
-    public void ifEnemyHasNoMancatoHeWillLose1HealthPoint() {
-        
-        round.getPlayerInTurn().getHandCards().get(0).function(round);
-        
-        assertEquals(3, round.getPlayerToFollow().getCurrentHealth());
-    }
+//    @Test
+//    public void ifEnemyHasNoMancatoHeWillLose1HealthPoint() {
+//
+//        round.getCheckerForPlayedCard().playingCard(0);
+//        
+//        assertEquals(3, round.getPlayerToFollow().getCurrentHealth());
+//    }
     
     @Test
     public void ifEnemyHasAMancatoHeWontLoseHealth() {
@@ -78,23 +78,23 @@ public class BangTest {
         assertEquals(4, round.getPlayerToFollow().getHandCards().size());
     }
     
-    @Test
-    public void ifEnemyHasAMancatoHeWillLoseIt() {
-        
-        round.getPlayerToFollow().putCardIntoHand(new Mancato("Hearts", 1));
-        round.getPlayerInTurn().getHandCards().get(0).function(round);
-        
-        assertEquals(0, round.getPlayerToFollow().getHandCards().size());
-    }
+//    @Test
+//    public void ifEnemyHasAMancatoHeWillLoseIt() {
+//        
+//        round.getPlayerToFollow().putCardIntoHand(new Mancato("Hearts", 1));
+//        round.getPlayerInTurn().getHandCards().get(0).function(round);
+//        
+//        assertEquals(0, round.getPlayerToFollow().getHandCards().size());
+//    }
     
-    @Test
-    public void ifEnemyHasMultipleMancatosHeWillLoseOnlyOne() {
-        
-        while (round.getPlayerToFollow().getHandCards().size() < round.getPlayerToFollow().getCurrentHealth()) {
-            round.getPlayerToFollow().getHandCards().add(new Mancato("Hearts", 1));
-        }
-        round.getPlayerInTurn().getHandCards().get(0).function(round);
-        
-        assertEquals(3, round.getPlayerToFollow().getHandCards().size());
-    }
+//    @Test
+//    public void ifEnemyHasMultipleMancatosHeWillLoseOnlyOne() {
+//        
+//        while (round.getPlayerToFollow().getHandCards().size() < round.getPlayerToFollow().getCurrentHealth()) {
+//            round.getPlayerToFollow().getHandCards().add(new Mancato("Hearts", 1));
+//        }
+//        round.getCheckerForPlayedCard().playingCard(0);
+//        
+//        assertEquals(3, round.getPlayerToFollow().getHandCards().size());
+//    }
 }

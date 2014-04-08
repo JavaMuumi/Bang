@@ -4,29 +4,27 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
  * 
  * @author Antti Korpi
  * 
  * Luokka on ActionListener, jolla varustettu nappula
- * kieltaytyy kayttamasta vaistokorttia vaikka siihen
- * olisi mahdollisuus, jolloin pelaaja menettaa yhden
- * keston.
+ * vie ruutuun, jolla hamataan vastustajaa luulemaan,
+ * etta pelaajalla saattaisi olla vaistokortti.
  */
-public class DoYouWannaPlayMancato_No implements ActionListener{
-
+public class DistractionReply implements ActionListener {
+    
     private VisibleScreen visibleScreen;
     
     /**
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public DoYouWannaPlayMancato_No(VisibleScreen visibleScreen) {
+    public DistractionReply(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -36,8 +34,7 @@ public class DoYouWannaPlayMancato_No implements ActionListener{
         visibleScreen.getFrame().getContentPane().removeAll();
         
         visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
-        
-        visibleScreen.pleaseLookAway();
+        visibleScreen.clickToPretendYouCouldReply();
         
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

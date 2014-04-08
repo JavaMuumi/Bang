@@ -19,12 +19,12 @@ import java.util.List;
  */
 public class Player {
 
-    private String name;
     private Avatar avatar;
     private int currentHealth;
     private List<Card> handCards = new ArrayList<>();
     private List<Card> frontCards = new ArrayList<>();
-    private Card lastCheckedCard;
+    private List<Card> lastCheckedCards = new ArrayList<>();
+    private Card cardWaitingForAReply;
 
     /**
      *
@@ -214,7 +214,7 @@ public class Player {
      * @param lastCheckedCard   pakasta viimeksi taskistettu kortti
      */
     public void setLastCheckedCard(Card lastCheckedCard) {
-        this.lastCheckedCard = lastCheckedCard;
+        lastCheckedCards.add(lastCheckedCard);
     }
 
     /**
@@ -222,6 +222,30 @@ public class Player {
      * @return  pakasta viimeksi tarkistettu kortti
      */
     public Card getLastCheckedCard() {
-        return lastCheckedCard;
+        return lastCheckedCards.get(lastCheckedCards.size() - 1);
+    }
+    
+    /**
+     *
+     * @param lastCheckedCard   pakasta viimeksi taskistettu kortti
+     */
+    public void setCardWaitingForAReply(Card cardWaitingForAReply) {
+        this.cardWaitingForAReply = cardWaitingForAReply;
+    }
+    
+    /**
+     * 
+     * @return  pakasta viimeksi tarkastetut kortit
+     */
+    public List<Card> getListOfLastCheckedCards() {
+        return lastCheckedCards;
+    }
+
+    /**
+     *
+     * @return  pakasta viimeksi tarkistettu kortti
+     */
+    public Card getCardWaitingForAReply() {
+        return cardWaitingForAReply;
     }
 }

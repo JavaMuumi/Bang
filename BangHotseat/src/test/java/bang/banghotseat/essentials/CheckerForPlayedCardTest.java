@@ -8,16 +8,7 @@ import bang.banghotseat.Round;
 import bang.banghotseat.avatars.PaulRegret;
 import bang.banghotseat.avatars.PedroRamirez;
 import bang.banghotseat.avatars.WillyTheKid;
-import bang.banghotseat.cards.Bang;
-import bang.banghotseat.cards.Barrel;
-import bang.banghotseat.cards.CatBalou;
-import bang.banghotseat.cards.Deck;
-import bang.banghotseat.cards.Mancato;
-import bang.banghotseat.cards.Mirino;
-import bang.banghotseat.cards.Panico;
-import bang.banghotseat.cards.Saloon;
-import bang.banghotseat.cards.Schofield;
-import bang.banghotseat.cards.Volcanic;
+import bang.banghotseat.cards.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -40,6 +31,7 @@ public class CheckerForPlayedCardTest {
         round.getPlayerInTurn().setCurrentHealth();
         round.getPlayerToFollow().setAvatar(new PedroRamirez());
         round.getPlayerToFollow().setCurrentHealth();
+        round.getDrawpile().createCards();
     }
 
     @BeforeClass
@@ -265,5 +257,51 @@ public class CheckerForPlayedCardTest {
         round.getCheckerForPlayedCard().playingCard(0);
 
         assertEquals("Schofield: 1 of Hearts", round.getDiscardpile().getDeck().get(0).toString());
+    }
+    
+    @Test
+    public void ifThereAreNoFrontCardsMethodThereIsABarrelReturnsFalse() {
+        
+        assertEquals(false, round.getCheckerForPlayedCard().thereIsABarrel());
+    }
+    
+    @Test
+    public void ifThereIsOtherFrontCardThanBarrelMethodThereIsABarrelReturnsFalse() {
+        
+        round.getPlayerToFollow().putCardInFront(new Mirino("Hearts", 1));
+        assertEquals(false, round.getCheckerForPlayedCard().thereIsABarrel());
+    }
+    
+    @Test
+    public void ifThereIsABarrelMethodThereIsABarrelReturnsTrue() {
+        
+        round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
+        assertEquals(true, round.getCheckerForPlayedCard().thereIsABarrel());
+    }
+    
+    @Test
+    public void ifThereAreNoFrontCardsMethodThereIsABarrelDoesNotSetLastCheckedCard() {
+        
+        round.getCheckerForPlayedCard().thereIsABarrel();
+        
+        assertEquals(true, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
+    }
+    
+    @Test
+    public void ifThereIsOtherFrontCardThanBarrelMethodThereIsABarrelDoesNotSetLastCheckedCard() {
+        
+        round.getPlayerToFollow().putCardInFront(new Mirino("Hearts", 1));
+        round.getCheckerForPlayedCard().thereIsABarrel();
+                
+        assertEquals(true, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
+    }
+    
+    @Test
+    public void ifThereIsABarrelAndPlayerIsNotLuckyDukeMethodThereIsABarrelSetsLastCheckedCard() {
+        
+        round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
+        round.getCheckerForPlayedCard().thereIsABarrel();
+                
+        assertEquals(false, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
     }
 }

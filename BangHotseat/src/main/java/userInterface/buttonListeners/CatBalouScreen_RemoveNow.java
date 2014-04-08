@@ -12,11 +12,10 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula ottaa vihollisen kortit
- * luettelevasta listasta valitun kortin pelaajan kateen ja siirtyy pelaajan
- * ruutuun.
+ * Luokka on ActionListener, jolla varustettu nappula poistaa vihollisen
+ * kortit luettelevasta listasta valitun kortin ja siirtyy pelaajan ruutuun.
  */
-public class PanicoScreen_StealNow implements ActionListener {
+public class CatBalouScreen_RemoveNow implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -24,7 +23,7 @@ public class PanicoScreen_StealNow implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public PanicoScreen_StealNow(VisibleScreen visibleScreen) {
+    public CatBalouScreen_RemoveNow(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -35,11 +34,11 @@ public class PanicoScreen_StealNow implements ActionListener {
         } else if (visibleScreen.getPanicoOrCatBalouIndex() == -2) {
             visibleScreen.getFrame().getContentPane().removeAll();
             visibleScreen.getSetup().getRound().getPlayerInTurn().setLastCheckedCard(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHangCard());
-            visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard());
-            visibleScreen.panicoStoleRandomHandCard();
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard());
+            visibleScreen.catBalouRemovedRandomHandCard();
         } else {
             visibleScreen.getFrame().getContentPane().removeAll();
-            visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificFrontCard(visibleScreen.getPanicoOrCatBalouIndex()));
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificFrontCard(visibleScreen.getPanicoOrCatBalouIndex()));
             visibleScreen.playerXScreen();
         }
         visibleScreen.getFrame().revalidate();

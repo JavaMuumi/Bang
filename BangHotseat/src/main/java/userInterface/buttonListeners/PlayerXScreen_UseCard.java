@@ -4,18 +4,18 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula
- * kayttaa pelaajaan kasikorttien luettelosta valittua
- * korttia. Kayttotapa vaihtelee kortin mukaan.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula kayttaa pelaajaan
+ * kasikorttien luettelosta valittua korttia. Kayttotapa vaihtelee kortin
+ * mukaan.
  */
 public class PlayerXScreen_UseCard implements ActionListener {
 
@@ -34,95 +34,108 @@ public class PlayerXScreen_UseCard implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        visibleScreen.getFrame().getContentPane().removeAll();
+
         if (visibleScreen.getIndex() == -1) {
+
+            visibleScreen.playerXScreen();
+
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("BANG!")) {
 
             if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().bangCanBePlayed() == false) {
-
-                frame.getContentPane().removeAll();
 
                 visibleScreen.moreBangCardsCannotBePlayed();
 
             } else if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnReachPlayerToFollow() == false) {
 
-                frame.getContentPane().removeAll();
-
                 visibleScreen.enemyIsOutOfReach();
 
             } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-
-                frame.getContentPane().removeAll();
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
                 if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
-                    visibleScreen.bangAndNoHandCards();
+                    visibleScreen.takingDamageAndNoHandCards();
                     visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
                 }
 
             } else {
 
-                frame.getContentPane().removeAll();
-
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
                 if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
-                    visibleScreen.bangPlayerPleaseLookAway();
+                    visibleScreen.attackingPlayerPleaseLookAway();
                 }
             }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Gatling")) {
             if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
 
-                frame.getContentPane().removeAll();
-
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
                 if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
-                    visibleScreen.bangAndNoHandCards();
+                    visibleScreen.takingDamageAndNoHandCards();
                     visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
                 }
 
             } else {
 
-                frame.getContentPane().removeAll();
-
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
                 if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
                     visibleScreen.barrelScreen();
                 } else {
-                    visibleScreen.bangPlayerPleaseLookAway();
+                    visibleScreen.attackingPlayerPleaseLookAway();
                 }
+            }
+        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Indiani!")) {
+
+            if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+                visibleScreen.takingDamageAndNoHandCards();
+                visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+
+            } else {
+
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+                visibleScreen.attackingPlayerPleaseLookAway();
+
             }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Panico!")) {
 
             if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnTouchPlayerToFollow() == false) {
 
-                frame.getContentPane().removeAll();
-
                 visibleScreen.enemyIsOutOfReach();
 
             } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
 
-                frame.getContentPane().removeAll();
-
                 visibleScreen.playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()));
             } else {
-
-                frame.getContentPane().removeAll();
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
                 visibleScreen.panicoScreen();
             }
+        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Cat Balou")) {
+
+            if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
+
+                visibleScreen.playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()));
+            } else {
+
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+                visibleScreen.catBalouScreen();
+            }
         } else {
-            frame.getContentPane().removeAll();
 
             visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
