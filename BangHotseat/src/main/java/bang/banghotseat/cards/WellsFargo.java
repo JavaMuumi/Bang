@@ -17,6 +17,7 @@ public class WellsFargo implements Card {
 
     private String suit;
     private int number;
+    private CardNamer namer;
 
     /**
      *
@@ -26,6 +27,7 @@ public class WellsFargo implements Card {
     public WellsFargo(String suit, int number) {
         this.suit = suit;
         this.number = number;
+        namer = new CardNamer();
     }
 
     /**
@@ -78,6 +80,11 @@ public class WellsFargo implements Card {
 
     @Override
     public String toString() {
-        return "Wells Fargo: " + number + " of " + suit;
+
+        if (number < 2 || number > 10) {
+            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+        } else {
+            return getName() +  ": " + number + " of " + suit;
+        }
     }
 }

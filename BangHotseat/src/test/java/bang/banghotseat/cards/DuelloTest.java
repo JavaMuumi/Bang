@@ -6,10 +6,10 @@ package bang.banghotseat.cards;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -17,7 +17,10 @@ import static org.junit.Assert.*;
  */
 public class DuelloTest {
     
+    private Card duello;
+    
     public DuelloTest() {
+        duello = new Duello("Hearts", 1);
     }
     
     @BeforeClass
@@ -35,9 +38,47 @@ public class DuelloTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void nameOfDuelloIsCorrect() {
+        assertEquals("Duello", duello.getName());
+    }
+
+    @Test
+    public void typeOfDuelloIsOrange() {
+        assertEquals("Orange", duello.getType());
+    }
+
+    @Test
+    public void stringOfDuelloIsCorrectForNumbers() {
+        
+        Card thisDuello = new Duello("Hearts", 3);
+        assertEquals("Duello: 3 of Hearts", thisDuello.toString());
+    }
+    
+    @Test
+    public void stringOfDuelloIsCorrectForAces() {
+        assertEquals("Duello: Ace of Hearts", duello.toString());
+    }
+    
+    @Test
+    public void stringOfDuelloIsCorrectForJacks() {
+        
+        Card thisDuello = new Duello("Hearts", 11);
+        assertEquals("Duello: Jack of Hearts", thisDuello.toString());
+    }
+    
+    @Test
+    public void stringOfDuelloIsCorrectForQueens() {
+        
+        Card thisDuello = new Duello("Hearts", 12);
+        assertEquals("Duello: Queen of Hearts", thisDuello.toString());
+    }
+    
+    @Test
+    public void stringOfDuelloIsCorrectForKings() {
+        
+        Card thisDuello = new Duello("Hearts", 13);
+        assertEquals("Duello: King of Hearts", thisDuello.toString());
+    }
 }

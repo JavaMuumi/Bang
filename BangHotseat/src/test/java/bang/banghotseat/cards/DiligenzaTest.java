@@ -46,6 +46,49 @@ public class DiligenzaTest {
     }
     
     @Test
+    public void nameOfDiligenzaIsCorrect() {
+        assertEquals("Diligenza", diligenza.getName());
+    }
+
+    @Test
+    public void typeOfDiligenzaIsOrange() {
+        assertEquals("Orange", diligenza.getType());
+    }
+
+    @Test
+    public void stringOfDiligenzaIsCorrectForNumbers() {
+        
+        Card thisDiligenza = new Diligenza("Hearts", 3);
+        assertEquals("Diligenza: 3 of Hearts", thisDiligenza.toString());
+    }
+    
+    @Test
+    public void stringOfDiligenzaIsCorrectForAces() {
+        assertEquals("Diligenza: Ace of Hearts", diligenza.toString());
+    }
+    
+    @Test
+    public void stringOfDiligenzaIsCorrectForJacks() {
+        
+        Card thisDiligenza = new Diligenza("Hearts", 11);
+        assertEquals("Diligenza: Jack of Hearts", thisDiligenza.toString());
+    }
+    
+    @Test
+    public void stringOfDiligenzaIsCorrectForQueens() {
+        
+        Card thisDiligenza = new Diligenza("Hearts", 12);
+        assertEquals("Diligenza: Queen of Hearts", thisDiligenza.toString());
+    }
+    
+    @Test
+    public void stringOfDiligenzaIsCorrectForKings() {
+        
+        Card thisDiligenza = new Diligenza("Hearts", 13);
+        assertEquals("Diligenza: King of Hearts", thisDiligenza.toString());
+    }
+    
+    @Test
     public void afterPlayingDiligenzaPlayerHas2HandCards() {
         diligenza.function(round);
         assertEquals(2, round.getPlayerInTurn().getHandCards().size());

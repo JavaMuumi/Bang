@@ -91,7 +91,7 @@ public class CheckerForPlayedCard {
                 round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index));
             }
         }
-        round.getCheckerForAvatarSpeciality().checkSuzyForEmptyHand(round.getPlayerInTurn());
+        round.getCheckerForAvatarSpeciality().checkSuzyLafayetteForEmptyHand(round.getPlayerInTurn());
     }
 
     /**
@@ -137,7 +137,7 @@ public class CheckerForPlayedCard {
      *
      * @return totuusarvo onko vastustajan edessa Barrel
      */
-    public boolean thereIsABarrel() {
+    public boolean checkBarrel() {
 
         boolean thereIsABarrel = false;
 
@@ -147,18 +147,11 @@ public class CheckerForPlayedCard {
             }
         }
         if (thereIsABarrel && round.getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
-            for (int i = 0; i < 2; i++) {
-                Card topCard = round.getDrawpile().take(round.getDiscardpile());
-                round.getPlayerInTurn().setLastCheckedCard(topCard);
-                round.getDiscardpile().place(topCard);
-            }
+            round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
             return true;
 
         } else if (thereIsABarrel) {
-
-            Card topCard = round.getDrawpile().take(round.getDiscardpile());
-            round.getPlayerInTurn().setLastCheckedCard(topCard);
-            round.getDiscardpile().place(topCard);
+            round.getCheckerForEventsBeforeTurn().checkTopCard();
             return true;
         }
         return false;

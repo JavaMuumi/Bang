@@ -178,21 +178,21 @@ public class CheckerForPlayedCardTest {
     @Test
     public void aBlueCardWillBePutInFrontIfThereAreNoBlueCardsToBeginWith() {
 
-        round.getPlayerInTurn().putCardIntoHand(new Barrel("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Barrel("Hearts", 2));
         round.getCheckerForPlayedCard().playingCard(0);
 
-        assertEquals("Barrel: 1 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString());
+        assertEquals("Barrel: 2 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString());
     }
 
     @Test
     public void aBlueCardWillBePutInFrontIfThereIsNotAlreadyACardOfSameKind() {
 
-        round.getPlayerInTurn().putCardIntoHand(new Barrel("Hearts", 1));
-        round.getPlayerInTurn().putCardIntoHand(new Mirino("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Barrel("Hearts", 2));
+        round.getPlayerInTurn().putCardIntoHand(new Mirino("Hearts", 2));
         round.getCheckerForPlayedCard().playingCard(0);
         round.getCheckerForPlayedCard().playingCard(0);
 
-        assertEquals("Barrel: 1 of Hearts, Mirino: 1 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString() + ", " + round.getPlayerInTurn().getFrontCards().get(1).toString());
+        assertEquals("Barrel: 2 of Hearts, Mirino: 2 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString() + ", " + round.getPlayerInTurn().getFrontCards().get(1).toString());
     }
 
     @Test
@@ -209,38 +209,38 @@ public class CheckerForPlayedCardTest {
     @Test
     public void ifABlueCardReplacesASimiliarOneTheOldWillBePutIntoDiscardPile() {
 
-        round.getPlayerInTurn().putCardIntoHand(new Barrel("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Barrel("Hearts", 2));
         round.getPlayerInTurn().putCardIntoHand(new Barrel("Spades", 10));
         round.getCheckerForPlayedCard().playingCard(0);
         round.getCheckerForPlayedCard().playingCard(0);
 
-        assertEquals("Barrel: 1 of Hearts", round.getDiscardpile().getDeck().get(0).toString());
+        assertEquals("Barrel: 2 of Hearts", round.getDiscardpile().getDeck().get(0).toString());
     }
 
     @Test
     public void aGunCardWillBePutInFrontIfThereAreNoGunCardsToBeginWith() {
 
-        round.getPlayerInTurn().putCardIntoHand(new Volcanic("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Volcanic("Hearts", 2));
         round.getCheckerForPlayedCard().playingCard(0);
 
-        assertEquals("Volcanic: 1 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString());
+        assertEquals("Volcanic: 2 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString());
     }
 
     @Test
     public void aGunCardWillBePutInFrontIfThereIsNotAlreadyAnotherGunCard() {
 
-        round.getPlayerInTurn().putCardIntoHand(new Volcanic("Hearts", 1));
-        round.getPlayerInTurn().putCardIntoHand(new Mirino("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Volcanic("Hearts", 2));
+        round.getPlayerInTurn().putCardIntoHand(new Mirino("Hearts", 2));
         round.getCheckerForPlayedCard().playingCard(0);
         round.getCheckerForPlayedCard().playingCard(0);
 
-        assertEquals("Volcanic: 1 of Hearts, Mirino: 1 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString() + ", " + round.getPlayerInTurn().getFrontCards().get(1).toString());
+        assertEquals("Volcanic: 2 of Hearts, Mirino: 2 of Hearts", round.getPlayerInTurn().getFrontCards().get(0).toString() + ", " + round.getPlayerInTurn().getFrontCards().get(1).toString());
     }
 
     @Test
     public void ifThereIsAlreadyAGunCardOfSameKindInFrontItWillBeReplacedByTheNewOne() {
 
-        round.getPlayerInTurn().putCardIntoHand(new Schofield("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Schofield("Hearts", 2));
         round.getPlayerInTurn().putCardIntoHand(new Volcanic("Spades", 10));
         round.getCheckerForPlayedCard().playingCard(0);
         round.getCheckerForPlayedCard().playingCard(0);
@@ -251,38 +251,38 @@ public class CheckerForPlayedCardTest {
     @Test
     public void ifAGunCardReplacesASimiliarOneTheOldWillBePutIntoDiscardPile() {
 
-        round.getPlayerInTurn().putCardIntoHand(new Schofield("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Schofield("Hearts", 2));
         round.getPlayerInTurn().putCardIntoHand(new Volcanic("Spades", 10));
         round.getCheckerForPlayedCard().playingCard(0);
         round.getCheckerForPlayedCard().playingCard(0);
 
-        assertEquals("Schofield: 1 of Hearts", round.getDiscardpile().getDeck().get(0).toString());
+        assertEquals("Schofield: 2 of Hearts", round.getDiscardpile().getDeck().get(0).toString());
     }
     
     @Test
     public void ifThereAreNoFrontCardsMethodThereIsABarrelReturnsFalse() {
         
-        assertEquals(false, round.getCheckerForPlayedCard().thereIsABarrel());
+        assertEquals(false, round.getCheckerForPlayedCard().checkBarrel());
     }
     
     @Test
     public void ifThereIsOtherFrontCardThanBarrelMethodThereIsABarrelReturnsFalse() {
         
         round.getPlayerToFollow().putCardInFront(new Mirino("Hearts", 1));
-        assertEquals(false, round.getCheckerForPlayedCard().thereIsABarrel());
+        assertEquals(false, round.getCheckerForPlayedCard().checkBarrel());
     }
     
     @Test
     public void ifThereIsABarrelMethodThereIsABarrelReturnsTrue() {
         
         round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
-        assertEquals(true, round.getCheckerForPlayedCard().thereIsABarrel());
+        assertEquals(true, round.getCheckerForPlayedCard().checkBarrel());
     }
     
     @Test
     public void ifThereAreNoFrontCardsMethodThereIsABarrelDoesNotSetLastCheckedCard() {
         
-        round.getCheckerForPlayedCard().thereIsABarrel();
+        round.getCheckerForPlayedCard().checkBarrel();
         
         assertEquals(true, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
     }
@@ -291,7 +291,7 @@ public class CheckerForPlayedCardTest {
     public void ifThereIsOtherFrontCardThanBarrelMethodThereIsABarrelDoesNotSetLastCheckedCard() {
         
         round.getPlayerToFollow().putCardInFront(new Mirino("Hearts", 1));
-        round.getCheckerForPlayedCard().thereIsABarrel();
+        round.getCheckerForPlayedCard().checkBarrel();
                 
         assertEquals(true, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
     }
@@ -300,7 +300,7 @@ public class CheckerForPlayedCardTest {
     public void ifThereIsABarrelAndPlayerIsNotLuckyDukeMethodThereIsABarrelSetsLastCheckedCard() {
         
         round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
-        round.getCheckerForPlayedCard().thereIsABarrel();
+        round.getCheckerForPlayedCard().checkBarrel();
                 
         assertEquals(false, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
     }

@@ -6,10 +6,10 @@ package bang.banghotseat.cards;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -17,27 +17,68 @@ import static org.junit.Assert.*;
  */
 public class BarrelTest {
     
+    private Card bang;
+
     public BarrelTest() {
+        bang = new Barrel("Hearts", 1);
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+
+    @Test
+    public void nameOfBarrelIsCorrect() {
+        assertEquals("Barrel", bang.getName());
+    }
+
+    @Test
+    public void typeOfBarrelIsBlue() {
+        assertEquals("Blue", bang.getType());
+    }
+
+    @Test
+    public void stringOfBarrelIsCorrectForNumbers() {
+        
+        Card thisBarrel = new Barrel("Hearts", 3);
+        assertEquals("Barrel: 3 of Hearts", thisBarrel.toString());
+    }
+    
+    @Test
+    public void stringOfBarrelIsCorrectForAces() {
+        assertEquals("Barrel: Ace of Hearts", bang.toString());
+    }
+    
+    @Test
+    public void stringOfBarrelIsCorrectForJacks() {
+        
+        Card thisBarrel = new Barrel("Hearts", 11);
+        assertEquals("Barrel: Jack of Hearts", thisBarrel.toString());
+    }
+    
+    @Test
+    public void stringOfBarrelIsCorrectForQueens() {
+        
+        Card thisBarrel = new Barrel("Hearts", 12);
+        assertEquals("Barrel: Queen of Hearts", thisBarrel.toString());
+    }
+    
+    @Test
+    public void stringOfBarrelIsCorrectForKings() {
+        
+        Card thisBarrel = new Barrel("Hearts", 13);
+        assertEquals("Barrel: King of Hearts", thisBarrel.toString());
+    }
 }

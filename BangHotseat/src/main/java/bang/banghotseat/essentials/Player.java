@@ -248,4 +248,11 @@ public class Player {
     public Card getCardWaitingForAReply() {
         return cardWaitingForAReply;
     }
+    
+    /**
+     * 
+     */
+    public void clearListOfLastCheckedCards() {
+        lastCheckedCards.clear();
+    }
 }

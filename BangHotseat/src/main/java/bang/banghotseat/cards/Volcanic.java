@@ -18,6 +18,7 @@ public class Volcanic implements Card {
     
     private String suit;
     private int number;
+    private CardNamer namer;
     
     /**
      *
@@ -27,6 +28,7 @@ public class Volcanic implements Card {
     public Volcanic(String suit, int number) {
         this.suit = suit;
         this.number = number;
+        namer = new CardNamer();
     }
     
     /**
@@ -75,6 +77,11 @@ public class Volcanic implements Card {
     
     @Override
     public String toString() {
-        return "Volcanic: " + number + " of " + suit;
+
+        if (number < 2 || number > 10) {
+            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+        } else {
+            return getName() +  ": " + number + " of " + suit;
+        }
     }
 }

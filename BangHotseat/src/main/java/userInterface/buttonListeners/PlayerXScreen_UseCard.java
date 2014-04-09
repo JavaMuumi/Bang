@@ -54,8 +54,10 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
                     visibleScreen.barrelScreen();
+                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+                    visibleScreen.jourdonnaisScreen();
                 } else {
                     visibleScreen.takingDamageAndNoHandCards();
                     visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
@@ -65,8 +67,10 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
                     visibleScreen.barrelScreen();
+                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+                    visibleScreen.jourdonnaisScreen();
                 } else {
                     visibleScreen.attackingPlayerPleaseLookAway();
                 }
@@ -76,8 +80,10 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
                     visibleScreen.barrelScreen();
+                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+                    visibleScreen.jourdonnaisScreen();
                 } else {
                     visibleScreen.takingDamageAndNoHandCards();
                     visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
@@ -87,8 +93,10 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().thereIsABarrel()) {
+                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
                     visibleScreen.barrelScreen();
+                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+                    visibleScreen.jourdonnaisScreen();
                 } else {
                     visibleScreen.attackingPlayerPleaseLookAway();
                 }

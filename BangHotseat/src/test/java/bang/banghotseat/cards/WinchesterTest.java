@@ -6,10 +6,10 @@ package bang.banghotseat.cards;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -17,7 +17,10 @@ import static org.junit.Assert.*;
  */
 public class WinchesterTest {
     
+    private Card winchester;
+    
     public WinchesterTest() {
+        winchester = new Winchester("Hearts", 1);
     }
     
     @BeforeClass
@@ -35,9 +38,47 @@ public class WinchesterTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void nameOfWinchesterIsCorrect() {
+        assertEquals("Winchester", winchester.getName());
+    }
+
+    @Test
+    public void typeOfWinchesterIsGun() {
+        assertEquals("Gun", winchester.getType());
+    }
+
+    @Test
+    public void stringOfWinchesterIsCorrectForNumbers() {
+        
+        Card thisWinchester = new Winchester("Hearts", 3);
+        assertEquals("Winchester: 3 of Hearts", thisWinchester.toString());
+    }
+    
+    @Test
+    public void stringOfWinchesterIsCorrectForAces() {
+        assertEquals("Winchester: Ace of Hearts", winchester.toString());
+    }
+    
+    @Test
+    public void stringOfWinchesterIsCorrectForJacks() {
+        
+        Card thisWinchester = new Winchester("Hearts", 11);
+        assertEquals("Winchester: Jack of Hearts", thisWinchester.toString());
+    }
+    
+    @Test
+    public void stringOfWinchesterIsCorrectForQueens() {
+        
+        Card thisWinchester = new Winchester("Hearts", 12);
+        assertEquals("Winchester: Queen of Hearts", thisWinchester.toString());
+    }
+    
+    @Test
+    public void stringOfWinchesterIsCorrectForKings() {
+        
+        Card thisWinchester = new Winchester("Hearts", 13);
+        assertEquals("Winchester: King of Hearts", thisWinchester.toString());
+    }
 }

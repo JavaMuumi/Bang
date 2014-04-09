@@ -7,30 +7,32 @@ package bang.banghotseat.cards;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa korttia, jolla ammutaan toista pelaajaa.
- * 
+ *
  */
 public class Bang implements Card {
 
     private String suit;
     private int number;
+    private CardNamer namer;
 
     /**
      *
-     * @param suit      kortin maa
-     * @param number    kortin suuruus
+     * @param suit kortin maa
+     * @param number kortin suuruus
      */
     public Bang(String suit, int number) {
         this.suit = suit;
         this.number = number;
+        namer = new CardNamer();
     }
 
     /**
      *
-     * @param round     pelattava kierros
+     * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
@@ -38,7 +40,7 @@ public class Bang implements Card {
 
     /**
      *
-     * @return          kortin nimi
+     * @return kortin nimi
      */
     @Override
     public String getName() {
@@ -47,7 +49,7 @@ public class Bang implements Card {
 
     /**
      *
-     * @return          kortin maa
+     * @return kortin maa
      */
     @Override
     public String getSuit() {
@@ -56,7 +58,7 @@ public class Bang implements Card {
 
     /**
      *
-     * @return          kortin tyyppi
+     * @return kortin tyyppi
      */
     @Override
     public String getType() {
@@ -65,7 +67,7 @@ public class Bang implements Card {
 
     /**
      *
-     * @return          kortin suuruus
+     * @return kortin suuruus
      */
     @Override
     public int getNumber() {
@@ -74,6 +76,11 @@ public class Bang implements Card {
 
     @Override
     public String toString() {
-        return "BANG!: " + number + " of " + suit;
+
+        if (number < 2 || number > 10) {
+            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+        } else {
+            return getName() +  ": " + number + " of " + suit;
+        }
     }
 }

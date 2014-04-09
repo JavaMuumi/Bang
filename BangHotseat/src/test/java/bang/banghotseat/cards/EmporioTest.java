@@ -17,7 +17,10 @@ import static org.junit.Assert.*;
  */
 public class EmporioTest {
     
+    private Card emporio;
+    
     public EmporioTest() {
+        emporio = new Emporio("Hearts", 1);
     }
     
     @BeforeClass
@@ -35,9 +38,47 @@ public class EmporioTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void nameOfEmporioIsCorrect() {
+        assertEquals("Emporio", emporio.getName());
+    }
+
+    @Test
+    public void typeOfEmporioIsOrange() {
+        assertEquals("Orange", emporio.getType());
+    }
+
+    @Test
+    public void stringOfEmporioIsCorrectForNumbers() {
+        
+        Card thisEmporio = new Emporio("Hearts", 3);
+        assertEquals("Emporio: 3 of Hearts", thisEmporio.toString());
+    }
+    
+    @Test
+    public void stringOfEmporioIsCorrectForAces() {
+        assertEquals("Emporio: Ace of Hearts", emporio.toString());
+    }
+    
+    @Test
+    public void stringOfEmporioIsCorrectForJacks() {
+        
+        Card thisEmporio = new Emporio("Hearts", 11);
+        assertEquals("Emporio: Jack of Hearts", thisEmporio.toString());
+    }
+    
+    @Test
+    public void stringOfEmporioIsCorrectForQueens() {
+        
+        Card thisEmporio = new Emporio("Hearts", 12);
+        assertEquals("Emporio: Queen of Hearts", thisEmporio.toString());
+    }
+    
+    @Test
+    public void stringOfEmporioIsCorrectForKings() {
+        
+        Card thisEmporio = new Emporio("Hearts", 13);
+        assertEquals("Emporio: King of Hearts", thisEmporio.toString());
+    }
 }

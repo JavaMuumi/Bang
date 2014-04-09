@@ -17,6 +17,7 @@ public class Saloon implements Card {
     
     private String suit;
     private int number;
+    private CardNamer namer;
     
     /**
      *
@@ -26,6 +27,7 @@ public class Saloon implements Card {
     public Saloon(String suit, int number) {
         this.suit = suit;
         this.number = number;
+        namer = new CardNamer();
     }
     
     /**
@@ -76,6 +78,11 @@ public class Saloon implements Card {
     
     @Override
     public String toString() {
-        return "Saloon: " + number + " of " + suit;
+
+        if (number < 2 || number > 10) {
+            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+        } else {
+            return getName() +  ": " + number + " of " + suit;
+        }
     }
 }

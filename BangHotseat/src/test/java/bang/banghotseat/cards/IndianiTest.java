@@ -17,7 +17,10 @@ import static org.junit.Assert.*;
  */
 public class IndianiTest {
     
+    private Card indiani;
+    
     public IndianiTest() {
+        indiani = new Indiani("Hearts", 1);
     }
     
     @BeforeClass
@@ -35,9 +38,47 @@ public class IndianiTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void nameOfIndianiIsCorrect() {
+        assertEquals("Indiani!", indiani.getName());
+    }
+
+    @Test
+    public void typeOfIndianiIsOrange() {
+        assertEquals("Orange", indiani.getType());
+    }
+
+    @Test
+    public void stringOfIndianiIsCorrectForNumbers() {
+        
+        Card thisIndiani = new Indiani("Hearts", 3);
+        assertEquals("Indiani!: 3 of Hearts", thisIndiani.toString());
+    }
+    
+    @Test
+    public void stringOfIndianiIsCorrectForAces() {
+        assertEquals("Indiani!: Ace of Hearts", indiani.toString());
+    }
+    
+    @Test
+    public void stringOfIndianiIsCorrectForJacks() {
+        
+        Card thisIndiani = new Indiani("Hearts", 11);
+        assertEquals("Indiani!: Jack of Hearts", thisIndiani.toString());
+    }
+    
+    @Test
+    public void stringOfIndianiIsCorrectForQueens() {
+        
+        Card thisIndiani = new Indiani("Hearts", 12);
+        assertEquals("Indiani!: Queen of Hearts", thisIndiani.toString());
+    }
+    
+    @Test
+    public void stringOfIndianiIsCorrectForKings() {
+        
+        Card thisIndiani = new Indiani("Hearts", 13);
+        assertEquals("Indiani!: King of Hearts", thisIndiani.toString());
+    }
 }

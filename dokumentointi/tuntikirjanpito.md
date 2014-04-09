@@ -103,3 +103,22 @@ YHTEENSA: 8h
 klo 9-14
 Mutanttien tappoa, testejä ja JavaDoceja
 YHTEENSÄ: 5h
+
+5.4.
+klo 12-14
+Koodausta
+YHTEENSÄ: 2h
+
+7.4.
+klo 14-17
+Koodausta
+YHTEENSÄ: 3h
+
+8.3.
+klo 12-18
+Koodia ja testejä
+YHTEENSÄ: 6h
+
+9.3.
+klo 14-17
+Lisää koodia ja testejä

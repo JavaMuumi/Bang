@@ -36,6 +36,7 @@ public class VisibleScreen {
     private ActionListener exit_ReallyExit;
     private ActionListener newGame_Continue;
     private ActionListener continueToNewRound;
+    private ActionListener toJourdonnaisScreen;
     private ActionListener toKitCarlsonScreen;
     private ActionListener kitCarlsonPutCardBack;
     private ActionListener playerXScreen_UseCard;
@@ -72,6 +73,7 @@ public class VisibleScreen {
         newGame_Continue = new NewGame_Continue(this);
         continueToNewRound = new ContinueToNewRound(this);
         toKitCarlsonScreen = new ToKitCarlsonScreen(this);
+        toJourdonnaisScreen = new ToJourdonnaisScreen(this);
         kitCarlsonPutCardBack = new KitCarlsonPutCardBack(this);
         continueToPlayerXScreen = new ContinueToPlayerXScreen(this);
         playerXScreen_UseCard = new PlayerXScreen_UseCard(this);
@@ -265,34 +267,114 @@ public class VisibleScreen {
      */
     public void dinamiteScreen() {
 
-        container.setLayout(new GridLayout(4, 3));
-
         JLabel thereIsADinamite = new JLabel("The dinamite is hissing...", JLabel.CENTER);
         thereIsADinamite.setFont(new Font("Bang", Font.BOLD, 48));
-        container.add(thereIsADinamite);
+
+        JLabel dinamiteExploded = new JLabel("The dinamite exploded!!! You lost 3 health points!!!", JLabel.CENTER);
+        dinamiteExploded.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel dinamiteWasPassedOn = new JLabel("The dinamite didn't explode and was passed on", JLabel.CENTER);
+        dinamiteWasPassedOn.setFont(new Font("Bang", Font.BOLD, 48));
+
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+
+        if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Lucky Duke")) {
+
+            container.setLayout(new GridLayout(6, 3));
+            container.add(thereIsADinamite);
+
+            JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
+            drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard1);
+
+            JLabel and = new JLabel("and", JLabel.CENTER);
+            and.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(and);
+
+            JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString(), JLabel.CENTER);
+            drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard2);
+
+            if (setup.getRound().getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDuke()) {
+
+                container.add(dinamiteExploded);
+
+                next.addActionListener(continueToPlayerXScreen);
+
+            } else {
+                container.add(dinamiteWasPassedOn);
+                next.addActionListener(continueToPlayerXScreen);
+            }
+            container.add(next);
+        } else {
+
+            container.setLayout(new GridLayout(4, 3));
+            container.add(thereIsADinamite);
+
+            JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+            drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard);
+
+            if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Spades") && setup.getRound().getPlayerInTurn().getLastCheckedCard().getNumber() > 1 && setup.getRound().getPlayerInTurn().getLastCheckedCard().getNumber() < 10) {
+                container.add(dinamiteExploded);
+            } else {
+                container.add(dinamiteWasPassedOn);
+            }
+            if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
+                next.addActionListener(toKitCarlsonScreen);
+            } else {
+                next.addActionListener(continueToPlayerXScreen);
+            }
+            container.add(next);
+        }
+    }
+
+    /**
+     *
+     */
+    public void jourdonnaisScreen() {
+
+        container.setLayout(new GridLayout(4, 3));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+
+        JLabel enemyIsJourdonnais = new JLabel("Enemy is Jourdonnais", JLabel.CENTER);
+        enemyIsJourdonnais.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(enemyIsJourdonnais);
 
         JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
         drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(drawnCard);
 
-        if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Spades") && setup.getRound().getPlayerInTurn().getLastCheckedCard().getNumber() > 1 && setup.getRound().getPlayerInTurn().getLastCheckedCard().getNumber() < 10) {
-            JLabel dinamiteExploded = new JLabel("The dinamite exploded!!! You lost 3 health points!!!", JLabel.CENTER);
-            dinamiteExploded.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(dinamiteExploded);
-        } else {
-            JLabel dinamiteWasPassedOn = new JLabel("The dinamite didn't explode and was passed on", JLabel.CENTER);
-            dinamiteWasPassedOn.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(dinamiteWasPassedOn);
-        }
-        JButton next = new JButton("Continue");
-        next.setFont(new Font("Button", Font.ITALIC, 34));
-        if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
-            next.addActionListener(toKitCarlsonScreen);
-            container.add(next);
-        } else {
+        if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+
+            JLabel jourdonnaisWorked = new JLabel("The shot missed!", JLabel.CENTER);
+            jourdonnaisWorked.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(jourdonnaisWorked);
+
+            next.setFont(new Font("Button", Font.ITALIC, 34));
             next.addActionListener(continueToPlayerXScreen);
-            container.add(next);
+
+        } else {
+
+            JLabel jourdonnaisDidNotWork = new JLabel("Jourdonnais couldn't evade the shot!", JLabel.CENTER);
+            jourdonnaisDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(jourdonnaisDidNotWork);
+
+            next.setFont(new Font("Button", Font.ITALIC, 34));
+
+            if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                next.addActionListener(toYouHaveNoMancato);
+            } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
+                next.addActionListener(toMancatoChoice);
+            } else {
+                next.addActionListener(distractionReply);
+            }
         }
+        container.add(next);
     }
 
     /**
@@ -321,8 +403,6 @@ public class VisibleScreen {
             JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString(), JLabel.CENTER);
             drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
             container.add(drawnCard2);
-
-
 
             if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts") || setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).getSuit().equals("Hearts")) {
 
@@ -372,12 +452,15 @@ public class VisibleScreen {
                 barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(barrelDidNotWork);
 
-                next.setFont(new Font("Button", Font.ITALIC, 34));
+                if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Jourdonnais")) {
+                    next.addActionListener(toJourdonnaisScreen);
 
-                if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                } else if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
                     next.addActionListener(toYouHaveNoMancato);
+
                 } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
                     next.addActionListener(toMancatoChoice);
+
                 } else {
                     next.addActionListener(distractionReply);
                 }
@@ -645,9 +728,9 @@ public class VisibleScreen {
      *
      */
     public void doYouWannaPlayMancato() {
-        
-        container.setLayout(new GridLayout(4,3));
-        
+
+        container.setLayout(new GridLayout(4, 3));
+
         JLabel willYouUseAMancato = new JLabel("Will you use a Mancato! to cancel a hit?", JLabel.CENTER);
         willYouUseAMancato.setFont(new Font("Bang", Font.BOLD, 48));
 

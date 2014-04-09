@@ -18,6 +18,7 @@ public class Emporio implements Card {
     
     private String suit;
     private int number;
+    private CardNamer namer;
     
     /**
      *
@@ -27,6 +28,7 @@ public class Emporio implements Card {
     public Emporio(String suit, int number) {
         this.suit = suit;
         this.number = number;
+        namer = new CardNamer();
     }
     
     /**
@@ -75,6 +77,11 @@ public class Emporio implements Card {
     
     @Override
     public String toString() {
-        return "Emporio: " + number + " of " + suit;
+
+        if (number < 2 || number > 10) {
+            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+        } else {
+            return getName() +  ": " + number + " of " + suit;
+        }
     }
 }

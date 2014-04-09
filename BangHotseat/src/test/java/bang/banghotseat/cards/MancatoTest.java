@@ -17,7 +17,10 @@ import static org.junit.Assert.*;
  */
 public class MancatoTest {
     
+    private Card mancato;
+    
     public MancatoTest() {
+        mancato = new Mancato("Hearts", 1);
     }
     
     @BeforeClass
@@ -35,9 +38,47 @@ public class MancatoTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void nameOfMancatoIsCorrect() {
+        assertEquals("Mancato!", mancato.getName());
+    }
+
+    @Test
+    public void typeOfMancatoIsMancato() {
+        assertEquals("Mancato", mancato.getType());
+    }
+
+    @Test
+    public void stringOfMancatoIsCorrectForNumbers() {
+        
+        Card thisMancato = new Mancato("Hearts", 3);
+        assertEquals("Mancato!: 3 of Hearts", thisMancato.toString());
+    }
+    
+    @Test
+    public void stringOfMancatoIsCorrectForAces() {
+        assertEquals("Mancato!: Ace of Hearts", mancato.toString());
+    }
+    
+    @Test
+    public void stringOfMancatoIsCorrectForJacks() {
+        
+        Card thisMancato = new Mancato("Hearts", 11);
+        assertEquals("Mancato!: Jack of Hearts", thisMancato.toString());
+    }
+    
+    @Test
+    public void stringOfMancatoIsCorrectForQueens() {
+        
+        Card thisMancato = new Mancato("Hearts", 12);
+        assertEquals("Mancato!: Queen of Hearts", thisMancato.toString());
+    }
+    
+    @Test
+    public void stringOfMancatoIsCorrectForKings() {
+        
+        Card thisMancato = new Mancato("Hearts", 13);
+        assertEquals("Mancato!: King of Hearts", thisMancato.toString());
+    }
 }

@@ -8,11 +8,10 @@ import bang.banghotseat.Round;
 import bang.banghotseat.cards.Card;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka tarkastaa, tapahtuuko ennen vuoron
- * aloittamista jotakin erikoista.
+ *
+ * Luokka tarkastaa, tapahtuuko ennen vuoron aloittamista jotakin erikoista.
  */
 public class CheckerForEventsBeforeTurn {
 
@@ -28,8 +27,8 @@ public class CheckerForEventsBeforeTurn {
 
     /**
      *
-     * @param playerInTurn      vuorossa oleva pelaaja
-     * @param playerToFollow    seuraavana vuorossa oleva pelaaja
+     * @param playerInTurn vuorossa oleva pelaaja
+     * @param playerToFollow seuraavana vuorossa oleva pelaaja
      */
     public void setPlayerTurns(Player playerInTurn, Player playerToFollow) {
         round.setPlayerInTurn(playerInTurn);
@@ -52,13 +51,21 @@ public class CheckerForEventsBeforeTurn {
                 indexOfDinamite = round.getPlayerInTurn().getFrontCards().indexOf(cardToCheck);
                 thereWasADinamite = true;
 
-                Card topCard = round.getDrawpile().take(round.getDiscardpile());
-                round.getPlayerInTurn().setLastCheckedCard(topCard);
-                round.getDiscardpile().place(topCard);
+                if (round.getPlayerInTurn().getAvatar().toString().equals("Lucky Duke")) {
 
-                if (topCard.getSuit().equals("Spades") && topCard.getNumber() > 1 && topCard.getNumber() < 10) {
-                    cardToCheck.function(round);
-                    dinamiteDetonated = true;
+                    round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+
+                    if (round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDuke()) {
+                        cardToCheck.function(round);
+                        dinamiteDetonated = true;
+                    }
+                } else {
+                    checkTopCard();
+
+                    if (round.getPlayerInTurn().getLastCheckedCard().getSuit().equals("Spades") && round.getPlayerInTurn().getLastCheckedCard().getNumber() > 1 && round.getPlayerInTurn().getLastCheckedCard().getNumber() < 10) {
+                        cardToCheck.function(round);
+                        dinamiteDetonated = true;
+                    }
                 }
             }
         }
@@ -80,5 +87,15 @@ public class CheckerForEventsBeforeTurn {
      *
      */
     public void checkPrigione() {
+    }
+
+    /**
+     *
+     */
+    public void checkTopCard() {
+        
+        Card topCard = round.getDrawpile().take(round.getDiscardpile());
+        round.getPlayerInTurn().setLastCheckedCard(topCard);
+        round.getDiscardpile().place(topCard);
     }
 }

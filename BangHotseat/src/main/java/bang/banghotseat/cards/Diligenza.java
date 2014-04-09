@@ -17,6 +17,7 @@ public class Diligenza implements Card {
     
     private String suit;
     private int number;
+    private CardNamer namer;
     
     /**
      *
@@ -26,6 +27,7 @@ public class Diligenza implements Card {
     public Diligenza(String suit, int number) {
         this.suit = suit;
         this.number = number;
+        namer = new CardNamer();
     }
     
     /**
@@ -76,6 +78,11 @@ public class Diligenza implements Card {
     
     @Override
     public String toString() {
-        return "Diligenza: " + number + " of " + suit;
+
+        if (number < 2 || number > 10) {
+            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+        } else {
+            return getName() +  ": " + number + " of " + suit;
+        }
     }
 }

@@ -56,7 +56,7 @@ public class RoundTest {
     @Test
     public void whenPlayTurnMethodIsPlayedPlayerDrawsCards() {
         
-        round.getPlayerInTurn().setAvatar(new SuzyLafayette());
+        round.getPlayerInTurn().setAvatar(new WillyTheKid());
         round.getPlayerInTurn().setCurrentHealth();
         
         round.playTurn();

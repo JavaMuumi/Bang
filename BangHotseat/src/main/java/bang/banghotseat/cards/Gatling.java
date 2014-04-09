@@ -19,6 +19,7 @@ public class Gatling implements Card {
     
     private String suit;
     private int number;
+    private CardNamer namer;
     
     /**
      *
@@ -28,6 +29,7 @@ public class Gatling implements Card {
     public Gatling(String suit, int number) {
         this.suit = suit;
         this.number = number;
+        namer = new CardNamer();
     }
     
     /**
@@ -76,6 +78,11 @@ public class Gatling implements Card {
     
     @Override
     public String toString() {
-        return "Gatling: " + number + " of " + suit;
+
+        if (number < 2 || number > 10) {
+            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+        } else {
+            return getName() +  ": " + number + " of " + suit;
+        }
     }
 }

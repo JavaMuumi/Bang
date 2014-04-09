@@ -6,10 +6,10 @@ package bang.banghotseat.cards;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -17,7 +17,10 @@ import static org.junit.Assert.*;
  */
 public class PrigioneTest {
     
+    private Card prigione;
+    
     public PrigioneTest() {
+        prigione = new Prigione("Hearts", 1);
     }
     
     @BeforeClass
@@ -35,9 +38,47 @@ public class PrigioneTest {
     @After
     public void tearDown() {
     }
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void nameOfPrigioneIsCorrect() {
+        assertEquals("Prigione", prigione.getName());
+    }
+
+    @Test
+    public void typeOfPrigioneIsBlue() {
+        assertEquals("Blue", prigione.getType());
+    }
+
+    @Test
+    public void stringOfPrigioneIsCorrectForNumbers() {
+        
+        Card thisPrigione = new Prigione("Hearts", 3);
+        assertEquals("Prigione: 3 of Hearts", thisPrigione.toString());
+    }
+    
+    @Test
+    public void stringOfPrigioneIsCorrectForAces() {
+        assertEquals("Prigione: Ace of Hearts", prigione.toString());
+    }
+    
+    @Test
+    public void stringOfPrigioneIsCorrectForJacks() {
+        
+        Card thisPrigione = new Prigione("Hearts", 11);
+        assertEquals("Prigione: Jack of Hearts", thisPrigione.toString());
+    }
+    
+    @Test
+    public void stringOfPrigioneIsCorrectForQueens() {
+        
+        Card thisPrigione = new Prigione("Hearts", 12);
+        assertEquals("Prigione: Queen of Hearts", thisPrigione.toString());
+    }
+    
+    @Test
+    public void stringOfPrigioneIsCorrectForKings() {
+        
+        Card thisPrigione = new Prigione("Hearts", 13);
+        assertEquals("Prigione: King of Hearts", thisPrigione.toString());
+    }
 }
