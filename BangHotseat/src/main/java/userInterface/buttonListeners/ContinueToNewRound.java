@@ -5,18 +5,16 @@
 package userInterface.buttonListeners;
 
 import bang.banghotseat.cards.Card;
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula
- * aloittaa uuden kierroksen ja vie vuorossa olevan
- * pelaajan ruutuun.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula aloittaa uuden kierroksen
+ * ja vie vuorossa olevan pelaajan ruutuun.
  */
 public class ContinueToNewRound implements ActionListener {
 
@@ -36,18 +34,27 @@ public class ContinueToNewRound implements ActionListener {
         visibleScreen.getFrame().getContentPane().removeAll();
 
         boolean thereIsADinamite = false;
+        boolean thereIsAPrigione = false;
 
-        for (Card isItDinamite : visibleScreen.getSetup().getRound().getPlayerInTurn().getFrontCards()) {
-            if (isItDinamite.getName().contains("Dinamite")) {
+        for (Card isItDinamiteOrPrigione : visibleScreen.getSetup().getRound().getPlayerInTurn().getFrontCards()) {
+            if (isItDinamiteOrPrigione.getName().contains("Dinamite")) {
                 thereIsADinamite = true;
+            } else if (isItDinamiteOrPrigione.getName().contains("Prigione")) {
+                thereIsAPrigione = true;
             }
         }
         visibleScreen.getSetup().getRound().playTurn();
         if (thereIsADinamite) {
             visibleScreen.dinamiteScreen();
+        } else if (thereIsAPrigione) {
+            visibleScreen.prigioneScreen();
         } else {
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
                 visibleScreen.kitCarlsonDrawScreen();
+
+            } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
+                visibleScreen.jesseJonesDrawScreen();
+
             } else {
                 visibleScreen.playerXScreen();
             }

@@ -45,8 +45,8 @@ public class PrigioneTest {
     }
 
     @Test
-    public void typeOfPrigioneIsBlue() {
-        assertEquals("Blue", prigione.getType());
+    public void typeOfPrigioneIsPrigione() {
+        assertEquals("Prigione", prigione.getType());
     }
 
     @Test

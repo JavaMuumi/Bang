@@ -4,22 +4,21 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula 
- * vie vuorossa olevan pelaajan ruutuun.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula vie vuorossa olevan
+ * pelaajan ruutuun.
  */
 public class ContinueToPlayerXScreen implements ActionListener {
-    
+
     private VisibleScreen visibleScreen;
-    
+
     /**
      *
      * @param visibleScreen nakyman luova luokka
@@ -27,14 +26,14 @@ public class ContinueToPlayerXScreen implements ActionListener {
     public ContinueToPlayerXScreen(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         visibleScreen.playerXScreen();
-        
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

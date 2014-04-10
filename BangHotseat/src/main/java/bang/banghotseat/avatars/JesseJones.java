@@ -33,10 +33,12 @@ public class JesseJones implements Avatar {
         return "He may draw his first card from the hand of a player.";
     }
 
+    /**
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
     
     @Override

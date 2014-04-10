@@ -9,21 +9,22 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka mallintaa pakkaa, joka sisaltaa pelattavia kortteja.
- * Pakka voi olla nosto- tai poistopakka.
+ *
+ * Luokka mallintaa pakkaa, joka sisaltaa pelattavia kortteja. Pakka voi olla
+ * nosto- tai poistopakka.
  */
 public class Deck {
-                    
+
     List<Card> deck = new ArrayList<>();
-    
+
     /**
      *
+     * Luo kaikki pelissa olevat kortit.
      */
     public void createCards() {
-        
+
         deck.add(new Bang("Hearts", 1));
         deck.add(new Bang("Hearts", 12));
         deck.add(new Bang("Hearts", 13));
@@ -49,16 +50,16 @@ public class Deck {
         deck.add(new Bang("Clubs", 7));
         deck.add(new Bang("Clubs", 8));
         deck.add(new Bang("Clubs", 9));
-        
+
         deck.add(new Gatling("Hearts", 10));
-        
+
         deck.add(new Duello("Diamonds", 12));
         deck.add(new Duello("Spades", 11));
         deck.add(new Duello("Clubs", 8));
-        
+
         deck.add(new Indiani("Diamonds", 1));
         deck.add(new Indiani("Diamonds", 13));
-        
+
         deck.add(new Mancato("Spades", 2));
         deck.add(new Mancato("Spades", 3));
         deck.add(new Mancato("Spades", 4));
@@ -71,7 +72,7 @@ public class Deck {
         deck.add(new Mancato("Clubs", 11));
         deck.add(new Mancato("Clubs", 12));
         deck.add(new Mancato("Clubs", 13));
-        
+
         deck.add(new Birra("Hearts", 6));
         deck.add(new Birra("Hearts", 7));
         deck.add(new Birra("Hearts", 8));
@@ -79,24 +80,24 @@ public class Deck {
         deck.add(new Birra("Hearts", 10));
         deck.add(new Birra("Hearts", 11));
         deck.add(new Saloon("Hearts", 5));
-        
+
         deck.add(new WellsFargo("Hearts", 3));
         deck.add(new Diligenza("Spades", 9));
         deck.add(new Diligenza("Spades", 9));
-        
+
         deck.add(new Prigione("Hearts", 4));
         deck.add(new Prigione("Spades", 10));
         deck.add(new Prigione("Spades", 11));
-        
+
         deck.add(new Mustang("Hearts", 8));
         deck.add(new Mustang("Hearts", 9));
-        
+
         deck.add(new Barrel("Spades", 12));
         deck.add(new Barrel("Spades", 13));
-        
+
         deck.add(new Emporio("Spades", 12));
         deck.add(new Emporio("Clubs", 9));
-        
+
         deck.add(new CatBalou("Diamonds", 9));
         deck.add(new CatBalou("Diamonds", 10));
         deck.add(new CatBalou("Diamonds", 11));
@@ -105,7 +106,7 @@ public class Deck {
         deck.add(new Panico("Hearts", 11));
         deck.add(new Panico("Hearts", 12));
         deck.add(new Panico("Diamonds", 8));
-        
+
         deck.add(new Schofield("Spades", 13));
         deck.add(new Schofield("Clubs", 11));
         deck.add(new Schofield("Clubs", 12));
@@ -113,14 +114,14 @@ public class Deck {
         deck.add(new RevCarabine("Spades", 8));
         deck.add(new Volcanic("Spades", 10));
         deck.add(new Volcanic("Clubs", 10));
-        
+
         deck.add(new Dinamite("Hearts", 2));
-        
+
         deck.add(new Mirino("Diamonds", 5));
-        
+
         Collections.shuffle(deck);
     }
-    
+
     /**
      *
      * @return lista pakan korteista
@@ -128,28 +129,33 @@ public class Deck {
     public List<Card> getDeck() {
         return deck;
     }
-    
+
     /**
      *
-     * @param discardpile   pakka, joka sekoitetaan uudeksi nostopakaksi vanhan loppuessa
-     * @return  annettava kortti
+     * Poistaa pakasta nostettavan kortin ja palauttaa sen.
+     *
+     * @param discardpile pakka, joka sekoitetaan uudeksi nostopakaksi vanhan
+     * loppuessa
+     * @return annettava kortti
      */
     public Card take(Deck discardpile) {
-        
+
         if (deck.isEmpty()) {
             for (Card toBePlaced : discardpile.getDeck()) {
                 place(toBePlaced);
             }
             Collections.shuffle(deck);
         }
-        Card cardToBeGiven = deck.get(deck.size()-1);
-        deck.remove(deck.size()-1);
+        Card cardToBeGiven = deck.get(deck.size() - 1);
+        deck.remove(deck.size() - 1);
         return cardToBeGiven;
     }
 
     /**
      *
-     * @param toBePlaced    asetettava kortti
+     * Asettaa kortin pakan paalimmaiseksi.
+     *
+     * @param toBePlaced asetettava kortti
      */
     public void place(Card toBePlaced) {
         deck.add(toBePlaced);

@@ -4,22 +4,20 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula
- * aloittaa uuden pelin.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula aloittaa uuden pelin.
  */
 public class MainMenu_NewGame implements ActionListener {
 
     private VisibleScreen visibleScreen;
-    
+
     /**
      *
      * @param visibleScreen nakyman luova luokka
@@ -27,14 +25,14 @@ public class MainMenu_NewGame implements ActionListener {
     public MainMenu_NewGame(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         visibleScreen.getSetup().runSetup();
 
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         visibleScreen.newGameInfo();
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

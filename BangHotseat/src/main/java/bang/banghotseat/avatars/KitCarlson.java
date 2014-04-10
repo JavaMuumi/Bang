@@ -7,13 +7,13 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Kit Carlsonin ominaisuuksia.
- * 
+ *
  */
-public class KitCarlson implements Avatar { 
+public class KitCarlson implements Avatar {
 
     /**
      *
@@ -33,10 +33,14 @@ public class KitCarlson implements Avatar {
         return "He looks at the top three cards of the deck and chooses the 2 to draw.";
     }
 
+    /**
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
     }
-    
+
     @Override
     public String toString() {
         return "Kit Carlson";

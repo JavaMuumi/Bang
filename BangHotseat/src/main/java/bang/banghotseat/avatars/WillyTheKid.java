@@ -7,13 +7,13 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Willy The Kidin ominaisuuksia.
- * 
+ *
  */
-public class WillyTheKid implements Avatar { 
+public class WillyTheKid implements Avatar {
 
     /**
      *
@@ -33,12 +33,18 @@ public class WillyTheKid implements Avatar {
         return "He can play any number of BANG! cards.";
     }
 
+    /**
+     *
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
-    
+
     @Override
     public String toString() {
         return "Willy The Kid";

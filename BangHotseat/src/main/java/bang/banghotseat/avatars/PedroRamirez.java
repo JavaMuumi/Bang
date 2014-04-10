@@ -33,6 +33,12 @@ public class PedroRamirez implements Avatar {
         return "He may draw his first card from the discard pile.";
     }
 
+    /**
+     *
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));

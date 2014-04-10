@@ -1,0 +1,611 @@
+<html>
+<head>
+<style type='text/css'>
+html, body, div, span, p, blockquote, pre {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body{
+	line-height: 1;
+	color: black;
+	background: white;
+	margin-left: 20px;
+}
+
+.src { 
+border: 1px solid #dddddd;
+padding-top: 10px;
+padding-right: 5px;
+padding-left: 5px;
+}
+
+
+.covered {background-color: #ddffdd}
+.uncovered {background-color: #ffdddd}
+.killed {background-color: #aaffaa}
+.survived {background-color: #ffaaaa}
+.uncertain {background-color: #dde7ef}
+.run_error {background-color: #dde7ef}
+.na {background-color: #eeeeee}
+.timed_out {background-color: #dde7ef}
+.non_viable {background-color: #aaffaa}
+.memory_error {background-color: #dde7ef}
+.not_started {background-color: #dde7ef; color : red}
+.no_coverage {background-color: #ffaaaa}
+
+</style>
+
+</head>
+<body>
+
+
+<h1>CardNamer.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_1'/>
+1
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_1'></a>
+</td>
+<td class=''><pre><span  class=''>/*</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_2'/>
+2
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_2'></a>
+</td>
+<td class=''><pre><span  class=''> * To change this template, choose Tools | Templates</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_3'/>
+3
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_3'></a>
+</td>
+<td class=''><pre><span  class=''> * and open the template in the editor.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_4'/>
+4
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_4'></a>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_5'/>
+5
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_5'></a>
+</td>
+<td class=''><pre><span  class=''>package bang.banghotseat.cards;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_6'/>
+6
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_6'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_7'/>
+7
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_7'></a>
+</td>
+<td class=''><pre><span  class=''>/**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_8'/>
+8
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_8'></a>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_9'/>
+9
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_9'></a>
+</td>
+<td class=''><pre><span  class=''> * @author Antti Korpi</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_10'/>
+10
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_10'></a>
+</td>
+<td class=''><pre><span  class=''> *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_11'/>
+11
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_11'></a>
+</td>
+<td class=''><pre><span  class=''> * Luokka muuttaa kuvakorttien numeron sanamuotoiseksi.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_12'/>
+12
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_12'></a>
+</td>
+<td class=''><pre><span  class=''> */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_13'/>
+13
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_13'></a>
+</td>
+<td class='covered'><pre><span  class=''>public class CardNamer {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_14'/>
+14
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_14'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_15'/>
+15
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_15'></a>
+</td>
+<td class=''><pre><span  class=''>    /**</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_16'/>
+16
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_16'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_17'/>
+17
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_17'></a>
+</td>
+<td class=''><pre><span  class=''>     * Muuttaa kuvakorttinumerot sanoiksi.</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_18'/>
+18
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_18'></a>
+</td>
+<td class=''><pre><span  class=''>     *</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_19'/>
+19
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_19'></a>
+</td>
+<td class=''><pre><span  class=''>     * @param number muutettava numero</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_20'/>
+20
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_20'></a>
+</td>
+<td class=''><pre><span  class=''>     * @return sanamuotoinen numero tai null jos sanauotoista ei ole</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_21'/>
+21
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_21'></a>
+</td>
+<td class=''><pre><span  class=''>     */</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_22'/>
+22
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_22'></a>
+</td>
+<td class=''><pre><span  class=''>    public String checkNumber(int number) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_23'/>
+23
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_23'></a>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_24'/>
+24
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_24'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (number == 1) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_25'/>
+25
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_25'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            return &#34;Ace&#34;;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_26'/>
+26
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_26'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        } else if (number == 11) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_27'/>
+27
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_27'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            return &#34;Jack&#34;;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_28'/>
+28
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_28'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        } else if (number == 12) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_29'/>
+29
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_29'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            return &#34;Queen&#34;;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_30'/>
+30
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_30'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        } else if (number == 13) {</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_31'/>
+31
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_31'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>            return &#34;King&#34;;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_32'/>
+32
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_32'></a>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_33'/>
+33
+</td>
+<td class='killed'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_33'>1</a>
+</td>
+<td class='covered'><pre><span  class='killed'>        return null;</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_34'/>
+34
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_34'></a>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@79705876_35'/>
+35
+</td>
+<td class=''>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@79705876_35'></a>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_24'>24</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_24'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_25'>25</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_25'/> 
+
+<p class='KILLED'>mutated return of Object value for bang/banghotseat/cards/CardNamer::checkNumber to ( if (x != null) null else throw new RuntimeException ) : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_26'>26</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_26'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_27'>27</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_27'/> 
+
+<p class='KILLED'>mutated return of Object value for bang/banghotseat/cards/CardNamer::checkNumber to ( if (x != null) null else throw new RuntimeException ) : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_28'>28</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_28'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_29'>29</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_29'/> 
+
+<p class='KILLED'>mutated return of Object value for bang/banghotseat/cards/CardNamer::checkNumber to ( if (x != null) null else throw new RuntimeException ) : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_30'>30</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_30'/> 
+
+<p class='KILLED'>negated conditional : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_31'>31</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_31'/> 
+
+<p class='KILLED'>mutated return of Object value for bang/banghotseat/cards/CardNamer::checkNumber to ( if (x != null) null else throw new RuntimeException ) : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@79705876_33'>33</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@79705876_33'/> 
+
+<p class='KILLED'>mutated return of Object value for bang/banghotseat/cards/CardNamer::checkNumber to ( if (x != null) null else throw new RuntimeException ) : KILLED -> bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest</p> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>INCREMENTS_MUTATOR</li>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY_MUTATOR</li>
+
+<li class='mutator'>RETURN_VALS_MUTATOR</li>
+
+<li class='mutator'>VOID_METHOD_CALL_MUTATOR</li>
+
+<li class='mutator'>INVERT_NEGS_MUTATOR</li>
+
+<li class='mutator'>MATH_MUTATOR</li>
+
+<li class='mutator'>NEGATE_CONDITIONALS_MUTATOR</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>bang.banghotseat.cards.EmporioTest.bang.banghotseat.cards.EmporioTest (0 ms)</li><li>bang.banghotseat.cards.BarrelTest.bang.banghotseat.cards.BarrelTest (40 ms)</li><li>bang.banghotseat.cards.CatBalouTest.bang.banghotseat.cards.CatBalouTest (10 ms)</li><li>bang.banghotseat.cards.DinamiteTest.bang.banghotseat.cards.DinamiteTest (0 ms)</li><li>bang.banghotseat.cards.CardNamerTest.bang.banghotseat.cards.CardNamerTest (0 ms)</li><li>bang.banghotseat.cards.RemingtonTest.bang.banghotseat.cards.RemingtonTest (0 ms)</li><li>bang.banghotseat.cards.WellsFargoTest.bang.banghotseat.cards.WellsFargoTest (0 ms)</li><li>bang.banghotseat.cards.VolcanicTest.bang.banghotseat.cards.VolcanicTest (10 ms)</li><li>bang.banghotseat.essentials.PlayerTest.bang.banghotseat.essentials.PlayerTest (10 ms)</li><li>bang.banghotseat.cards.BangTest.bang.banghotseat.cards.BangTest (10 ms)</li><li>bang.banghotseat.cards.MancatoTest.bang.banghotseat.cards.MancatoTest (10 ms)</li><li>bang.banghotseat.cards.IndianiTest.bang.banghotseat.cards.IndianiTest (0 ms)</li><li>bang.banghotseat.cards.GatlingTest.bang.banghotseat.cards.GatlingTest (10 ms)</li><li>bang.banghotseat.cards.SaloonTest.bang.banghotseat.cards.SaloonTest (10 ms)</li><li>bang.banghotseat.essentials.CheckerForAvatarSpecialityTest.bang.banghotseat.essentials.CheckerForAvatarSpecialityTest (20 ms)</li><li>bang.banghotseat.cards.SchofieldTest.bang.banghotseat.cards.SchofieldTest (0 ms)</li><li>bang.banghotseat.cards.MustangTest.bang.banghotseat.cards.MustangTest (0 ms)</li><li>bang.banghotseat.cards.BirraTest.bang.banghotseat.cards.BirraTest (10 ms)</li><li>bang.banghotseat.cards.WinchesterTest.bang.banghotseat.cards.WinchesterTest (10 ms)</li><li>bang.banghotseat.cards.MirinoTest.bang.banghotseat.cards.MirinoTest (0 ms)</li><li>bang.banghotseat.cards.DuelloTest.bang.banghotseat.cards.DuelloTest (50 ms)</li><li>bang.banghotseat.cards.PrigioneTest.bang.banghotseat.cards.PrigioneTest (0 ms)</li><li>bang.banghotseat.cards.PanicoTest.bang.banghotseat.cards.PanicoTest (0 ms)</li><li>bang.banghotseat.cards.RevCarabineTest.bang.banghotseat.cards.RevCarabineTest (10 ms)</li><li>bang.banghotseat.cards.DiligenzaTest.bang.banghotseat.cards.DiligenzaTest (10 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='http://pitest.org'>PIT</a> 0.30
+
+</body>
+</html>

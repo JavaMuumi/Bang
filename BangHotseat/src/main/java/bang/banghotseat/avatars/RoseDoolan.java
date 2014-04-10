@@ -33,6 +33,12 @@ public class RoseDoolan implements Avatar {
         return "She sees all players at a distance decreased by 1.";
     }
 
+    /**
+     *
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));

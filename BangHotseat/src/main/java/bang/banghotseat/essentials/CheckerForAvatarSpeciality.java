@@ -28,6 +28,9 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * Nostaa pakasta pelaajalle yhden kortin kateen, jos pelaajan avatar on
+     * Suzy Lafayette.
+     *
      * @param playerToCheck pelaaja, joka tulee tarkistaa
      */
     public void checkSuzyLafayetteForEmptyHand(Player playerToCheck) {
@@ -37,6 +40,11 @@ public class CheckerForAvatarSpeciality {
         }
     }
 
+    /**
+     *
+     * Asettaa kaksi pakan paalimmaista korttia vuorossa olevan pelaajan
+     * tarkistettujen korttien listaan.
+     */
     public void checkTwoCardsForLuckyDuke() {
 
         for (int i = 0; i < 2; i++) {
@@ -46,6 +54,13 @@ public class CheckerForAvatarSpeciality {
         }
     }
 
+    /**
+     *
+     * Tarkistaa vuorossa olevan pelaajan tarkastettujen korttien listasta, onko
+     * kahden viimeisen joukossa herttaa.
+     *
+     * @return totuusarvo oliko korteissa herttaa
+     */
     public boolean checkTwoLastCheckedCardsForLuckyDukeForHearts() {
 
         boolean thereWasHearts = false;
@@ -58,6 +73,14 @@ public class CheckerForAvatarSpeciality {
         return thereWasHearts;
     }
 
+    /**
+     *
+     * Tarkistaa kaksi paalimmaista viimeksi tarkastetuista korteista dynamiitin
+     * rajayttavia.
+     *
+     * @return totuusarvo olisivatko molemmat viimeksi tarkistetuista korteista
+     * rajayttaneet dynamiitin.
+     */
     public boolean checkIfDinamiteExplodesOnLuckyDuke() {
 
         boolean didDinamiteExplode = true;
@@ -72,6 +95,9 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * Asettaa pakan paalimmaisen kortin tarkastettujen pinoon, jos pelaajan
+     * avatar on Jourdonnais.
+     *
      * @return totuusarvo onko vastustajan avatar Jourdonnais
      */
     public boolean checkJourdonnais() {
@@ -81,5 +107,18 @@ public class CheckerForAvatarSpeciality {
             return true;
         }
         return false;
+    }
+
+    /**
+     *
+     * Vetaa vastustajalta yhden ja pakasta yhden kortin pelaajan kateen.
+     */
+    public void drawFromEnemyHandWithJesseJones() {
+
+        Card stolen = round.getPlayerToFollow().drawRandomHangCard();
+        round.getPlayerInTurn().setLastCheckedCard(stolen);
+        round.getPlayerInTurn().putCardIntoHand(stolen);
+
+        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
     }
 }

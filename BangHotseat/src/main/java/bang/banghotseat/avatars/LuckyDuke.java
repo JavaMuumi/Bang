@@ -7,11 +7,11 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Lucky Duken ominaisuuksia.
- * 
+ *
  */
 public class LuckyDuke implements Avatar {
 
@@ -35,17 +35,16 @@ public class LuckyDuke implements Avatar {
 
     /**
      *
-     * @param drawpile          lista korteista, joita nostetaan pelin aikana
-     * @param discardpile       lista, jolle pelissa poistetut kortit lisataan
-     * @param playerInTurn      vuorossa oleva pelaaja
-     * @param playerToFollow    seuraavana vuorossa oleva pelaaja
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
      */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
-    
+
     @Override
     public String toString() {
         return "Lucky Duke";

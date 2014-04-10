@@ -7,11 +7,11 @@ package bang.banghotseat.cards;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka mallintaa korttia, jonka pelaamalla
- * saa nostaa kolme uutta korttia kateen.
+ *
+ * Luokka mallintaa korttia, jonka pelaamalla saa nostaa kolme uutta korttia
+ * kateen.
  */
 public class WellsFargo implements Card {
 
@@ -21,8 +21,8 @@ public class WellsFargo implements Card {
 
     /**
      *
-     * @param suit      kortin maa
-     * @param number    kortin suuruus
+     * @param suit kortin maa
+     * @param number kortin suuruus
      */
     public WellsFargo(String suit, int number) {
         this.suit = suit;
@@ -32,7 +32,9 @@ public class WellsFargo implements Card {
 
     /**
      *
-     * @param round     pelattava kierros
+     * Nostaa kolme korttia pelaajan kateen.
+     *
+     * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
@@ -44,7 +46,7 @@ public class WellsFargo implements Card {
 
     /**
      *
-     * @return  kortin nimi
+     * @return kortin nimi
      */
     @Override
     public String getName() {
@@ -53,7 +55,7 @@ public class WellsFargo implements Card {
 
     /**
      *
-     * @return  kortin maa
+     * @return kortin maa
      */
     @Override
     public String getSuit() {
@@ -62,7 +64,7 @@ public class WellsFargo implements Card {
 
     /**
      *
-     * @return  kortin tyyppi
+     * @return kortin tyyppi
      */
     @Override
     public String getType() {
@@ -71,7 +73,7 @@ public class WellsFargo implements Card {
 
     /**
      *
-     * @return  kortin suuruus
+     * @return kortin suuruus
      */
     @Override
     public int getNumber() {
@@ -82,9 +84,9 @@ public class WellsFargo implements Card {
     public String toString() {
 
         if (number < 2 || number > 10) {
-            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+            return getName() + ": " + namer.checkNumber(number) + " of " + suit;
         } else {
-            return getName() +  ": " + number + " of " + suit;
+            return getName() + ": " + number + " of " + suit;
         }
     }
 }

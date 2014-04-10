@@ -36,7 +36,7 @@ public class PanicoScreen_StealNow implements ActionListener {
             visibleScreen.getFrame().getContentPane().removeAll();
             visibleScreen.getSetup().getRound().getPlayerInTurn().setLastCheckedCard(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHangCard());
             visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard());
-            visibleScreen.panicoStoleRandomHandCard();
+            visibleScreen.randomHandCardWasStolen();
         } else {
             visibleScreen.getFrame().getContentPane().removeAll();
             visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificFrontCard(visibleScreen.getPanicoOrCatBalouIndex()));

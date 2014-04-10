@@ -12,8 +12,8 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula poistaa vihollisen
- * kortit luettelevasta listasta valitun kortin ja siirtyy pelaajan ruutuun.
+ * Luokka on ActionListener, jolla varustettu nappula poistaa vihollisen kortit
+ * luettelevasta listasta valitun kortin ja siirtyy pelaajan ruutuun.
  */
 public class CatBalouScreen_RemoveNow implements ActionListener {
 

@@ -33,6 +33,12 @@ public class Jourdonnais implements Avatar {
         return "Whenever he is the target of a BANG!, he may 'draw!': on a Heart, he is missed.";
     }
 
+    /**
+     *
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));

@@ -27,6 +27,8 @@ public class CheckerForEventsBeforeTurn {
 
     /**
      *
+     * Asettaa kierroksella vuorossa olevan ja seuraavan pelaajan.
+     *
      * @param playerInTurn vuorossa oleva pelaaja
      * @param playerToFollow seuraavana vuorossa oleva pelaaja
      */
@@ -37,6 +39,8 @@ public class CheckerForEventsBeforeTurn {
 
     /**
      *
+     * Tarkastaa onko vuorossa olevan pelaajan edessa dynamiitti ja muiden
+     * metodien kautta rajahtaako se, Lucky Duke huomioidaan erikseen.
      */
     public void checkDinamite() {
 
@@ -85,15 +89,50 @@ public class CheckerForEventsBeforeTurn {
 
     /**
      *
+     * Tarkastaa onko pelaajan edessa vankilaa ja muiden metodien kautta
+     * menettaako pelaaja sen vuoksi vuoronsa, Lucky Duke huomioidaan erikseen.
      */
-    public void checkPrigione() {
+    public boolean checkPrigione() {
+
+        boolean prigioneDidNotStopTurn = true;
+        boolean thereIsAPrigione = false;
+        int indexOfPrigione = 0;
+
+        for (Card isThisPrigione : round.getPlayerInTurn().getFrontCards()) {
+            if (isThisPrigione.getName().contains("Prigione")) {
+                indexOfPrigione = round.getPlayerInTurn().getFrontCards().indexOf(isThisPrigione);
+                thereIsAPrigione = true;
+            }
+        }
+        if (thereIsAPrigione && round.getPlayerInTurn().getAvatar().toString().equals("Lucky Duke")) {
+            round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+            if (!round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
+                prigioneDidNotStopTurn = false;
+                round.endTurn();
+            } else {
+                round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione);
+            }
+        } else if (thereIsAPrigione) {
+            round.getCheckerForEventsBeforeTurn().checkTopCard();
+            if (!round.getPlayerInTurn().getLastCheckedCard().getType().equals("Hearts")) {
+                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
+                prigioneDidNotStopTurn = false;
+                round.endTurn();
+            } else {
+                round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione);
+            }
+        }
+        return prigioneDidNotStopTurn;
     }
 
     /**
      *
+     * Asettaa pakan paalimmaisen kortin pelaajan viimeksi tarkastettujen
+     * korttien listaan.
      */
     public void checkTopCard() {
-        
+
         Card topCard = round.getDrawpile().take(round.getDiscardpile());
         round.getPlayerInTurn().setLastCheckedCard(topCard);
         round.getDiscardpile().place(topCard);

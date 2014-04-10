@@ -14,7 +14,7 @@ import userInterface.VisibleScreen;
  * @author Antti Korpi
  *
  * Luokka on ActionListener, jolla varustettu nappula suostuu kauttamaan
- * vaistokortin, jolloin pelaaja ei meneta kestoja.
+ * vastauskortin, jolloin pelaaja ei meneta kestoja.
  */
 public class DoYouWannaRespond_Yes implements ActionListener {
 

@@ -7,13 +7,13 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Slab The Killerin ominaisuuksia.
- * 
+ *
  */
-public class SlabTheKiller implements Avatar {   
+public class SlabTheKiller implements Avatar {
 
     /**
      *
@@ -33,12 +33,18 @@ public class SlabTheKiller implements Avatar {
         return "Player needs 2 Missed! cards to cancel his BANG! card.";
     }
 
+    /**
+     *
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
-    
+
     @Override
     public String toString() {
         return "Slab The Killer";

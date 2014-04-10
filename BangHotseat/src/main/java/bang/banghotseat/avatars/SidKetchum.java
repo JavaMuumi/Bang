@@ -7,11 +7,11 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Sid Ketchumin ominaisuuksia.
- * 
+ *
  */
 public class SidKetchum implements Avatar {
 
@@ -33,12 +33,18 @@ public class SidKetchum implements Avatar {
         return "He may discard 2 cards to regain one life point.";
     }
 
-   @Override
+    /**
+     *
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
+     */
+    @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
-    
+
     @Override
     public String toString() {
         return "Sid Ketchum";

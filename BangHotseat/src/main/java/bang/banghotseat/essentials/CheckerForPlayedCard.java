@@ -30,6 +30,8 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Kasittelee indeksin mukaisen kortin pelaamisen pelaajan kadesta.
+     *
      * @param index pelatun kortin indeksi pelaajan kadessa
      */
     public void playingCard(int index) {
@@ -72,6 +74,23 @@ public class CheckerForPlayedCard {
             } else {
                 round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index));
             }
+        } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Prigione")) {
+
+            int indexOfOldPrigione = 0;
+            boolean prigioneIsAlreadyInFront = false;
+
+            for (Card isPrigioneAlreadyInFront : round.getPlayerToFollow().getFrontCards()) {
+                if (isPrigioneAlreadyInFront.getName().equals("Prigione")) {
+                    indexOfOldPrigione = round.getPlayerToFollow().getFrontCards().indexOf(isPrigioneAlreadyInFront);
+                    prigioneIsAlreadyInFront = true;
+                }
+            }
+            if (prigioneIsAlreadyInFront) {
+                round.getDiscardpile().place(round.getPlayerToFollow().drawSpecificFrontCard(indexOfOldPrigione));
+                round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index));
+            } else {
+                round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index));
+            }
         } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Gun")) {
 
             int indexOfGun = 0;
@@ -96,6 +115,8 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Kasittelee BANG! tai Gatlin -kortin pelaamisen.
+     *
      * @param bangOrGatling pelattu kortti
      */
     public void playingBangOrGatling(Card bangOrGatling) {
@@ -110,6 +131,8 @@ public class CheckerForPlayedCard {
     }
 
     /**
+     *
+     * Tarkistaa, voiko talla vuorolla viela pelata BANG!-kortteja.
      *
      * @return totuusarvo voiko pelaaja enaa talla vuorolla kayttaa BANG!
      */
@@ -135,6 +158,9 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Tarkistaa onko pelaajan edessa Barrelia ja asettaa pakasta pelaajan
+     * viimeksi tarkastetut kortit avatarin mukaisesti.
+     *
      * @return totuusarvo onko vastustajan edessa Barrel
      */
     public boolean checkBarrel() {
@@ -159,6 +185,7 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Kasittelee Indiani!-kortin pelaamisen.
      */
     public void playingIndiani() {
         round.getPlayerInTurn().setCardWaitingForAReply(playedCard);
@@ -167,6 +194,7 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Kasittelee Cat Balou -kortin pelaamisen.
      */
     public void playingCatBalou() {
 
@@ -176,6 +204,7 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Kasittelee Panico!-kortin pelaamisen.
      */
     public void playingPanico() {
 
@@ -187,6 +216,8 @@ public class CheckerForPlayedCard {
     }
 
     /**
+     *
+     * Tarkastaa onko vastustajalla kadessa Mancato!
      *
      * @return totuusarvo onko vastustajalla Mancato!
      */
@@ -207,6 +238,8 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Tarkastaa onko vastustajalla kadessa BANG!
+     *
      * @return totuusarvo onko vastustajalla BANG!
      */
     public boolean playerToFollowHasBang() {
@@ -226,6 +259,8 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Tarkastaa yltaako pelaajan kantama vastustajaan.
+     * 
      * @return totuusarvo riittaako pelaajan kantama vastustajaan
      */
     public boolean canPlayerInTurnReachPlayerToFollow() {
@@ -239,6 +274,8 @@ public class CheckerForPlayedCard {
 
     /**
      *
+     * Tarkastaa yltaako pelaajan kosketus vastustajaan.
+     * 
      * @return totuusarvo paaseeko pelaaja koskettamaan vastustajaa
      */
     public boolean canPlayerInTurnTouchPlayerToFollow() {

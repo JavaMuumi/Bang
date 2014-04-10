@@ -122,3 +122,11 @@ YHTEENSÄ: 6h
 9.3.
 klo 14-17
 Lisää koodia ja testejä
+klo 18-20
+Sekvenssikaavioita
+YHTEENSÄ: 5h
+
+10.3.
+klo 10-14
+Deadline painaa päälle --> Koodia, testejä, JavaDoceja
+YHTEENSÄ: 4h

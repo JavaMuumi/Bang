@@ -10,21 +10,20 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka sisaltaa kaikki avatarit
- * ja voi arpoa niita jaettavaksi.
+ *
+ * Luokka sisaltaa kaikki avatarit ja voi arpoa niita jaettavaksi.
  */
 public class AvatarRandomizer {
-        
+
     private List<Avatar> avatars = new ArrayList<>();
 
     /**
      *
      */
     public AvatarRandomizer() {
-        
+
         avatars.add(new BartCassidy());
         avatars.add(new BlackJack());
         avatars.add(new CalamityJanet());
@@ -43,20 +42,22 @@ public class AvatarRandomizer {
 
         Collections.shuffle(avatars);
     }
-    
+
     /**
      *
-     * @return  annettava avatar
+     * Palauttaa yhden avatarin sekoitetusta listasta.
+     *
+     * @return annettava avatar
      */
-    public Avatar giveAvatar() {  
+    public Avatar giveAvatar() {
         Avatar toBeGiven = avatars.get(0);
         avatars.remove(0);
         return toBeGiven;
     }
-    
+
     /**
      *
-     * @return  lista kaikista avatareista
+     * @return lista kaikista avatareista
      */
     public List<Avatar> getAvatarlist() {
         return avatars;

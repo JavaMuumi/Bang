@@ -187,4 +187,42 @@ public class CheckerForAvatarSpecialityTest {
         
         assertEquals(true, round.getCheckerForAvatarSpeciality().checkJourdonnais());
     }
+    
+    @Test
+    public void methodDrawFromEnemyHandWithJesseJonesGivesPlayer2Cards() {
+        
+        round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
+        round.getCheckerForAvatarSpeciality().drawFromEnemyHandWithJesseJones();
+        
+        assertEquals("Hand cards: 2", "Hand cards: " + round.getPlayerInTurn().getHandCards().size());
+    }
+    
+    @Test
+    public void methodDrawFromEnemyHandWithJesseJonesDrawsFirstCardFromEnemyHand() {
+        
+        round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
+        round.getCheckerForAvatarSpeciality().drawFromEnemyHandWithJesseJones();
+        
+        assertEquals("BANG!: Ace of Hearts", round.getPlayerInTurn().getHandCards().get(round.getPlayerInTurn().getHandCards().size() - 2).toString());
+    }
+    
+    @Test
+    public void methodDrawFromEnemyHandWithJesseJonesDrawsSecondCardFromDeck() {
+        
+        round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+        round.getCheckerForAvatarSpeciality().drawFromEnemyHandWithJesseJones();
+        
+        assertEquals("BANG!: Ace of Spades", round.getPlayerInTurn().getHandCards().get(round.getPlayerInTurn().getHandCards().size() - 1).toString());
+    }
+    
+    @Test
+    public void methodDrawFromEnemyHandWithJesseJonesDrawsOnlyOneCardFromEnemyHand() {
+        
+        round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
+        round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
+        round.getCheckerForAvatarSpeciality().drawFromEnemyHandWithJesseJones();
+        
+        assertEquals("Enemy hand cards: 1", "Enemy hand cards: " + round.getPlayerToFollow().getHandCards().size());
+    }
 }

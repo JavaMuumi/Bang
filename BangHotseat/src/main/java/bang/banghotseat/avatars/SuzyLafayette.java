@@ -7,13 +7,13 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Suzy Lafayetten ominaisuuksia.
- * 
+ *
  */
-public class SuzyLafayette implements Avatar { 
+public class SuzyLafayette implements Avatar {
 
     /**
      *
@@ -33,12 +33,18 @@ public class SuzyLafayette implements Avatar {
         return "As soon as she has no cards in hand, she draws a card.";
     }
 
+    /**
+     *
+     * Vetaa vuorokortit kateen.
+     *
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
     }
-    
+
     @Override
     public String toString() {
         return "Suzy Lafayette";

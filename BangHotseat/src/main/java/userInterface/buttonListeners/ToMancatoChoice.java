@@ -9,16 +9,16 @@ import java.awt.event.ActionListener;
 import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula
- * vie valintaan, haluaako pelaaja kayttaa vaistokorttia.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula vie valintaan, haluaako
+ * pelaaja kayttaa vaistokorttia.
  */
 public class ToMancatoChoice implements ActionListener {
-    
+
     private VisibleScreen visibleScreen;
-    
+
     /**
      *
      * @param visibleScreen nakyman luova luokka
@@ -29,11 +29,11 @@ public class ToMancatoChoice implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         visibleScreen.doYouWannaPlayMancato();
-        
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

@@ -9,18 +9,17 @@ import java.awt.event.ActionListener;
 import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula
- * kieltaytyy kayttamasta vaistokorttia vaikka siihen
- * olisi mahdollisuus, jolloin pelaaja menettaa yhden
- * keston.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula kieltaytyy kayttamasta
+ * vastauskorttia vaikka siihen olisi mahdollisuus, jolloin pelaaja menettaa
+ * yhden keston.
  */
-public class DoYouWannaRespond_No implements ActionListener{
+public class DoYouWannaRespond_No implements ActionListener {
 
     private VisibleScreen visibleScreen;
-    
+
     /**
      *
      * @param visibleScreen nakyman luova luokka
@@ -31,13 +30,13 @@ public class DoYouWannaRespond_No implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
-        
+
         visibleScreen.pleaseLookAway();
-        
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

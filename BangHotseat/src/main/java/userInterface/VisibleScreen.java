@@ -36,6 +36,9 @@ public class VisibleScreen {
     private ActionListener exit_ReallyExit;
     private ActionListener newGame_Continue;
     private ActionListener continueToNewRound;
+    private ActionListener prigione_ToNextPlayer;
+    private ActionListener jesseJonesDrawsFromDrawpile;
+    private ActionListener jesseJonesDrawsFromEnemyHand;
     private ActionListener toJourdonnaisScreen;
     private ActionListener toKitCarlsonScreen;
     private ActionListener kitCarlsonPutCardBack;
@@ -72,8 +75,11 @@ public class VisibleScreen {
         exit_ReallyExit = new Exit_ReallyExit(this);
         newGame_Continue = new NewGame_Continue(this);
         continueToNewRound = new ContinueToNewRound(this);
-        toKitCarlsonScreen = new ToKitCarlsonScreen(this);
+        prigione_ToNextPlayer = new Prigione_ToNextPlayer(this);
+        jesseJonesDrawsFromDrawpile = new JesseJonesDrawsFromDrawpile(this);
+        jesseJonesDrawsFromEnemyHand = new JesseJonesDrawsFromEnemyHand(this);
         toJourdonnaisScreen = new ToJourdonnaisScreen(this);
+        toKitCarlsonScreen = new ToKitCarlsonScreen(this);
         kitCarlsonPutCardBack = new KitCarlsonPutCardBack(this);
         continueToPlayerXScreen = new ContinueToPlayerXScreen(this);
         playerXScreen_UseCard = new PlayerXScreen_UseCard(this);
@@ -92,6 +98,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa paavalikkonakyman.
      */
     public void MainMenu() {
 
@@ -131,6 +138,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa saantonakyman.
      */
     public void rules() {
 
@@ -147,6 +155,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa poistumisnakyman.
      */
     public void exit() {
 
@@ -168,6 +177,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa nakyman pelaajien erikoiskyvyista.
      */
     public void newGameInfo() {
 
@@ -196,6 +206,9 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa nakyman, joka pyytaa toista pelaajaa katsomaan pois ja jatkaa
+     * uudelle kierrokselle.
+     *
      * @param playerWhoShouldLookAway pelaaja, joka luovuttaa vuoronsa
      */
     public void playerXPleaseLookAwayScreen(Player playerWhoShouldLookAway) {
@@ -214,6 +227,9 @@ public class VisibleScreen {
     }
 
     /**
+     *
+     * Asettaa nakyman, joka pyytaa askeista pelaajaa katsomaan muualle, jotta
+     * toinen pelaaja voi jatkaa.
      *
      */
     public void pleaseLookAway() {
@@ -234,6 +250,8 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa nakyman, joka pyytaa hyokannytta pelaajaa katsomaan pois, jotta
+     * toinen pelaaja voi reagoida.
      */
     public void attackingPlayerPleaseLookAway() {
 
@@ -264,6 +282,75 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa vankilakortin infonakyman.
+     */
+    public void prigioneScreen() {
+
+        JLabel thereIsAPrigione = new JLabel("You are in prigione...", JLabel.CENTER);
+        thereIsAPrigione.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel prigioneHeld = new JLabel("Prigione is secure!!! You lost your turn!!!", JLabel.CENTER);
+        prigioneHeld.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel prigioneFailed = new JLabel("You broke out!!!", JLabel.CENTER);
+        prigioneFailed.setFont(new Font("Bang", Font.BOLD, 48));
+
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+
+        if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Lucky Duke")) {
+
+            container.setLayout(new GridLayout(6, 3));
+            container.add(thereIsAPrigione);
+
+            JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
+            drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard1);
+
+            JLabel and = new JLabel("and", JLabel.CENTER);
+            and.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(and);
+
+            JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString(), JLabel.CENTER);
+            drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard2);
+
+            if (!setup.getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+
+                container.add(prigioneHeld);
+
+                next.addActionListener(prigione_ToNextPlayer);
+
+            } else {
+                container.add(prigioneFailed);
+                next.addActionListener(continueToPlayerXScreen);
+            }
+            container.add(next);
+        } else {
+
+            container.setLayout(new GridLayout(4, 3));
+            container.add(thereIsAPrigione);
+
+            JLabel drawnCard = new JLabel(setup.getRound().getPlayerToFollow().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+            drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(drawnCard);
+
+            if (!setup.getRound().getPlayerToFollow().getLastCheckedCard().getSuit().equals("Hearts")) {
+                container.add(prigioneHeld);
+                next.addActionListener(prigione_ToNextPlayer);
+            } else {
+                container.add(prigioneFailed);
+
+                next.addActionListener(continueToNewRound);
+            }
+            container.add(next);
+        }
+    }
+
+    /**
+     *
+     * Asettaa dynamiitin infonakyman.
      */
     public void dinamiteScreen() {
 
@@ -333,6 +420,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa Jourdonnaisin vaistonakyman.
      */
     public void jourdonnaisScreen() {
 
@@ -379,6 +467,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa Barrelin vaistonakyman.
      */
     public void barrelScreen() {
 
@@ -471,6 +560,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa Panico!-kortin valintanakyman.
      */
     public void panicoScreen() {
 
@@ -497,8 +587,9 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa varastetun kortin infonakyman.
      */
-    public void panicoStoleRandomHandCard() {
+    public void randomHandCardWasStolen() {
 
         container.setLayout(new GridLayout(3, 3));
 
@@ -515,6 +606,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa Cat Balou -kortin valintanakyman.
      */
     public void catBalouScreen() {
 
@@ -541,6 +633,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa poistetun kortin infonakyman.
      */
     public void catBalouRemovedRandomHandCard() {
 
@@ -558,6 +651,9 @@ public class VisibleScreen {
     }
 
     /**
+     *
+     * Asettaa nakyman, joka kertoo ettei vastustajalla ole kasikortteja joten
+     * niita ei voi vieda.
      *
      * @param panicoOrCatBalou kortti, joka yritettiin pelata
      */
@@ -582,6 +678,50 @@ public class VisibleScreen {
 
     /**
      *
+     * Jesse Jonesin kortinnoston valintanakyma.
+     */
+    public void jesseJonesDrawScreen() {
+
+        container.setLayout(new GridLayout(4, 3));
+
+        if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+
+            JLabel enemyHasNoHandCards = new JLabel("Enemy has no hand cards,", JLabel.CENTER);
+            enemyHasNoHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(enemyHasNoHandCards);
+
+            JLabel youCannotUseSpeciality = new JLabel("you cannot use your speciality!", JLabel.CENTER);
+            youCannotUseSpeciality.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(youCannotUseSpeciality);
+
+            JButton next = new JButton("Continue");
+            next.setFont(new Font("Button", Font.ITALIC, 34));
+            next.addActionListener(continueToPlayerXScreen);
+        } else {
+            JLabel wannaDrawFromEnemyHand = new JLabel("Do you want to draw your first card from enemy's hand?", JLabel.CENTER);
+            wannaDrawFromEnemyHand.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(wannaDrawFromEnemyHand);
+
+            JLabel enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards", JLabel.CENTER);
+            enemyHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(enemyHandCards);
+
+            JButton drawFromEnemyHand = new JButton("Draw from enemy's hand");
+            drawFromEnemyHand.setFont(new Font("Button", Font.ITALIC, 34));
+            drawFromEnemyHand.addActionListener(jesseJonesDrawsFromEnemyHand);
+            container.add(drawFromEnemyHand);
+
+
+            JButton drawFromDrawpile = new JButton("Draw from drawpile");
+            drawFromDrawpile.setFont(new Font("Button", Font.ITALIC, 34));
+            drawFromDrawpile.addActionListener(jesseJonesDrawsFromDrawpile);
+            container.add(drawFromDrawpile);
+        }
+    }
+
+    /**
+     *
+     * Kit Carlsonin kortinnoston valintanakyma.
      */
     public void kitCarlsonDrawScreen() {
 
@@ -608,6 +748,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Pelaajan vuoronakyma.
      */
     public void playerXScreen() {
 
@@ -668,6 +809,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Nakyma, joka kertoo vastustajan olevan kantaman ulkopuolella.
      */
     public void enemyIsOutOfReach() {
 
@@ -686,6 +828,8 @@ public class VisibleScreen {
 
     /**
      *
+     * Nakyma, joka kertoo ettei BANG!-kortteja voi pelata enaa talla
+     * kierroksella.
      */
     public void moreBangCardsCannotBePlayed() {
 
@@ -704,6 +848,8 @@ public class VisibleScreen {
 
     /**
      *
+     * Nakyma, joka kertoo reagoijalle ettei han voi reagoida mutta salaa sen
+     * hyokkaajalta.
      */
     public void clickToPretendYouCouldReply() {
 
@@ -726,6 +872,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Vaistokortin kayton valintaikkuna.
      */
     public void doYouWannaPlayMancato() {
 
@@ -747,6 +894,10 @@ public class VisibleScreen {
         container.add(doNotUseMancato);
     }
 
+    /**
+     *
+     * BANG!-kortilla reagoimisen valintaikkuna.
+     */
     public void doYouWannaReplyWithBang() {
 
         JLabel willYouUseABang = new JLabel("Will you use a Bang! to cancel a hit?", JLabel.CENTER);
@@ -767,6 +918,8 @@ public class VisibleScreen {
 
     /**
      *
+     * Nakyma, joka kertoo ettei vastustaja voi reagoida, koska hanella ei ole
+     * kasikortteja.
      */
     public void takingDamageAndNoHandCards() {
 
@@ -789,6 +942,7 @@ public class VisibleScreen {
 
     /**
      *
+     * Korttien poiston valintanakyma.
      */
     public void discardCards() {
 
@@ -831,6 +985,9 @@ public class VisibleScreen {
 
     /**
      *
+     * Palauttaa valikosta valitun kortin indeksin ja -1 jos mitaan ei ole
+     * valittu.
+     *
      * @return listasta valitun kortin indeksi tai merkki, etta mitaan ei ole
      * valittu
      */
@@ -845,8 +1002,11 @@ public class VisibleScreen {
 
     /**
      *
-     * @return listasta valitun kortin indeksi tai merkki, etta mitaan ei ole
-     * valittu
+     * Palauttaa valikosta valitun kortin indeksin, -1 jos mitaan ei ole valittu
+     * ja -2 jos listan viimeinen on valittu.
+     *
+     * @return listasta valitun kortin indeksi tai -1 jos mitaan ei ole valittu
+     * ja -2 jos viimeinen kortti on valittu.
      */
     public int getPanicoOrCatBalouIndex() {
         for (JRadioButton isThisSelected : cardList) {

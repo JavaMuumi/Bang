@@ -78,9 +78,9 @@ public class Birra implements Card {
     public String toString() {
 
         if (number < 2 || number > 10) {
-            return getName() +  ": " + namer.checkNumber(number) + " of " + suit;
+            return getName() + ": " + namer.checkNumber(number) + " of " + suit;
         } else {
-            return getName() +  ": " + number + " of " + suit;
+            return getName() + ": " + number + " of " + suit;
         }
     }
 }

@@ -52,11 +52,5 @@ public class JesseJonesTest {
     @Test
     public void getSpecialityReturnsCorrectDescriptionForJesseJones() {
         assertEquals("He may draw his first card from the hand of a player.", round.getPlayerInTurn().getAvatar().getSpeciality());
+    }   
     }
-
-    @Test
-    public void jesseJonesDrawsTwoCards() {
-        round.getPlayerInTurn().getAvatar().drawCards(round);
-        assertEquals(2, round.getPlayerInTurn().getHandCards().size());
-    }
-}

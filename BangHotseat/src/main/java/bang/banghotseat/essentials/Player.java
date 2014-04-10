@@ -11,11 +11,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka sisaltaa pelaajan tiedot ja hanen
- * korttiensa hallinnoinnin.
+ *
+ * Luokka sisaltaa pelaajan tiedot ja hanen korttiensa hallinnoinnin.
  */
 public class Player {
 
@@ -28,7 +27,7 @@ public class Player {
 
     /**
      *
-     * @param avatar    pelaajalle asetettava avatar
+     * @param avatar pelaajalle asetettava avatar
      */
     public void setAvatar(Avatar avatar) {
         this.avatar = avatar;
@@ -36,7 +35,7 @@ public class Player {
 
     /**
      *
-     * @return  pelaajan avatar
+     * @return pelaajan avatar
      */
     public Avatar getAvatar() {
         return avatar;
@@ -44,6 +43,7 @@ public class Player {
 
     /**
      *
+     * Asettaa pelaajan kestoiksi avatarin maksimikestot.
      */
     public void setCurrentHealth() {
         currentHealth = avatar.getMaxHealth();
@@ -51,7 +51,7 @@ public class Player {
 
     /**
      *
-     * @return  pelaajan tuonhetkiset kestot
+     * @return pelaajan tuonhetkiset kestot
      */
     public int getCurrentHealth() {
         return currentHealth;
@@ -59,7 +59,9 @@ public class Player {
 
     /**
      *
-     * @param amountToBeLost    menetettavien kestojen maara
+     * Vahentaa pelaajan kestoja maaratyn verran.
+     *
+     * @param amountToBeLost menetettavien kestojen maara
      */
     public void loseHealth(int amountToBeLost) {
 
@@ -73,7 +75,7 @@ public class Player {
 
     /**
      *
-     * @return  lista pelaajan kasikorteista
+     * @return lista pelaajan kasikorteista
      */
     public List<Card> getHandCards() {
         return handCards;
@@ -81,8 +83,10 @@ public class Player {
 
     /**
      *
+     * Vetaa maaratyn kortin pelaajan kadesta.
+     *
      * @param index vedettavan kasikortin indeksi
-     * @return  vedetty kortti
+     * @return vedetty kortti
      */
     public Card drawSpecificHandCard(int index) {
 
@@ -93,10 +97,12 @@ public class Player {
 
     /**
      *
-     * @return  vedetty kortti
+     * Vetaa satunnaisen kortin pelaajan kadesta.
+     *
+     * @return vedetty kortti
      */
     public Card drawRandomHangCard() {
-        
+
         Collections.shuffle(handCards);
         Card toBeGiven = drawSpecificHandCard(0);
         return toBeGiven;
@@ -104,7 +110,9 @@ public class Player {
 
     /**
      *
-     * @param cardToPutIn   asetettava kortti
+     * Laittaa kortin pelaajan kateen.
+     *
+     * @param cardToPutIn asetettava kortti
      */
     public void putCardIntoHand(Card cardToPutIn) {
         handCards.add(cardToPutIn);
@@ -112,7 +120,7 @@ public class Player {
 
     /**
      *
-     * @return  lista pelaajan etukorteista
+     * @return lista pelaajan etukorteista
      */
     public List<Card> getFrontCards() {
         return frontCards;
@@ -120,8 +128,10 @@ public class Player {
 
     /**
      *
+     * Vetaa maaratyn pelaajalta maaratyn etukortin.
+     *
      * @param index vedettavan kortin indeksi
-     * @return  vedetty kortti
+     * @return vedetty kortti
      */
     public Card drawSpecificFrontCard(int index) {
         Card toBeGiven = frontCards.get(index);
@@ -131,7 +141,9 @@ public class Player {
 
     /**
      *
-     * @param toBePlaced    asetettava kortti
+     * Asettaa kortin pelaajan eteen.
+     *
+     * @param toBePlaced asetettava kortti
      */
     public void putCardInFront(Card toBePlaced) {
         frontCards.add(toBePlaced);
@@ -139,6 +151,7 @@ public class Player {
 
     /**
      *
+     * Antaa pelaajalle yhden keston.
      */
     public void gainHealth() {
         if (currentHealth < avatar.getMaxHealth()) {
@@ -148,7 +161,9 @@ public class Player {
 
     /**
      *
-     * @return  pelaajan etaisyys vastustajaan
+     * Palauttaa pelaajan etaisyyden vastustajaan.
+     *
+     * @return pelaajan etaisyys vastustajaan
      */
     public int getDistance() {
 
@@ -167,7 +182,9 @@ public class Player {
 
     /**
      *
-     * @return  pelaajan kantama
+     * Palauttaa pelaajan kantaman.
+     *
+     * @return pelaajan kantama
      */
     public int getReach() {
         int reach = 1;
@@ -193,7 +210,9 @@ public class Player {
 
     /**
      *
-     * @return  pelaajan kosketuksen kantama
+     * Palauettaa pelaajan kosketuksen kantaman.
+     *
+     * @return pelaajan kosketuksen kantama
      */
     public int getTouch() {
         int touch = 1;
@@ -211,7 +230,9 @@ public class Player {
 
     /**
      *
-     * @param lastCheckedCard   pakasta viimeksi taskistettu kortti
+     * Asettaa kortin pelaajan viimeksi tarkastetuksi kortiksi.
+     *
+     * @param lastCheckedCard pakasta viimeksi taskistettu kortti
      */
     public void setLastCheckedCard(Card lastCheckedCard) {
         lastCheckedCards.add(lastCheckedCard);
@@ -219,23 +240,25 @@ public class Player {
 
     /**
      *
-     * @return  pakasta viimeksi tarkistettu kortti
+     * @return pakasta viimeksi tarkistettu kortti
      */
     public Card getLastCheckedCard() {
         return lastCheckedCards.get(lastCheckedCards.size() - 1);
     }
-    
+
     /**
      *
-     * @param lastCheckedCard   pakasta viimeksi taskistettu kortti
+     * Asettaa pelaajan kortin, johon odotetaan vastustaja reaktiota.
+     *
+     * @param cardWaitingForAReply vastustajan reaktiota odottava kortti
      */
     public void setCardWaitingForAReply(Card cardWaitingForAReply) {
         this.cardWaitingForAReply = cardWaitingForAReply;
     }
-    
+
     /**
-     * 
-     * @return  pakasta viimeksi tarkastetut kortit
+     *
+     * @return pakasta viimeksi tarkastetut kortit
      */
     public List<Card> getListOfLastCheckedCards() {
         return lastCheckedCards;
@@ -243,14 +266,15 @@ public class Player {
 
     /**
      *
-     * @return  pakasta viimeksi tarkistettu kortti
+     * @return pakasta viimeksi tarkistettu kortti
      */
     public Card getCardWaitingForAReply() {
         return cardWaitingForAReply;
     }
-    
+
     /**
-     * 
+     *
+     * Tyhjentaa pelaajan viimeksi tarkastettujen korttien listan.
      */
     public void clearListOfLastCheckedCards() {
         lastCheckedCards.clear();

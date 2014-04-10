@@ -33,6 +33,12 @@ public class CalamityJanet implements Avatar {
         return "She can play BANG! cards as Missed! cards and vice versa.";
     }
 
+    /**
+     * 
+     * Vetaa vuorokortit kateen.
+     * 
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));

@@ -7,9 +7,18 @@ package bang.banghotseat.cards;
 /**
  *
  * @author Antti Korpi
+ *
+ * Luokka muuttaa kuvakorttien numeron sanamuotoiseksi.
  */
 public class CardNamer {
 
+    /**
+     *
+     * Muuttaa kuvakorttinumerot sanoiksi.
+     *
+     * @param number muutettava numero
+     * @return sanamuotoinen numero tai null jos sanauotoista ei ole
+     */
     public String checkNumber(int number) {
 
         if (number == 1) {

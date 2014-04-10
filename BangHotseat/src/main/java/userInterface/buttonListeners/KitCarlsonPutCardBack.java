@@ -4,18 +4,17 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula
- * asettaa tarjotuista vaihtoehdoista valitun kortin
- * takaisin nostopakkaan ja siirtyy pelaajan ruutuun.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula asettaa tarjotuista
+ * vaihtoehdoista valitun kortin takaisin nostopakkaan ja siirtyy pelaajan
+ * ruutuun.
  */
 public class KitCarlsonPutCardBack implements ActionListener {
 
@@ -39,7 +38,7 @@ public class KitCarlsonPutCardBack implements ActionListener {
             visibleScreen.getSetup().getRound().getDrawpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().size() - 3 + visibleScreen.getIndex()));
         }
         visibleScreen.playerXScreen();
-        
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

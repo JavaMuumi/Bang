@@ -14,7 +14,7 @@ import bang.banghotseat.essentials.Player;
  *
  * @author Antti Korpi
  *
- * Pelin ydinluokka, joka sisaltaa molemmat pelaajat ja tiedon, kumpi on
+ * Pelin ydinluokka, joka sisaltaa molemmat pelaajat ja tiedon kumpi on
  * vuorossa, seka molemmat pakat.
  *
  */
@@ -51,19 +51,28 @@ public class Round {
 
     /**
      *
+     * Kaynnistaa vuorossa olevan pelaajan vuoron.
      */
     public void playTurn() {
+
+        playerInTurn.clearListOfLastCheckedCards();
+
+        boolean prigioneDidNotStopTurn;
 
         checkerForEventsBeforeTurn.setPlayerTurns(playerInTurn, playerToFollow);
 
         checkerForEventsBeforeTurn.checkDinamite();
-        checkerForEventsBeforeTurn.checkPrigione();
+        prigioneDidNotStopTurn = checkerForEventsBeforeTurn.checkPrigione();
 
-        playerInTurn.getAvatar().drawCards(this);
+        if (prigioneDidNotStopTurn) {
+            playerInTurn.getAvatar().drawCards(this);
+        }
     }
 
     /**
      *
+     * Asettaa vuoronsa lopettavan pelaajan seuraavaksi pelaajaksi ja
+     * painvastoin.
      */
     public void endTurn() {
 
@@ -71,8 +80,6 @@ public class Round {
         statsDepository = playerInTurn;
         playerInTurn = playerToFollow;
         playerToFollow = statsDepository;
-
-        playerInTurn.clearListOfLastCheckedCards();
     }
 
     /**

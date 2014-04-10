@@ -4,18 +4,16 @@
  */
 package userInterface.buttonListeners;
 
-import userInterface.VisibleScreen;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import userInterface.VisibleScreen;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
- * Luokka on ActionListener, jolla varustettu nappula
- * vie ruutuun, joka kehottaa toista pelaajaa katsomaan
- * poispain ja uuden vuoron aloitustoimet suoritetaan.
+ *
+ * Luokka on ActionListener, jolla varustettu nappula vie ruutuun, joka kehottaa
+ * toista pelaajaa katsomaan poispain ja uuden vuoron aloitustoimet suoritetaan.
  */
 public class NewGame_Continue implements ActionListener {
 

@@ -34,6 +34,12 @@ public class BlackJack implements Avatar {
         return "He shows the second card he draws. On Heart or Diamonds, he draws one more card.";
     }
     
+    /**
+     * 
+     * Vetaa vuorokortit kateen.
+     * 
+     * @param round pelattava kierros
+     */
     @Override
     public void drawCards(Round round) {
         
