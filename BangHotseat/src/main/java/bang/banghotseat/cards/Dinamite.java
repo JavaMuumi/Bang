@@ -40,7 +40,7 @@ public class Dinamite implements Card {
      */
     @Override
     public void function(Round round) {
-        round.getPlayerInTurn().loseHealth(3);
+        round.getPlayerInTurn().loseHealth(3, round);
     }
 
     /**

@@ -130,3 +130,10 @@ YHTEENSÄ: 5h
 klo 10-14
 Deadline painaa päälle --> Koodia, testejä, JavaDoceja
 YHTEENSÄ: 4h
+
+11.3.
+klo 10-16
+Koodia ja testejä
+klo 20-01
+Sitä samaa taas
+YHTEENSÄ: 11h

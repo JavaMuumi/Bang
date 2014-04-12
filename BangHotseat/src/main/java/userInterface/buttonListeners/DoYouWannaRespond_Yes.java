@@ -35,23 +35,36 @@ public class DoYouWannaRespond_Yes implements ActionListener {
 
         int indexOfReplyCard = 0;
 
-        if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling!")) {
-            for (Card thisIsAMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                if (thisIsAMancato.getName().contains("Mancato!")) {
-                    indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAMancato);
+        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
+            for (Card thisIsBangOrMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
+                if (thisIsBangOrMancato.getName().contains("BANG!") || thisIsBangOrMancato.getName().contains("Mancato!")) {
+                    indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsBangOrMancato);
                 }
             }
-        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Indiani!")) {
-            for (Card thisIsABang : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                if (thisIsABang.getName().contains("Mancato!")) {
-                    indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsABang);
+        } else {
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Mancato!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling!")) {
+                for (Card thisIsAMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
+                    if (thisIsAMancato.getName().contains("Mancato!")) {
+                        indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAMancato);
+                    }
+                }
+            } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Indiani!")) {
+                for (Card thisIsABang : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
+                    if (thisIsABang.getName().contains("BANG!")) {
+                        indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsABang);
+                    }
                 }
             }
         }
-        visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfReplyCard));
+        visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfReplyCard, visibleScreen.getSetup().getRound()));
 
-        visibleScreen.pleaseLookAway();
+        if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Duello")) {
+            visibleScreen.getSetup().getRound().setPlayerInTurnIsNextToReactToDuello(true);
+            visibleScreen.attackingPlayerPleaseLookAway();
 
+        } else {
+            visibleScreen.pleaseLookAway();
+        }
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

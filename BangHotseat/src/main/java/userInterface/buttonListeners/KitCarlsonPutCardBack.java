@@ -35,7 +35,7 @@ public class KitCarlsonPutCardBack implements ActionListener {
 
         if (visibleScreen.getIndex() == -1) {
         } else {
-            visibleScreen.getSetup().getRound().getDrawpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().size() - 3 + visibleScreen.getIndex()));
+            visibleScreen.getSetup().getRound().getDrawpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().size() - 3 + visibleScreen.getIndex(), visibleScreen.getSetup().getRound()));
         }
         visibleScreen.playerXScreen();
 

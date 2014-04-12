@@ -33,7 +33,7 @@ public class CatBalouScreen_RemoveNow implements ActionListener {
         if (visibleScreen.getPanicoOrCatBalouIndex() == -1) {
         } else if (visibleScreen.getPanicoOrCatBalouIndex() == -2) {
             visibleScreen.getFrame().getContentPane().removeAll();
-            visibleScreen.getSetup().getRound().getPlayerInTurn().setLastCheckedCard(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHangCard());
+            visibleScreen.getSetup().getRound().getPlayerInTurn().setLastCheckedCard(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHandCard(visibleScreen.getSetup().getRound()));
             visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard());
             visibleScreen.catBalouRemovedRandomHandCard();
         } else {

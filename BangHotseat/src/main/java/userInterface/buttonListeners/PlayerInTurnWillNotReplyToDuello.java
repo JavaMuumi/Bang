@@ -12,10 +12,10 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie ruutuun, jolla
- * hamataan vastustajaa luulemaan, etta pelaajalla saattaisi olla vaistokortti.
+ * Luokka on ActionListener, jolla varustettu nappula kieltaytyy vastaamasta
+ * Duelloon, jolloin pelaaja menettaa yhden keston.
  */
-public class DistractionReply implements ActionListener {
+public class PlayerInTurnWillNotReplyToDuello implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -23,7 +23,7 @@ public class DistractionReply implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public DistractionReply(VisibleScreen visibleScreen) {
+    public PlayerInTurnWillNotReplyToDuello(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -32,8 +32,8 @@ public class DistractionReply implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
-        visibleScreen.clickToPretendYouCouldReply();
+        visibleScreen.getSetup().getRound().getPlayerInTurn().loseHealth(1, visibleScreen.getSetup().getRound());
+        visibleScreen.playerXScreen();
 
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

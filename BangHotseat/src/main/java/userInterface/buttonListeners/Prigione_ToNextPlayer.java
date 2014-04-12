@@ -31,6 +31,8 @@ public class Prigione_ToNextPlayer implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
+        
+        visibleScreen.getSetup().getRound().endTurn();
 
         visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getRound().getPlayerToFollow());
 

@@ -1,5 +1,9 @@
 package bang.banghotseat;
 
+import bang.banghotseat.avatars.ElGringo;
+import bang.banghotseat.cards.Bang;
+import bang.banghotseat.cards.Deck;
+import bang.banghotseat.essentials.Player;
 import javax.swing.SwingUtilities;
 import userInterface.UserInterface;
 

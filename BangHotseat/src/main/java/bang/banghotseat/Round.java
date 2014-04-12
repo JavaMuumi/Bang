@@ -29,6 +29,7 @@ public class Round {
     private CheckerForAvatarSpeciality checkerForAvatarSpeciality;
     private Player statsDepository;
     private boolean bangHasBeenPlayed = false;
+    private boolean playerInTurnIsNextToReactToDuello = false;
 
     /**
      *
@@ -65,7 +66,9 @@ public class Round {
         prigioneDidNotStopTurn = checkerForEventsBeforeTurn.checkPrigione();
 
         if (prigioneDidNotStopTurn) {
-            playerInTurn.getAvatar().drawCards(this);
+            if (!playerInTurn.getAvatar().toString().equals("Jesse Jones")) {
+                playerInTurn.getAvatar().drawCards(this);
+            }
         }
     }
 
@@ -169,5 +172,22 @@ public class Round {
      */
     public void setBangHasBeenPlayed(boolean trueOrFalse) {
         bangHasBeenPlayed = trueOrFalse;
+    }
+
+    /**
+     *
+     * @param trueOrFalse asetettava totuusarvo muuttujalle joka kertoo kumpi
+     * pelaaja reagoi seuraavana Duello-korttiin.
+     */
+    public void setPlayerInTurnIsNextToReactToDuello(boolean trueOrFalse) {
+        playerInTurnIsNextToReactToDuello = trueOrFalse;
+    }
+
+    /**
+     *
+     * @return totuusarvo kumpi pelaaja reagoi seuraavana Duello-korttiin.
+     */
+    public boolean playerInTurnIsNextToReactToDuello() {
+        return playerInTurnIsNextToReactToDuello;
     }
 }

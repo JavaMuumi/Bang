@@ -4,6 +4,7 @@
  */
 package bang.banghotseat.essentials;
 
+import bang.banghotseat.Round;
 import bang.banghotseat.avatars.Avatar;
 import bang.banghotseat.cards.Card;
 import java.util.ArrayList;
@@ -63,13 +64,18 @@ public class Player {
      *
      * @param amountToBeLost menetettavien kestojen maara
      */
-    public void loseHealth(int amountToBeLost) {
+    public void loseHealth(int amountToBeLost, Round round) {
 
-        int counter = 1;
+        currentHealth = currentHealth - amountToBeLost;
 
-        while (counter <= amountToBeLost) {
-            currentHealth--;
-            counter++;
+        if (amountToBeLost == 1) {
+            round.getCheckerForAvatarSpeciality().drawCardForBartCassidyWhenHeTakesAHit();
+            round.getCheckerForAvatarSpeciality().drawCardFromEnemyHandWhenElGringoTakesAHit();
+        } else if (amountToBeLost == 3) {
+
+            for (int i = 0; i < 3; i++) {
+                round.getCheckerForAvatarSpeciality().drawCardForBartCassidyWhenHeTakesAHit();
+            }
         }
     }
 
@@ -88,10 +94,13 @@ public class Player {
      * @param index vedettavan kasikortin indeksi
      * @return vedetty kortti
      */
-    public Card drawSpecificHandCard(int index) {
+    public Card drawSpecificHandCard(int index, Round round) {
 
         Card toBeGiven = handCards.get(index);
         handCards.remove(index);
+        
+        round.getCheckerForAvatarSpeciality().checkSuzyLafayetteForEmptyHand(this);
+        
         return toBeGiven;
     }
 
@@ -101,10 +110,13 @@ public class Player {
      *
      * @return vedetty kortti
      */
-    public Card drawRandomHangCard() {
+    public Card drawRandomHandCard(Round round) {
 
         Collections.shuffle(handCards);
-        Card toBeGiven = drawSpecificHandCard(0);
+        Card toBeGiven = drawSpecificHandCard(0, round);
+        
+        round.getCheckerForAvatarSpeciality().checkSuzyLafayetteForEmptyHand(this);
+        
         return toBeGiven;
     }
 

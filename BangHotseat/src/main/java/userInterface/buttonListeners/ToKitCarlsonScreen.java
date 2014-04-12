@@ -29,6 +29,7 @@ public class ToKitCarlsonScreen implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        
         visibleScreen.getFrame().getContentPane().removeAll();
 
         visibleScreen.kitCarlsonDrawScreen();

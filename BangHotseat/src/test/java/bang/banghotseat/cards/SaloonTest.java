@@ -6,14 +6,13 @@ package bang.banghotseat.cards;
 
 import bang.banghotseat.Round;
 import bang.banghotseat.avatars.SlabTheKiller;
-import bang.banghotseat.avatars.SuzyLafayette;
 import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -96,7 +95,7 @@ public class SaloonTest {
     @Test
     public void whenPlayerIsWoundedAndEnemyIsAtFullHealthSaloonHealsOnlyPlayerForOneHealthPoint() {
         
-        round.getPlayerInTurn().loseHealth(3);
+        round.getPlayerInTurn().loseHealth(3, round);
         saloon.function(round);
         
         String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();
@@ -106,7 +105,7 @@ public class SaloonTest {
     @Test
     public void whenEnemyIsWoundedAndPlayerIsAtFullHealthSaloonHealsOnlyEnemyForOneHealthPoint() {
         
-        round.getPlayerToFollow().loseHealth(3);
+        round.getPlayerToFollow().loseHealth(3, round);
         saloon.function(round);
         
         String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();
@@ -125,8 +124,8 @@ public class SaloonTest {
     @Test
     public void whenBothPlayersAreWoundedSaloonHealsBothForOneHealthPoint() {
         
-        round.getPlayerInTurn().loseHealth(3);
-        round.getPlayerToFollow().loseHealth(3);
+        round.getPlayerInTurn().loseHealth(3, round);
+        round.getPlayerToFollow().loseHealth(3, round);
         saloon.function(round);
         
         String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();

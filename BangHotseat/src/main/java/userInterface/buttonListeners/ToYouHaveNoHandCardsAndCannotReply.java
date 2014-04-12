@@ -16,7 +16,7 @@ import userInterface.VisibleScreen;
  * ilmoittaa vastustajan olemaan kykenematon vaistamaan, koska hanella ei ole
  * yhtaan kasikorttia.
  */
-public class ToYouHaveNoMancato implements ActionListener {
+public class ToYouHaveNoHandCardsAndCannotReply implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -24,7 +24,7 @@ public class ToYouHaveNoMancato implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ToYouHaveNoMancato(VisibleScreen visibleScreen) {
+    public ToYouHaveNoHandCardsAndCannotReply(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -34,7 +34,7 @@ public class ToYouHaveNoMancato implements ActionListener {
         visibleScreen.getFrame().getContentPane().removeAll();
 
         visibleScreen.takingDamageAndNoHandCards();
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
 
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

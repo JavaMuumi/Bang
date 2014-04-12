@@ -109,7 +109,6 @@ public class CheckerForEventsBeforeTurn {
             if (!round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
                 round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
                 prigioneDidNotStopTurn = false;
-                round.endTurn();
             } else {
                 round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione);
             }
@@ -118,7 +117,6 @@ public class CheckerForEventsBeforeTurn {
             if (!round.getPlayerInTurn().getLastCheckedCard().getType().equals("Hearts")) {
                 round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
                 prigioneDidNotStopTurn = false;
-                round.endTurn();
             } else {
                 round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione);
             }
@@ -136,5 +134,23 @@ public class CheckerForEventsBeforeTurn {
         Card topCard = round.getDrawpile().take(round.getDiscardpile());
         round.getPlayerInTurn().setLastCheckedCard(topCard);
         round.getDiscardpile().place(topCard);
+    }
+
+    /**
+     *
+     * Tarkastaa, rajahtaako dynamiitti annetulla kortilla.
+     *
+     * @param cardToCheck tarkastettava kortti
+     * @return totuusarvo rajahtaako dynamiitti annetulla kortilla
+     */
+    public boolean dinamiteBlowsUp(Card cardToCheck) {
+        
+        boolean willDinamiteExplode = false;
+        
+        if (cardToCheck.getSuit().equals("Spades") && cardToCheck.getNumber() > 1 && cardToCheck.getNumber() < 10) {
+            willDinamiteExplode = true;
+        }
+                
+        return willDinamiteExplode;
     }
 }

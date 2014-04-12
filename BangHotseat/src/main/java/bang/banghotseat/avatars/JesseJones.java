@@ -39,6 +39,8 @@ public class JesseJones implements Avatar {
      */
     @Override
     public void drawCards(Round round) {
+        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
     }
     
     @Override

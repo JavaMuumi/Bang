@@ -36,7 +36,9 @@ public class VisibleScreen {
     private ActionListener exit_ReallyExit;
     private ActionListener newGame_Continue;
     private ActionListener continueToNewRound;
+    private ActionListener toPrigioneScreen;
     private ActionListener prigione_ToNextPlayer;
+    private ActionListener toJesseJonesScreen;
     private ActionListener jesseJonesDrawsFromDrawpile;
     private ActionListener jesseJonesDrawsFromEnemyHand;
     private ActionListener toJourdonnaisScreen;
@@ -53,8 +55,17 @@ public class VisibleScreen {
     private ActionListener doYouWannaRespond_No;
     private ActionListener doYouWannaRespond_Yes;
     private ActionListener toBangAsAReplyChoice;
+    private ActionListener duelloChoiceForPlayerInTurn;
+    private ActionListener duelloChoiceForPlayerToFollow;
+    private ActionListener duelloToOtherPlayer;
+    private ActionListener playerInTurnWillNotReplyToDuello;
+    private ActionListener toDuelloDistractionOfPlayerInTurn;
+    private ActionListener playerInTurnLostHisOwnDuelloAndAllHisHandCards;
+    private ActionListener playerToFollowLostDuelloAndAllHisHandCards;
     private ActionListener panicoScreen_StealNow;
     private ActionListener catBalouScreen_RemoveNow;
+    private ActionListener toRandomHandCardWasStolen;
+    private ActionListener toRandomHandCardCannotBeTaken;
 
     /**
      *
@@ -75,7 +86,9 @@ public class VisibleScreen {
         exit_ReallyExit = new Exit_ReallyExit(this);
         newGame_Continue = new NewGame_Continue(this);
         continueToNewRound = new ContinueToNewRound(this);
+        toPrigioneScreen = new ToPrigioneScreen(this);
         prigione_ToNextPlayer = new Prigione_ToNextPlayer(this);
+        toJesseJonesScreen = new ToJesseJonesScreen(this);
         jesseJonesDrawsFromDrawpile = new JesseJonesDrawsFromDrawpile(this);
         jesseJonesDrawsFromEnemyHand = new JesseJonesDrawsFromEnemyHand(this);
         toJourdonnaisScreen = new ToJourdonnaisScreen(this);
@@ -87,13 +100,22 @@ public class VisibleScreen {
         discardCards_Discard = new DiscardCards_Discard(this);
         pleaseLookAwayToPlayerXScreen = new PleaseLookAwayToPlayerXScreen(this);
         toMancatoChoice = new ToMancatoChoice(this);
-        toYouHaveNoMancato = new ToYouHaveNoMancato(this);
+        toYouHaveNoMancato = new ToYouHaveNoHandCardsAndCannotReply(this);
         distractionReply = new DistractionReply(this);
         doYouWannaRespond_No = new DoYouWannaRespond_No(this);
         doYouWannaRespond_Yes = new DoYouWannaRespond_Yes(this);
         toBangAsAReplyChoice = new ToBangAsAReplyChoice(this);
+        duelloChoiceForPlayerInTurn = new DuelloChoiceForPlayerInTurn(this);
+        duelloChoiceForPlayerToFollow = new DuelloChoiceForPlayerToFollow(this);
+        duelloToOtherPlayer = new DuelloToOtherPlayer(this);
+        playerInTurnWillNotReplyToDuello = new PlayerInTurnWillNotReplyToDuello(this);
+        toDuelloDistractionOfPlayerInTurn = new ToDuelloDistractionOfPlayerInTurn(this);
+        playerInTurnLostHisOwnDuelloAndAllHisHandCards = new PlayerInTurnLostHisOwnDuelloAndAllHisHandCards(this);
+        playerToFollowLostDuelloAndAllHisHandCards = new PlayerToFollowLostDuelloAndAllHisHandCards(this);
         panicoScreen_StealNow = new PanicoScreen_StealNow(this);
         catBalouScreen_RemoveNow = new CatBalouScreen_RemoveNow(this);
+        toRandomHandCardWasStolen = new ToRandomHandCardWasStolen(this);
+        toRandomHandCardCannotBeTaken = new ToRandomHandCardCannotBeTaken(this);
     }
 
     /**
@@ -145,11 +167,16 @@ public class VisibleScreen {
         JLabel rules = new JLabel("Rules: KILL THE OTHER PLAYER!", JLabel.CENTER);
         rules.setFont(new Font("Rules", Font.BOLD, 48));
 
+        JLabel additionalInfo = new JLabel("For more details, check http://www.dvgiochi.net/bang/bang_rules.pdf", JLabel.CENTER);
+        additionalInfo.setFont(new Font("Info", Font.PLAIN, 32));
+
+
         JButton goBackToMainMenu = new JButton("Back to Main Menu");
         goBackToMainMenu.setFont(new Font("Button", Font.ITALIC, 34));
         goBackToMainMenu.addActionListener(backToMainMenu);
 
         container.add(rules);
+        container.add(additionalInfo);
         container.add(goBackToMainMenu);
     }
 
@@ -181,17 +208,22 @@ public class VisibleScreen {
      */
     public void newGameInfo() {
 
-        GridLayout layout = new GridLayout(5, 4);
+        GridLayout layout = new GridLayout(7, 4);
         container.setLayout(layout);
 
         JLabel player1Avatar = new JLabel("Player1, your character is " + setup.getPlayer1().getAvatar().toString());
         player1Avatar.setFont(new Font("Bang", Font.BOLD, 48));
         JLabel player1Speciality = new JLabel(setup.getPlayer1().getAvatar().getSpeciality());
         player1Speciality.setFont(new Font("CharacterAbility", Font.ITALIC, 28));
+        JLabel player1MaxHealth = new JLabel("Your maximum health is " + setup.getPlayer1().getAvatar().getMaxHealth());
+        player1MaxHealth.setFont(new Font("CharacterAbility", Font.ITALIC, 28));
+
         JLabel player2Avatar = new JLabel("Player2, your character is " + setup.getPlayer2().getAvatar().toString());
         player2Avatar.setFont(new Font("Bang", Font.BOLD, 48));
         JLabel player2Speciality = new JLabel(setup.getPlayer2().getAvatar().getSpeciality());
         player2Speciality.setFont(new Font("CharacterAbility", Font.ITALIC, 28));
+        JLabel player2MaxHealth = new JLabel("Your maximum health is " + setup.getPlayer2().getAvatar().getMaxHealth());
+        player2MaxHealth.setFont(new Font("CharacterAbility", Font.ITALIC, 28));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
@@ -199,8 +231,10 @@ public class VisibleScreen {
 
         container.add(player1Avatar);
         container.add(player1Speciality);
+        container.add(player1MaxHealth);
         container.add(player2Avatar);
         container.add(player2Speciality);
+        container.add(player2MaxHealth);
         container.add(next);
     }
 
@@ -263,15 +297,21 @@ public class VisibleScreen {
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
-        if (setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling")) {
-            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
+        if (setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Mancato!") || setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling")) {
+            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato() || (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && setup.getRound().getCheckerForAvatarSpeciality().checkCalamityJanetForBangsOrMancatos())) {
                 next.addActionListener(toMancatoChoice);
             } else {
                 next.addActionListener(distractionReply);
             }
         } else if (setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Indiani!")) {
-            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang()) {
+            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang() || (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && setup.getRound().getCheckerForAvatarSpeciality().checkCalamityJanetForBangsOrMancatos())) {
                 next.addActionListener(toBangAsAReplyChoice);
+            } else {
+                next.addActionListener(distractionReply);
+            }
+        } else if (setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Duello")) {
+            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang() || (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && setup.getRound().getCheckerForAvatarSpeciality().checkCalamityJanetForBangsOrMancatos())) {
+                next.addActionListener(duelloChoiceForPlayerToFollow);
             } else {
                 next.addActionListener(distractionReply);
             }
@@ -332,11 +372,11 @@ public class VisibleScreen {
             container.setLayout(new GridLayout(4, 3));
             container.add(thereIsAPrigione);
 
-            JLabel drawnCard = new JLabel(setup.getRound().getPlayerToFollow().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+            JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
             drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
             container.add(drawnCard);
 
-            if (!setup.getRound().getPlayerToFollow().getLastCheckedCard().getSuit().equals("Hearts")) {
+            if (!setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
                 container.add(prigioneHeld);
                 next.addActionListener(prigione_ToNextPlayer);
             } else {
@@ -372,49 +412,89 @@ public class VisibleScreen {
             container.setLayout(new GridLayout(6, 3));
             container.add(thereIsADinamite);
 
-            JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
-            drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(drawnCard1);
+            if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() == 4) {
 
-            JLabel and = new JLabel("and", JLabel.CENTER);
-            and.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(and);
+                JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 4).toString(), JLabel.CENTER);
+                drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard1);
 
-            JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString(), JLabel.CENTER);
-            drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(drawnCard2);
+                JLabel and = new JLabel("and", JLabel.CENTER);
+                and.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(and);
 
-            if (setup.getRound().getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDuke()) {
+                JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 3).toString(), JLabel.CENTER);
+                drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard2);
 
-                container.add(dinamiteExploded);
-
-                next.addActionListener(continueToPlayerXScreen);
+                if (setup.getRound().getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDukeWhenHeHasBothDinamiteAndPrigione()) {
+                    container.add(dinamiteExploded);
+                } else {
+                    container.add(dinamiteWasPassedOn);
+                }
+                next.addActionListener(toPrigioneScreen);
+                container.add(next);
 
             } else {
-                container.add(dinamiteWasPassedOn);
+
+                JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
+                drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard1);
+
+                JLabel and = new JLabel("and", JLabel.CENTER);
+                and.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(and);
+
+                JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString(), JLabel.CENTER);
+                drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard2);
+
+                if (setup.getRound().getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDuke()) {
+                    container.add(dinamiteExploded);
+                } else {
+                    container.add(dinamiteWasPassedOn);
+                }
                 next.addActionListener(continueToPlayerXScreen);
+                container.add(next);
             }
-            container.add(next);
         } else {
 
             container.setLayout(new GridLayout(4, 3));
             container.add(thereIsADinamite);
 
-            JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
-            drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(drawnCard);
+            if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() == 2) {
 
-            if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Spades") && setup.getRound().getPlayerInTurn().getLastCheckedCard().getNumber() > 1 && setup.getRound().getPlayerInTurn().getLastCheckedCard().getNumber() < 10) {
-                container.add(dinamiteExploded);
+                JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
+                drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard);
+
+                if (setup.getRound().getCheckerForEventsBeforeTurn().dinamiteBlowsUp(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2))) {
+                    container.add(dinamiteExploded);
+                } else {
+                    container.add(dinamiteWasPassedOn);
+                }
+                next.addActionListener(toPrigioneScreen);
+                container.add(next);
+
             } else {
-                container.add(dinamiteWasPassedOn);
+
+                JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+                drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard);
+
+                if (setup.getRound().getCheckerForEventsBeforeTurn().dinamiteBlowsUp(setup.getRound().getPlayerInTurn().getLastCheckedCard())) {
+                    container.add(dinamiteExploded);
+                } else {
+                    container.add(dinamiteWasPassedOn);
+                }
+                if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
+                    next.addActionListener(toKitCarlsonScreen);
+                } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
+                    next.addActionListener(toJesseJonesScreen);
+                } else {
+                    next.addActionListener(continueToPlayerXScreen);
+                }
+                container.add(next);
             }
-            if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
-                next.addActionListener(toKitCarlsonScreen);
-            } else {
-                next.addActionListener(continueToPlayerXScreen);
-            }
-            container.add(next);
         }
     }
 
@@ -654,17 +734,15 @@ public class VisibleScreen {
      *
      * Asettaa nakyman, joka kertoo ettei vastustajalla ole kasikortteja joten
      * niita ei voi vieda.
-     *
-     * @param panicoOrCatBalou kortti, joka yritettiin pelata
      */
-    public void playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(Card panicoOrCatBalou) {
+    public void targetedPlayerHasNoCardsSoTheyCannotBeTaken() {
 
         container.setLayout(new GridLayout(3, 3));
 
         JLabel enemyHasNoCards = new JLabel("The other player has no cards,", JLabel.CENTER);
         enemyHasNoCards.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel youCannotPlayThisCard = new JLabel("you cannot play " + panicoOrCatBalou.getName(), JLabel.CENTER);
+        JLabel youCannotPlayThisCard = new JLabel("there are no cards to take!", JLabel.CENTER);
         youCannotPlayThisCard.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
@@ -697,6 +775,8 @@ public class VisibleScreen {
             JButton next = new JButton("Continue");
             next.setFont(new Font("Button", Font.ITALIC, 34));
             next.addActionListener(continueToPlayerXScreen);
+            container.add(next);
+
         } else {
             JLabel wannaDrawFromEnemyHand = new JLabel("Do you want to draw your first card from enemy's hand?", JLabel.CENTER);
             wannaDrawFromEnemyHand.setFont(new Font("Bang", Font.BOLD, 48));
@@ -863,8 +943,16 @@ public class VisibleScreen {
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
-        next.addActionListener(pleaseLookAwayToPlayerXScreen);
 
+        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
+            if (setup.getRound().getPlayerInTurn().getHandCards().isEmpty()) {
+                next.addActionListener(toRandomHandCardCannotBeTaken);
+            } else {
+                next.addActionListener(toRandomHandCardWasStolen);
+            }
+        } else {
+            next.addActionListener(pleaseLookAwayToPlayerXScreen);
+        }
         container.add(youHaveNoMancato);
         container.add(clickToDistract);
         container.add(next);
@@ -878,9 +966,15 @@ public class VisibleScreen {
 
         container.setLayout(new GridLayout(4, 3));
 
-        JLabel willYouUseAMancato = new JLabel("Will you use a Mancato! to cancel a hit?", JLabel.CENTER);
-        willYouUseAMancato.setFont(new Font("Bang", Font.BOLD, 48));
-
+        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
+            JLabel willYouUseACard = new JLabel("Will you use a BANG! or a Mancato! to cancel a hit?", JLabel.CENTER);
+            willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseACard);
+        } else {
+            JLabel willYouUseAMancato = new JLabel("Will you use a Mancato! to cancel a hit?", JLabel.CENTER);
+            willYouUseAMancato.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseAMancato);
+        }
         JButton useMancato = new JButton("Yes");
         useMancato.setFont(new Font("Button", Font.ITALIC, 34));
         useMancato.addActionListener(doYouWannaRespond_Yes);
@@ -889,7 +983,6 @@ public class VisibleScreen {
         doNotUseMancato.setFont(new Font("Button", Font.ITALIC, 34));
         doNotUseMancato.addActionListener(doYouWannaRespond_No);
 
-        container.add(willYouUseAMancato);
         container.add(useMancato);
         container.add(doNotUseMancato);
     }
@@ -900,9 +993,17 @@ public class VisibleScreen {
      */
     public void doYouWannaReplyWithBang() {
 
-        JLabel willYouUseABang = new JLabel("Will you use a Bang! to cancel a hit?", JLabel.CENTER);
-        willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+        container.setLayout(new GridLayout(4, 3));
 
+        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
+            JLabel willYouUseACard = new JLabel("Will you use a BANG! or a Mancato! to cancel a hit?");
+            willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseACard);
+        } else {
+            JLabel willYouUseABang = new JLabel("Will you use a BANG! to cancel a hit?", JLabel.CENTER);
+            willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseABang);
+        }
         JButton useBang = new JButton("Yes");
         useBang.setFont(new Font("Button", Font.ITALIC, 34));
         useBang.addActionListener(doYouWannaRespond_Yes);
@@ -911,9 +1012,209 @@ public class VisibleScreen {
         doNotUseBang.setFont(new Font("Button", Font.ITALIC, 34));
         doNotUseBang.addActionListener(doYouWannaRespond_No);
 
-        container.add(willYouUseABang);
         container.add(useBang);
         container.add(doNotUseBang);
+    }
+
+    /**
+     *
+     * Seuraavana vuorossa olevan pelaajan Duello-korttiin reagointinakyma.
+     */
+    public void playerToFollowRepliesToDuello() {
+
+        container.setLayout(new GridLayout(5, 3));
+
+        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
+            JLabel willYouUseACard = new JLabel("Will you use a BANG! or a Mancato! to reply to Duello?");
+            willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseACard);
+
+        } else {
+            JLabel willYouUseABang = new JLabel("Will you use a BANG! to cancel a hit?", JLabel.CENTER);
+            willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseABang);
+        }
+        JLabel enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerInTurn().getHandCards().size() + " hand cards", JLabel.CENTER);
+        enemyHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(enemyHandCards);
+
+        JButton useBang = new JButton("Yes");
+        useBang.setFont(new Font("Button", Font.ITALIC, 34));
+
+        if (setup.getRound().getPlayerInTurn().getHandCards().isEmpty()) {
+            useBang.addActionListener(playerInTurnLostHisOwnDuelloAndAllHisHandCards);
+        } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang()) {
+            useBang.addActionListener(duelloToOtherPlayer);
+
+        } else {
+            useBang.addActionListener(duelloToOtherPlayer);
+        }
+
+        JButton doNotUseBang = new JButton("No");
+        doNotUseBang.setFont(new Font("Button", Font.ITALIC, 34));
+        doNotUseBang.addActionListener(doYouWannaRespond_No);
+
+        container.add(useBang);
+        container.add(doNotUseBang);
+    }
+
+    /**
+     *
+     * Seuraavana vuorossa olevan pelaajan Duello-korttiin reagointinakyma.
+     */
+    public void playerInTurnRepliesToDuello() {
+
+        container.setLayout(new GridLayout(5, 3));
+
+        if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet")) {
+            JLabel willYouUseACard = new JLabel("Will you use a BANG! or a Mancato! to reply to Duello?");
+            willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseACard);
+
+        } else {
+            JLabel willYouUseABang = new JLabel("Will you use a BANG! to cancel a hit?", JLabel.CENTER);
+            willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseABang);
+        }
+        JLabel enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards", JLabel.CENTER);
+        enemyHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(enemyHandCards);
+
+        JButton useBang = new JButton("Yes");
+        useBang.setFont(new Font("Button", Font.ITALIC, 34));
+
+        if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+            useBang.addActionListener(playerToFollowLostDuelloAndAllHisHandCards);
+        } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang()) {
+            useBang.addActionListener(duelloToOtherPlayer);
+
+        } else {
+            useBang.addActionListener(duelloToOtherPlayer);
+        }
+
+        JButton doNotUseBang = new JButton("No");
+        doNotUseBang.setFont(new Font("Button", Font.ITALIC, 34));
+        doNotUseBang.addActionListener(playerInTurnWillNotReplyToDuello);
+
+        container.add(useBang);
+        container.add(doNotUseBang);
+    }
+
+    /**
+     *
+     * Nakyma, joka kehottaa Duelloon asken reagoinutta pelaajaa katsomaan pois.
+     */
+    public void duelloToOtherPlayerScreen() {
+
+        container.setLayout(new GridLayout(2, 3));
+
+        JLabel pleaseLookAway;
+        if (setup.getRound().playerInTurnIsNextToReactToDuello()) {
+            pleaseLookAway = new JLabel("Please look away, " + setup.getRound().getPlayerInTurn().getAvatar().toString() + " replies to Duello", JLabel.CENTER);
+        } else {
+            pleaseLookAway = new JLabel("Please look away, " + setup.getRound().getPlayerToFollow().getAvatar().toString() + " replies to Duello", JLabel.CENTER);
+        }
+        pleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(pleaseLookAway);
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+
+        if (setup.getRound().playerInTurnIsNextToReactToDuello()) {
+            if (setup.getRound().getCheckerForPlayedCard().playerInTurnHasBang()) {
+                next.addActionListener(duelloChoiceForPlayerInTurn);
+
+            } else {
+                next.addActionListener(toDuelloDistractionOfPlayerInTurn);
+            }
+        } else {
+            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang()) {
+                next.addActionListener(duelloChoiceForPlayerToFollow);
+
+            } else {
+                next.addActionListener(distractionReply);
+            }
+        }
+        container.add(next);
+    }
+
+    /**
+     *
+     * Nakyma, joka kertoo, etta vuorossa oleva pelaaja havisi Duellon, koska
+     * hanella ei ole korttia, jolla vastata.
+     */
+    public void playerInTurnCannotReplyToDuello() {
+
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel youHaveNoBang = new JLabel("You have no BANG!-card to reply with and will lose health!", JLabel.CENTER);
+        youHaveNoBang.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
+        clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+
+        next.addActionListener(continueToPlayerXScreen);
+
+        container.add(youHaveNoBang);
+        container.add(clickToDistract);
+        container.add(next);
+    }
+
+    /**
+     *
+     * Nakyma, joka kertoo vuorossa olevan pelaajan havinneen kaiken Duellossa
+     * ja seuraavana olevan pelaajan aloittavan vuoronsa.
+     */
+    public void playerInTurnLostEverythingInDuello() {
+
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel enemyLostEverything = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().toString() + "has no hand cards and lost Duello!", JLabel.CENTER);
+        enemyLostEverything.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(enemyLostEverything);
+
+        JLabel youContinue = new JLabel("Your turn starts now!", JLabel.CENTER);
+        youContinue.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(youContinue);
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(continueToNewRound);
+        container.add(next);
+    }
+
+    /**
+     *
+     * Nakyma, joka kertoo vuorossa seuraavna olevan pelaajan havinneen kaiken
+     * Duellossa.
+     */
+    public void playerToFollowLostEverythingInDuello() {
+
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel enemyLostEverything = new JLabel(setup.getRound().getPlayerToFollow().getAvatar().toString() + " has no hand cards and lost Duello!", JLabel.CENTER);
+        enemyLostEverything.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(enemyLostEverything);
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+
+        if (!setup.getRound().getPlayerInTurn().getHandCards().isEmpty()) {
+            JLabel youContinue = new JLabel("You may continue your turn", JLabel.CENTER);
+            youContinue.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(youContinue);
+            next.addActionListener(continueToPlayerXScreen);
+
+        } else {
+            JLabel youHaveNoMoreHandCards = new JLabel("You have no more cards, your turn ended", JLabel.CENTER);
+            youHaveNoMoreHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(youHaveNoMoreHandCards);
+            next.addActionListener(playerXScreen_EndTurn);
+        }
+        container.add(next);
     }
 
     /**
@@ -933,8 +1234,12 @@ public class VisibleScreen {
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
-        next.addActionListener(continueToPlayerXScreen);
 
+        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
+            next.addActionListener(toRandomHandCardWasStolen);
+        } else {
+            next.addActionListener(continueToPlayerXScreen);
+        }
         container.add(enemyHasNoHandCards);
         container.add(enemyCannotReply);
         container.add(next);

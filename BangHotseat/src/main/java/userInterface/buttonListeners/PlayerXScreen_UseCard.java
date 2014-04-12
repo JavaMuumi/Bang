@@ -40,7 +40,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
             visibleScreen.playerXScreen();
 
-        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("BANG!")) {
+        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("BANG!") || (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Mancato!"))) {
 
             if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().bangCanBePlayed() == false) {
 
@@ -60,11 +60,9 @@ public class PlayerXScreen_UseCard implements ActionListener {
                     visibleScreen.jourdonnaisScreen();
                 } else {
                     visibleScreen.takingDamageAndNoHandCards();
-                    visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+                    visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
                 }
-
             } else {
-
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
                 if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
@@ -86,7 +84,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
                     visibleScreen.jourdonnaisScreen();
                 } else {
                     visibleScreen.takingDamageAndNoHandCards();
-                    visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+                    visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
                 }
 
             } else {
@@ -108,14 +106,23 @@ public class PlayerXScreen_UseCard implements ActionListener {
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
                 visibleScreen.takingDamageAndNoHandCards();
-                visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+                visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
 
             } else {
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+                visibleScreen.attackingPlayerPleaseLookAway();
+            }
+        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Duello")) {
+            if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
-                visibleScreen.attackingPlayerPleaseLookAway();
+                visibleScreen.takingDamageAndNoHandCards();
+                visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
 
+            } else {
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+                visibleScreen.duelloToOtherPlayerScreen();
             }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Panico!")) {
 
@@ -125,7 +132,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
             } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
 
-                visibleScreen.playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()));
+                visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
             } else {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
@@ -136,7 +143,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
             if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
 
-                visibleScreen.playerToFollowHasNoCardsSoPanicoOrCatBalouCannotBePlayed(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()));
+                visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
             } else {
 
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());

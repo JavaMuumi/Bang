@@ -7,6 +7,7 @@ package bang.banghotseat.essentials;
 import bang.banghotseat.Round;
 import bang.banghotseat.avatars.PaulRegret;
 import bang.banghotseat.avatars.PedroRamirez;
+import bang.banghotseat.avatars.SuzyLafayette;
 import bang.banghotseat.avatars.WillyTheKid;
 import bang.banghotseat.cards.*;
 import org.junit.After;
@@ -174,6 +175,15 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Discardpile size: 1", "Discardpile size: " + round.getDiscardpile().getDeck().size());
     }
+    
+    @Test
+    public void afterPlayingADuelloTheCardWillBeInDiscardPile() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Duello("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Discardpile size: 1", "Discardpile size: " + round.getDiscardpile().getDeck().size());
+    }
 
     @Test
     public void aBlueCardWillBePutInFrontIfThereAreNoBlueCardsToBeginWith() {
@@ -303,5 +313,26 @@ public class CheckerForPlayedCardTest {
         round.getCheckerForPlayedCard().checkBarrel();
                 
         assertEquals(false, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
+    }
+    
+    @Test
+    public void ifPlayedCardIsLastInHandOfSuzyLafayetteSheWillDrawANewOne() {
+        
+        round.getPlayerInTurn().setAvatar(new SuzyLafayette());
+        round.getPlayerInTurn().putCardIntoHand(new Birra("Hearts", 1));
+        
+        round.getPlayerInTurn().getHandCards().get(0).function(round);
+        
+        assertEquals("Player hand cards: 1", "Player hand cards: " + round.getPlayerInTurn().getHandCards().size());
+    }
+    
+    @Test
+    public void ifLastCardIsDrawnFromHandOfSuzyLafayetteSheWillDrawANewOne() {
+        
+        round.getPlayerToFollow().setAvatar(new SuzyLafayette());
+        round.getPlayerToFollow().putCardIntoHand(new Birra("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new CatBalou("Hearts", 1));
+        
+        
     }
 }

@@ -75,22 +75,45 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
-     * Tarkistaa kaksi paalimmaista viimeksi tarkastetuista korteista dynamiitin
-     * rajayttavia.
+     * Tarkistaa ovatko kaksi paalimmaista viimeksi tarkastetuista korteista
+     * dynamiitin rajayttavia.
      *
      * @return totuusarvo olisivatko molemmat viimeksi tarkistetuista korteista
      * rajayttaneet dynamiitin.
      */
     public boolean checkIfDinamiteExplodesOnLuckyDuke() {
 
-        boolean didDinamiteExplode = true;
+        boolean dinamiteExploded = true;
 
         for (Card willThisDetonateDinamite : round.getPlayerInTurn().getListOfLastCheckedCards()) {
             if (!willThisDetonateDinamite.getSuit().equals("Spades") || willThisDetonateDinamite.getNumber() < 2 || willThisDetonateDinamite.getNumber() > 9) {
-                didDinamiteExplode = false;
+                dinamiteExploded = false;
             }
         }
-        return didDinamiteExplode;
+        return dinamiteExploded;
+    }
+
+    /**
+     *
+     * Tarkistaa ovatko neljanneksi ja kolmanneksi paalimmaiset viimeksi
+     * tarkastetuista korteista dynamiitin rajayttavia.
+     *
+     * @return totuusarvo olisivatko molemmat tarkistetuista korteista
+     * rajayttaneet dynamiitin.
+     */
+    public boolean checkIfDinamiteExplodesOnLuckyDukeWhenHeHasBothDinamiteAndPrigione() {
+
+        boolean dinamiteExploded = true;
+
+        Card willThisDetonateDinamite = round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 4);
+
+        for (int i = 0; i < 1; i++) {
+            if (!willThisDetonateDinamite.getSuit().equals("Spades") || willThisDetonateDinamite.getNumber() < 2 || willThisDetonateDinamite.getNumber() > 9) {
+                dinamiteExploded = false;
+            }
+            willThisDetonateDinamite = round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 3);
+        }
+        return dinamiteExploded;
     }
 
     /**
@@ -115,10 +138,74 @@ public class CheckerForAvatarSpeciality {
      */
     public void drawFromEnemyHandWithJesseJones() {
 
-        Card stolen = round.getPlayerToFollow().drawRandomHangCard();
+        Card stolen = round.getPlayerToFollow().drawRandomHandCard(round);
         round.getPlayerInTurn().setLastCheckedCard(stolen);
         round.getPlayerInTurn().putCardIntoHand(stolen);
 
         round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+    }
+
+    /**
+     *
+     * Vetaa kortin pakasta pelaajan kateen, jos pelaaja on Bart Cassidy
+     */
+    public void drawCardForBartCassidyWhenHeTakesAHit() {
+
+        if (round.getPlayerToFollow().getAvatar().toString().equals("Bart Cassidy")) {
+            round.getPlayerToFollow().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+        }
+    }
+
+    /**
+     *
+     * Vetaa sattumanvaraisen kortin vastustajan kadesta omaan kateen, jos
+     * pelaaja on El Gringo ja vastustajalla on kasikortteja.
+     */
+    public void drawCardFromEnemyHandWhenElGringoTakesAHit() {
+
+        if (round.getPlayerToFollow().getAvatar().toString().equals("El Gringo") && !round.getPlayerInTurn().getHandCards().isEmpty()) {
+
+            Card drawnCard = round.getPlayerInTurn().drawRandomHandCard(round);
+            round.getPlayerInTurn().setLastCheckedCard(drawnCard);
+            round.getPlayerToFollow().putCardIntoHand(drawnCard);
+        }
+    }
+
+    /**
+     *
+     * Tarkastaa, onko Calamity Janetilla BANG! tai Mancato! kadessaan.
+     */
+    public boolean checkCalamityJanetForBangsOrMancatos() {
+
+        boolean calamityJanetHasBangOrMancato = false;
+
+        for (Card isItBangOrMancato : round.getPlayerToFollow().getHandCards()) {
+            if (isItBangOrMancato.getName().contains("BANG!") || isItBangOrMancato.getName().contains("Mancato!")) {
+
+                calamityJanetHasBangOrMancato = true;
+            }
+        }
+        return calamityJanetHasBangOrMancato;
+    }
+
+    /**
+     *
+     * Etsii Calamity Janetin kadesta BANG! tai Mancato! -korttia ja palauttaa
+     * sen indeksin.
+     *
+     * @param playerToCheck pelaaja, jonka kadesta BANG! tai Mancato! -korttia
+     * etsitaan
+     * @return kadessa olevan BANG! tai Mancato! -kortin indeksi
+     */
+    public int getIndexOfABangOrMancatoInHandOfCalamityJanet(Player playerToCheck) {
+
+        int indexOfBangOrMancato = 0;
+
+        for (Card thisIsBangOrMancato : playerToCheck.getHandCards()) {
+            if (thisIsBangOrMancato.getName().contains("BANG!") || thisIsBangOrMancato.getName().contains("Mancato!")) {
+                indexOfBangOrMancato = playerToCheck.getHandCards().indexOf(thisIsBangOrMancato);
+            }
+        }
+        return indexOfBangOrMancato;
     }
 }

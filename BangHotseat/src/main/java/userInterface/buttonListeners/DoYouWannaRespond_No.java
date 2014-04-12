@@ -33,10 +33,17 @@ public class DoYouWannaRespond_No implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1);
+        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
 
-        visibleScreen.pleaseLookAway();
-
+        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().isEmpty()) {
+                visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
+            } else {
+                visibleScreen.randomHandCardWasStolen();
+            }
+        } else {
+            visibleScreen.pleaseLookAway();
+        }
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

@@ -33,7 +33,7 @@ public class DiscardCards_Discard implements ActionListener {
         if (visibleScreen.getIndex() == -1) {
         }
         else {
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getIndex()));
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getIndex(), visibleScreen.getSetup().getRound()));
         }
         if(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().size() > visibleScreen.getSetup().getRound().getPlayerInTurn().getCurrentHealth()) {
             visibleScreen.getFrame().getContentPane().removeAll();
