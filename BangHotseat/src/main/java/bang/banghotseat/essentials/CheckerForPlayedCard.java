@@ -60,6 +60,9 @@ public class CheckerForPlayedCard {
                 if (canPlayerInTurnTouchPlayerToFollow()) {
                     playingPanico();
                 }
+            } else if (playedCard.getName().equals("Emporio")) {
+                playingEmporio();
+
             } else {
                 playedCard.function(round);
                 round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
@@ -228,6 +231,17 @@ public class CheckerForPlayedCard {
         } else {
             round.getPlayerInTurn().getHandCards().get(index).function(round);
             round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        }
+    }
+
+    /**
+     *
+     * Kasittelee Emporio-kortin pelaamisen.
+     */
+    public void playingEmporio() {
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        for (int i = 0; i < 2; i++) {
+            round.getCheckerForEventsBeforeTurn().checkTopCard();
         }
     }
 

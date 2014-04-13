@@ -38,12 +38,17 @@ public class VisibleScreen {
     private ActionListener continueToNewRound;
     private ActionListener toPrigioneScreen;
     private ActionListener prigione_ToNextPlayer;
+    private ActionListener emporioPlayerChoseFirstCard;
+    private ActionListener emporioPlayerChoseSecondCard;
     private ActionListener toJesseJonesScreen;
     private ActionListener jesseJonesDrawsFromDrawpile;
     private ActionListener jesseJonesDrawsFromEnemyHand;
     private ActionListener toJourdonnaisScreen;
     private ActionListener toKitCarlsonScreen;
     private ActionListener kitCarlsonPutCardBack;
+    private ActionListener toSidKetchumCardDiscard;
+    private ActionListener sidKetchumDiscardClick;
+    private ActionListener sidKetchumCancel;
     private ActionListener playerXScreen_UseCard;
     private ActionListener continueToPlayerXScreen;
     private ActionListener playerXScreen_EndTurn;
@@ -88,12 +93,17 @@ public class VisibleScreen {
         continueToNewRound = new ContinueToNewRound(this);
         toPrigioneScreen = new ToPrigioneScreen(this);
         prigione_ToNextPlayer = new Prigione_ToNextPlayer(this);
+        emporioPlayerChoseFirstCard = new EmporioPlayerChoseFirstCard(this);
+        emporioPlayerChoseSecondCard = new EmporioPlayerChoseSecondCard(this);
         toJesseJonesScreen = new ToJesseJonesScreen(this);
         jesseJonesDrawsFromDrawpile = new JesseJonesDrawsFromDrawpile(this);
         jesseJonesDrawsFromEnemyHand = new JesseJonesDrawsFromEnemyHand(this);
         toJourdonnaisScreen = new ToJourdonnaisScreen(this);
         toKitCarlsonScreen = new ToKitCarlsonScreen(this);
         kitCarlsonPutCardBack = new KitCarlsonPutCardBack(this);
+        toSidKetchumCardDiscard = new ToSidKetchumCardDiscard(this);
+        sidKetchumDiscardClick = new SidKetchumDiscardClick(this);
+        sidKetchumCancel = new SidKetchumCancel(this);
         continueToPlayerXScreen = new ContinueToPlayerXScreen(this);
         playerXScreen_UseCard = new PlayerXScreen_UseCard(this);
         playerXScreen_EndTurn = new PlayerXScreen_EndTurn(this);
@@ -756,6 +766,33 @@ public class VisibleScreen {
 
     /**
      *
+     * Asettaa Emporio-kortin valintanakyman.
+     */
+    public void emporioScreen() {
+
+        container.setLayout(new GridLayout(4, 3));
+
+        JButton drawnCard1 = new JButton(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString());
+        drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
+        drawnCard1.addActionListener(emporioPlayerChoseFirstCard);
+        container.add(drawnCard1);
+
+        JLabel and = new JLabel("and", JLabel.CENTER);
+        and.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(and);
+
+        JButton drawnCard2 = new JButton(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString());
+        drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
+        drawnCard2.addActionListener(emporioPlayerChoseSecondCard);
+        container.add(drawnCard2);
+
+        JLabel whichWillYouTake = new JLabel("Which will you take? Enemy will have the other", JLabel.CENTER);
+        whichWillYouTake.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(whichWillYouTake);
+    }
+
+    /**
+     *
      * Jesse Jonesin kortinnoston valintanakyma.
      */
     public void jesseJonesDrawScreen() {
@@ -828,6 +865,58 @@ public class VisibleScreen {
 
     /**
      *
+     * Sid Ketchumin kestojen palauttamiseksi poistettavien kasikorttien
+     * valintanakyma.
+     */
+    public void sidKetchumCardDiscard() {
+
+        BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
+        container.setLayout(yPlane);
+
+        if (setup.getRound().getCheckerForAvatarSpeciality().getSidKetchumDiscardList().size() == 2) {
+            container.add(new JLabel("Are you sure?"));
+
+            String remainingHandCards = "<html><br>Hand cards:";
+            for (Card toBeShown : setup.getRound().getPlayerInTurn().getHandCards()) {
+                remainingHandCards = remainingHandCards + "<br>" + toBeShown.toString();
+            }
+            remainingHandCards = remainingHandCards + "</html>";
+            container.add(new JLabel(remainingHandCards));
+
+        } else {
+            container.add(new JLabel("Choose a card to discard"));
+
+            container.add(new JLabel("Hand cards:"));
+
+            ButtonGroup choises = new ButtonGroup();
+            cardList.clear();
+
+            for (int i = 0; i < setup.getRound().getPlayerInTurn().getHandCards().size(); i++) {
+                cardList.add(new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(i).toString()));
+            }
+            for (JRadioButton toBeAdded : cardList) {
+                choises.add(toBeAdded);
+                container.add(toBeAdded);
+            }
+        }
+        String cardsToBeDiscarded = "<html><br>To be discarded:";
+        for (Card toBeShown : setup.getRound().getCheckerForAvatarSpeciality().getSidKetchumDiscardList()) {
+            cardsToBeDiscarded = cardsToBeDiscarded + "<br>" + toBeShown.toString();
+        }
+        cardsToBeDiscarded = cardsToBeDiscarded + "</html>";
+        container.add(new JLabel(cardsToBeDiscarded));
+
+        JButton discard = new JButton("Discard");
+        discard.addActionListener(sidKetchumDiscardClick);
+        container.add(discard);
+
+        JButton cancel = new JButton("Cancel");
+        cancel.addActionListener(sidKetchumCancel);
+        container.add(cancel);
+    }
+
+    /**
+     *
      * Pelaajan vuoronakyma.
      */
     public void playerXScreen() {
@@ -881,6 +970,13 @@ public class VisibleScreen {
         JButton useCard = new JButton("Use card");
         useCard.addActionListener(playerXScreen_UseCard);
         container.add(useCard);
+
+        if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Sid Ketchum") && setup.getRound().getPlayerInTurn().getHandCards().size() > 1) {
+
+            JButton healthForSidKetchum = new JButton("Regain health");
+            healthForSidKetchum.addActionListener(toSidKetchumCardDiscard);
+            container.add(healthForSidKetchum);
+        }
 
         JButton endTurn = new JButton("End turn");
         endTurn.addActionListener(playerXScreen_EndTurn);
@@ -954,6 +1050,30 @@ public class VisibleScreen {
             next.addActionListener(pleaseLookAwayToPlayerXScreen);
         }
         container.add(youHaveNoMancato);
+        container.add(clickToDistract);
+        container.add(next);
+    }
+
+    /**
+     *
+     * Nakyma, joka kertoo vuorossa olevalle pelaajalle, ettei han voi reagoida
+     * Duelloon mutta salaa sen hyokkaajalta.
+     */
+    public void playerInTurnclickToPretendYouCouldReplyToDuello() {
+
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel youHaveNoReplyCard = new JLabel("You have no BANG! to reply with and lost the Duello!", JLabel.CENTER);
+        youHaveNoReplyCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
+        clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(continueToPlayerXScreen);
+
+        container.add(youHaveNoReplyCard);
         container.add(clickToDistract);
         container.add(next);
     }
@@ -1043,9 +1163,6 @@ public class VisibleScreen {
 
         if (setup.getRound().getPlayerInTurn().getHandCards().isEmpty()) {
             useBang.addActionListener(playerInTurnLostHisOwnDuelloAndAllHisHandCards);
-        } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang()) {
-            useBang.addActionListener(duelloToOtherPlayer);
-
         } else {
             useBang.addActionListener(duelloToOtherPlayer);
         }
@@ -1085,9 +1202,6 @@ public class VisibleScreen {
 
         if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
             useBang.addActionListener(playerToFollowLostDuelloAndAllHisHandCards);
-        } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasBang()) {
-            useBang.addActionListener(duelloToOtherPlayer);
-
         } else {
             useBang.addActionListener(duelloToOtherPlayer);
         }
@@ -1172,7 +1286,7 @@ public class VisibleScreen {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel enemyLostEverything = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().toString() + "has no hand cards and lost Duello!", JLabel.CENTER);
+        JLabel enemyLostEverything = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().toString() + " has no hand cards and lost Duello!", JLabel.CENTER);
         enemyLostEverything.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(enemyLostEverything);
 

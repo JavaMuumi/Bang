@@ -42,9 +42,10 @@ public class PlayerInTurnLostHisOwnDuelloAndAllHisHandCards implements ActionLis
             visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().get(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfABangInHand(visibleScreen.getSetup().getRound().getPlayerToFollow())));
         }
         visibleScreen.getSetup().getRound().getPlayerInTurn().loseHealth(1, visibleScreen.getSetup().getRound());
-        visibleScreen.getSetup().getRound().endTurn();
 
         visibleScreen.playerInTurnLostEverythingInDuello();
+
+        visibleScreen.getSetup().getRound().endTurn();
 
         frame.revalidate();
         frame.repaint();

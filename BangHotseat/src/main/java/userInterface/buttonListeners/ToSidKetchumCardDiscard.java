@@ -12,11 +12,10 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie ruutuun, jolla
- * vuorossa oleva pelaaja hamaa vastustajaa luulemaan, etta pelaajalla saattaisi
- * olla BANG!.
+ * Luokka on ActionListener, jolla varustettu nappula vie Sid Ketchum -avatarin
+ * korttienuhraus-ruutuun.
  */
-public class ToDuelloDistractionOfPlayerInTurn implements ActionListener {
+public class ToSidKetchumCardDiscard implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -24,17 +23,16 @@ public class ToDuelloDistractionOfPlayerInTurn implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ToDuelloDistractionOfPlayerInTurn(VisibleScreen visibleScreen) {
+    public ToSidKetchumCardDiscard(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.getSetup().getRound().getPlayerInTurn().loseHealth(1, visibleScreen.getSetup().getRound());
-        visibleScreen.playerInTurnclickToPretendYouCouldReplyToDuello();
+        visibleScreen.sidKetchumCardDiscard();
 
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

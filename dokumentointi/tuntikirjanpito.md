@@ -114,26 +114,36 @@ klo 14-17
 Koodausta
 YHTEENSÄ: 3h
 
-8.3.
+8.4.
 klo 12-18
 Koodia ja testejä
 YHTEENSÄ: 6h
 
-9.3.
+9.4.
 klo 14-17
 Lisää koodia ja testejä
 klo 18-20
 Sekvenssikaavioita
 YHTEENSÄ: 5h
 
-10.3.
+10.4.
 klo 10-14
 Deadline painaa päälle --> Koodia, testejä, JavaDoceja
 YHTEENSÄ: 4h
 
-11.3.
+11.4.
 klo 10-16
 Koodia ja testejä
 klo 20-01
 Sitä samaa taas
 YHTEENSÄ: 11h
+
+12.4.
+klo 9-11
+Koodia (yllätys)
+YHTEENSÄ: 2h
+
+13.4.
+klo 19-23
+Koodia ja toisten arvostelua
+YHTEENSÄ: 4h

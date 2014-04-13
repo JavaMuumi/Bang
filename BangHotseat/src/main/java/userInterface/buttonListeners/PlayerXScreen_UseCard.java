@@ -125,35 +125,30 @@ public class PlayerXScreen_UseCard implements ActionListener {
                 visibleScreen.duelloToOtherPlayerScreen();
             }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Panico!")) {
-
             if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnTouchPlayerToFollow() == false) {
-
                 visibleScreen.enemyIsOutOfReach();
 
             } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
-
                 visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
+
             } else {
-
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
                 visibleScreen.panicoScreen();
             }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Cat Balou")) {
-
             if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
-
                 visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
+
             } else {
-
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
                 visibleScreen.catBalouScreen();
             }
-        } else {
-
+        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().equals("Emporio")) {
             visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+            visibleScreen.emporioScreen();
 
+        } else {
+            visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
             visibleScreen.playerXScreen();
         }
         frame.revalidate();

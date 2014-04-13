@@ -6,6 +6,8 @@ package bang.banghotseat.essentials;
 
 import bang.banghotseat.Round;
 import bang.banghotseat.cards.Card;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,6 +19,7 @@ import bang.banghotseat.cards.Card;
 public class CheckerForAvatarSpeciality {
 
     private Round round;
+    private List<Card> sidKetchumDiscardList;
 
     /**
      *
@@ -24,6 +27,7 @@ public class CheckerForAvatarSpeciality {
      */
     public CheckerForAvatarSpeciality(Round round) {
         this.round = round;
+        sidKetchumDiscardList = new ArrayList<>();
     }
 
     /**
@@ -207,5 +211,19 @@ public class CheckerForAvatarSpeciality {
             }
         }
         return indexOfBangOrMancato;
+    }
+    
+    /**
+     * 
+     */
+    public void addToSidKetchumDiscardList(Card toBeAdded) {
+        sidKetchumDiscardList.add(toBeAdded);
+    }
+    
+    /**
+     * 
+     */
+    public List<Card> getSidKetchumDiscardList() {
+        return sidKetchumDiscardList;
     }
 }

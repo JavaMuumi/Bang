@@ -4,7 +4,7 @@
  */
 package bang.banghotseat;
 
-import bang.banghotseat.avatars.CalamityJanet;
+import bang.banghotseat.avatars.SidKetchum;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.AvatarRandomizer;
@@ -42,7 +42,7 @@ public class Setup {
      * Antaa pelaajille avatarit ja niiden mukaiset kestot.
      */
     private void givePlayersAvatarsAndSetMaxHealths() {
-        player1.setAvatar(randomizer.giveAvatar());
+        player1.setAvatar(new SidKetchum());
         player1.setCurrentHealth();
         player2.setAvatar(randomizer.giveAvatar());
         player2.setCurrentHealth();
