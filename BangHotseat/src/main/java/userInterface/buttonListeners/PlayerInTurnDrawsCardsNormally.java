@@ -15,26 +15,31 @@ import userInterface.VisibleScreen;
  * Luokka on ActionListener, jolla Jesse Jones haluaa vetaa ensimmaisen
  * korttinsa nostopakasta.
  */
-public class JesseJonesDrawsFromDrawpile implements ActionListener {
-
+public class PlayerInTurnDrawsCardsNormally implements ActionListener {
+    
     private VisibleScreen visibleScreen;
 
     /**
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public JesseJonesDrawsFromDrawpile(VisibleScreen visibleScreen) {
+    public PlayerInTurnDrawsCardsNormally(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        
         visibleScreen.getFrame().getContentPane().removeAll();
-
+        
+        if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Pedro Ramirez")) {
+            for (int i = 0; i < 2; i++) {
+                visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getDrawpile().take(visibleScreen.getSetup().getRound().getDiscardpile()));
+            }
+        }
         visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().drawCards(visibleScreen.getSetup().getRound());
         visibleScreen.playerXScreen();
-
+        
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

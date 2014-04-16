@@ -184,10 +184,15 @@ public class CheckerForPlayedCard {
         }
         if (thereIsABarrel && round.getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
             round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+            if (round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+            }
             return true;
 
         } else if (thereIsABarrel) {
             round.getCheckerForEventsBeforeTurn().checkTopCard();
+            if (round.getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+                round.getCheckerForAvatarSpeciality().missHasBeenPlayedAgainstSlabTheKiller();
+            }
             return true;
         }
         return false;

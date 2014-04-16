@@ -20,6 +20,7 @@ public class CheckerForAvatarSpeciality {
 
     private Round round;
     private List<Card> sidKetchumDiscardList;
+    private int howManyMissesHaveBeenUsedAgainstSlabTheKiller;
 
     /**
      *
@@ -28,6 +29,7 @@ public class CheckerForAvatarSpeciality {
     public CheckerForAvatarSpeciality(Round round) {
         this.round = round;
         sidKetchumDiscardList = new ArrayList<>();
+        howManyMissesHaveBeenUsedAgainstSlabTheKiller = 0;
     }
 
     /**
@@ -72,6 +74,7 @@ public class CheckerForAvatarSpeciality {
         for (Card isItHearts : round.getPlayerInTurn().getListOfLastCheckedCards()) {
             if (isItHearts.getSuit().equals("Hearts")) {
                 thereWasHearts = true;
+                missHasBeenPlayedAgainstSlabTheKiller();
             }
         }
         return thereWasHearts;
@@ -131,6 +134,9 @@ public class CheckerForAvatarSpeciality {
 
         if (round.getPlayerToFollow().getAvatar().toString().equals("Jourdonnais")) {
             round.getCheckerForEventsBeforeTurn().checkTopCard();
+            if (round.getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+                missHasBeenPlayedAgainstSlabTheKiller();
+            }
             return true;
         }
         return false;
@@ -138,7 +144,7 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
-     * Vetaa vastustajalta yhden ja pakasta yhden kortin pelaajan kateen.
+     * Vetaa vastustajalta yhden ja pakasta toisen kortin pelaajan kateen.
      */
     public void drawFromEnemyHandWithJesseJones() {
 
@@ -146,6 +152,16 @@ public class CheckerForAvatarSpeciality {
         round.getPlayerInTurn().setLastCheckedCard(stolen);
         round.getPlayerInTurn().putCardIntoHand(stolen);
 
+        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+    }
+
+    /**
+     *
+     * Vetaa poistopakasta yhden ja pakasta toisen kortin pelaajan kateen.
+     */
+    public void drawFromDiscardpileWithPedroRamirez() {
+
+        round.getPlayerInTurn().putCardIntoHand(round.getDiscardpile().take(round.getDiscardpile()));
         round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
     }
 
@@ -212,18 +228,68 @@ public class CheckerForAvatarSpeciality {
         }
         return indexOfBangOrMancato;
     }
-    
+
     /**
-     * 
+     *
+     * Lisaa poistettavaksi valitun kortin Sid Ketchumin uhrattavien korttien
+     * listalle.
      */
     public void addToSidKetchumDiscardList(Card toBeAdded) {
         sidKetchumDiscardList.add(toBeAdded);
     }
-    
+
     /**
-     * 
+     *
      */
     public List<Card> getSidKetchumDiscardList() {
         return sidKetchumDiscardList;
+    }
+
+    /**
+     *
+     * Tarkastaa, onko seuraavana vuorossa olevan pelaajan kadessa kahta
+     * Mancato!-korttia.
+     */
+    public boolean checkThatEnemyHasTwoMancatosAgainstSlabTheKiller() {
+
+        int indexOfFirstMancato = 0;
+        boolean thereWereTwoMancatos = false;
+
+        for (Card isItMancato : round.getPlayerToFollow().getHandCards()) {
+            if (isItMancato.getName().contains("Mancato!") || (round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItMancato.getName().contains("Mancato!"))) {
+                indexOfFirstMancato = round.getPlayerToFollow().getHandCards().indexOf(isItMancato);
+            }
+        }
+        for (Card isItMancato : round.getPlayerToFollow().getHandCards()) {
+            if ((isItMancato.getName().contains("Mancato!") && round.getPlayerToFollow().getHandCards().indexOf(isItMancato) != indexOfFirstMancato) || ((round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItMancato.getName().contains("Mancato!") && round.getPlayerToFollow().getHandCards().indexOf(isItMancato) != indexOfFirstMancato))) {
+                indexOfFirstMancato = round.getPlayerToFollow().getHandCards().indexOf(isItMancato);
+                thereWereTwoMancatos = true;
+            }
+        }
+        if (thereWereTwoMancatos) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     */
+    public void missHasBeenPlayedAgainstSlabTheKiller() {
+        howManyMissesHaveBeenUsedAgainstSlabTheKiller++;
+    }
+
+    /**
+     *
+     */
+    public int howManyMissesHaveBeenUsedAgainstSlabTheKiller() {
+        return howManyMissesHaveBeenUsedAgainstSlabTheKiller;
+    }
+
+    /**
+     *
+     */
+    public void eraseHowManyMissesHaveBeenUsedAgainstSlabTheKiller() {
+        howManyMissesHaveBeenUsedAgainstSlabTheKiller = 0;
     }
 }

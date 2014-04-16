@@ -7,11 +7,11 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Pedro Ramirezin ominaisuuksia.
- * 
+ *
  */
 public class PedroRamirez implements Avatar {
 
@@ -41,10 +41,13 @@ public class PedroRamirez implements Avatar {
      */
     @Override
     public void drawCards(Round round) {
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+
+        if (round.getDiscardpile().getDeck().isEmpty()) {
+            round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+            round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+        }
     }
-    
+
     @Override
     public String toString() {
         return "Pedro Ramirez";

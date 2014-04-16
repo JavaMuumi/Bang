@@ -12,10 +12,10 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie vuorossa olevan
- * pelaajan ruutuun.
+ * Luokka on ActionListener, jolla Jesse Jones haluaa vetaa ensimmaisen
+ * korttinsa vihollisen kadesta.
  */
-public class ContinueToPlayerXScreen implements ActionListener {
+public class PedroRamirezDrawsFromDiscardpile implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -23,7 +23,7 @@ public class ContinueToPlayerXScreen implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ContinueToPlayerXScreen(VisibleScreen visibleScreen) {
+    public PedroRamirezDrawsFromDiscardpile(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -32,13 +32,10 @@ public class ContinueToPlayerXScreen implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        if (visibleScreen.getSetup().getRound().isTheGameOver()) {
-            visibleScreen.gameIsOver();
+        visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().drawFromDiscardpileWithPedroRamirez();
 
-        } else {
-            visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().eraseHowManyMissesHaveBeenUsedAgainstSlabTheKiller();
-            visibleScreen.playerXScreen();
-        }
+        visibleScreen.playerXScreen();
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

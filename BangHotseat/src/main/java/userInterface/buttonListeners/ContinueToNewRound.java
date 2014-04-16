@@ -55,6 +55,9 @@ public class ContinueToNewRound implements ActionListener {
             } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
                 visibleScreen.jesseJonesDrawScreen();
 
+            } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Pedro Ramirez")) {
+                visibleScreen.pedroRamirezDrawScreen();
+
             } else {
                 visibleScreen.playerXScreen();
             }

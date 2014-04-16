@@ -43,6 +43,7 @@ public class VisibleScreen {
     private ActionListener toJesseJonesScreen;
     private ActionListener jesseJonesDrawsFromDrawpile;
     private ActionListener jesseJonesDrawsFromEnemyHand;
+    private ActionListener pedroRamirezDrawsFromDiscardpile;
     private ActionListener toJourdonnaisScreen;
     private ActionListener toKitCarlsonScreen;
     private ActionListener kitCarlsonPutCardBack;
@@ -53,9 +54,10 @@ public class VisibleScreen {
     private ActionListener continueToPlayerXScreen;
     private ActionListener playerXScreen_EndTurn;
     private ActionListener discardCards_Discard;
+    private ActionListener toAttackingPlayerPleaseLookAway;
     private ActionListener pleaseLookAwayToPlayerXScreen;
     private ActionListener toMancatoChoice;
-    private ActionListener toYouHaveNoMancato;
+    private ActionListener toYouDoNotHaveEnoughHandCardsAndCannotReply;
     private ActionListener distractionReply;
     private ActionListener doYouWannaRespond_No;
     private ActionListener doYouWannaRespond_Yes;
@@ -96,8 +98,9 @@ public class VisibleScreen {
         emporioPlayerChoseFirstCard = new EmporioPlayerChoseFirstCard(this);
         emporioPlayerChoseSecondCard = new EmporioPlayerChoseSecondCard(this);
         toJesseJonesScreen = new ToJesseJonesScreen(this);
-        jesseJonesDrawsFromDrawpile = new JesseJonesDrawsFromDrawpile(this);
+        jesseJonesDrawsFromDrawpile = new PlayerInTurnDrawsCardsNormally(this);
         jesseJonesDrawsFromEnemyHand = new JesseJonesDrawsFromEnemyHand(this);
+        pedroRamirezDrawsFromDiscardpile = new PedroRamirezDrawsFromDiscardpile(this);
         toJourdonnaisScreen = new ToJourdonnaisScreen(this);
         toKitCarlsonScreen = new ToKitCarlsonScreen(this);
         kitCarlsonPutCardBack = new KitCarlsonPutCardBack(this);
@@ -108,9 +111,10 @@ public class VisibleScreen {
         playerXScreen_UseCard = new PlayerXScreen_UseCard(this);
         playerXScreen_EndTurn = new PlayerXScreen_EndTurn(this);
         discardCards_Discard = new DiscardCards_Discard(this);
+        toAttackingPlayerPleaseLookAway = new ToAttackingPlayerPleaseLookAway(this);
         pleaseLookAwayToPlayerXScreen = new PleaseLookAwayToPlayerXScreen(this);
         toMancatoChoice = new ToMancatoChoice(this);
-        toYouHaveNoMancato = new ToYouHaveNoHandCardsAndCannotReply(this);
+        toYouDoNotHaveEnoughHandCardsAndCannotReply = new ToYouDoNotHaveEnoughHandCardsAndCannotReply(this);
         distractionReply = new DistractionReply(this);
         doYouWannaRespond_No = new DoYouWannaRespond_No(this);
         doYouWannaRespond_Yes = new DoYouWannaRespond_Yes(this);
@@ -126,6 +130,36 @@ public class VisibleScreen {
         catBalouScreen_RemoveNow = new CatBalouScreen_RemoveNow(this);
         toRandomHandCardWasStolen = new ToRandomHandCardWasStolen(this);
         toRandomHandCardCannotBeTaken = new ToRandomHandCardCannotBeTaken(this);
+    }
+
+    /**
+     *
+     * Asettaa pelin paattymisen nakyman.
+     */
+    public void gameIsOver() {
+
+        GridLayout layout = new GridLayout(4, 3);
+        container.setLayout(layout);
+
+        if (setup.getRound().getPlayerInTurn().getCurrentHealth() == 0) {
+
+            JLabel playerInTurnDied = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().toString() + " died!", JLabel.CENTER);
+            playerInTurnDied.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(playerInTurnDied);
+
+            JLabel playerToFollowWon = new JLabel(setup.getRound().getPlayerToFollow().getAvatar().toString() + ", congratulations!", JLabel.CENTER);
+            playerToFollowWon.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(playerToFollowWon);
+        } else if (setup.getRound().getPlayerToFollow().getCurrentHealth() == 0) {
+
+            JLabel playerToFollowDied = new JLabel(setup.getRound().getPlayerToFollow().getAvatar().toString() + " died!", JLabel.CENTER);
+            playerToFollowDied.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(playerToFollowDied);
+
+            JLabel playerInTurnWon = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().toString() + ", congratulations!", JLabel.CENTER);
+            playerInTurnWon.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(playerInTurnWon);
+        }
     }
 
     /**
@@ -308,7 +342,14 @@ public class VisibleScreen {
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
         if (setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Mancato!") || setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling")) {
-            if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato() || (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && setup.getRound().getCheckerForAvatarSpeciality().checkCalamityJanetForBangsOrMancatos())) {
+
+            if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && setup.getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") && setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
+                if (setup.getRound().getCheckerForAvatarSpeciality().checkThatEnemyHasTwoMancatosAgainstSlabTheKiller()) {
+                    next.addActionListener(toMancatoChoice);
+                } else {
+                    next.addActionListener(distractionReply);
+                }
+            } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato() || (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && setup.getRound().getCheckerForAvatarSpeciality().checkCalamityJanetForBangsOrMancatos())) {
                 next.addActionListener(toMancatoChoice);
             } else {
                 next.addActionListener(distractionReply);
@@ -514,12 +555,12 @@ public class VisibleScreen {
      */
     public void jourdonnaisScreen() {
 
-        container.setLayout(new GridLayout(4, 3));
-
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
-        JLabel enemyIsJourdonnais = new JLabel("Enemy is Jourdonnais", JLabel.CENTER);
+        container.setLayout(new GridLayout(5, 3));
+
+        JLabel enemyIsJourdonnais = new JLabel("The enemy is Jourdonnais", JLabel.CENTER);
         enemyIsJourdonnais.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(enemyIsJourdonnais);
 
@@ -527,29 +568,60 @@ public class VisibleScreen {
         drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(drawnCard);
 
-        if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+        if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
 
-            JLabel jourdonnaisWorked = new JLabel("The shot missed!", JLabel.CENTER);
-            jourdonnaisWorked.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(jourdonnaisWorked);
+            if (setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 2) {
 
-            next.setFont(new Font("Button", Font.ITALIC, 34));
-            next.addActionListener(continueToPlayerXScreen);
+                JLabel theShotMissed = new JLabel("The shot missed!", JLabel.CENTER);
+                theShotMissed.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(theShotMissed);
 
-        } else {
+                next.addActionListener(continueToPlayerXScreen);
+            } else if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
 
-            JLabel jourdonnaisDidNotWork = new JLabel("Jourdonnais couldn't evade the shot!", JLabel.CENTER);
-            jourdonnaisDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(jourdonnaisDidNotWork);
+                JLabel barrelWorkedAgainstSlabTheKiller = new JLabel("Jourdonnais softened the shot!", JLabel.CENTER);
+                barrelWorkedAgainstSlabTheKiller.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelWorkedAgainstSlabTheKiller);
 
-            next.setFont(new Font("Button", Font.ITALIC, 34));
+                JLabel oneMoreMissIsNeeded = new JLabel("One more miss is needed", JLabel.CENTER);
+                oneMoreMissIsNeeded.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(oneMoreMissIsNeeded);
 
-            if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-                next.addActionListener(toYouHaveNoMancato);
-            } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
-                next.addActionListener(toMancatoChoice);
+                if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                    next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                } else {
+                    next.addActionListener(toAttackingPlayerPleaseLookAway);
+                }
+
             } else {
-                next.addActionListener(distractionReply);
+                JLabel barrelDidNotWork = new JLabel("Jourdonnais couldn't evade the shot!", JLabel.CENTER);
+                barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelDidNotWork);
+
+                if ((setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0 && setup.getRound().getPlayerToFollow().getHandCards().size() < 2) || (setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 1 && setup.getRound().getPlayerToFollow().getHandCards().isEmpty())) {
+                    next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                } else {
+                    next.addActionListener(toAttackingPlayerPleaseLookAway);
+                }
+            }
+        } else {
+            if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+
+                JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
+                barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelWorked);
+
+                next.addActionListener(continueToPlayerXScreen);
+            } else {
+                JLabel barrelDidNotWork = new JLabel("Jourdonnais couldn't evade the shot!", JLabel.CENTER);
+                barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(barrelDidNotWork);
+
+                if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                    next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                } else {
+                    next.addActionListener(toAttackingPlayerPleaseLookAway);
+                }
             }
         }
         container.add(next);
@@ -564,84 +636,192 @@ public class VisibleScreen {
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
-        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
+        container.setLayout(new GridLayout(7, 3));
 
-            container.setLayout(new GridLayout(6, 3));
-            JLabel thereIsABarrel = new JLabel("The enemy has a barrel and he is Lucky Duke", JLabel.CENTER);
-            thereIsABarrel.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(thereIsABarrel);
+        JLabel thereIsABarrel = new JLabel("The enemy has a barrel", JLabel.CENTER);
+        thereIsABarrel.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(thereIsABarrel);
 
-            JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
-            drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(drawnCard1);
+        if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
 
-            JLabel and = new JLabel("and", JLabel.CENTER);
-            and.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(and);
+            if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Jourdonnais")) {
 
-            JLabel drawnCard2 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString(), JLabel.CENTER);
-            drawnCard2.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(drawnCard2);
+                JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
+                drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard);
 
-            if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts") || setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).getSuit().equals("Hearts")) {
+                if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts")) {
 
-                JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
-                barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
-                container.add(barrelWorked);
+                    JLabel barrelWorkedAgainstSlabTheKiller = new JLabel("Barrel got in the way of the shot!", JLabel.CENTER);
+                    barrelWorkedAgainstSlabTheKiller.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelWorkedAgainstSlabTheKiller);
 
-                next.addActionListener(continueToPlayerXScreen);
+                    JLabel oneMoreMissIsNeeded = new JLabel("One more miss is needed", JLabel.CENTER);
+                    oneMoreMissIsNeeded.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(oneMoreMissIsNeeded);
 
+                    next.addActionListener(toJourdonnaisScreen);
+
+                } else {
+                    JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                    barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelDidNotWork);
+
+                    next.addActionListener(toJourdonnaisScreen);
+                }
+            } else if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
+
+                JLabel firstDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
+                firstDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(firstDrawnCard);
+
+                JLabel and = new JLabel("and", JLabel.CENTER);
+                and.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(and);
+
+                JLabel secondDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+                secondDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(secondDrawnCard);
+
+                if (setup.getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+
+                    JLabel barrelWorkedAgainstSlabTheKiller = new JLabel("Barrel got in the way of the shot!", JLabel.CENTER);
+                    barrelWorkedAgainstSlabTheKiller.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelWorkedAgainstSlabTheKiller);
+
+                    JLabel oneMoreMissIsNeeded = new JLabel("One more miss is needed", JLabel.CENTER);
+                    oneMoreMissIsNeeded.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(oneMoreMissIsNeeded);
+
+                    if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                    } else {
+                        next.addActionListener(toAttackingPlayerPleaseLookAway);
+                    }
+                } else {
+
+                    JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                    barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelDidNotWork);
+
+                    if (setup.getRound().getPlayerToFollow().getHandCards().size() < 2) {
+                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                    } else {
+                        next.addActionListener(toAttackingPlayerPleaseLookAway);
+                    }
+                }
             } else {
 
-                JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
-                barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
-                container.add(barrelDidNotWork);
+                if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
 
-                if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-                    next.addActionListener(toYouHaveNoMancato);
-                } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
-                    next.addActionListener(toMancatoChoice);
+                    JLabel barrelWorkedAgainstSlabTheKiller = new JLabel("Barrel got in the way of the shot!", JLabel.CENTER);
+                    barrelWorkedAgainstSlabTheKiller.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelWorkedAgainstSlabTheKiller);
+
+                    JLabel oneMoreMissIsNeeded = new JLabel("One more miss is needed", JLabel.CENTER);
+                    oneMoreMissIsNeeded.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(oneMoreMissIsNeeded);
+
+                    if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                    } else {
+                        next.addActionListener(toAttackingPlayerPleaseLookAway);
+                    }
                 } else {
-                    next.addActionListener(distractionReply);
+                    JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                    barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelDidNotWork);
+
+                    if (setup.getRound().getPlayerToFollow().getHandCards().size() < 2) {
+                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                    } else {
+                        next.addActionListener(toAttackingPlayerPleaseLookAway);
+                    }
                 }
             }
         } else {
-            container.setLayout(new GridLayout(4, 3));
+            if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Jourdonnais")) {
 
-            JLabel thereIsABarrel = new JLabel("The enemy has a barrel", JLabel.CENTER);
-            thereIsABarrel.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(thereIsABarrel);
+                if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() == 2) {
 
-            JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
-            drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(drawnCard);
+                    JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
+                    drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(drawnCard);
 
-            if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+                    JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                    barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelDidNotWork);
 
-                JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
-                barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
-                container.add(barrelWorked);
-
-                next.setFont(new Font("Button", Font.ITALIC, 34));
-                next.addActionListener(continueToPlayerXScreen);
-
-            } else {
-
-                JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
-                barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
-                container.add(barrelDidNotWork);
-
-                if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Jourdonnais")) {
                     next.addActionListener(toJourdonnaisScreen);
 
-                } else if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-                    next.addActionListener(toYouHaveNoMancato);
-
-                } else if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato()) {
-                    next.addActionListener(toMancatoChoice);
-
                 } else {
-                    next.addActionListener(distractionReply);
+
+                    JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
+                    barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelWorked);
+
+                    next.addActionListener(continueToPlayerXScreen);
+                }
+            } else if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
+
+                JLabel firstDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
+                firstDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(firstDrawnCard);
+
+                JLabel and = new JLabel("and", JLabel.CENTER);
+                and.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(and);
+
+                JLabel secondDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+                secondDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(secondDrawnCard);
+
+                if (setup.getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+
+                    JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
+                    barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelWorked);
+
+                    if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                    } else {
+                        next.addActionListener(toAttackingPlayerPleaseLookAway);
+                    }
+                } else {
+
+                    JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                    barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelDidNotWork);
+
+                    if (setup.getRound().getPlayerToFollow().getHandCards().size() < 2) {
+                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                    } else {
+                        next.addActionListener(toAttackingPlayerPleaseLookAway);
+                    }
+                }
+            } else {
+
+                JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+                drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard);
+
+                if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+
+                    JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
+                    barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelWorked);
+
+                    next.addActionListener(continueToPlayerXScreen);
+                } else {
+                    JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
+                    barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(barrelDidNotWork);
+
+                    if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
+                    } else {
+                        next.addActionListener(toAttackingPlayerPleaseLookAway);
+                    }
                 }
             }
         }
@@ -861,6 +1041,51 @@ public class VisibleScreen {
         JButton putCardBack = new JButton("Put card back");
         putCardBack.addActionListener(kitCarlsonPutCardBack);
         container.add(putCardBack);
+    }
+
+    /**
+     *
+     * Pedro Ramirezin kortinnoston valintanakyma.
+     */
+    public void pedroRamirezDrawScreen() {
+
+        container.setLayout(new GridLayout(4, 3));
+
+        if (setup.getRound().getDiscardpile().getDeck().isEmpty()) {
+
+            JLabel discardpileIsEmpty = new JLabel("Discardpile is empty,", JLabel.CENTER);
+            discardpileIsEmpty.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(discardpileIsEmpty);
+
+            JLabel youCannotUseSpeciality = new JLabel("you cannot use your speciality!", JLabel.CENTER);
+            youCannotUseSpeciality.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(youCannotUseSpeciality);
+
+            JButton next = new JButton("Continue");
+            next.setFont(new Font("Button", Font.ITALIC, 34));
+            next.addActionListener(continueToPlayerXScreen);
+            container.add(next);
+
+        } else {
+            JLabel topCardOfDiscardPile = new JLabel("Top card of discardpile is " + setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).toString() + ",", JLabel.CENTER);
+            topCardOfDiscardPile.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(topCardOfDiscardPile);
+
+            JLabel wannaDrawFromDiscardpile = new JLabel("do you want to draw your first card from discardpile?", JLabel.CENTER);
+            wannaDrawFromDiscardpile.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(wannaDrawFromDiscardpile);
+
+            JButton drawFromDiscardpile = new JButton("Draw from discardpile");
+            drawFromDiscardpile.setFont(new Font("Button", Font.ITALIC, 34));
+            drawFromDiscardpile.addActionListener(pedroRamirezDrawsFromDiscardpile);
+            container.add(drawFromDiscardpile);
+
+
+            JButton drawFromDrawpile = new JButton("Draw from drawpile");
+            drawFromDrawpile.setFont(new Font("Button", Font.ITALIC, 34));
+            drawFromDrawpile.addActionListener(jesseJonesDrawsFromDrawpile);
+            container.add(drawFromDrawpile);
+        }
     }
 
     /**
@@ -1087,9 +1312,20 @@ public class VisibleScreen {
         container.setLayout(new GridLayout(4, 3));
 
         if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
-            JLabel willYouUseACard = new JLabel("Will you use a BANG! or a Mancato! to cancel a hit?", JLabel.CENTER);
-            willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
-            container.add(willYouUseACard);
+            if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
+                JLabel willYouUseTwoCards = new JLabel("Will you use two BANG! / Mancato! -cards to cancel a hit?", JLabel.CENTER);
+                willYouUseTwoCards.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(willYouUseTwoCards);
+            } else {
+                JLabel willYouUseACard = new JLabel("Will you use a BANG! / Mancato! to cancel a hit?", JLabel.CENTER);
+                willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(willYouUseACard);
+            }
+        } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
+            JLabel willYouUseTwoMancatos = new JLabel("Will you use two Mancato!-cards to cancel a hit?", JLabel.CENTER);
+            willYouUseTwoMancatos.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(willYouUseTwoMancatos);
+
         } else {
             JLabel willYouUseAMancato = new JLabel("Will you use a Mancato! to cancel a hit?", JLabel.CENTER);
             willYouUseAMancato.setFont(new Font("Bang", Font.BOLD, 48));

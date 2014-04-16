@@ -147,3 +147,18 @@ YHTEENSÄ: 2h
 klo 19-23
 Koodia ja toisten arvostelua
 YHTEENSÄ: 4h
+
+14.4.
+klo 12-18
+Koodia juu
+YHTEENSÄ: 6h
+
+15.4.
+klo 12-19
+Koodaillenhan tämäkin meni
+YHTEENSÄ: 7h
+
+16.4.
+klo 9-12
+Koodia ja nyt peli on pelattava!!! (bugeja luonnollisestikin löytyy)
+YHTEENSÄ: 3h

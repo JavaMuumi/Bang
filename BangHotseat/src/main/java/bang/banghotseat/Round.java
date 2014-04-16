@@ -4,6 +4,7 @@
  */
 package bang.banghotseat;
 
+import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.CheckerForAvatarSpeciality;
 import bang.banghotseat.essentials.CheckerForEventsBeforeTurn;
@@ -55,8 +56,6 @@ public class Round {
      * Kaynnistaa vuorossa olevan pelaajan vuoron.
      */
     public void playTurn() {
-
-        playerInTurn.clearListOfLastCheckedCards();
 
         boolean prigioneDidNotStopTurn;
 
@@ -189,5 +188,21 @@ public class Round {
      */
     public boolean playerInTurnIsNextToReactToDuello() {
         return playerInTurnIsNextToReactToDuello;
+    }
+
+    /**
+     *
+     * Testaa onko jompikumpi pelaaja kuollut.
+     *
+     * @return totuusarvo onko jommallakummalla pelaajalla 0 kestoa jaljella.
+     */
+    public boolean isTheGameOver() {
+
+        boolean isEitherPlayerDead = false;
+
+        if (playerInTurn.getCurrentHealth() == 0 || playerToFollow.getCurrentHealth() == 0) {
+            isEitherPlayerDead = true;
+        }
+        return isEitherPlayerDead;
     }
 }

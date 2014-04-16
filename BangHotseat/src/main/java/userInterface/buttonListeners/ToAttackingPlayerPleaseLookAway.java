@@ -12,10 +12,10 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie vuorossa olevan
- * pelaajan ruutuun.
+ * Luokka on ActionListener, jolla varustettu nappula vie ruutuun, joka pyytaa
+ * hyokannytta pelaajaa katsomaan pois.
  */
-public class ContinueToPlayerXScreen implements ActionListener {
+public class ToAttackingPlayerPleaseLookAway implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -23,7 +23,7 @@ public class ContinueToPlayerXScreen implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ContinueToPlayerXScreen(VisibleScreen visibleScreen) {
+    public ToAttackingPlayerPleaseLookAway(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -32,13 +32,8 @@ public class ContinueToPlayerXScreen implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        if (visibleScreen.getSetup().getRound().isTheGameOver()) {
-            visibleScreen.gameIsOver();
+        visibleScreen.attackingPlayerPleaseLookAway();
 
-        } else {
-            visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().eraseHowManyMissesHaveBeenUsedAgainstSlabTheKiller();
-            visibleScreen.playerXScreen();
-        }
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

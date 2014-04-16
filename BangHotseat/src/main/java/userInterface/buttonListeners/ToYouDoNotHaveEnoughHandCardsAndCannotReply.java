@@ -16,7 +16,7 @@ import userInterface.VisibleScreen;
  * ilmoittaa vastustajan olemaan kykenematon vaistamaan, koska hanella ei ole
  * yhtaan kasikorttia.
  */
-public class ToYouHaveNoHandCardsAndCannotReply implements ActionListener {
+public class ToYouDoNotHaveEnoughHandCardsAndCannotReply implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -24,7 +24,7 @@ public class ToYouHaveNoHandCardsAndCannotReply implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ToYouHaveNoHandCardsAndCannotReply(VisibleScreen visibleScreen) {
+    public ToYouDoNotHaveEnoughHandCardsAndCannotReply(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 

@@ -4,9 +4,14 @@
  */
 package bang.banghotseat;
 
-import bang.banghotseat.avatars.SidKetchum;
+import bang.banghotseat.avatars.LuckyDuke;
+import bang.banghotseat.avatars.SlabTheKiller;
+import bang.banghotseat.cards.Bang;
+import bang.banghotseat.cards.Barrel;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
+import bang.banghotseat.cards.Mancato;
+import bang.banghotseat.cards.Volcanic;
 import bang.banghotseat.essentials.AvatarRandomizer;
 import bang.banghotseat.essentials.Player;
 
@@ -42,7 +47,7 @@ public class Setup {
      * Antaa pelaajille avatarit ja niiden mukaiset kestot.
      */
     private void givePlayersAvatarsAndSetMaxHealths() {
-        player1.setAvatar(new SidKetchum());
+        player1.setAvatar(randomizer.giveAvatar());
         player1.setCurrentHealth();
         player2.setAvatar(randomizer.giveAvatar());
         player2.setCurrentHealth();
@@ -53,6 +58,7 @@ public class Setup {
      * Luo nosto- ja poistopakan ja lisaa nostopakkaan kortit.
      */
     private void createDecks() {
+
         this.drawpile = new Deck();
         drawpile.createCards();
         this.discardpile = new Deck();

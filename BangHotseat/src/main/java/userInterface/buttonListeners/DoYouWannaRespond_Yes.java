@@ -34,6 +34,7 @@ public class DoYouWannaRespond_Yes implements ActionListener {
         visibleScreen.getFrame().getContentPane().removeAll();
 
         int indexOfReplyCard = 0;
+        int indexOfSecondReplyCard = 0;
 
         if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
             for (Card thisIsBangOrMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
@@ -41,11 +42,33 @@ public class DoYouWannaRespond_Yes implements ActionListener {
                     indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsBangOrMancato);
                 }
             }
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
+                for (Card thisIsAlsoBangOrMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
+                    if ((thisIsAlsoBangOrMancato.getName().contains("BANG!") || thisIsAlsoBangOrMancato.getName().contains("Mancato!")) && visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoBangOrMancato) != indexOfReplyCard) {
+                        indexOfSecondReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoBangOrMancato);
+                    }
+                }
+                visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfSecondReplyCard, visibleScreen.getSetup().getRound()));
+                if (indexOfReplyCard > indexOfSecondReplyCard) {
+                    indexOfReplyCard = indexOfReplyCard - 1;
+                }
+            }
         } else {
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Mancato!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling!")) {
                 for (Card thisIsAMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
                     if (thisIsAMancato.getName().contains("Mancato!")) {
                         indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAMancato);
+                    }
+                }
+                if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
+                    for (Card thisIsAlsoAMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
+                        if (thisIsAlsoAMancato.getName().contains("Mancato!") && visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoAMancato) != indexOfReplyCard) {
+                            indexOfSecondReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoAMancato);
+                        }
+                    }
+                    visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfSecondReplyCard, visibleScreen.getSetup().getRound()));
+                    if (indexOfReplyCard > indexOfSecondReplyCard) {
+                        indexOfReplyCard = indexOfReplyCard - 1;
                     }
                 }
             } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Indiani!")) {
