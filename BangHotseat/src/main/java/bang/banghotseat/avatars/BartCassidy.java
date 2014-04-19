@@ -32,11 +32,11 @@ public class BartCassidy implements Avatar {
     public String getSpeciality() {
         return "Each time he is hit, he draws a card.";
     }
-    
+
     /**
-     * 
+     *
      * Vetaa vuorokortit kateen.
-     * 
+     *
      * @param round pelattava kierros
      */
     @Override

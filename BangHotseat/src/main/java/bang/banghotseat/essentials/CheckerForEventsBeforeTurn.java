@@ -16,13 +16,23 @@ import bang.banghotseat.cards.Card;
 public class CheckerForEventsBeforeTurn {
 
     private Round round;
+    private boolean thereIsADinamite;
+    private boolean dinamiteDetonated;
+    private int indexOfDinamite;
+    private boolean thereIsAPrigione;
+    private int indexOfPrigione;
+    private int indexOfSameCard;
 
     /**
      *
      * @param round pelattava kierros
      */
     public CheckerForEventsBeforeTurn(Round round) {
+
         this.round = round;
+        thereIsADinamite = false;
+        dinamiteDetonated = false;
+        thereIsAPrigione = false;
     }
 
     /**
@@ -44,20 +54,13 @@ public class CheckerForEventsBeforeTurn {
      */
     public void checkDinamite() {
 
-        boolean thereWasADinamite = false;
-        boolean dinamiteDetonated = false;
-        int indexOfDinamite = 0;
-
         for (Card cardToCheck : round.getPlayerInTurn().getFrontCards()) {
-
             if (cardToCheck.toString().contains("Dinamite")) {
 
                 indexOfDinamite = round.getPlayerInTurn().getFrontCards().indexOf(cardToCheck);
-                thereWasADinamite = true;
+                thereIsADinamite = true;
 
                 if (round.getPlayerInTurn().getAvatar().toString().equals("Lucky Duke")) {
-
-                    round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
 
                     if (round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDuke()) {
                         cardToCheck.function(round);
@@ -66,25 +69,60 @@ public class CheckerForEventsBeforeTurn {
                 } else {
                     checkTopCard();
 
-                    if (round.getPlayerInTurn().getLastCheckedCard().getSuit().equals("Spades") && round.getPlayerInTurn().getLastCheckedCard().getNumber() > 1 && round.getPlayerInTurn().getLastCheckedCard().getNumber() < 10) {
+                    if (dinamiteBlowsUp(round.getPlayerInTurn().getLastCheckedCard())) {
                         cardToCheck.function(round);
                         dinamiteDetonated = true;
                     }
                 }
             }
         }
-        if (thereWasADinamite) {
-            if (dinamiteDetonated) {
-                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
+        if (thereIsADinamite) {
+            moveDinamite();
+        }
+    }
+
+    /**
+     *
+     * Tarkastaa, rajahtaako dynamiitti annetulla kortilla.
+     *
+     * @param cardToCheck tarkastettava kortti
+     * @return totuusarvo rajahtaako dynamiitti annetulla kortilla
+     */
+    public boolean dinamiteBlowsUp(Card cardToCheck) {
+
+        boolean willDinamiteExplode = false;
+
+        if (cardToCheck.getSuit().equals("Spades") && cardToCheck.getNumber() > 1 && cardToCheck.getNumber() < 10) {
+            willDinamiteExplode = true;
+        }
+        return willDinamiteExplode;
+    }
+
+    /**
+     *
+     * Kasittelee Dinamite-kortin siirtymisen sen tarkastamisen jalkeen.
+     */
+    public void moveDinamite() {
+
+        boolean enemyAlreadyHasADinamite = sameKindOfCardIsAlreadyInFrontOfPlayerToFollow("Dinamite");
+
+        if (dinamiteDetonated) {
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
+
+        } else {
+            if (enemyAlreadyHasADinamite) {
             } else {
-                if (round.getPlayerToFollow().getFrontCards().isEmpty()) {
-                    round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
-                } else if (round.getPlayerToFollow().getFrontCards().get(round.getPlayerToFollow().getFrontCards().size() - 1).getName().contains("Dinamite")) {
-                } else {
-                    round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
-                }
+                round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
             }
         }
+    }
+
+    /**
+     *
+     * @return totuusarvo onko vuorossa olevan pelaajan edessa Dinamite.
+     */
+    public boolean thereIsADinamite() {
+        return thereIsADinamite;
     }
 
     /**
@@ -95,33 +133,50 @@ public class CheckerForEventsBeforeTurn {
     public boolean checkPrigione() {
 
         boolean prigioneDidNotStopTurn = true;
-        boolean thereIsAPrigione = false;
-        int indexOfPrigione = 0;
 
         for (Card isThisPrigione : round.getPlayerInTurn().getFrontCards()) {
-            if (isThisPrigione.getName().contains("Prigione")) {
+            if (isThisPrigione.getName().equals("Prigione")) {
+
                 indexOfPrigione = round.getPlayerInTurn().getFrontCards().indexOf(isThisPrigione);
                 thereIsAPrigione = true;
             }
         }
         if (thereIsAPrigione && round.getPlayerInTurn().getAvatar().toString().equals("Lucky Duke")) {
-            round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
-            if (!round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
-                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
-                prigioneDidNotStopTurn = false;
-            } else {
-                round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione);
-            }
+            prigioneDidNotStopTurn = round.getCheckerForAvatarSpeciality().luckyDukeStaysInPrigione(indexOfPrigione);
+
         } else if (thereIsAPrigione) {
-            round.getCheckerForEventsBeforeTurn().checkTopCard();
-            if (!round.getPlayerInTurn().getLastCheckedCard().getType().equals("Hearts")) {
-                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
-                prigioneDidNotStopTurn = false;
-            } else {
-                round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione);
-            }
+            prigioneDidNotStopTurn = removePrigione();
         }
         return prigioneDidNotStopTurn;
+    }
+
+    /**
+     *
+     * Poistaa Prigione-kortin vuorossa olevan pelaajan edesta ja palauttaa
+     * tottusarvon, ettei se estanyt taman vuoroa.
+     *
+     * @return totuusarvo ettei Prigione estanyt vuoroa
+     */
+    public boolean removePrigione() {
+
+        boolean prigioneDidNotStopTurn = true;
+
+        round.getCheckerForEventsBeforeTurn().checkTopCard();
+
+        if (!round.getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+            prigioneDidNotStopTurn = false;
+        }
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
+
+        return prigioneDidNotStopTurn;
+    }
+
+    /**
+     *
+     * @return totuusarvo onko vuorossa olevan pelaajan edessa Prigione.
+     */
+    public boolean thereIsAPrigione() {
+        return thereIsAPrigione;
     }
 
     /**
@@ -138,19 +193,40 @@ public class CheckerForEventsBeforeTurn {
 
     /**
      *
-     * Tarkastaa, rajahtaako dynamiitti annetulla kortilla.
+     * Tarkastaa, onko seuraavana vuorossa olevan pelaajan edessa jo samanlainen
+     * kortti.
      *
-     * @param cardToCheck tarkastettava kortti
-     * @return totuusarvo rajahtaako dynamiitti annetulla kortilla
+     * @return totuusarvo onko seuraavana vuorossa olevan pelaajan edessa jo
+     * samanlainen kortti
      */
-    public boolean dinamiteBlowsUp(Card cardToCheck) {
-        
-        boolean willDinamiteExplode = false;
-        
-        if (cardToCheck.getSuit().equals("Spades") && cardToCheck.getNumber() > 1 && cardToCheck.getNumber() < 10) {
-            willDinamiteExplode = true;
+    public boolean sameKindOfCardIsAlreadyInFrontOfPlayerToFollow(String nameOfCard) {
+
+        boolean sameCardIsAlreadyInFront = false;
+
+        for (Card isTheSameCardAlreadyInFront : round.getPlayerToFollow().getFrontCards()) {
+            if (isTheSameCardAlreadyInFront.getName().equals(nameOfCard)) {
+                indexOfSameCard = round.getPlayerToFollow().getFrontCards().indexOf(isTheSameCardAlreadyInFront);
+                sameCardIsAlreadyInFront = true;
+            }
         }
-                
-        return willDinamiteExplode;
+        return sameCardIsAlreadyInFront;
+    }
+
+    /**
+     *
+     * @return kortin, joka oli samanlainen kuin pelattu kortti, indeksi
+     */
+    public int getIndexOfSameCard() {
+        return indexOfSameCard;
+    }
+
+    /**
+     *
+     * Nollaa tiedon siita, onko vuorossa olevan pelaajan edessa Dinamite tai
+     * Prigione.
+     */
+    public void forgetDinamiteAndPrigione() {
+        thereIsADinamite = false;
+        thereIsAPrigione = false;
     }
 }

@@ -39,7 +39,7 @@ public class DoYouWannaRespond_No implements ActionListener {
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().isEmpty()) {
                 visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
             } else {
-                visibleScreen.randomHandCardWasStolen();
+                visibleScreen.handCardWasStolenByElGringo();
             }
         } else {
             visibleScreen.pleaseLookAway();

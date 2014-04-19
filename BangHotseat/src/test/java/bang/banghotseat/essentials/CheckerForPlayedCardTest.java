@@ -5,6 +5,7 @@
 package bang.banghotseat.essentials;
 
 import bang.banghotseat.Round;
+import bang.banghotseat.avatars.CalamityJanet;
 import bang.banghotseat.avatars.PaulRegret;
 import bang.banghotseat.avatars.PedroRamirez;
 import bang.banghotseat.avatars.SuzyLafayette;
@@ -175,7 +176,7 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Discardpile size: 1", "Discardpile size: " + round.getDiscardpile().getDeck().size());
     }
-    
+
     @Test
     public void afterPlayingADuelloTheCardWillBeInDiscardPile() {
 
@@ -228,7 +229,7 @@ public class CheckerForPlayedCardTest {
     }
 
     @Test
-    public void aGunCardWillBePutInFrontIfThereAreNoGunCardsToBeginWith() {
+    public void aGunCardWillBePutInFrontIfThereAreNoFrontCardsToBeginWith() {
 
         round.getPlayerInTurn().putCardIntoHand(new Volcanic("Hearts", 2));
         round.getCheckerForPlayedCard().playingCard(0);
@@ -237,7 +238,7 @@ public class CheckerForPlayedCardTest {
     }
 
     @Test
-    public void aGunCardWillBePutInFrontIfThereIsNotAlreadyAnotherGunCard() {
+    public void aGunCardWillBePutInFrontIfThereIsAlreadyACardOfAnotherKind() {
 
         round.getPlayerInTurn().putCardIntoHand(new Volcanic("Hearts", 2));
         round.getPlayerInTurn().putCardIntoHand(new Mirino("Hearts", 2));
@@ -248,7 +249,7 @@ public class CheckerForPlayedCardTest {
     }
 
     @Test
-    public void ifThereIsAlreadyAGunCardOfSameKindInFrontItWillBeReplacedByTheNewOne() {
+    public void ifThereIsAlreadyAGunCardInFrontCardsItWillBeReplacedByTheNewOne() {
 
         round.getPlayerInTurn().putCardIntoHand(new Schofield("Hearts", 2));
         round.getPlayerInTurn().putCardIntoHand(new Volcanic("Spades", 10));
@@ -268,71 +269,91 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Schofield: 2 of Hearts", round.getDiscardpile().getDeck().get(0).toString());
     }
-    
+
     @Test
     public void ifThereAreNoFrontCardsMethodThereIsABarrelReturnsFalse() {
-        
+
         assertEquals(false, round.getCheckerForPlayedCard().checkBarrel());
     }
-    
+
     @Test
     public void ifThereIsOtherFrontCardThanBarrelMethodThereIsABarrelReturnsFalse() {
-        
+
         round.getPlayerToFollow().putCardInFront(new Mirino("Hearts", 1));
         assertEquals(false, round.getCheckerForPlayedCard().checkBarrel());
     }
-    
+
     @Test
     public void ifThereIsABarrelMethodThereIsABarrelReturnsTrue() {
-        
+
         round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
         assertEquals(true, round.getCheckerForPlayedCard().checkBarrel());
     }
-    
+
     @Test
     public void ifThereAreNoFrontCardsMethodThereIsABarrelDoesNotSetLastCheckedCard() {
-        
+
         round.getCheckerForPlayedCard().checkBarrel();
-        
+
         assertEquals(true, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
     }
-    
+
     @Test
     public void ifThereIsOtherFrontCardThanBarrelMethodThereIsABarrelDoesNotSetLastCheckedCard() {
-        
+
         round.getPlayerToFollow().putCardInFront(new Mirino("Hearts", 1));
         round.getCheckerForPlayedCard().checkBarrel();
-                
+
         assertEquals(true, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
     }
-    
+
     @Test
     public void ifThereIsABarrelAndPlayerIsNotLuckyDukeMethodThereIsABarrelSetsLastCheckedCard() {
-        
+
         round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
         round.getCheckerForPlayedCard().checkBarrel();
-                
+
         assertEquals(false, round.getPlayerInTurn().getListOfLastCheckedCards().isEmpty());
     }
-    
+
     @Test
     public void ifPlayedCardIsLastInHandOfSuzyLafayetteSheWillDrawANewOne() {
-        
+
         round.getPlayerInTurn().setAvatar(new SuzyLafayette());
         round.getPlayerInTurn().putCardIntoHand(new Birra("Hearts", 1));
-        
+
         round.getPlayerInTurn().getHandCards().get(0).function(round);
-        
+
         assertEquals("Player hand cards: 1", "Player hand cards: " + round.getPlayerInTurn().getHandCards().size());
     }
-    
+
     @Test
-    public void ifLastCardIsDrawnFromHandOfSuzyLafayetteSheWillDrawANewOne() {
-        
+    public void ifLastCardIsDrawnFromHandOfSuzyLafayetteOnRandomSheWillDrawANewOne() {
+
         round.getPlayerToFollow().setAvatar(new SuzyLafayette());
         round.getPlayerToFollow().putCardIntoHand(new Birra("Hearts", 1));
-        round.getPlayerInTurn().putCardIntoHand(new CatBalou("Hearts", 1));
-        
-        
+        round.getPlayerToFollow().drawRandomHandCard(round);
+
+        assertEquals("Player hand cards: 1", "Player hand cards: " + round.getPlayerToFollow().getHandCards().size());
+    }
+
+    @Test
+    public void ifCalamityJanetUsesAMancatoItWillBeRemovedFromHerHand() {
+
+        round.getPlayerInTurn().setAvatar(new CalamityJanet());
+        round.getPlayerInTurn().putCardIntoHand(new Mancato("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Player hand cards: 0", "Player hand cards: " + round.getPlayerInTurn().getHandCards().size());
+    }
+
+    @Test
+    public void ifCalamityJanetUsesAMancatoItWillBePlacedInDiscardpile() {
+
+        round.getPlayerInTurn().setAvatar(new CalamityJanet());
+        round.getPlayerInTurn().putCardIntoHand(new Mancato("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Discardpile size: 1", "Discardpile size: " + round.getDiscardpile().getDeck().size());
     }
 }

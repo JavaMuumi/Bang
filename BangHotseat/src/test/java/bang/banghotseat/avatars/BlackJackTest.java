@@ -48,7 +48,7 @@ public class BlackJackTest {
     public void blackJackSetsMaxHealthTo4() {
         assertEquals(4, round.getPlayerInTurn().getAvatar().getMaxHealth());
     }
-    
+
     @Test
     public void getSpecialityReturnsCorrectDescriptionForBlackJack() {
         assertEquals("He shows the second card he draws. On Heart or Diamonds, he draws one more card.", round.getPlayerInTurn().getAvatar().getSpeciality());

@@ -162,3 +162,18 @@ YHTEENSÄ: 7h
 klo 9-12
 Koodia ja nyt peli on pelattava!!! (bugeja luonnollisestikin löytyy)
 YHTEENSÄ: 3h
+
+17.4.
+klo 8-13
+Bugien metsästystä ja testejä
+YHTEENSÄ: 5h
+
+18.4.
+klo 20-22
+Koodin refraktointia
+YHTEENSÄ: 2h
+
+19.4.
+klo 08-12
+Erittäin kinkkinen bugi ja hieman refraktointia
+YHTEENSÄ: 4h

@@ -386,7 +386,6 @@ public class VisibleScreen {
         JLabel prigioneFailed = new JLabel("You broke out!!!", JLabel.CENTER);
         prigioneFailed.setFont(new Font("Bang", Font.BOLD, 48));
 
-
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
@@ -418,6 +417,7 @@ public class VisibleScreen {
                 next.addActionListener(continueToPlayerXScreen);
             }
             container.add(next);
+
         } else {
 
             container.setLayout(new GridLayout(4, 3));
@@ -432,8 +432,7 @@ public class VisibleScreen {
                 next.addActionListener(prigione_ToNextPlayer);
             } else {
                 container.add(prigioneFailed);
-
-                next.addActionListener(continueToNewRound);
+                next.addActionListener(continueToPlayerXScreen);
             }
             container.add(next);
         }
@@ -463,7 +462,7 @@ public class VisibleScreen {
             container.setLayout(new GridLayout(6, 3));
             container.add(thereIsADinamite);
 
-            if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() == 4) {
+            if (setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).getName().contains("Prigione")) {
 
                 JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 4).toString(), JLabel.CENTER);
                 drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
@@ -512,7 +511,7 @@ public class VisibleScreen {
             container.setLayout(new GridLayout(4, 3));
             container.add(thereIsADinamite);
 
-            if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() == 2) {
+            if (setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).getName().contains("Prigione")) {
 
                 JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
                 drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
@@ -782,11 +781,7 @@ public class VisibleScreen {
                     barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
                     container.add(barrelWorked);
 
-                    if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-                        next.addActionListener(toYouDoNotHaveEnoughHandCardsAndCannotReply);
-                    } else {
-                        next.addActionListener(toAttackingPlayerPleaseLookAway);
-                    }
+                    next.addActionListener(continueToPlayerXScreen);
                 } else {
 
                     JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
@@ -869,6 +864,25 @@ public class VisibleScreen {
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToPlayerXScreen);
+
+        container.add(stolenCard);
+        container.add(next);
+    }
+    
+    /**
+     * 
+     * Asettaa El Gringon erikoiskyvylla varastetun kortin infonakyman.
+     */
+    public void handCardWasStolenByElGringo() {
+        
+        container.setLayout(new GridLayout(3, 3));
+
+        JLabel stolenCard = new JLabel("You stole " + setup.getRound().getPlayerInTurn().getLastCheckedCard().toString(), JLabel.CENTER);
+        stolenCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(pleaseLookAwayToPlayerXScreen);
 
         container.add(stolenCard);
         container.add(next);
@@ -1256,9 +1270,15 @@ public class VisibleScreen {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel youHaveNoMancato = new JLabel("You have no cards to reply with and will lose health!", JLabel.CENTER);
-        youHaveNoMancato.setFont(new Font("Bang", Font.BOLD, 48));
-
+        if (setup.getRound().getCheckerForPlayedCard().playerToFollowHasMancato() || setup.getRound().getCheckerForAvatarSpeciality().checkCalamityJanetForBangsOrMancatos()) {
+            JLabel youDoNotHaveEnoughMancatos = new JLabel("You have too few cards to reply with and will lose health!", JLabel.CENTER);
+            youDoNotHaveEnoughMancatos.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(youDoNotHaveEnoughMancatos);
+        } else {
+            JLabel youHaveNoMancato = new JLabel("You have no cards to reply with and will lose health!", JLabel.CENTER);
+            youHaveNoMancato.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(youHaveNoMancato);
+        }
         JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
         clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
 
@@ -1274,7 +1294,6 @@ public class VisibleScreen {
         } else {
             next.addActionListener(pleaseLookAwayToPlayerXScreen);
         }
-        container.add(youHaveNoMancato);
         container.add(clickToDistract);
         container.add(next);
     }
@@ -1575,10 +1594,16 @@ public class VisibleScreen {
     public void takingDamageAndNoHandCards() {
 
         container.setLayout(new GridLayout(3, 3));
+        JLabel enemyHasNoHandCards;
 
-        JLabel enemyHasNoHandCards = new JLabel("The other player has no hand cards,", JLabel.CENTER);
-        enemyHasNoHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+        if (setup.getRound().getPlayerInTurn().getHandCards().size() == 1) {
+            enemyHasNoHandCards = new JLabel("The other only has one hand card,", JLabel.CENTER);
+            enemyHasNoHandCards.setFont(new Font("Bang", Font.BOLD, 48));
 
+        } else {
+            enemyHasNoHandCards = new JLabel("The other player has no hand cards,", JLabel.CENTER);
+            enemyHasNoHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+        }
         JLabel enemyCannotReply = new JLabel("the damage cannot be avoided!", JLabel.CENTER);
         enemyCannotReply.setFont(new Font("Bang", Font.BOLD, 48));
 

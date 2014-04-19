@@ -33,20 +33,12 @@ public class ContinueToNewRound implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        boolean thereIsADinamite = false;
-        boolean thereIsAPrigione = false;
+        visibleScreen.getSetup().getRound().getPlayerInTurn().clearListOfLastCheckedCards();
 
-        for (Card isItDinamiteOrPrigione : visibleScreen.getSetup().getRound().getPlayerInTurn().getFrontCards()) {
-            if (isItDinamiteOrPrigione.getName().contains("Dinamite")) {
-                thereIsADinamite = true;
-            } else if (isItDinamiteOrPrigione.getName().contains("Prigione")) {
-                thereIsAPrigione = true;
-            }
-        }
         visibleScreen.getSetup().getRound().playTurn();
-        if (thereIsADinamite) {
+        if (visibleScreen.getSetup().getRound().getCheckerForEventsBeforeTurn().thereIsADinamite()) {
             visibleScreen.dinamiteScreen();
-        } else if (thereIsAPrigione) {
+        } else if (visibleScreen.getSetup().getRound().getCheckerForEventsBeforeTurn().thereIsAPrigione()) {
             visibleScreen.prigioneScreen();
         } else {
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {

@@ -13,6 +13,7 @@ import bang.banghotseat.cards.Deck;
 import bang.banghotseat.cards.Dinamite;
 import bang.banghotseat.cards.Mirino;
 import bang.banghotseat.cards.Mustang;
+import bang.banghotseat.cards.Prigione;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -155,12 +156,12 @@ public class CheckerForEventsBeforeTurnTest {
 
         round.getDrawpile().place(new Bang("Hearts", 1));
         round.getDrawpile().place(new Bang("Spades", 3));
-        
+
         round.getCheckerForEventsBeforeTurn().checkDinamite();
 
         assertEquals("Player health: 4", "Player health: " + round.getPlayerInTurn().getCurrentHealth());
     }
-    
+
     @Test
     public void ifPlayerIsLuckyDukeAndNeitherOfTheDrawnCardsWouldBlowDinamiteUpDinamiteWillNotExplode() {
 
@@ -175,7 +176,7 @@ public class CheckerForEventsBeforeTurnTest {
 
         assertEquals("Player health: 4", "Player health: " + round.getPlayerInTurn().getCurrentHealth());
     }
-    
+
     @Test
     public void ifPlayerIsLuckyDukeAndBothOfTheDrawnCardsWouldBlowDinamiteUpDinamiteWillExplode() {
 
@@ -190,7 +191,7 @@ public class CheckerForEventsBeforeTurnTest {
 
         assertEquals("Player health: 1", "Player health: " + round.getPlayerInTurn().getCurrentHealth());
     }
-    
+
     @Test
     public void ifDinamiteDoesNotExplodeAndPlayerToFollowHasNoFrontCardsItWillBePassedOn() {
 
@@ -241,7 +242,7 @@ public class CheckerForEventsBeforeTurnTest {
     }
 
     @Test
-    public void ifDinamiteExplodesItWillBeRemovedFromHandCardsOfPlayerInTurn() {
+    public void ifDinamiteExplodesItWillBeRemovedFromFrontCardsOfPlayerInTurn() {
 
         round.getDrawpile().place(new Bang("Spades", 3));
         round.getPlayerInTurn().putCardInFront(new Dinamite("Hearts", 2));
@@ -271,6 +272,78 @@ public class CheckerForEventsBeforeTurnTest {
         round.getCheckerForEventsBeforeTurn().checkDinamite();
 
         assertEquals("Dinamite", round.getDiscardpile().getDeck().get(round.getDiscardpile().getDeck().size() - 1).getName());
+    }
+
+    @Test
+    public void ifPlayerInTurnHasNoFrontCardsMethodCheckPrigioneReturnsTrue() {
+
+        assertEquals(true, round.getCheckerForEventsBeforeTurn().checkPrigione());
+    }
+
+    @Test
+    public void ifPlayerInTurnHasOtherFrontCardThanPrigioneMethodCheckPrigioneReturnsTrue() {
+
+        round.getPlayerInTurn().putCardInFront(new Barrel("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForEventsBeforeTurn().checkPrigione());
+    }
+
+    @Test
+    public void ifPlayerInTurnHasPrigioneInFrontCardsAndTopCardIsHeartsMethodCheckPrigioneReturnsTrue() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForEventsBeforeTurn().checkPrigione());
+    }
+
+    @Test
+    public void ifPlayerInTurnHasPrigioneInFrontCardsAndTopCardIsNotHeartsMethodCheckPrigioneReturnsFalse() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+
+        assertEquals(false, round.getCheckerForEventsBeforeTurn().checkPrigione());
+    }
+
+    @Test
+    public void ifTopCardIsHeartsMethodRemovePrigioneRemovesPrigione() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
+        round.getCheckerForEventsBeforeTurn().checkPrigione();
+
+        assertEquals("Player front cards: 0", "Player front cards: " + round.getPlayerInTurn().getFrontCards().size());
+    }
+
+    @Test
+    public void ifTopCardIsNotHeartsMethodRemovePrigioneRemovesPrigione() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+        round.getCheckerForEventsBeforeTurn().checkPrigione();
+
+        assertEquals("Player front cards: 0", "Player front cards: " + round.getPlayerInTurn().getFrontCards().size());
+    }
+
+    @Test
+    public void ifTopCardIsHeartsMethodRemovePrigionePlacesPrigioneInDiscardpile() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
+        round.getCheckerForEventsBeforeTurn().checkPrigione();
+
+        assertEquals("Prigione: Ace of Hearts", round.getDiscardpile().getDeck().get(round.getDiscardpile().getDeck().size() - 1).toString());
+    }
+
+    @Test
+    public void ifTopCardIsNotHeartsMethodRemovePrigionePlacesPrigioneInDiscardpile() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+        round.getCheckerForEventsBeforeTurn().checkPrigione();
+
+        assertEquals("Prigione: Ace of Hearts", round.getDiscardpile().getDeck().get(round.getDiscardpile().getDeck().size() - 1).toString());
     }
 
     @Test

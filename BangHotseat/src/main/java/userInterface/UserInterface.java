@@ -57,9 +57,9 @@ public class UserInterface implements Runnable {
     public JFrame getFrame() {
         return frame;
     }
-    
+
     /**
-     * 
+     *
      * @return peliin kaytettava alkuvalmistelija
      */
     public Setup getSetup() {

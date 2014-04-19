@@ -36,8 +36,6 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.getSetup().getRound().getPlayerInTurn().clearListOfLastCheckedCards();
-
         if (visibleScreen.getIndex() == -1) {
             visibleScreen.playerXScreen();
 
@@ -65,7 +63,6 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
                 } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
                     visibleScreen.jourdonnaisScreen();
-
 
                 } else {
                     visibleScreen.takingDamageAndNoHandCards();

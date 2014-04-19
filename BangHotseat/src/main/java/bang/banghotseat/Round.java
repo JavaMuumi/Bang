@@ -4,7 +4,6 @@
  */
 package bang.banghotseat;
 
-import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.CheckerForAvatarSpeciality;
 import bang.banghotseat.essentials.CheckerForEventsBeforeTurn;
@@ -57,13 +56,12 @@ public class Round {
      */
     public void playTurn() {
 
-        boolean prigioneDidNotStopTurn;
-
+        checkerForEventsBeforeTurn.forgetDinamiteAndPrigione();
         checkerForEventsBeforeTurn.setPlayerTurns(playerInTurn, playerToFollow);
 
         checkerForEventsBeforeTurn.checkDinamite();
-        prigioneDidNotStopTurn = checkerForEventsBeforeTurn.checkPrigione();
 
+        boolean prigioneDidNotStopTurn = checkerForEventsBeforeTurn.checkPrigione();
         if (prigioneDidNotStopTurn) {
             if (!playerInTurn.getAvatar().toString().equals("Jesse Jones")) {
                 playerInTurn.getAvatar().drawCards(this);

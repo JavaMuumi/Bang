@@ -18,7 +18,8 @@ public class CheckerForPlayedCard {
 
     private Card playedCard;
     private Round round;
-    private int index;
+    private int indexOfHandCard;
+    private int indexOfSameCard;
 
     /**
      *
@@ -36,91 +37,146 @@ public class CheckerForPlayedCard {
      */
     public void playingCard(int index) {
 
-        this.index = index;
+        this.indexOfHandCard = index;
         this.playedCard = round.getPlayerInTurn().getHandCards().get(index);
 
         if (playedCard.getType().equals("Orange") || (round.getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && playedCard.getType().equals("Mancato"))) {
-            if (playedCard.getName().contains("BANG!") || playedCard.getName().contains("Gatling")) {
-                playingBangOrGatling(playedCard);
+            playingOrangeCard(round.getPlayerInTurn().getHandCards().get(index));
 
-            } else if (playedCard.getName().contains("Mancato!")) {
-                if (round.getPlayerInTurn().getAvatar().toString().equals("Calamity Janet")) {
-                    playingBangOrGatling(playedCard);
-                }
-            } else if (playedCard.getName().contains("Indiani!")) {
-                playingIndiani();
-
-            } else if (playedCard.getName().contains("Duello")) {
-                playingDuello();
-
-            } else if (playedCard.getName().contains("Cat Balou")) {
-                playingCatBalou();
-
-            } else if (playedCard.getName().contains("Panico!")) {
-                if (canPlayerInTurnTouchPlayerToFollow()) {
-                    playingPanico();
-                }
-            } else if (playedCard.getName().equals("Emporio")) {
-                playingEmporio();
-
-            } else {
-                playedCard.function(round);
-                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
-            }
         } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Blue")) {
+            playingBlueCard();
 
-            int indexOfTheSameCard = 0;
-            boolean sameCardIsAlreadyInFront = false;
-
-            for (Card isTheSameCardAlreadyInFront : round.getPlayerInTurn().getFrontCards()) {
-                if (isTheSameCardAlreadyInFront.getName().equals(round.getPlayerInTurn().getHandCards().get(index).getName())) {
-                    indexOfTheSameCard = round.getPlayerInTurn().getFrontCards().indexOf(isTheSameCardAlreadyInFront);
-                    sameCardIsAlreadyInFront = true;
-                }
-            }
-            if (sameCardIsAlreadyInFront) {
-                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfTheSameCard));
-                round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
-
-            } else {
-                round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
-            }
-        } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Prigione")) {
-
-            int indexOfOldPrigione = 0;
-            boolean prigioneIsAlreadyInFront = false;
-
-            for (Card isPrigioneAlreadyInFront : round.getPlayerToFollow().getFrontCards()) {
-                if (isPrigioneAlreadyInFront.getName().equals("Prigione")) {
-                    indexOfOldPrigione = round.getPlayerToFollow().getFrontCards().indexOf(isPrigioneAlreadyInFront);
-                    prigioneIsAlreadyInFront = true;
-                }
-            }
-            if (prigioneIsAlreadyInFront) {
-                round.getDiscardpile().place(round.getPlayerToFollow().drawSpecificFrontCard(indexOfOldPrigione));
-                round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
-            } else {
-                round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
-            }
         } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Gun")) {
+            playingGun();
 
-            int indexOfGun = 0;
-            boolean aGunIsAlreadyInFront = false;
+        } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Prigione")) {
+            playingPrigione();
 
-            for (Card isAGun : round.getPlayerInTurn().getFrontCards()) {
-                if (isAGun.getType().equals("Gun")) {
-                    indexOfGun = round.getPlayerInTurn().getFrontCards().indexOf(isAGun);
-                    aGunIsAlreadyInFront = true;
-                }
+        } else {
+            round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        }
+    }
+
+    /**
+     *
+     * Kasittelee oranssin kortin pelaamisen.
+     */
+    public void playingOrangeCard(Card playedCard) {
+        if (playedCard.getName().equals("BANG!") || playedCard.getName().equals("Mancato!") || playedCard.getName().equals("Gatling")) {
+            playingBangOrGatling(playedCard);
+
+        } else if (playedCard.getName().equals("Mancato!")) {
+            if (round.getPlayerInTurn().getAvatar().toString().equals("Calamity Janet")) {
+                playingBangOrGatling(playedCard);
             }
-            if (aGunIsAlreadyInFront) {
-                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfGun));
-                round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        } else if (playedCard.getName().equals("Indiani!")) {
+            playingIndiani();
 
-            } else {
-                round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        } else if (playedCard.getName().equals("Duello")) {
+            playingDuello();
+
+        } else if (playedCard.getName().equals("Cat Balou")) {
+            playingCatBalou();
+
+        } else if (playedCard.getName().equals("Panico!")) {
+            if (canPlayerInTurnTouchPlayerToFollow()) {
+                playingPanico();
+            }
+        } else if (playedCard.getName().equals("Emporio")) {
+            playingEmporio();
+
+        } else {
+            playedCard.function(round);
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+        }
+    }
+
+    /**
+     *
+     * Kasittelee sinisen kortin pelaamisen.
+     */
+    public void playingBlueCard() {
+
+        if (sameKindOfCardIsAlreadyInFrontOfPlayerInTurn(playedCard.getName())) {
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfSameCard));
+            round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+
+        } else {
+            round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+        }
+    }
+
+    /**
+     *
+     * Kasittelee ase-kortin pelaamisen.
+     */
+    public void playingGun() {
+
+        boolean aGunIsAlreadyInFront = sameTypeOfCardIsAlreadyInFrontOfPlayerInTurn("Gun");
+
+        if (aGunIsAlreadyInFront) {
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfSameCard));
+            round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+
+        } else {
+            round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+        }
+    }
+
+    /**
+     *
+     * Kasittelee Prigione-kortin pelaamisen.
+     */
+    public void playingPrigione() {
+
+        boolean prigioneIsAlreadyInFront = round.getCheckerForEventsBeforeTurn().sameKindOfCardIsAlreadyInFrontOfPlayerToFollow("Prigione");
+
+        if (prigioneIsAlreadyInFront) {
+            round.getDiscardpile().place(round.getPlayerToFollow().drawSpecificFrontCard(round.getCheckerForEventsBeforeTurn().getIndexOfSameCard()));
+            round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+        } else {
+            round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+        }
+    }
+
+    /**
+     *
+     * Tarkastaa, onko samanlainen kortti jo vuorossa olevan pelaajan edessa.
+     *
+     * @return totuusarvo onko vuorossa olevan pelaajan edessa jo samanlainen
+     * kortti.
+     */
+    public boolean sameKindOfCardIsAlreadyInFrontOfPlayerInTurn(String cardName) {
+
+        boolean sameCardIsAlreadyInFront = false;
+
+        for (Card isTheSameCardAlreadyInFront : round.getPlayerInTurn().getFrontCards()) {
+            if (isTheSameCardAlreadyInFront.getName().equals(cardName)) {
+                indexOfSameCard = round.getPlayerInTurn().getFrontCards().indexOf(isTheSameCardAlreadyInFront);
+                sameCardIsAlreadyInFront = true;
             }
         }
+        return sameCardIsAlreadyInFront;
+    }
+
+    /**
+     *
+     * Tarkastaa, onko samantyyppinen kortti jo vuorossa olevan pelaajan edessa.
+     *
+     * @return totuusarvo, onko vuorossa olevan pelaajan edessa jo
+     * samantyyppinen kortti.
+     */
+    public boolean sameTypeOfCardIsAlreadyInFrontOfPlayerInTurn(String cardType) {
+
+        boolean sameTypeOfCardIsAlreadyInFront = false;
+
+        for (Card isOfSameType : round.getPlayerInTurn().getFrontCards()) {
+            if (isOfSameType.getType().equals(cardType)) {
+                indexOfSameCard = round.getPlayerInTurn().getFrontCards().indexOf(isOfSameType);
+                sameTypeOfCardIsAlreadyInFront = true;
+            }
+        }
+        return sameTypeOfCardIsAlreadyInFront;
     }
 
     /**
@@ -132,11 +188,11 @@ public class CheckerForPlayedCard {
     public void playingBangOrGatling(Card bangOrGatling) {
 
         round.getPlayerInTurn().setCardWaitingForAReply(bangOrGatling);
-        if ((bangOrGatling.getName().contains("BANG!") || bangOrGatling.getName().contains("Mancato!")) && bangCanBePlayed()) {
+        if ((bangOrGatling.getName().equals("BANG!") || bangOrGatling.getName().equals("Mancato!")) && bangCanBePlayed()) {
             round.setBangHasBeenPlayed(true);
-            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
-        } else if (bangOrGatling.getName().contains("Gatling")) {
-            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+        } else if (bangOrGatling.getName().equals("Gatling")) {
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
         }
     }
 
@@ -156,7 +212,7 @@ public class CheckerForPlayedCard {
             return true;
         }
         for (Card isItVolcanic : round.getPlayerInTurn().getFrontCards()) {
-            if (isItVolcanic.getName().contains("Volcanic")) {
+            if (isItVolcanic.getName().equals("Volcanic")) {
                 thereIsAVolcanic = true;
             }
         }
@@ -178,7 +234,7 @@ public class CheckerForPlayedCard {
         boolean thereIsABarrel = false;
 
         for (Card isItBarrel : round.getPlayerToFollow().getFrontCards()) {
-            if (isItBarrel.getName().contains("Barrel")) {
+            if (isItBarrel.getName().equals("Barrel")) {
                 thereIsABarrel = true;
             }
         }
@@ -204,7 +260,7 @@ public class CheckerForPlayedCard {
      */
     public void playingIndiani() {
         round.getPlayerInTurn().setCardWaitingForAReply(playedCard);
-        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
     }
 
     /**
@@ -213,7 +269,7 @@ public class CheckerForPlayedCard {
      */
     public void playingDuello() {
         round.getPlayerInTurn().setCardWaitingForAReply(playedCard);
-        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
     }
 
     /**
@@ -222,8 +278,8 @@ public class CheckerForPlayedCard {
      */
     public void playingCatBalou() {
 
-        round.getPlayerInTurn().getHandCards().get(index).function(round);
-        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        round.getPlayerInTurn().getHandCards().get(indexOfHandCard).function(round);
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
     }
 
     /**
@@ -234,8 +290,8 @@ public class CheckerForPlayedCard {
 
         if (canPlayerInTurnTouchPlayerToFollow() == false) {
         } else {
-            round.getPlayerInTurn().getHandCards().get(index).function(round);
-            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+            round.getPlayerInTurn().getHandCards().get(indexOfHandCard).function(round);
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
         }
     }
 
@@ -244,7 +300,7 @@ public class CheckerForPlayedCard {
      * Kasittelee Emporio-kortin pelaamisen.
      */
     public void playingEmporio() {
-        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(index, round));
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
         for (int i = 0; i < 2; i++) {
             round.getCheckerForEventsBeforeTurn().checkTopCard();
         }
@@ -261,7 +317,7 @@ public class CheckerForPlayedCard {
         boolean thereWasAMancato = false;
 
         for (Card isItMancato : round.getPlayerToFollow().getHandCards()) {
-            if (isItMancato.getName().contains("Mancato!") || (round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItMancato.getName().contains("Mancato!"))) {
+            if (isItMancato.getName().equals("Mancato!") || (round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItMancato.getName().equals("Mancato!"))) {
                 thereWasAMancato = true;
             }
         }
@@ -282,7 +338,7 @@ public class CheckerForPlayedCard {
         boolean thereWasABang = false;
 
         for (Card isItBang : round.getPlayerToFollow().getHandCards()) {
-            if (isItBang.getName().contains("BANG!") || (round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItBang.getName().contains("Mancato!"))) {
+            if (isItBang.getName().equals("BANG!") || (round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItBang.getName().equals("Mancato!"))) {
                 thereWasABang = true;
             }
         }
@@ -303,7 +359,7 @@ public class CheckerForPlayedCard {
         boolean thereWasABang = false;
 
         for (Card isItBang : round.getPlayerInTurn().getHandCards()) {
-            if (isItBang.getName().contains("BANG!") || (round.getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && isItBang.getName().contains("Mancato!"))) {
+            if (isItBang.getName().equals("BANG!") || (round.getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && isItBang.getName().equals("Mancato!"))) {
                 thereWasABang = true;
             }
         }
@@ -356,7 +412,7 @@ public class CheckerForPlayedCard {
         int indexOfMancato = 0;
 
         for (Card thisIsMancato : playerToCheck.getHandCards()) {
-            if (thisIsMancato.getName().contains("Mancato!")) {
+            if (thisIsMancato.getName().equals("Mancato!")) {
                 indexOfMancato = playerToCheck.getHandCards().indexOf(thisIsMancato);
             }
         }
@@ -375,7 +431,7 @@ public class CheckerForPlayedCard {
         int indexOfBang = 0;
 
         for (Card thisIsBang : playerToCheck.getHandCards()) {
-            if (thisIsBang.getName().contains("BANG!")) {
+            if (thisIsBang.getName().equals("BANG!")) {
                 indexOfBang = playerToCheck.getHandCards().indexOf(thisIsBang);
             }
         }
