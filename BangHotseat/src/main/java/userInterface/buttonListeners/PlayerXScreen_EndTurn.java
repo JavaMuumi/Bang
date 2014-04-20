@@ -38,16 +38,13 @@ public class PlayerXScreen_EndTurn implements ActionListener {
 
             visibleScreen.discardCards();
 
-            frame.revalidate();
-            frame.repaint();
         } else {
             frame.getContentPane().removeAll();
 
             visibleScreen.getSetup().getRound().endTurn();
             visibleScreen.playerXPleaseLookAwayScreen(visibleScreen.getSetup().getRound().getPlayerToFollow());
-
-            frame.revalidate();
-            frame.repaint();
         }
+        frame.revalidate();
+        frame.repaint();
     }
 }

@@ -37,7 +37,7 @@ public class SidKetchumCancel implements ActionListener {
             visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(toBePutBackIntoHand);
         }
         visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().getSidKetchumDiscardList().clear();
-        
+
         visibleScreen.playerXScreen();
 
         visibleScreen.getFrame().revalidate();

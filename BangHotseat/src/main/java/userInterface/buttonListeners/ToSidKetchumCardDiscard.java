@@ -29,7 +29,7 @@ public class ToSidKetchumCardDiscard implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         visibleScreen.getFrame().getContentPane().removeAll();
 
         visibleScreen.sidKetchumCardDiscard();

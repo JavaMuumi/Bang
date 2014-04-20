@@ -40,127 +40,42 @@ public class PlayerXScreen_UseCard implements ActionListener {
             visibleScreen.playerXScreen();
 
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("BANG!") || (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Mancato!"))) {
+            checkForProblemsInUsingBang();
 
-            if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().bangCanBePlayed() == false) {
-                visibleScreen.moreBangCardsCannotBePlayed();
-
-            } else if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnReachPlayerToFollow() == false) {
-                visibleScreen.enemyIsOutOfReach();
-
-            } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
-
-                    if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
-                        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
-                        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
-                            visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
-                        }
-                    } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
-                    }
-                    visibleScreen.barrelScreen();
-
-                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
-                    visibleScreen.jourdonnaisScreen();
-
-                } else {
-                    visibleScreen.takingDamageAndNoHandCards();
-                    visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
-                }
-            } else {
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
-
-                    if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
-                        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
-                        } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
-                            visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
-
-                        } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
-                        }
-                    }
-                    visibleScreen.barrelScreen();
-                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
-                    visibleScreen.jourdonnaisScreen();
-                } else {
-                    visibleScreen.attackingPlayerPleaseLookAway();
-                }
-            }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Gatling")) {
+
             if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
-                    visibleScreen.barrelScreen();
-                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
-                    visibleScreen.jourdonnaisScreen();
-                } else {
-                    visibleScreen.takingDamageAndNoHandCards();
-                    visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
-                }
+                usingGatlingAgainstEnemyWithNoHandCards();
 
             } else {
-
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
-                if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
-                    visibleScreen.barrelScreen();
-                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
-                    visibleScreen.jourdonnaisScreen();
-                } else {
-                    visibleScreen.attackingPlayerPleaseLookAway();
-                }
+                usingGatling();
             }
+
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Indiani!")) {
 
             if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
-                visibleScreen.takingDamageAndNoHandCards();
-                visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+                usingIndianiOrDuelloAgainstEnemyWithNoHandCards();
 
             } else {
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-                visibleScreen.attackingPlayerPleaseLookAway();
+                usingIndiani();
             }
+
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Duello")) {
             if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-
-                visibleScreen.takingDamageAndNoHandCards();
-                visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+                usingIndianiOrDuelloAgainstEnemyWithNoHandCards();
 
             } else {
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-                visibleScreen.duelloToOtherPlayerScreen();
+                usingDuello();
             }
+
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Panico!")) {
-            if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnTouchPlayerToFollow() == false) {
-                visibleScreen.enemyIsOutOfReach();
+            usingPanico();
 
-            } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
-                visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
-
-            } else {
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-                visibleScreen.panicoScreen();
-            }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().contains("Cat Balou")) {
-            if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
-                visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
+            usingCatBalou();
 
-            } else {
-                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-                visibleScreen.catBalouScreen();
-            }
         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()).getName().equals("Emporio")) {
-            visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
-            visibleScreen.emporioScreen();
+            usingEmporio();
 
         } else {
             visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
@@ -168,6 +83,192 @@ public class PlayerXScreen_UseCard implements ActionListener {
         }
         frame.revalidate();
         frame.repaint();
+    }
 
+    /**
+     *
+     * Tarkastaa onko BANG!-kortin kayttamiselle estetta ja asettaa sen mukaan
+     * oikean nakyman.
+     */
+    public void checkForProblemsInUsingBang() {
+
+        if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().bangCanBePlayed() == false) {
+            visibleScreen.moreBangCardsCannotBePlayed();
+
+        } else if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnReachPlayerToFollow() == false) {
+            visibleScreen.enemyIsOutOfReach();
+
+        } else {
+            if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                usingBangAgainstEnemyWithNoHandCards();
+            } else {
+                usingBang();
+            }
+        }
+    }
+
+    /**
+     *
+     * Pelaa valitun BANG!-kortin tai Calamity Janetin sita vastaavan
+     * Mancato!-kortin pelaajaa vastaan, jolla ei ole tarpeeksi vaistokortteja
+     * valtaakseen osuman.
+     */
+    public void usingBangAgainstEnemyWithNoHandCards() {
+
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+        if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
+
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
+                if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
+                } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+                    visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
+                }
+            } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+            }
+            visibleScreen.barrelScreen();
+
+        } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+            visibleScreen.jourdonnaisScreen();
+
+        } else {
+            visibleScreen.takingDamageAndNoHandCards();
+            visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+        }
+    }
+
+    /**
+     *
+     * Pelaa valitun BANG!-kortin tai Calamity Janetin sita vastaavan
+     * Mancato!-kortin.
+     */
+    public void usingBang() {
+
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+        if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
+
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
+                if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
+                } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+                    visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
+
+                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+                }
+            }
+            visibleScreen.barrelScreen();
+        } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+            visibleScreen.jourdonnaisScreen();
+        } else {
+            visibleScreen.attackingPlayerPleaseLookAway();
+        }
+    }
+
+    /**
+     *
+     * Pelaa valitun Gatling-kortin pelaajaa vastaan, jolla ei ole yhtakaan
+     * vaistokorttia.
+     */
+    public void usingGatlingAgainstEnemyWithNoHandCards() {
+
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+        if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
+            visibleScreen.barrelScreen();
+        } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+            visibleScreen.jourdonnaisScreen();
+        } else {
+            visibleScreen.takingDamageAndNoHandCards();
+            visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+        }
+    }
+
+    /**
+     *
+     * Pelaa valitun Gatling-kortin.
+     */
+    public void usingGatling() {
+
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+        if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
+            visibleScreen.barrelScreen();
+        } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+            visibleScreen.jourdonnaisScreen();
+        } else {
+            visibleScreen.attackingPlayerPleaseLookAway();
+        }
+    }
+
+    /**
+     *
+     * Pelaa valitun Indiani!-kortin pelaajaa vastaan, jolla ei ole yhtakaan
+     * vaistokorttia.
+     */
+    public void usingIndianiOrDuelloAgainstEnemyWithNoHandCards() {
+
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+
+        visibleScreen.takingDamageAndNoHandCards();
+        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+
+    }
+
+    /**
+     *
+     * Pelaa valitun Indiani!-kortin.
+     */
+    public void usingIndiani() {
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+        visibleScreen.attackingPlayerPleaseLookAway();
+    }
+
+    /**
+     *
+     * Pelaa valitun Duello-kortin.
+     */
+    public void usingDuello() {
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+        visibleScreen.duelloToOtherPlayerScreen();
+    }
+
+    /**
+     *
+     * Pelaa valitun Panico!-kortin.
+     */
+    public void usingPanico() {
+
+        if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().canPlayerInTurnTouchPlayerToFollow() == false) {
+            visibleScreen.enemyIsOutOfReach();
+
+        } else if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
+            visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
+
+        } else {
+            visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+            visibleScreen.panicoScreen();
+        }
+    }
+
+    /**
+     *
+     * Pelaa valitun Cat Balou -kortin
+     */
+    public void usingCatBalou() {
+        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
+            visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
+        } else {
+            visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+            visibleScreen.catBalouScreen();
+        }
+    }
+
+    /**
+     *
+     * Pelaa valitun Emporio-kortin
+     */
+    public void usingEmporio() {
+        visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
+        visibleScreen.emporioScreen();
     }
 }

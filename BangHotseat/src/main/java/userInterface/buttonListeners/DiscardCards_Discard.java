@@ -30,6 +30,8 @@ public class DiscardCards_Discard implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        visibleScreen.getFrame().getContentPane().removeAll();
+        
         if (visibleScreen.getIndex() > -1) {
 
             visibleScreen.getFrame().getContentPane().removeAll();

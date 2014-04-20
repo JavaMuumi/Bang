@@ -31,7 +31,7 @@ public class ToRandomHandCardWasStolen implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         visibleScreen.randomHandCardWasStolen();
 
         visibleScreen.getFrame().revalidate();

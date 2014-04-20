@@ -181,4 +181,6 @@ YHTEENSÄ: 4h
 20.4.
 klo 08-12
 Refraktointia ja bugikorjailua
-YHTEENSÄ: 4h
+klo 16-18
+Refraktoituu
+YHTEENSÄ: 6h
