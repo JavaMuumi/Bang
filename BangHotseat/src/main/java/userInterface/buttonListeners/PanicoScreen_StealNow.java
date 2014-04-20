@@ -33,15 +33,19 @@ public class PanicoScreen_StealNow implements ActionListener {
 
         if (visibleScreen.getPanicoOrCatBalouIndex() == -1) {
         } else if (visibleScreen.getPanicoOrCatBalouIndex() == -2) {
+
             visibleScreen.getFrame().getContentPane().removeAll();
             visibleScreen.getSetup().getRound().getPlayerInTurn().setLastCheckedCard(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHandCard(visibleScreen.getSetup().getRound()));
             visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard());
             visibleScreen.randomHandCardWasStolen();
+
         } else {
+
             visibleScreen.getFrame().getContentPane().removeAll();
             visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificFrontCard(visibleScreen.getPanicoOrCatBalouIndex()));
             visibleScreen.playerXScreen();
         }
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

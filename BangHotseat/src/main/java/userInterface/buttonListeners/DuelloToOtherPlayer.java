@@ -4,7 +4,6 @@
  */
 package userInterface.buttonListeners;
 
-import bang.banghotseat.cards.Card;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import userInterface.VisibleScreen;
@@ -33,26 +32,28 @@ public class DuelloToOtherPlayer implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        int indexOfCardToBeDiscarded = 0;
+        boolean playerHadABang = false;
 
         if (visibleScreen.getSetup().getRound().playerInTurnIsNextToReactToDuello()) {
-            for (Card toBeDiscarded : visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards()) {
-                if (toBeDiscarded.getName().contains("BANG!") || (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && toBeDiscarded.getName().contains("Mancato!"))) {
-                    indexOfCardToBeDiscarded = visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().indexOf(toBeDiscarded);
-                }
-            }
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(indexOfCardToBeDiscarded, visibleScreen.getSetup().getRound()));
 
+            playerHadABang = visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerInTurn(), "BANG!");
+
+            if (!playerHadABang && visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet")) {
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerInTurn(), "Mancato!");
+            }
+
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCardWithoutGivingReplacingOne(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfReplyCard(), visibleScreen.getSetup().getRound()));
             visibleScreen.getSetup().getRound().setPlayerInTurnIsNextToReactToDuello(false);
 
         } else {
-            for (Card toBeDiscarded : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                if (toBeDiscarded.getName().contains("BANG!") || (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && toBeDiscarded.getName().contains("Mancato!"))) {
-                    indexOfCardToBeDiscarded = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(toBeDiscarded);
-                }
-            }
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfCardToBeDiscarded, visibleScreen.getSetup().getRound()));
 
+            playerHadABang = visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "BANG!");
+
+            if (!playerHadABang && visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "Mancato!");
+            }
+
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfReplyCard(), visibleScreen.getSetup().getRound()));
             visibleScreen.getSetup().getRound().setPlayerInTurnIsNextToReactToDuello(true);
         }
         visibleScreen.duelloToOtherPlayerScreen();

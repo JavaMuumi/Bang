@@ -4,6 +4,7 @@
  */
 package bang.banghotseat;
 
+import bang.banghotseat.avatars.LuckyDuke;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.AvatarRandomizer;

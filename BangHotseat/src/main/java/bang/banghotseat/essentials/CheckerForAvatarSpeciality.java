@@ -34,12 +34,13 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
-     * Vetaa kortin pakasta pelaajan kateen, jos pelaaja on Bart Cassidy
+     * Vetaa kortin pakasta pelaajan kateen, jos vahingoittuva pelaaja on Bart
+     * Cassidy
      */
-    public void drawCardForBartCassidyWhenHeTakesAHit() {
+    public void drawCardForBartCassidyWhenHeTakesAHit(Player possibleBartCassidy) {
 
-        if (round.getPlayerToFollow().getAvatar().toString().equals("Bart Cassidy")) {
-            round.getPlayerToFollow().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+        if (possibleBartCassidy.getAvatar().toString().equals("Bart Cassidy")) {
+            possibleBartCassidy.putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
         }
     }
 
@@ -144,8 +145,30 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * Tarkistaa pakan kahdesta paalimmaisesta kortista, onko toinen niista
+     * herttaa.
+     *
+     * @return totuusarvo oliko korteissa herttaa
+     */
+    public boolean checkTwoTopCardsForLuckyDukeForHearts() {
+
+        boolean thereWasHearts = false;
+
+        checkTwoCardsForLuckyDuke();
+
+        if (round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts") || round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 1).getSuit().equals("Hearts")) {
+            thereWasHearts = true;
+        }
+        if (thereWasHearts) {
+            missHasBeenPlayedAgainstSlabTheKiller();
+        }
+        return thereWasHearts;
+    }
+
+    /**
+     *
      * Tarkistaa vuorossa olevan pelaajan tarkastettujen korttien listasta, onko
-     * kahden viimeisen joukossa herttaa.
+     * toinen kahdesta viimeksi tarkastetusta herttaa.
      *
      * @return totuusarvo oliko korteissa herttaa
      */
@@ -153,12 +176,8 @@ public class CheckerForAvatarSpeciality {
 
         boolean thereWasHearts = false;
 
-        checkTwoCardsForLuckyDuke();
-        
-        for (Card isItHearts : round.getPlayerInTurn().getListOfLastCheckedCards()) {
-            if (isItHearts.getSuit().equals("Hearts")) {
-                thereWasHearts = true;
-            }
+        if (round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts") || round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 1).getSuit().equals("Hearts")) {
+            thereWasHearts = true;
         }
         if (thereWasHearts) {
             missHasBeenPlayedAgainstSlabTheKiller();
@@ -190,19 +209,36 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * Tarkastaa, rajayttavatko molemmat annetut kortit Dinamite-kortin.
+     *
+     * @param first ensimmainen tarkastettava kortti
+     * @param second toinen tarkastettava kortti
+     * @return totuusarvo rajauttavatko molemmat kortit Dinamite-kortin
+     */
+    public boolean dinamiteBlowsUpOnLuckyDuke(Card first, Card second) {
+
+        boolean dinamiteBlowsUpOnLuckyDuke = true;
+
+        if (!round.getCheckerForEventsBeforeTurn().dinamiteBlowsUp(first)) {
+            dinamiteBlowsUpOnLuckyDuke = false;
+        } else if (!round.getCheckerForEventsBeforeTurn().dinamiteBlowsUp(second)) {
+            dinamiteBlowsUpOnLuckyDuke = false;
+        }
+        return dinamiteBlowsUpOnLuckyDuke;
+    }
+
+    /**
+     *
      * Tarkistaa ovatko neljanneksi ja kolmanneksi paalimmaiset viimeksi
      * tarkastetuista korteista dynamiitin rajayttavia.
      *
      * @return totuusarvo olisivatko molemmat tarkistetuista korteista
      * rajayttaneet dynamiitin.
      */
-    public boolean checkIfDinamiteExplodesOnLuckyDukeWhenHeHasBothDinamiteAndPrigione() {
+    public boolean checkIfDinamiteExplodedOnLuckyDukeWhenHeHasBothDinamiteAndPrigione() {
 
         boolean dinamiteExploded = true;
 
-        for (int i = 0; i < 2; i++) {
-            checkTwoCardsForLuckyDuke();
-        }
         Card willThisDetonateDinamite = round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 4);
 
         for (int i = 0; i < 2; i++) {
@@ -213,22 +249,21 @@ public class CheckerForAvatarSpeciality {
         }
         return dinamiteExploded;
     }
-    
+
     /**
-     * 
+     *
      * Tarkistaa menettaisiko Lucky Duke vuoron Prigione-kortin vuoksi.
      */
     public boolean luckyDukeStaysInPrigione(int indexOfPrigione) {
-        
+
         boolean luckyDukeDidNotLoseTurn = true;
-        
-            if (!round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
-                round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
-                luckyDukeDidNotLoseTurn = false;
-            } else {
-                round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione);
-            }
-            return luckyDukeDidNotLoseTurn;
+
+        if (!round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
+            luckyDukeDidNotLoseTurn = false;
+        }
+        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfPrigione));
+
+        return luckyDukeDidNotLoseTurn;
     }
 
     /**

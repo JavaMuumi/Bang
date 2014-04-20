@@ -177,3 +177,8 @@ YHTEENSÄ: 2h
 klo 08-12
 Erittäin kinkkinen bugi ja hieman refraktointia
 YHTEENSÄ: 4h
+
+20.4.
+klo 08-12
+Refraktointia ja bugikorjailua
+YHTEENSÄ: 4h

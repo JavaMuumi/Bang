@@ -4,7 +4,6 @@
  */
 package userInterface.buttonListeners;
 
-import bang.banghotseat.cards.Card;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import userInterface.VisibleScreen;
@@ -33,55 +32,39 @@ public class DoYouWannaRespond_Yes implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        int indexOfReplyCard = 0;
-        int indexOfSecondReplyCard = 0;
-
         if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
-            for (Card thisIsBangOrMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                if (thisIsBangOrMancato.getName().contains("BANG!") || thisIsBangOrMancato.getName().contains("Mancato!")) {
-                    indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsBangOrMancato);
-                }
+
+            boolean bangWasFound = false;
+            boolean mancatoWasFound = visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "Mancato!");
+
+            if (!mancatoWasFound) {
+                bangWasFound = visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "BANG!");
             }
-            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
-                for (Card thisIsAlsoBangOrMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                    if ((thisIsAlsoBangOrMancato.getName().contains("BANG!") || thisIsAlsoBangOrMancato.getName().contains("Mancato!")) && visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoBangOrMancato) != indexOfReplyCard) {
-                        indexOfSecondReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoBangOrMancato);
-                    }
-                }
-                visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfSecondReplyCard, visibleScreen.getSetup().getRound()));
-                if (indexOfReplyCard > indexOfSecondReplyCard) {
-                    indexOfReplyCard = indexOfReplyCard - 1;
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().equals("BANG!") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
+
+                if (mancatoWasFound) {
+                    visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(visibleScreen.getSetup().getRound().getPlayerToFollow(), "Mancato!");
+
+                } else if (bangWasFound) {
+                    visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(visibleScreen.getSetup().getRound().getPlayerToFollow(), "BANG!");
                 }
             }
         } else {
-            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Mancato!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Gatling!")) {
-                for (Card thisIsAMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                    if (thisIsAMancato.getName().contains("Mancato!")) {
-                        indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAMancato);
-                    }
+
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().equals("BANG!") || visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().equals("Gatling!")) {
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "Mancato!");
+
+                if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().equals("BANG!") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
+                    visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(visibleScreen.getSetup().getRound().getPlayerToFollow(), "Mancato!");
                 }
-                if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("BANG!") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
-                    for (Card thisIsAlsoAMancato : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                        if (thisIsAlsoAMancato.getName().contains("Mancato!") && visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoAMancato) != indexOfReplyCard) {
-                            indexOfSecondReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsAlsoAMancato);
-                        }
-                    }
-                    visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfSecondReplyCard, visibleScreen.getSetup().getRound()));
-                    if (indexOfReplyCard > indexOfSecondReplyCard) {
-                        indexOfReplyCard = indexOfReplyCard - 1;
-                    }
-                }
-            } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Indiani!")) {
-                for (Card thisIsABang : visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards()) {
-                    if (thisIsABang.getName().contains("BANG!")) {
-                        indexOfReplyCard = visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().indexOf(thisIsABang);
-                    }
-                }
+
+            } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().equals("Indiani!")) {
+                visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "BANG!");
             }
         }
-        visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(indexOfReplyCard, visibleScreen.getSetup().getRound()));
+        visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfReplyCard(), visibleScreen.getSetup().getRound()));
 
-        if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().contains("Duello")) {
+        if (visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().getName().equals("Duello")) {
             visibleScreen.getSetup().getRound().setPlayerInTurnIsNextToReactToDuello(true);
             visibleScreen.attackingPlayerPleaseLookAway();
 

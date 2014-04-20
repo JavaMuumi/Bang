@@ -4,7 +4,10 @@
  */
 package bang.banghotseat;
 
+import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Deck;
+import bang.banghotseat.cards.Dinamite;
+import bang.banghotseat.cards.Prigione;
 import bang.banghotseat.essentials.CheckerForAvatarSpeciality;
 import bang.banghotseat.essentials.CheckerForEventsBeforeTurn;
 import bang.banghotseat.essentials.CheckerForPlayedCard;
@@ -39,7 +42,7 @@ public class Round {
      * @param discardpile lista, jolle pelissa poistetut kortit lisataan
      */
     public Round(Player player1, Player player2, Deck drawpile, Deck discardpile) {
-
+        
         playerInTurn = player1;
         playerToFollow = player2;
         this.drawpile = drawpile;
@@ -61,8 +64,7 @@ public class Round {
 
         checkerForEventsBeforeTurn.checkDinamite();
 
-        boolean prigioneDidNotStopTurn = checkerForEventsBeforeTurn.checkPrigione();
-        if (prigioneDidNotStopTurn) {
+        if (checkerForEventsBeforeTurn.checkPrigione()) {
             if (!playerInTurn.getAvatar().toString().equals("Jesse Jones")) {
                 playerInTurn.getAvatar().drawCards(this);
             }

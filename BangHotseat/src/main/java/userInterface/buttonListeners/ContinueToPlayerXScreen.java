@@ -39,6 +39,7 @@ public class ContinueToPlayerXScreen implements ActionListener {
             visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().eraseHowManyMissesHaveBeenUsedAgainstSlabTheKiller();
             visibleScreen.playerXScreen();
         }
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

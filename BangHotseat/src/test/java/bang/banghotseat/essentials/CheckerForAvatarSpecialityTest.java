@@ -248,7 +248,7 @@ public class CheckerForAvatarSpecialityTest {
         round.getDrawpile().place(new Bang("Spades", 1));
         round.getDrawpile().place(new Bang("Hearts", 1));
 
-        assertEquals(true, round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts());
+        assertEquals(true, round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts());
     }
 
     @Test
@@ -257,7 +257,7 @@ public class CheckerForAvatarSpecialityTest {
         round.getDrawpile().place(new Bang("Hearts", 1));
         round.getDrawpile().place(new Bang("Spades", 1));
 
-        assertEquals(true, round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts());
+        assertEquals(true, round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts());
     }
 
     @Test
@@ -266,7 +266,7 @@ public class CheckerForAvatarSpecialityTest {
         round.getDrawpile().place(new Bang("Hearts", 1));
         round.getDrawpile().place(new Bang("Hearts", 1));
 
-        assertEquals(true, round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts());
+        assertEquals(true, round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts());
     }
 
     @Test
@@ -275,7 +275,7 @@ public class CheckerForAvatarSpecialityTest {
         round.getDrawpile().place(new Bang("Spades", 1));
         round.getDrawpile().place(new Bang("Spades", 1));
 
-        assertEquals(false, round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts());
+        assertEquals(false, round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts());
     }
 
     @Test
@@ -283,7 +283,7 @@ public class CheckerForAvatarSpecialityTest {
 
         round.getDrawpile().place(new Bang("Spades", 1));
         round.getDrawpile().place(new Bang("Hearts", 1));
-        round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts();
+        round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts();
 
         assertEquals(1, round.getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller());
     }
@@ -293,7 +293,7 @@ public class CheckerForAvatarSpecialityTest {
 
         round.getDrawpile().place(new Bang("Hearts", 1));
         round.getDrawpile().place(new Bang("Spades", 1));
-        round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts();
+        round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts();
 
         assertEquals(1, round.getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller());
     }
@@ -303,7 +303,7 @@ public class CheckerForAvatarSpecialityTest {
 
         round.getDrawpile().place(new Bang("Hearts", 1));
         round.getDrawpile().place(new Bang("Hearts", 1));
-        round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts();
+        round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts();
 
         assertEquals(1, round.getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller());
     }
@@ -313,7 +313,7 @@ public class CheckerForAvatarSpecialityTest {
 
         round.getDrawpile().place(new Bang("Spades", 1));
         round.getDrawpile().place(new Bang("Spades", 1));
-        round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts();
+        round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts();
 
         assertEquals(0, round.getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller());
     }
@@ -361,8 +361,12 @@ public class CheckerForAvatarSpecialityTest {
             round.getDrawpile().place(new Bang("Hearts", 1));
         }
         round.getDrawpile().place(new Bang("Spades", 3));
+        
+        for (int i = 0; i < 2; i++) {
+            round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+        }
 
-        assertEquals(false, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
+        assertEquals(false, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodedOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
     }
 
     @Test
@@ -375,7 +379,11 @@ public class CheckerForAvatarSpecialityTest {
                 round.getDrawpile().place(new Bang("Hearts", 1));
             }
         }
-        assertEquals(false, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
+        
+        for (int i = 0; i < 2; i++) {
+            round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+        }
+        assertEquals(false, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodedOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
     }
 
     @Test
@@ -387,7 +395,7 @@ public class CheckerForAvatarSpecialityTest {
         for (int i = 0; i < 2; i++) {
             round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
         }
-        assertEquals(false, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
+        assertEquals(false, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodedOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
     }
 
     @Test
@@ -400,7 +408,10 @@ public class CheckerForAvatarSpecialityTest {
                 round.getDrawpile().place(new Bang("Spades", 3));
             }
         }
-        assertEquals(true, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodesOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
+        for (int i = 0; i < 2; i++) {
+        round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+        }
+        assertEquals(true, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodedOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
     }
 
     @Test

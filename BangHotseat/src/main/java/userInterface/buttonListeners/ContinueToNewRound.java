@@ -4,7 +4,6 @@
  */
 package userInterface.buttonListeners;
 
-import bang.banghotseat.cards.Card;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import userInterface.VisibleScreen;
@@ -34,12 +33,14 @@ public class ContinueToNewRound implements ActionListener {
         visibleScreen.getFrame().getContentPane().removeAll();
 
         visibleScreen.getSetup().getRound().getPlayerInTurn().clearListOfLastCheckedCards();
-
         visibleScreen.getSetup().getRound().playTurn();
+
         if (visibleScreen.getSetup().getRound().getCheckerForEventsBeforeTurn().thereIsADinamite()) {
             visibleScreen.dinamiteScreen();
+
         } else if (visibleScreen.getSetup().getRound().getCheckerForEventsBeforeTurn().thereIsAPrigione()) {
             visibleScreen.prigioneScreen();
+
         } else {
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
                 visibleScreen.kitCarlsonDrawScreen();

@@ -53,7 +53,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
                 if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
 
                     if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
-                        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+                        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
                         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
                             visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
                         }
@@ -74,7 +74,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
                 if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
 
                     if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
-                        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+                        if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
                         } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
                             visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
 

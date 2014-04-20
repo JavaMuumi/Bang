@@ -69,12 +69,14 @@ public class Player {
         currentHealth = currentHealth - amountToBeLost;
 
         if (amountToBeLost == 1) {
-            round.getCheckerForAvatarSpeciality().drawCardForBartCassidyWhenHeTakesAHit();
+
+            round.getCheckerForAvatarSpeciality().drawCardForBartCassidyWhenHeTakesAHit(this);
             round.getCheckerForAvatarSpeciality().drawCardFromEnemyHandWhenElGringoTakesAHit();
+
         } else if (amountToBeLost == 3) {
 
             for (int i = 0; i < 3; i++) {
-                round.getCheckerForAvatarSpeciality().drawCardForBartCassidyWhenHeTakesAHit();
+                round.getCheckerForAvatarSpeciality().drawCardForBartCassidyWhenHeTakesAHit(this);
             }
         }
     }
@@ -98,9 +100,25 @@ public class Player {
 
         Card toBeGiven = handCards.get(index);
         handCards.remove(index);
-        
+
         round.getCheckerForAvatarSpeciality().checkSuzyLafayetteForEmptyHand(this);
-        
+
+        return toBeGiven;
+    }
+
+    /**
+     *
+     * Vetaa maaratyn kortin pelaajan kadesta antamatta kortin menettavalle
+     * hahmolle uutta, vaikka taman erikoiskyky yleensa sallisi sen.
+     *
+     * @param index vedettavan kasikortin indeksi
+     * @return vedetty kortti
+     */
+    public Card drawSpecificHandCardWithoutGivingReplacingOne(int index, Round round) {
+
+        Card toBeGiven = handCards.get(index);
+        handCards.remove(index);
+
         return toBeGiven;
     }
 
@@ -114,9 +132,9 @@ public class Player {
 
         Collections.shuffle(handCards);
         Card toBeGiven = drawSpecificHandCard(0, round);
-        
+
         round.getCheckerForAvatarSpeciality().checkSuzyLafayetteForEmptyHand(this);
-        
+
         return toBeGiven;
     }
 

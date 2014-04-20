@@ -31,7 +31,7 @@ public class DuelloChoiceForPlayerInTurn implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         visibleScreen.playerInTurnRepliesToDuello();
 
         visibleScreen.getFrame().revalidate();

@@ -20,6 +20,8 @@ public class CheckerForPlayedCard {
     private Round round;
     private int indexOfHandCard;
     private int indexOfSameCard;
+    private int indexOfReplyCard;
+    private int indexOfSecondReplyCard;
 
     /**
      *
@@ -240,7 +242,7 @@ public class CheckerForPlayedCard {
         }
         if (thereIsABarrel && round.getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
             round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
-            if (round.getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
+            if (round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
             }
             return true;
 
@@ -398,6 +400,56 @@ public class CheckerForPlayedCard {
             return true;
         }
     }
+
+    /**
+     *
+     * Etsii pelaajan kadesta annetun nimista korttia
+     * ja merkitsee sen indeksin muistiin.
+     *
+     * @param nameOfSearchedCard etsityn kortin nimi
+     * @return totuusarvo loytyiko etsittya korttia
+     */
+    public boolean searchPlayerHandForCertainCard(Player playerToCheck, String nameOfSearchedCard) {
+
+        boolean aCardWasFound = false;
+
+        for (Card thisIsSearchedCard : playerToCheck.getHandCards()) {
+            if (thisIsSearchedCard.getName().equals(nameOfSearchedCard)) {
+                indexOfReplyCard = playerToCheck.getHandCards().indexOf(thisIsSearchedCard);
+                aCardWasFound = true;
+            }
+        }
+        return aCardWasFound;
+    }
+
+    /**
+     *
+     * @return vastauskortin indeksi
+     */
+    public int getIndexOfReplyCard() {
+        return indexOfReplyCard;
+    }
+
+    /**
+     *
+     * Etsii pelaajan kadesta toista annetun nimista
+     * korttia ja merkitsee sen indeksin muistiin.
+     *
+     * @param nameOfSearchedCard etsityn kortin nimi
+     */
+    public void searchPlayerHandForAnotherCardOfSameKind(Player playerToCheck, String nameOfSearchedCard) {
+        for (Card thisIsAlsoAMancato : playerToCheck.getHandCards()) {
+
+            if (thisIsAlsoAMancato.getName().equals("Mancato!") && playerToCheck.getHandCards().indexOf(thisIsAlsoAMancato) != indexOfReplyCard) {
+                indexOfSecondReplyCard = playerToCheck.getHandCards().indexOf(thisIsAlsoAMancato);
+            }
+        }
+        round.getDiscardpile().place(playerToCheck.drawSpecificHandCard(indexOfSecondReplyCard, round));
+        if (indexOfReplyCard > indexOfSecondReplyCard) {
+            indexOfReplyCard--;
+        }
+    }
+
 
     /**
      *
