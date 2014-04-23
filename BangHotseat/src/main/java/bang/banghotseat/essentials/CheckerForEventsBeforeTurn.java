@@ -90,12 +90,12 @@ public class CheckerForEventsBeforeTurn {
      */
     public boolean dinamiteBlowsUp(Card cardToCheck) {
 
-        boolean willDinamiteExplode = false;
+        boolean dinamiteExplodes = false;
 
         if (cardToCheck.getSuit().equals("Spades") && cardToCheck.getNumber() > 1 && cardToCheck.getNumber() < 10) {
-            willDinamiteExplode = true;
+            dinamiteExplodes = true;
         }
-        return willDinamiteExplode;
+        return dinamiteExplodes;
     }
 
     /**
@@ -226,6 +226,7 @@ public class CheckerForEventsBeforeTurn {
      * Prigione.
      */
     public void forgetDinamiteAndPrigione() {
+
         thereIsADinamite = false;
         thereIsAPrigione = false;
     }

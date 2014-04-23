@@ -145,6 +145,7 @@ public class Deck {
                 place(toBePlaced);
             }
             Collections.shuffle(deck);
+            discardpile.clearDeck();
         }
         Card cardToBeGiven = deck.get(deck.size() - 1);
         deck.remove(deck.size() - 1);
@@ -159,5 +160,13 @@ public class Deck {
      */
     public void place(Card toBePlaced) {
         deck.add(toBePlaced);
+    }
+    
+    /**
+     * 
+     * Tyhjentaa pakan
+     */
+    public void clearDeck() {
+        deck.clear();
     }
 }

@@ -32,8 +32,12 @@ public class PleaseLookAwayToPlayerXScreen implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.pleaseLookAway();
+        if (visibleScreen.getSetup().getRound().gameIsOver()) {
+            visibleScreen.gameIsOver();
 
+        } else {
+            visibleScreen.pleaseLookAway();
+        }
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

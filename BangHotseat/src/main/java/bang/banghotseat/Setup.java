@@ -21,8 +21,8 @@ public class Setup {
     private Player player1 = new Player();
     private Player player2 = new Player();
     private AvatarRandomizer randomizer = new AvatarRandomizer();
-    private Deck drawpile;
-    private Deck discardpile;
+    private Deck drawpile = new Deck();
+    private Deck discardpile = new Deck();
     private Round round;
 
     /**
@@ -41,11 +41,15 @@ public class Setup {
      *
      * Antaa pelaajille avatarit ja niiden mukaiset kestot.
      */
-    private void givePlayersAvatarsAndSetMaxHealths() {
+    public void givePlayersAvatarsAndSetMaxHealths() {
 
         player1.setAvatar(randomizer.giveAvatar());
         player1.setCurrentHealth();
+
         player2.setAvatar(randomizer.giveAvatar());
+        while (player2.getAvatar().toString().equals(player1.getAvatar().toString())) {
+            player2.setAvatar(randomizer.giveAvatar());
+        }
         player2.setCurrentHealth();
     }
 
@@ -55,9 +59,10 @@ public class Setup {
      */
     private void createDecks() {
 
-        this.drawpile = new Deck();
+        drawpile.clearDeck();
+        discardpile.clearDeck();
+
         drawpile.createCards();
-        this.discardpile = new Deck();
     }
 
     /**

@@ -16,14 +16,14 @@ import java.util.List;
  * Luokka sisaltaa kaikki avatarit ja voi arpoa niita jaettavaksi.
  */
 public class AvatarRandomizer {
-
+    
     private List<Avatar> avatars = new ArrayList<>();
 
     /**
      *
      */
     public AvatarRandomizer() {
-
+        
         avatars.add(new BartCassidy());
         avatars.add(new BlackJack());
         avatars.add(new CalamityJanet());
@@ -39,8 +39,6 @@ public class AvatarRandomizer {
         avatars.add(new SlabTheKiller());
         avatars.add(new SuzyLafayette());
         avatars.add(new WillyTheKid());
-
-        Collections.shuffle(avatars);
     }
 
     /**
@@ -50,8 +48,9 @@ public class AvatarRandomizer {
      * @return annettava avatar
      */
     public Avatar giveAvatar() {
+        
+        Collections.shuffle(avatars);
         Avatar toBeGiven = avatars.get(0);
-        avatars.remove(0);
         return toBeGiven;
     }
 

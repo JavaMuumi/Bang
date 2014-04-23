@@ -356,4 +356,147 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Discardpile size: 1", "Discardpile size: " + round.getDiscardpile().getDeck().size());
     }
+
+    @Test
+    public void methodSameKindOfCardIsAlreadyInFrontOfPlayerInTurnReturnsFalseIfThereAreNoCardsInFrontOfPlayerInTurn() {
+        assertEquals(false, round.getCheckerForPlayedCard().sameKindOfCardIsAlreadyInFrontOfPlayerInTurn("Mirino"));
+    }
+
+    @Test
+    public void methodSameKindOfCardIsAlreadyInFrontOfPlayerInTurnReturnsFalseIfThereIsNoCardOfGivenNameInFrontOfPlayerInTurn() {
+
+        round.getPlayerInTurn().putCardInFront(new Barrel("Hearts", 1));
+
+        assertEquals(false, round.getCheckerForPlayedCard().sameKindOfCardIsAlreadyInFrontOfPlayerInTurn("Mirino"));
+    }
+
+    @Test
+    public void methodSameKindOfCardIsAlreadyInFrontOfPlayerInTurnReturnsTrueIfThereIsACardOfGivenNameInFrontOfPlayerInTurn() {
+
+        round.getPlayerInTurn().putCardInFront(new Barrel("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForPlayedCard().sameKindOfCardIsAlreadyInFrontOfPlayerInTurn("Barrel"));
+    }
+
+    @Test
+    public void methodSameTypeOfCardIsAlreadyInFrontOfPlayerInTurnReturnsFalseIfThereAreNoCardsInFrontOfPlayerInTurn() {
+        assertEquals(false, round.getCheckerForPlayedCard().sameTypeOfCardIsAlreadyInFrontOfPlayerInTurn("Blue"));
+    }
+
+    @Test
+    public void methodSameTypeOfCardIsAlreadyInFrontOfPlayerInTurnReturnsFalseIfThereIsNoCardOfGivenTypeInFrontOfPlayerInTurn() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+
+        assertEquals(false, round.getCheckerForPlayedCard().sameTypeOfCardIsAlreadyInFrontOfPlayerInTurn("Blue"));
+    }
+
+    @Test
+    public void methodSameTypeOfCardIsAlreadyInFrontOfPlayerInTurnReturnsTrueIfThereIsACardOfGivenTypeInFrontOfPlayerInTurn() {
+
+        round.getPlayerInTurn().putCardInFront(new Barrel("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForPlayedCard().sameTypeOfCardIsAlreadyInFrontOfPlayerInTurn("Blue"));
+    }
+
+    @Test
+    public void methodSearchPlayerHandForCertainCardReturnsFalseIfPlayerHasNoHandCards() {
+
+        assertEquals(false, round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "Mancato"));
+    }
+
+    @Test
+    public void methodSearchPlayerHandForCertainCardReturnsFalseIfPlayerHasNoHandCardOfGivenName() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+
+        assertEquals(false, round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "Mancato"));
+    }
+
+    @Test
+    public void methodSearchPlayerHandForCertainCardReturnsTrueIfPlayerHasAHandCardOfGivenName() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!"));
+    }
+
+    @Test
+    public void methodSearchPlayerHandForCertainCardSetsIndexOfHandCardAsIntIndexOfReplyCard() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Mancato("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+        round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!");
+
+        assertEquals("Index of reply card: 1", "Index of reply card: " + round.getCheckerForPlayedCard().getIndexOfReplyCard());
+    }
+
+    @Test
+    public void methodSearchPlayerHandForAnotherCardOfSameKindAddsNothingToDiscardpileIfPlayerOnlyHasOneHandCard() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+        round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!");
+        round.getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(round.getPlayerInTurn(), "BANG!");
+
+        assertEquals("Discardpile size: 0", "Discardpile size: " + round.getDiscardpile().getDeck().size());
+    }
+
+    @Test
+    public void methodSearchPlayerHandForAnotherCardOfSameKindAddsNothingToDiscardpileIfPlayerDoesNotHaveAnotherHandCardOfSearchedName() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Mancato("Hearts", 1));
+
+        round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!");
+        round.getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(round.getPlayerInTurn(), "BANG!");
+
+        assertEquals("Discardpile size: 0", "Discardpile size: " + round.getDiscardpile().getDeck().size());
+    }
+    
+    @Test
+    public void methodSearchPlayerHandForAnotherCardOfSameKindAddsTheOtherCardToDiscardpileIfPlayerHasAnotherHandCardOfSearchedName() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+
+        round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!");
+        round.getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(round.getPlayerInTurn(), "BANG!");
+
+        assertEquals("Discardpile size: 1", "Discardpile size: " + round.getDiscardpile().getDeck().size());
+    }
+    
+    @Test
+    public void methodSearchPlayerHandForAnotherCardOfSameKindDoesNotChangeIndexOfReplyCardIfPlayerOnlyHasOneHandCard() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+
+        round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!");
+        round.getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(round.getPlayerInTurn(), "BANG!");
+
+        assertEquals("Index of reply card: 0", "Index of reply card: " + round.getCheckerForPlayedCard().getIndexOfReplyCard());
+    }
+    
+    @Test
+    public void methodSearchPlayerHandForAnotherCardOfSameKindDoesNotChangeIndexOfReplyCardIfPlayerHasAnotherHandCardOfSearchedName() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Mancato("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+
+        round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!");
+        round.getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(round.getPlayerInTurn(), "BANG!");
+
+        assertEquals("Index of reply card: 1", "Index of reply card: " + round.getCheckerForPlayedCard().getIndexOfReplyCard());
+    }
+    
+    @Test
+    public void methodSearchPlayerHandForAnotherCardOfSameKindReducesIndexOfReplyCardByOneIfPlayerHasAnotherHandCardOfSearchedName() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+
+        round.getCheckerForPlayedCard().searchPlayerHandForCertainCard(round.getPlayerInTurn(), "BANG!");
+        round.getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(round.getPlayerInTurn(), "BANG!");
+
+        assertEquals("Index of reply card: 0", "Index of reply card: " + round.getCheckerForPlayedCard().getIndexOfReplyCard());
+    }
 }

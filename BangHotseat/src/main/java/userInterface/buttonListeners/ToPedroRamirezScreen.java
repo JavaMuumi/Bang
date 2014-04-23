@@ -12,10 +12,10 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie vuorossa olevan
- * pelaajan ruutuun.
+ * Luokka on ActionListener, jolla varustettu nappula vie Kit Carlson -avatarin
+ * korttienvalinta-ruutuun.
  */
-public class ContinueToPlayerXScreen implements ActionListener {
+public class ToPedroRamirezScreen implements ActionListener {
 
     private VisibleScreen visibleScreen;
 
@@ -23,7 +23,7 @@ public class ContinueToPlayerXScreen implements ActionListener {
      *
      * @param visibleScreen nakyman luova luokka
      */
-    public ContinueToPlayerXScreen(VisibleScreen visibleScreen) {
+    public ToPedroRamirezScreen(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
 
@@ -32,8 +32,7 @@ public class ContinueToPlayerXScreen implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().eraseHowManyMissesHaveBeenUsedAgainstSlabTheKiller();
-        visibleScreen.playerXScreen();
+        visibleScreen.pedroRamirezDrawScreen();
 
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

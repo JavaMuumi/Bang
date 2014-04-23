@@ -143,6 +143,25 @@ public class CheckerForAvatarSpecialityTest {
     }
 
     @Test
+    public void ifElGringoStealsACardItWillBeAddedToTheListOfLastCheckedCardsOfPlayerInTurn() {
+
+        round.getPlayerToFollow().setAvatar(new ElGringo());
+        round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
+        round.getPlayerToFollow().loseHealth(1, round);
+
+        assertEquals("BANG!: Ace of Hearts", round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString());
+    }
+
+    @Test
+    public void ifElGringoCannotStealACardNothingWillBeAddedToTheListOfLastCheckedCardsOfPlayerInTurn() {
+
+        round.getPlayerToFollow().setAvatar(new ElGringo());
+        round.getPlayerToFollow().loseHealth(1, round);
+
+        assertEquals("List size: 0", "List size: " + round.getPlayerInTurn().getListOfLastCheckedCards().size());
+    }
+
+    @Test
     public void ifElGringoTakesAHitAndEnemyHasHandCardsHeStealsOnlyOne() {
 
         round.getPlayerToFollow().setAvatar(new ElGringo());
@@ -201,6 +220,15 @@ public class CheckerForAvatarSpecialityTest {
     }
 
     @Test
+    public void ifJesseJonesDrawsACardFromEnemyHandItWillBeAddedToTheListOfLastCheckedCardsOfPlayerInTurn() {
+
+        round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
+        round.getCheckerForAvatarSpeciality().drawFromEnemyHandWithJesseJones();
+
+        assertEquals("BANG!: Ace of Hearts", round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString());
+    }
+
+    @Test
     public void ifPlayerToFollowIsNotJourdonnaisCheckJourdonnaisReturnsFalse() {
 
         round.getPlayerToFollow().setAvatar(new LuckyDuke());
@@ -232,6 +260,17 @@ public class CheckerForAvatarSpecialityTest {
         round.getCheckerForAvatarSpeciality().checkJourdonnais();
 
         assertEquals("List of last checked cards: 1", "List of last checked cards: " + round.getPlayerInTurn().getListOfLastCheckedCards().size());
+    }
+    
+    @Test
+    public void ifPlayerToFollowIsJourdonnaisAndHeartsIsDrawnWithMethodCheckJourdonnaisAMissHasBeenPlayedAgainstSlabTheKillerWillBeSet() {
+        
+        round.getPlayerToFollow().setAvatar(new Jourdonnais());
+        round.getDrawpile().place(new Bang("Hearts", 1));
+        
+        round.getCheckerForAvatarSpeciality().checkJourdonnais();
+        
+        assertEquals("Number of misses used against Slab The Killer: 1", "Number of misses used against Slab The Killer: " + round.getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller());
     }
 
     @Test
@@ -361,7 +400,7 @@ public class CheckerForAvatarSpecialityTest {
             round.getDrawpile().place(new Bang("Hearts", 1));
         }
         round.getDrawpile().place(new Bang("Spades", 3));
-        
+
         for (int i = 0; i < 2; i++) {
             round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
         }
@@ -379,7 +418,7 @@ public class CheckerForAvatarSpecialityTest {
                 round.getDrawpile().place(new Bang("Hearts", 1));
             }
         }
-        
+
         for (int i = 0; i < 2; i++) {
             round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
         }
@@ -409,7 +448,7 @@ public class CheckerForAvatarSpecialityTest {
             }
         }
         for (int i = 0; i < 2; i++) {
-        round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+            round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
         }
         assertEquals(true, round.getCheckerForAvatarSpeciality().checkIfDinamiteExplodedOnLuckyDukeWhenHeHasBothDinamiteAndPrigione());
     }

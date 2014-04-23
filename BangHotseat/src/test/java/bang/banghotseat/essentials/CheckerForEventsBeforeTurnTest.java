@@ -378,4 +378,25 @@ public class CheckerForEventsBeforeTurnTest {
 
         assertEquals("BANG!", round.getPlayerInTurn().getLastCheckedCard().getName());
     }
+
+    @Test
+    public void methodSameKindOfCardIsAlreadyInFrontOfPlayerToFollowReturnsFalseIfThereAreNoCardsInFrontOfPlayerToFollow() {
+        assertEquals(false, round.getCheckerForEventsBeforeTurn().sameKindOfCardIsAlreadyInFrontOfPlayerToFollow("Barrel"));
+    }
+
+    @Test
+    public void methodSameKindOfCardIsAlreadyInFrontOfPlayerToFollowReturnsFalseIfThereIsNoCardOfGivenNameInFrontOfPlayerToFollow() {
+
+        round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
+
+        assertEquals(false, round.getCheckerForEventsBeforeTurn().sameKindOfCardIsAlreadyInFrontOfPlayerToFollow("Mirino"));
+    }
+
+    @Test
+    public void methodSameKindOfCardIsAlreadyInFrontOfPlayerToFollowReturnsTrueIfThereIsACardOfGivenNameInFrontOfPlayerToFollow() {
+
+        round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForEventsBeforeTurn().sameKindOfCardIsAlreadyInFrontOfPlayerToFollow("Barrel"));
+    }
 }

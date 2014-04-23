@@ -184,3 +184,13 @@ Refraktointia ja bugikorjailua
 klo 16-18
 Refraktoituu
 YHTEENSÄ: 6h
+
+22.4.
+klo 20-23
+Testejä
+YHTEENSÄ: 3h
+
+23.4.
+klo 13:30-15:30
+Bugien metsästystä
+YHTEENSÄ: 2h

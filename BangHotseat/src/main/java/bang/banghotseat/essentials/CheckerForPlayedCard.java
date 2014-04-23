@@ -55,7 +55,6 @@ public class CheckerForPlayedCard {
             playingPrigione();
 
         } else {
-            round.getPlayerInTurn().putCardInFront(round.getPlayerInTurn().drawSpecificHandCard(index, round));
         }
     }
 
@@ -310,62 +309,22 @@ public class CheckerForPlayedCard {
 
     /**
      *
-     * Tarkastaa onko vastustajalla kadessa Mancato!
+     * Tarkastaa onko pelaajalla kadessa BANG! tai Mancato!
      *
-     * @return totuusarvo onko vastustajalla Mancato!
+     * @param playerToCheck tarkastettava pelaaja
+     * @param bangOrMancato tarkennus etsitaanko BANG! vai Mancato! -korttia
+     * @return totuusarvo onko vastustajalla haettu kortti
      */
-    public boolean playerToFollowHasMancato() {
+    public boolean playerHasBangOrMancato(Player playerToCheck, String bangOrMancato) {
 
-        boolean thereWasAMancato = false;
+        boolean thereWasTheCard = false;
 
-        for (Card isItMancato : round.getPlayerToFollow().getHandCards()) {
-            if (isItMancato.getName().equals("Mancato!") || (round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItMancato.getName().equals("Mancato!"))) {
-                thereWasAMancato = true;
+        for (Card isItTheCard : playerToCheck.getHandCards()) {
+            if (isItTheCard.getName().equals(bangOrMancato) || (playerToCheck.getAvatar().toString().equals("Calamity Janet") && (isItTheCard.getName().equals("Mancato!") || isItTheCard.getName().equals("BANG!")))) {
+                thereWasTheCard = true;
             }
         }
-        if (thereWasAMancato) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *
-     * Tarkastaa onko vastustajalla kadessa BANG!
-     *
-     * @return totuusarvo onko vastustajalla BANG!
-     */
-    public boolean playerToFollowHasBang() {
-
-        boolean thereWasABang = false;
-
-        for (Card isItBang : round.getPlayerToFollow().getHandCards()) {
-            if (isItBang.getName().equals("BANG!") || (round.getPlayerToFollow().getAvatar().toString().equals("Calamity Janet") && isItBang.getName().equals("Mancato!"))) {
-                thereWasABang = true;
-            }
-        }
-        if (thereWasABang) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     *
-     * Tarkastaa onko vuorossa olevalla pelaajalla kadessa BANG!
-     *
-     * @return totuusarvo onko vuorossa olevalla pelaajalla BANG!
-     */
-    public boolean playerInTurnHasBang() {
-
-        boolean thereWasABang = false;
-
-        for (Card isItBang : round.getPlayerInTurn().getHandCards()) {
-            if (isItBang.getName().equals("BANG!") || (round.getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && isItBang.getName().equals("Mancato!"))) {
-                thereWasABang = true;
-            }
-        }
-        if (thereWasABang) {
+        if (thereWasTheCard) {
             return true;
         }
         return false;
@@ -403,9 +362,10 @@ public class CheckerForPlayedCard {
 
     /**
      *
-     * Etsii pelaajan kadesta annetun nimista korttia
-     * ja merkitsee sen indeksin muistiin.
+     * Etsii pelaajan kadesta annetun nimista korttia ja merkitsee sen indeksin
+     * muistiin.
      *
+     * @param playerToCheck tarkastettava pelaaja
      * @param nameOfSearchedCard etsityn kortin nimi
      * @return totuusarvo loytyiko etsittya korttia
      */
@@ -432,61 +392,49 @@ public class CheckerForPlayedCard {
 
     /**
      *
-     * Etsii pelaajan kadesta toista annetun nimista
-     * korttia ja merkitsee sen indeksin muistiin.
+     * Etsii pelaajan kadesta toista annetun nimista korttia ja merkitsee sen
+     * indeksin muistiin.
      *
+     * @param playerToCheck etsittava pelaaja
      * @param nameOfSearchedCard etsityn kortin nimi
      */
     public void searchPlayerHandForAnotherCardOfSameKind(Player playerToCheck, String nameOfSearchedCard) {
-        for (Card thisIsAlsoAMancato : playerToCheck.getHandCards()) {
 
-            if (thisIsAlsoAMancato.getName().equals("Mancato!") && playerToCheck.getHandCards().indexOf(thisIsAlsoAMancato) != indexOfReplyCard) {
-                indexOfSecondReplyCard = playerToCheck.getHandCards().indexOf(thisIsAlsoAMancato);
+        boolean thereWasAnotherCard = false;
+
+        for (Card thisIsSameCard : playerToCheck.getHandCards()) {
+
+            if (thisIsSameCard.getName().equals(nameOfSearchedCard) && playerToCheck.getHandCards().indexOf(thisIsSameCard) != indexOfReplyCard) {
+                indexOfSecondReplyCard = playerToCheck.getHandCards().indexOf(thisIsSameCard);
+                thereWasAnotherCard = true;
             }
         }
-        round.getDiscardpile().place(playerToCheck.drawSpecificHandCard(indexOfSecondReplyCard, round));
-        if (indexOfReplyCard > indexOfSecondReplyCard) {
-            indexOfReplyCard--;
+        if (thereWasAnotherCard) {
+            round.getDiscardpile().place(playerToCheck.drawSpecificHandCard(indexOfSecondReplyCard, round));
+            if (indexOfReplyCard > indexOfSecondReplyCard) {
+                indexOfReplyCard--;
+            }
         }
     }
 
-
     /**
      *
-     * Etsii maaratyn pelaajan kadesta Mancato!-korttia ja palauttaa sen
+     * Etsii maaratyn pelaajan kadesta tietyn nimista korttia ja palauttaa sen
      * indeksin.
      *
-     * @param playerToCheck pelaaja, jonka kadesta Mancato!-korttia etsitaan
-     * @return kadessa olevan Mancato!-kortin indeksi
+     * @param playerToCheck pelaaja, jonka kadesta korttia etsitaan
+     * @param nameOfSearchedCard etsittavan kortin nimi
+     * @return kadessa olevan kortin indeksi
      */
-    public int getIndexOfAMancatoInHand(Player playerToCheck) {
+    public int getIndexOfCertainHandCard(Player playerToCheck, String nameOfSearchedCard) {
 
-        int indexOfMancato = 0;
+        int indexOfCard = 0;
 
-        for (Card thisIsMancato : playerToCheck.getHandCards()) {
-            if (thisIsMancato.getName().equals("Mancato!")) {
-                indexOfMancato = playerToCheck.getHandCards().indexOf(thisIsMancato);
+        for (Card thisIsIt : playerToCheck.getHandCards()) {
+            if (thisIsIt.getName().equals("BANG!")) {
+                indexOfCard = playerToCheck.getHandCards().indexOf(thisIsIt);
             }
         }
-        return indexOfMancato;
-    }
-
-    /**
-     *
-     * Etsii maaratyn pelaajan kadesta BANG!-korttia ja palauttaa sen indeksin.
-     *
-     * @param playerToCheck pelaaja, jonka kadesta BANG!-korttia etsitaan
-     * @return kadessa olevan BANG!-kortin indeksi
-     */
-    public int getIndexOfABangInHand(Player playerToCheck) {
-
-        int indexOfBang = 0;
-
-        for (Card thisIsBang : playerToCheck.getHandCards()) {
-            if (thisIsBang.getName().equals("BANG!")) {
-                indexOfBang = playerToCheck.getHandCards().indexOf(thisIsBang);
-            }
-        }
-        return indexOfBang;
+        return indexOfCard;
     }
 }

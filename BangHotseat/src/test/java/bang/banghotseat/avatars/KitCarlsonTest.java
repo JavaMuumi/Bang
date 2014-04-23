@@ -54,4 +54,10 @@ public class KitCarlsonTest {
     public void getSpecialityReturnsCorrectDescriptionForKitCarlson() {
         assertEquals("He looks at the top three cards of the deck and chooses the 2 to draw.", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
+    
+    @Test
+    public void kitCarlsonDrawsThreeCards() {
+        round.getPlayerInTurn().getAvatar().drawCards(round);
+        assertEquals(3, round.getPlayerInTurn().getHandCards().size());
+    }
 }

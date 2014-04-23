@@ -35,7 +35,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
-
+        
         if (visibleScreen.getIndex() == -1) {
             visibleScreen.playerXScreen();
 

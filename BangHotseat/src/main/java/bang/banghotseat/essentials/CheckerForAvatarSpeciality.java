@@ -209,13 +209,13 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
-     * Tarkastaa, rajayttavatko molemmat annetut kortit Dinamite-kortin.
+     * Tarkastaa, rajayttivatko molemmat aiemmin annetut kortit Dinamite-kortin.
      *
      * @param first ensimmainen tarkastettava kortti
      * @param second toinen tarkastettava kortti
      * @return totuusarvo rajauttavatko molemmat kortit Dinamite-kortin
      */
-    public boolean dinamiteBlowsUpOnLuckyDuke(Card first, Card second) {
+    public boolean checkTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDuke(Card first, Card second) {
 
         boolean dinamiteBlowsUpOnLuckyDuke = true;
 

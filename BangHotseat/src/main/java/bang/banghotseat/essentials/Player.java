@@ -25,6 +25,7 @@ public class Player {
     private List<Card> frontCards = new ArrayList<>();
     private List<Card> lastCheckedCards = new ArrayList<>();
     private Card cardWaitingForAReply;
+    private List<Card> discardedCards = new ArrayList<>();
 
     /**
      *
@@ -308,5 +309,29 @@ public class Player {
      */
     public void clearListOfLastCheckedCards() {
         lastCheckedCards.clear();
+    }
+
+    /**
+     *
+     * Lisaa annetun kortin poistettujen kasikorttien listalle.
+     */
+    public void addCardToListOfDiscardedCards(Card toBeAdded) {
+        discardedCards.add(toBeAdded);
+    }
+
+    /**
+     *
+     * @return poistettujen kasikorttien lista
+     */
+    public List<Card> getListOfDiscardedCards() {
+        return discardedCards;
+    }
+
+    /**
+     *
+     * Tyhjentaa poistettujen kasikorttien listan.
+     */
+    public void clearListOfDiscardedCards() {
+        discardedCards.clear();
     }
 }
