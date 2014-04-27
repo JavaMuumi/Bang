@@ -42,6 +42,7 @@ public class VisibleScreen extends JFrame {
     private ActionListener prigione_ToNextPlayer;
     private ActionListener emporioPlayerChoseFirstCard;
     private ActionListener emporioPlayerChoseSecondCard;
+    private ActionListener toBlackJackScren;
     private ActionListener toJesseJonesScreen;
     private ActionListener jesseJonesDrawsFromDrawpile;
     private ActionListener jesseJonesDrawsFromEnemyHand;
@@ -103,6 +104,7 @@ public class VisibleScreen extends JFrame {
         prigione_ToNextPlayer = new Prigione_ToNextPlayer(this);
         emporioPlayerChoseFirstCard = new EmporioPlayerChoseFirstCard(this);
         emporioPlayerChoseSecondCard = new EmporioPlayerChoseSecondCard(this);
+        toBlackJackScren = new ToBlackJackScreen(this);
         toJesseJonesScreen = new ToJesseJonesScreen(this);
         jesseJonesDrawsFromDrawpile = new PlayerInTurnDrawsCardsNormally(this);
         jesseJonesDrawsFromEnemyHand = new JesseJonesDrawsFromEnemyHand(this);
@@ -241,16 +243,101 @@ public class VisibleScreen extends JFrame {
      */
     public void rules() {
 
-        container.setLayout(new GridLayout(3, 3));
+        container.setLayout(new BoxLayout(container, WIDTH));
 
-        JLabel rules = new JLabel("Rules", JLabel.CENTER);
+        JLabel rules = new JLabel("Rules");
         rules.setFont(new Font("Bang", Font.BOLD, 48));
 
         JLabel rulesText = new JLabel("<html>BANG! is a Wild West themed card game and this computer adaption follows the rules of the original game, but only for two players (for now...)."
+                + "<br>Game is played with hotseat principle: one computer, two players. Every time the other player should play, a message is displayed for the player in turn to look away. Then he should do so, because players are not allowed to see each"
+                + "<br>other's hand cards."
                 + "<br>"
-                + "<br>This town is not big enough for the both of you. Your objective is to annihilate the other player."
+                + "<br>This town is not big enough for the both of you. The objective is to annihilate the other player."
                 + "<br>"
+                + "<br>At the beginning of the game both players are given a random character. Each of them have a special ability which is active for the whole game. Specific abilitiy of each character is visible in writing for the whole game. Character"
+                + "<br>determines the maximum health points of the player, it is either 3 or 4. Player may never have more health points than this."
                 + "<br>"
+                + "<br>Players may have cards in their hand which cannot be seen by the other player, but their amount is shown. Players may also have cards in front of them which are visible for the other player as well."
+                + "<br>"
+                + "<br>There are two decks of cards in the game: drawpile and discardpile. At the beginnig of the game all the cards are in drawpile and discardpile is empty. During the game cards are discarded into discardpile (who'd have guessed!?). If"
+                + "<br>drawpile is emptied, discardpile will be shuffled and become a new drawpile."
+                + "<br>"
+                + "<br>Both players will be dealt their maximum health of cards which will be put into their hand. After this, first round starts."
+                + "<br>"
+                + "<br>At the beginning of a turn player draws two cards from the deck into their hand, unless characters special ability allows otherwise. Then player can play cards."
+                + "<br>"
+                + "<br>Cards are either orange or blue."
+                + "<br>Orange cards are used instaneously and can, for example, attack in various ways, defend or allow to draw more cards. An orange card is discarded after it is used."
+                + "<br>Blue cards are put in front of the player to give benefit as long as the card remains there. They may, again for example, provide additional cover. There are also blue cards that cause harm but they will be explained in more detail"
+                + "<br>later. Player cannot have two blue cards of same kind in front. If a similar card is played it will replace the old one, which will be discarded ('Dinamite' is an exeption, see later)."
+                + "<br>Also, six blue cards are guns. Player may only have one gun in front. If another is played, the old one will be discarded. Guns will be explained later."
+                + "<br>"
+                + "<br>Players are normally at distance of one from each other."
+                + "<br>Players reach is also normally one. This means, that they cannot use cards that are dependant on distance if player is further than this. Reach can be altered with guns. You may shoot to distance the gun provides."
+                + "<br>In addition, players touch reach is normally one. It is not increased by guns. There are also cards dependant on this type of reach."
+                + "<br>"
+                + "<br>Most basic orange cards (and cards all in all) of the game are 'BANG!' and 'Mancato!'."
+                + "<br>'BANG!' shoots enemy and target loses one health point if it hits. Only one 'BANG!' can be played in one turn. Other attacking cards than 'BANG!' do not forbid its use or vice versa."
+                + "<br>'Mancato!' is a miss card which can be used to cancel 'BANG!' or other shooting card. Therefore, 'Mancato!' is used on other players turn, it cannot be played on player's own turn."
+                + "<br>"
+                + "<br>Other orange attacking cards are 'Gatling', 'Indiani!' and 'Duello'."
+                + "<br>'Gatling' is basically same as 'BANG!', but it can always be played and is not dependant on attacking player's reach."
+                + "<br>'Indiani' calls a tribe of indians to attack other player, who must use 'BANG!' to shoot them off or lose one health point. 'Indiani!' is not dependant on attacking player's reach."
+                + "<br>'Duello', as it says, challenges other player to a duel. Challenged player must play 'BANG!' or lose one health point. If player player plays 'BANG!', the player who played 'Duello' must now play 'BANG!' or lose one health point."
+                + "<br>This continues until other player can or will not play 'BANG!' and loses one health point. 'Duello' is not dependant on attacking player's reach."
+                + "<br>"
+                + "<br>Other orange cards are 'Cat Balou', 'Panico', 'Emporio', 'Diligenza', 'Wells Fargo', 'Saloon' and 'Birra'."
+                + "<br>'Cat Balou' forces other player to discard a card. User may either select from enemy's visible front (if there are any) cards or one hand card at random. 'Cat Balou' is not dependant on reach using player."
+                + "<br>'Panico' steals a card from hand of other player and puts it into using player's hand. Like when using 'Cat Balou', using player may choose from enemy's front cards or hand. Panico is dependant on touch reach of using player."
+                + "<br>'Emporio' reveals two cards from the top of drawpile. Using player may choose one of them and other player gets the other one."
+                + "<br>'Diligenza' instantly draws two cards from drawpile into hand of using player."
+                + "<br>'Wells Fargo' is the same as 'Diligenza' but it draws three cards."
+                + "<br>'Saloon' returns one health point to both players. However, neither may have more health points than their maximum."
+                + "<br>'Birra' is a beer. It tastes good but does not do a thing."
+                + "<br>"
+                + "<br>Blue cards include 'Barrel', 'Mirino', 'Mustang', 'Dinamite', 'Prigione' and five guns: 'Schofield', 'Remington', 'Rev.Carabine', 'Winchester' and 'Volcanic'.  "
+                + "<br>'Barrel' is a defensive card. If player who has 'Barrel' in front of him is shot at, the top card of drawpile is flipped. If suit of the card is 'Hearts' the shot missed, otherwise it did not. If 'Barrel' does not stop the shot"
+                + "<br>the player being shot at may still use 'Mancato!' to dodge. In any case, the flipped card will be discarded. 'Barrel' only works against shots which means only 'BANG!' and 'Gatling', not 'Duello' or 'Inadiani!'."
+                + "<br>'Mirino', increases player's touch reach by one."
+                + "<br>'Mustang', increases player's distance from other player by one. This means that other pleyer needs longer reach against him, but the player on 'Mustang' does not need additional reach aginst other player."
+                + "<br>'Dinamite' is an attacking card. When it is played, it will be placed in front of the player who uses it. When he next time begins his turn, before he draws his cards, top card of drawpile will be flipped. If suit of the card"
+                + "<br>is 'Spades' and number between two and nine (two and nine are also included in this range), 'Dinamite' explodes and player loses three life points. If flipped card is anything else, 'Dinamite' will pe passed to the other player."
+                + "<br>He then checks the top card before his turn and 'Dinamite' will be passed again if it does not explode. This will contiue until it does. Unlike with other blue cards, if other player already has 'Dinamite' in front and new one"
+                + "<br>would be passed to him the old one will not be discarded. Both will stay put and be checked with players turns until another will explode. After that the other"
+                + "<br>will start passing on normally."
+                + "<br>'Prigione' is another attacking card. When a player uses it, it will be placed in front of another player. When this other player next starts his turn, before he draws his cards, top card of drawpile will be flipped. If suit of"
+                + "<br>the card is 'Hearts', 'Prigione' will be discarded and player will begin his turn normally. If suit of flipped card is anything else, player will lose his turn. 'Prigione' will be discarded and turn will be passed to other player."
+                + "<br>If player has both 'Dinamite' and 'Prigione' in front, 'Dinamite' will be checked first and 'Prigione' after that."
+                + "<br>Five guns alter players reach."
+                + "<br>'Schofield' increases reach by one, 'Remington' by two , 'Rev-Carabine' by three and 'Winchester' by four."
+                + "<br>'Volcanic' is a different type of gun. It provides no additional reach but it allows player to use unlimited amount of 'BANG!' during his turn."
+                + "<br>"
+                + "<br>Player may use as many cards as he can in one turn (but remember: normally only one 'BANG!'). Once player has no more hand cards he cannot continue his turn."
+                + "<br>When finishing a turn, player may only keep as many cards in his hand as he has health points left. If he has more than this, he must discard the excessive cards. Any card can be discarded. Player may not discard cards unless"
+                + "<br>he has more than his current health points."
+                + "<br>"
+                + "<br>Characters special abilities affect many events of game and some cards."
+                + "<br>'Bart Cassidy' draws a card from drawpile each time he loses health. If 'Dinamite' explodes on him he draws three cards."
+                + "<br>'Black Jack' shows the second card he draws to other player so you must tell him what it was. If suit of card is 'Hearts' or 'Diamonds', he draws a third card. This is not shown to the other player."
+                + "<br>'Calamity Janet' may use 'BANG!' as 'Mancato!' and vice versa. They are basically same card to her."
+                + "<br>'El Gringo' draws a card from hand of other player when he loses health as a result from other players attack. This means 'BANG!', 'Gatling', 'Indiani!' or 'Duello'. If 'Dinamite' explodes on him he draws no cards. Also, if he"
+                + "<br>himself plays 'Duello' and loses it, he draws no cards."
+                + "<br>'Jesse Jones' may choose to draw his first card form other player's hand or from drawpile. Second card is always drawn from drawpile. He cannot use his ability if other player has no hand cards."
+                + "<br>'Jourdonnais' flips top card of drawpile when he is shot. On 'Hearts' he is missed. Basically he always has 'Barrel' in front of him. If he actually has 'Barrel', he may check both. If either is 'Hearts' he is missed."
+                + "<br>'Kit Carlson' draws three cards from drawpile. He looks all of them, returns one to the top of drawpile and keeps two others. It should be noted that the returned card really goes to drawpile. If no cards are drawn during 'Kit"
+                + "<br>Carlson's' turn, the other player draws it. This applies also if other player has 'Dinamite' or 'Prigione' in front..."
+                + "<br>'Lucky Duke' flips two cards instead of one whenever top card of drawpile is checked. This means for 'Barrel', 'Dinamite' and 'Prigione'. If either is desired type ('Hearts' on 'Barrel' and 'Prigione' and something other than"
+                + "<br>'Spades' 2-9 on 'Dinamite') it will be considered when checking effect."
+                + "<br>'Paul Regret' always has distance increased by one. Basically he always has 'Mustang' in front of him. His ability stacks with an actual 'Mustang'."
+                + "<br>'Pedro Ramirez' May choose to draw his first card from discardpile or from drawpile. Second card is always drawn from drawpile. He cannot use his ability if discarpile is empty."
+                + "<br>'Rose Doolan' always has touch reach increased by one. Basically she always has 'Mirino' in front of her. Her ability stacks with an actual 'Mirino' and all range providing guns."
+                + "<br>'Sid Ketchum' may discard two cards from his hand during his turn to regain one health point. He may never exceed his maximum health of four. He can use his ability unlimited amount of times (also during one turn)."
+                + "<br>'Slab The Killer' is an effective killer. Other player needs two misses to avoid his 'BANG!'. This only applies to 'BANG!', not 'Gatling', 'Indiani!' or 'Duello'. If player has 'Barrel', flipped 'Hearts' counts as one missed. If"
+                + "<br>enemy is 'Jourdonnais' and he has 'Barrel', each flipped 'Hearts' counts as one missed."
+                + "<br>'Suzy Lafayette' draws a card from drawpile as soon as she has no hand cards. The effect reamains on both her own turn as well as other player's. However, during 'Duello' she draws the card only after it is finished."
+                + "<br>'Willy The Kid' may play unlimited amount of 'BANG!' during his turn. Basically he always has 'Volcanic' in front of him. An actual 'Volcanic' is usless to him."
+                + "<br>"
+                + "<br>Once one player is reduced to zero health points he loses the game and it is over."
                 + "</html>");
 
         JScrollPane rulesScreen = new JScrollPane(rulesText, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -478,7 +565,10 @@ public class VisibleScreen extends JFrame {
             } else {
                 container.add(prigioneFailed);
 
-                if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
+                if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Black Jack")) {
+                    next.addActionListener(toBlackJackScren);
+
+                } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
                     next.addActionListener(toJesseJonesScreen);
 
                 } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
@@ -590,7 +680,10 @@ public class VisibleScreen extends JFrame {
                 } else {
                     container.add(dinamiteWasPassedOn);
                 }
-                if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
+                if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Black Jack")) {
+                    next.addActionListener(toBlackJackScren);
+
+                } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
                     next.addActionListener(toJesseJonesScreen);
 
                 } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
@@ -906,6 +999,7 @@ public class VisibleScreen extends JFrame {
             panicoChoice.add(toBeAdded);
             container.add(toBeAdded);
         }
+
         JButton steal = new JButton("Steal now!");
         steal.addActionListener(panicoScreen_StealNow);
         container.add(steal);
@@ -1044,6 +1138,38 @@ public class VisibleScreen extends JFrame {
         JLabel whichWillYouTake = new JLabel("Which will you take? Enemy will have the other", JLabel.CENTER);
         whichWillYouTake.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(whichWillYouTake);
+    }
+
+    /**
+     *
+     * Black Jackin kortinnoston infonakyma.
+     */
+    public void blackJackDrawScreen() {
+
+        container.setLayout(new GridLayout(4, 3));
+
+        JLabel drawnCard = new JLabel(setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString() + " was drawn", JLabel.CENTER);
+        drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel getsNew = new JLabel("You get one more card", JLabel.CENTER);
+        getsNew.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel doesNotGetNew = new JLabel("You don't get more cards", JLabel.CENTER);
+        doesNotGetNew.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JButton next = new JButton("Continue");
+        next.setFont(new Font("Button", Font.ITALIC, 34));
+        next.addActionListener(continueToPlayerXScreen);
+
+        container.add(drawnCard);
+
+        if (setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().getSuit().equals("Hearts") || setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString().equals("Diamonds")) {
+            container.add(getsNew);
+
+        } else {
+            container.add(doesNotGetNew);
+        }
+        container.add(next);
     }
 
     /**
@@ -1612,7 +1738,7 @@ public class VisibleScreen extends JFrame {
         if (setup.getRound().gameIsOver()) {
             next.addActionListener(toGameOverScreen);
 
-        } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Bart Cassidy")) {
+        } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Bart Cassidy") || setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Suzy Lafayette")) {
 
             JLabel enemyContinues = new JLabel("Enemy gets one card and may continue", JLabel.CENTER);
             enemyContinues.setFont(new Font("Bang", Font.BOLD, 48));
@@ -1780,8 +1906,10 @@ public class VisibleScreen extends JFrame {
      */
     public int getPanicoOrCatBalouIndex() {
         for (JRadioButton isThisSelected : cardList) {
+
             if (isThisSelected.isSelected() && cardList.indexOf(isThisSelected) == cardList.size() - 1) {
                 return -2;
+
             } else if (isThisSelected.isSelected()) {
                 return cardList.indexOf(isThisSelected);
             }

@@ -194,3 +194,13 @@ YHTEENSÄ: 3h
 klo 13:30-15:30
 Bugien metsästystä
 YHTEENSÄ: 2h
+
+24.4.
+klo 14-16
+Bugien korjailua
+YHTEENSÄ: 2h
+
+27.4.
+klo 14-19
+Bugeja löyty vielä, korjattu
+YHTEENSÄ: 5h

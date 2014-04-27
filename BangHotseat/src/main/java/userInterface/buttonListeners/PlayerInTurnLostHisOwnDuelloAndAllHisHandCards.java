@@ -18,7 +18,7 @@ import userInterface.VisibleScreen;
  * vuoroon.
  */
 public class PlayerInTurnLostHisOwnDuelloAndAllHisHandCards implements ActionListener {
-
+    
     private VisibleScreen visibleScreen;
     private JFrame frame;
 
@@ -30,23 +30,29 @@ public class PlayerInTurnLostHisOwnDuelloAndAllHisHandCards implements ActionLis
         this.visibleScreen = visibleScreen;
         frame = visibleScreen.getFrame();
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        
         frame.getContentPane().removeAll();
-
+        
         if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().get(visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().getIndexOfABangOrMancatoInHandOfCalamityJanet(visibleScreen.getSetup().getRound().getPlayerToFollow())));
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().getIndexOfABangOrMancatoInHandOfCalamityJanet(visibleScreen.getSetup().getRound().getPlayerToFollow()), visibleScreen.getSetup().getRound()));
         } else {
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().get(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfCertainHandCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "Bang")));
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificHandCard(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfCertainHandCard(visibleScreen.getSetup().getRound().getPlayerToFollow(), "Bang"), visibleScreen.getSetup().getRound()));
         }
         visibleScreen.getSetup().getRound().getPlayerInTurn().loseHealth(1, visibleScreen.getSetup().getRound());
-
+        
+        if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Suzy Lafayette")) {
+            visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getDrawpile().take(visibleScreen.getSetup().getRound().getDiscardpile()));
+        }
+        
         visibleScreen.playerInTurnLostEverythingInDuello();
-
-        visibleScreen.getSetup().getRound().endTurn();
-
+        
+        if (!visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Bart Cassidy") && !visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Suzy Lafayette")) {
+            visibleScreen.getSetup().getRound().endTurn();
+        }
+        
         frame.revalidate();
         frame.repaint();
     }

@@ -42,7 +42,10 @@ public class ContinueToNewRound implements ActionListener {
             visibleScreen.prigioneScreen();
 
         } else {
-            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
+            if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Black Jack")) {
+                visibleScreen.blackJackDrawScreen();
+
+            } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
                 visibleScreen.kitCarlsonDrawScreen();
 
             } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {

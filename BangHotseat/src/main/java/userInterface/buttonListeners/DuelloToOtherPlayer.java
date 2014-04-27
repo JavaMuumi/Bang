@@ -41,7 +41,6 @@ public class DuelloToOtherPlayer implements ActionListener {
             if (!playerHadABang && visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet")) {
                 visibleScreen.getSetup().getRound().getCheckerForPlayedCard().searchPlayerHandForCertainCard(visibleScreen.getSetup().getRound().getPlayerInTurn(), "Mancato!");
             }
-
             visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCardWithoutGivingReplacingOne(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfReplyCard(), visibleScreen.getSetup().getRound()));
             visibleScreen.getSetup().getRound().setPlayerInTurnIsNextToReactToDuello(false);
 

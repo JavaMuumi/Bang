@@ -21,6 +21,7 @@ public class CheckerForAvatarSpeciality {
     private Round round;
     private List<Card> sidKetchumDiscardList;
     private int howManyMissesHaveBeenUsedAgainstSlabTheKiller;
+    private Card secondDrawnCardOfBlackJack;
 
     /**
      *
@@ -42,6 +43,24 @@ public class CheckerForAvatarSpeciality {
         if (possibleBartCassidy.getAvatar().toString().equals("Bart Cassidy")) {
             possibleBartCassidy.putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
         }
+    }
+
+    /**
+     *
+     * Asettaa Black Jackin toisen vedetyn kortin muistilistaan.
+     *
+     * @param secondCard toinen vedetty kortti
+     */
+    public void setSecondDrawnCardOfBlackJack(Card secondCard) {
+        secondDrawnCardOfBlackJack = secondCard;
+    }
+
+    /**
+     *
+     * @return toinen vedetty kortti
+     */
+    public Card getSecondDrawnCardOfBlackJack() {
+        return secondDrawnCardOfBlackJack;
     }
 
     /**

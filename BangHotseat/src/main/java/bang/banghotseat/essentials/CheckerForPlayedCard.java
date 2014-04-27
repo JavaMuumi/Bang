@@ -270,7 +270,13 @@ public class CheckerForPlayedCard {
      */
     public void playingDuello() {
         round.getPlayerInTurn().setCardWaitingForAReply(playedCard);
-        round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+
+        if (round.getPlayerInTurn().getAvatar().toString().equals("Suzy Lafayette")) {
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCardWithoutGivingReplacingOne(indexOfHandCard, round));
+
+        } else {
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+        }
     }
 
     /**
@@ -279,7 +285,6 @@ public class CheckerForPlayedCard {
      */
     public void playingCatBalou() {
 
-        round.getPlayerInTurn().getHandCards().get(indexOfHandCard).function(round);
         round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
     }
 
@@ -291,8 +296,7 @@ public class CheckerForPlayedCard {
 
         if (canPlayerInTurnTouchPlayerToFollow() == false) {
         } else {
-            round.getPlayerInTurn().getHandCards().get(indexOfHandCard).function(round);
-            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+            round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCardWithoutGivingReplacingOne(indexOfHandCard, round));
         }
     }
 

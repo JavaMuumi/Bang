@@ -36,9 +36,9 @@ public class PlayerToFollowLostDuelloAndAllHisHandCards implements ActionListene
         frame.getContentPane().removeAll();
 
         if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet")) {
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().getIndexOfABangOrMancatoInHandOfCalamityJanet(visibleScreen.getSetup().getRound().getPlayerInTurn())));
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().getIndexOfABangOrMancatoInHandOfCalamityJanet(visibleScreen.getSetup().getRound().getPlayerInTurn()), visibleScreen.getSetup().getRound()));
         } else {
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfCertainHandCard(visibleScreen.getSetup().getRound().getPlayerInTurn(), "Bang")));
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfCertainHandCard(visibleScreen.getSetup().getRound().getPlayerInTurn(), "Bang"), visibleScreen.getSetup().getRound()));
         }
         visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
 
