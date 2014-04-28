@@ -131,4 +131,10 @@ public class SaloonTest {
         String healthCheck = "Player: " + round.getPlayerInTurn().getCurrentHealth() + ", Enemy: " + round.getPlayerToFollow().getCurrentHealth();
         assertEquals("Player: 2, Enemy: 2", healthCheck);
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", saloon.getSuit());
+    }
 }

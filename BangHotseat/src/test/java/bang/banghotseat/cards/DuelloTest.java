@@ -81,4 +81,10 @@ public class DuelloTest {
         Card thisDuello = new Duello("Hearts", 13);
         assertEquals("Duello: King of Hearts", thisDuello.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", duello.getSuit());
+    }
 }

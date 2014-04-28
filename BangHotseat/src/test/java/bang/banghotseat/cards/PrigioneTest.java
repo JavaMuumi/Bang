@@ -81,4 +81,10 @@ public class PrigioneTest {
         Card thisPrigione = new Prigione("Hearts", 13);
         assertEquals("Prigione: King of Hearts", thisPrigione.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", prigione.getSuit());
+    }
 }

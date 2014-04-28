@@ -17,10 +17,10 @@ import org.junit.Test;
  */
 public class BarrelTest {
     
-    private Card bang;
+    private Card barrel;
 
     public BarrelTest() {
-        bang = new Barrel("Hearts", 1);
+        barrel = new Barrel("Hearts", 1);
     }
 
     @BeforeClass
@@ -41,12 +41,12 @@ public class BarrelTest {
 
     @Test
     public void nameOfBarrelIsCorrect() {
-        assertEquals("Barrel", bang.getName());
+        assertEquals("Barrel", barrel.getName());
     }
 
     @Test
     public void typeOfBarrelIsBlue() {
-        assertEquals("Blue", bang.getType());
+        assertEquals("Blue", barrel.getType());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class BarrelTest {
     
     @Test
     public void stringOfBarrelIsCorrectForAces() {
-        assertEquals("Barrel: Ace of Hearts", bang.toString());
+        assertEquals("Barrel: Ace of Hearts", barrel.toString());
     }
     
     @Test
@@ -80,5 +80,11 @@ public class BarrelTest {
         
         Card thisBarrel = new Barrel("Hearts", 13);
         assertEquals("Barrel: King of Hearts", thisBarrel.toString());
+    }
+    
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+        
+        assertEquals("Hearts", barrel.getSuit());
     }
 }

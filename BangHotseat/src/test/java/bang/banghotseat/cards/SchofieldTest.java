@@ -81,4 +81,10 @@ public class SchofieldTest {
         Card thisSchofield = new Schofield("Hearts", 13);
         assertEquals("Schofield: King of Hearts", thisSchofield.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", schofield.getSuit());
+    }
 }

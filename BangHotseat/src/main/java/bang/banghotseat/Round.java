@@ -4,13 +4,7 @@
  */
 package bang.banghotseat;
 
-import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Deck;
-import bang.banghotseat.cards.Diligenza;
-import bang.banghotseat.cards.Dinamite;
-import bang.banghotseat.cards.Duello;
-import bang.banghotseat.cards.Panico;
-import bang.banghotseat.cards.Schofield;
 import bang.banghotseat.essentials.CheckerForAvatarSpeciality;
 import bang.banghotseat.essentials.CheckerForEventsBeforeTurn;
 import bang.banghotseat.essentials.CheckerForPlayedCard;

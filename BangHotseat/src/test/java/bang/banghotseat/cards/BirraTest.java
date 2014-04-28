@@ -81,4 +81,10 @@ public class BirraTest {
         Card thisBirra = new Birra("Hearts", 13);
         assertEquals("Birra: King of Hearts", thisBirra.toString());
     }
+    
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+        
+        assertEquals("Hearts", birra.getSuit());
+    }
 }

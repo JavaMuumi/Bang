@@ -6,10 +6,10 @@ package bang.banghotseat.cards;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -80,5 +80,11 @@ public class GatlingTest {
         
         Card thisGatling = new Gatling("Hearts", 13);
         assertEquals("Gatling: King of Hearts", thisGatling.toString());
+    }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", gatling.getSuit());
     }
 }

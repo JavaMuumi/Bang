@@ -81,4 +81,10 @@ public class VolcanicTest {
         Card thisVolcanic = new Volcanic("Hearts", 13);
         assertEquals("Volcanic: King of Hearts", thisVolcanic.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", volcanic.getSuit());
+    }
 }

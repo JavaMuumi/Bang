@@ -6,10 +6,10 @@ package bang.banghotseat.cards;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -80,5 +80,11 @@ public class DinamiteTest {
 
         Card thisDinamite = new Dinamite("Hearts", 13);
         assertEquals("Dinamite: King of Hearts", thisDinamite.toString());
+    }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", dinamite.getSuit());
     }
 }

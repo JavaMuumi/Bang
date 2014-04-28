@@ -81,4 +81,10 @@ public class MustangTest {
         Card thisMustang = new Mustang("Hearts", 13);
         assertEquals("Mustang: King of Hearts", thisMustang.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", mustang.getSuit());
+    }
 }

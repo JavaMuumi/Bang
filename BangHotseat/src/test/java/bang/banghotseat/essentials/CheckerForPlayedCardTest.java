@@ -452,7 +452,7 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Discardpile size: 0", "Discardpile size: " + round.getDiscardpile().getDeck().size());
     }
-    
+
     @Test
     public void methodSearchPlayerHandForAnotherCardOfSameKindAddsTheOtherCardToDiscardpileIfPlayerHasAnotherHandCardOfSearchedName() {
 
@@ -464,7 +464,7 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Discardpile size: 1", "Discardpile size: " + round.getDiscardpile().getDeck().size());
     }
-    
+
     @Test
     public void methodSearchPlayerHandForAnotherCardOfSameKindDoesNotChangeIndexOfReplyCardIfPlayerOnlyHasOneHandCard() {
 
@@ -475,7 +475,7 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Index of reply card: 0", "Index of reply card: " + round.getCheckerForPlayedCard().getIndexOfReplyCard());
     }
-    
+
     @Test
     public void methodSearchPlayerHandForAnotherCardOfSameKindDoesNotChangeIndexOfReplyCardIfPlayerHasAnotherHandCardOfSearchedName() {
 
@@ -487,7 +487,7 @@ public class CheckerForPlayedCardTest {
 
         assertEquals("Index of reply card: 1", "Index of reply card: " + round.getCheckerForPlayedCard().getIndexOfReplyCard());
     }
-    
+
     @Test
     public void methodSearchPlayerHandForAnotherCardOfSameKindReducesIndexOfReplyCardByOneIfPlayerHasAnotherHandCardOfSearchedName() {
 
@@ -498,5 +498,121 @@ public class CheckerForPlayedCardTest {
         round.getCheckerForPlayedCard().searchPlayerHandForAnotherCardOfSameKind(round.getPlayerInTurn(), "BANG!");
 
         assertEquals("Index of reply card: 0", "Index of reply card: " + round.getCheckerForPlayedCard().getIndexOfReplyCard());
+    }
+
+    @Test
+    public void ifPlayerToFolloHasNoFrontCardsMethodPlayingPrigionePutsPrigioneInFrontOfHim() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Prigione("Hearts", 1));
+        round.getCheckerForPlayedCard().playingPrigione();
+
+        assertEquals("Player front cards: 1", "Player front cards: " + round.getPlayerToFollow().getFrontCards().size());
+    }
+
+    @Test
+    public void ifPlayerToFolloHasOtherFrontCardThanPrigioneMethodPlayingPrigionePutsPrigioneInFrontOfHim() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Prigione("Hearts", 1));
+        round.getPlayerToFollow().putCardInFront(new Barrel("Hearts", 1));
+        round.getCheckerForPlayedCard().playingPrigione();
+
+        assertEquals("Player front cards: 2", "Player front cards: " + round.getPlayerToFollow().getFrontCards().size());
+    }
+
+    @Test
+    public void ifPlayerToFolloAlreadyHasPrigioneInFrontMethodPlayingPrigioneReplacesTheOldOneWithNew() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Prigione("Hearts", 1));
+        round.getPlayerToFollow().putCardInFront(new Prigione("Spades", 1));
+        round.getCheckerForPlayedCard().playingPrigione();
+
+        assertEquals("Prigione: Ace of Hearts", round.getPlayerToFollow().getFrontCards().get(0).toString());
+    }
+
+    @Test
+    public void methodPlayingIndianiSetsIndianiAsCardWaitingForReply() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Indiani("Diamonds", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Indiani!: Ace of Diamonds", round.getPlayerInTurn().getCardWaitingForAReply().toString());
+    }
+
+    @Test
+    public void methodPlayingIndianiPutsIndianiIntoDiscardpile() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Indiani("Diamonds", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Indiani!: Ace of Diamonds", round.getDiscardpile().getDeck().get(round.getDiscardpile().getDeck().size() - 1).toString());
+    }
+
+    @Test
+    public void methodPlayingDuelloSetsDuelloAsCardWaitingForReply() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Duello("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Duello: Ace of Hearts", round.getPlayerInTurn().getCardWaitingForAReply().toString());
+    }
+
+    @Test
+    public void methodPlayingDuelloPutsDuelloIntoDiscardpile() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Duello("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Duello: Ace of Hearts", round.getDiscardpile().getDeck().get(round.getDiscardpile().getDeck().size() - 1).toString());
+    }
+
+    @Test
+    public void ifPlayerInTurnIsSuzyLafayetteAndShePlaysDuelloWhichIsHerLastHandCardSheWillNotDrawAnotherOne() {
+
+        round.getPlayerInTurn().setAvatar(new SuzyLafayette());
+        round.getPlayerInTurn().putCardIntoHand(new Duello("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Player hand cards: 0", "Player hand cards: " + round.getPlayerInTurn().getHandCards().size());
+    }
+
+    @Test
+    public void methodPlayingEmporioSetsTwoCardsInListOfLastCheckedCards() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Emporio("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Number of last checked cards: 2", "Number of last checked cards: " + round.getPlayerInTurn().getListOfLastCheckedCards().size());
+    }
+
+    @Test
+    public void methodPlayingEmporioPutsEmporioAndTwoCardsIntoDiscardpile() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Emporio("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Discardpile: 3", "Discardpile: " + round.getDiscardpile().getDeck().size());
+    }
+
+    @Test
+    public void methodPlayingEmporioPutsEmporioIntoDiscardpileBeforeTwoOtherCards() {
+
+        round.getPlayerInTurn().putCardIntoHand(new Emporio("Hearts", 1));
+        round.getCheckerForPlayedCard().playingCard(0);
+
+        assertEquals("Emporio: Ace of Hearts", round.getDiscardpile().getDeck().get(round.getDiscardpile().getDeck().size() - 3).toString());
+    }
+    
+    @Test
+    public void methodCanPlayerInTurnReachPlayerToFollowReturnsTrueIfPlayerToFollowIsAtDistanceOfOne() {
+        
+        assertEquals(true, round.getCheckerForPlayedCard().canPlayerInTurnReachPlayerToFollow());
+    }
+    
+    @Test
+    public void methodCanPlayerInTurnReachPlayerToFollowReturnsTrueIfPlayerToFollowIsAtDistanceOfMoreThanOne() {
+        
+        round.getPlayerToFollow().setAvatar(new PaulRegret());
+        
+        assertEquals(false, round.getCheckerForPlayedCard().canPlayerInTurnReachPlayerToFollow());
     }
 }

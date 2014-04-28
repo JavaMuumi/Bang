@@ -81,4 +81,10 @@ public class BangTest {
         Card thisBang = new Bang("Hearts", 13);
         assertEquals("BANG!: King of Hearts", thisBang.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", bang.getSuit());
+    }
 }

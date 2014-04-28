@@ -17,6 +17,7 @@ import bang.banghotseat.cards.Bang;
 import bang.banghotseat.cards.Barrel;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.cards.Mancato;
+import bang.banghotseat.cards.Prigione;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -72,6 +73,14 @@ public class CheckerForAvatarSpecialityTest {
         round.getPlayerToFollow().loseHealth(3, round);
 
         assertEquals("Player hand cards: 3", "Player hand cards: " + round.getPlayerToFollow().getHandCards().size());
+    }
+
+    @Test
+    public void methodSetSecondDrawnCardOfBlackJackReallySetsGivenCard() {
+
+        round.getCheckerForAvatarSpeciality().setSecondDrawnCardOfBlackJack(new Bang("Hearts", 1));
+
+        assertEquals("BANG!: Ace of Hearts", round.getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString());
     }
 
     @Test
@@ -261,15 +270,15 @@ public class CheckerForAvatarSpecialityTest {
 
         assertEquals("List of last checked cards: 1", "List of last checked cards: " + round.getPlayerInTurn().getListOfLastCheckedCards().size());
     }
-    
+
     @Test
     public void ifPlayerToFollowIsJourdonnaisAndHeartsIsDrawnWithMethodCheckJourdonnaisAMissHasBeenPlayedAgainstSlabTheKillerWillBeSet() {
-        
+
         round.getPlayerToFollow().setAvatar(new Jourdonnais());
         round.getDrawpile().place(new Bang("Hearts", 1));
-        
+
         round.getCheckerForAvatarSpeciality().checkJourdonnais();
-        
+
         assertEquals("Number of misses used against Slab The Killer: 1", "Number of misses used against Slab The Killer: " + round.getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller());
     }
 
@@ -279,6 +288,14 @@ public class CheckerForAvatarSpecialityTest {
         round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
 
         assertEquals("List of last checked cards: 2", "List of last checked cards: " + round.getPlayerInTurn().getListOfLastCheckedCards().size());
+    }
+
+    @Test
+    public void methodCheckTwoCardsForLuckyDukePutsTwoDrawnCardsToDiscardpile() {
+
+        round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
+
+        assertEquals("Discardpile: 2", "Discardpile: " + round.getDiscardpile().getDeck().size());
     }
 
     @Test
@@ -454,6 +471,78 @@ public class CheckerForAvatarSpecialityTest {
     }
 
     @Test
+    public void methodCheckTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDukePutsNoCardsIntoListOfLastCheckedCards() {
+
+        round.getCheckerForAvatarSpeciality().checkTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDuke(new Bang("Hearts", 1), new Bang("Hearts", 1));
+
+        assertEquals("Last checked cards: 0", "Last checked cards: " + round.getPlayerInTurn().getListOfLastCheckedCards().size());
+    }
+
+    @Test
+    public void methodCheckTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDukeReturnsFalseIfFirstCardWouldDetoniteDinamiteButOtherWouldNot() {
+
+        assertEquals(false, round.getCheckerForAvatarSpeciality().checkTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDuke(new Bang("Spades", 3), new Bang("Hearts", 1)));
+    }
+
+    @Test
+    public void methodCheckTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDukeReturnsFalseIfFirstCardWouldNotDetoniteDinamiteButOtherWould() {
+
+        assertEquals(false, round.getCheckerForAvatarSpeciality().checkTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDuke(new Bang("Hearts", 1), new Bang("Spades", 3)));
+    }
+
+    @Test
+    public void methodCheckTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDukeReturnsFalseIfNeitherCardWouldNotDetoniteDinamite() {
+
+        assertEquals(false, round.getCheckerForAvatarSpeciality().checkTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDuke(new Bang("Hearts", 1), new Bang("Hearts", 1)));
+    }
+
+    @Test
+    public void methodCheckTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDukeReturnsTrueIfBothCardWouldNotDetoniteDinamite() {
+
+        assertEquals(true, round.getCheckerForAvatarSpeciality().checkTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDuke(new Bang("Spades", 3), new Bang("Spades", 3)));
+    }
+
+    @Test
+    public void methodLuckyDukeStaysInPrigioneReturnsTrueIfFirstCheckedCardIsHeartsButOtherIsNot() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForAvatarSpeciality().luckyDukeStaysInPrigione(0));
+    }
+
+    @Test
+    public void methodLuckyDukeStaysInPrigioneReturnsTrueIfFirstCheckedCardIsNotHeartsButOtherIs() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+
+        assertEquals(true, round.getCheckerForAvatarSpeciality().luckyDukeStaysInPrigione(0));
+    }
+
+    @Test
+    public void methodLuckyDukeStaysInPrigioneReturnsTrueIfBothCheckedCardsAreHearts() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
+        round.getDrawpile().place(new Bang("Hearts", 1));
+
+        assertEquals(true, round.getCheckerForAvatarSpeciality().luckyDukeStaysInPrigione(0));
+    }
+
+    @Test
+    public void methodLuckyDukeStaysInPrigioneReturnsFalseIfNeitherCheckedCardsIsHearts() {
+
+        round.getPlayerInTurn().putCardInFront(new Prigione("Hearts", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+        round.getDrawpile().place(new Bang("Spades", 1));
+
+        assertEquals(false, round.getCheckerForAvatarSpeciality().luckyDukeStaysInPrigione(0));
+    }
+
+    @Test
     public void ifPedroRamirezDrawsFromDiscardpileHeGetsTwoCards() {
 
         round.getDiscardpile().place(new Bang("Hearts", 1));
@@ -469,6 +558,23 @@ public class CheckerForAvatarSpecialityTest {
         round.getCheckerForAvatarSpeciality().drawFromDiscardpileWithPedroRamirez();
 
         assertEquals("Discardpile size: 0", "Discardpile size: " + round.getDiscardpile().getDeck().size());
+    }
+
+    @Test
+    public void methodAddToSidKetchumDiscardListReallyAddsGivenCard() {
+
+        round.getCheckerForAvatarSpeciality().addToSidKetchumDiscardList(new Bang("Hearts", 1));
+
+        assertEquals("BANG!: Ace of Hearts", round.getCheckerForAvatarSpeciality().getSidKetchumDiscardList().get(0).toString());
+    }
+
+    @Test
+    public void methodGetSidKetchumDiscardListReallyReturnsTheList() {
+
+        for (int i = 0; i < 5; i++) {
+            round.getCheckerForAvatarSpeciality().addToSidKetchumDiscardList(new Bang("Hearts", 1));
+        }
+        assertEquals("List size: 5", "List size: " + round.getCheckerForAvatarSpeciality().getSidKetchumDiscardList().size());
     }
 
     @Test
@@ -542,6 +648,15 @@ public class CheckerForAvatarSpecialityTest {
         round.getPlayerToFollow().putCardIntoHand(new Bang("Hearts", 1));
 
         assertEquals(true, round.getCheckerForAvatarSpeciality().checkThatEnemyHasTwoMancatosAgainstSlabTheKiller());
+    }
+
+    @Test
+    public void methodEraseHowManyMissesHaveBeenUsedAgainstSlabTheKillerReallyErasesTheNumber() {
+
+        round.getCheckerForAvatarSpeciality().missHasBeenPlayedAgainstSlabTheKiller();
+        round.getCheckerForAvatarSpeciality().eraseHowManyMissesHaveBeenUsedAgainstSlabTheKiller();
+
+        assertEquals("Misses used against Slab The Killer: 0", "Misses used against Slab The Killer: " + round.getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller());
     }
 
     @Test

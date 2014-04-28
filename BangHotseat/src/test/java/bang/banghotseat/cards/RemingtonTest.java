@@ -81,4 +81,10 @@ public class RemingtonTest {
         Card thisRemington = new Remington("Hearts", 13);
         assertEquals("Remington: King of Hearts", thisRemington.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", remington.getSuit());
+    }
 }

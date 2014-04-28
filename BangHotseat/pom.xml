@@ -44,10 +44,18 @@
                 <version>0.30</version>
                 <configuration>
                     <targetClasses>
-                        <param>bang.banghotseat.*</param>
+                        <param>bang.banghotseat.Round*</param>
+                        <param>bang.banghotseat.Setup*</param>
+                        <param>bang.banghotseat.avatars*</param>
+                        <param>bang.banghotseat.cards*</param>
+                        <param>bang.banghotseat.essentials*</param>
                     </targetClasses>
                     <targetTests>
-                        <param>bang.banghotseat.*</param>
+                        <param>bang.banghotseat.Round*</param>
+                        <param>bang.banghotseat.Setup*</param>
+                        <param>bang.banghotseat.avatars*</param>
+                        <param>bang.banghotseat.cards*</param>
+                        <param>bang.banghotseat.essentials*</param>
                     </targetTests>
                 </configuration>
             </plugin>

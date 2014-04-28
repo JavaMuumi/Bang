@@ -81,4 +81,10 @@ public class RevCarabineTest {
         Card thisRevCarabine = new RevCarabine("Hearts", 13);
         assertEquals("Rev.Carabine: King of Hearts", thisRevCarabine.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", revCarabine.getSuit());
+    }
 }

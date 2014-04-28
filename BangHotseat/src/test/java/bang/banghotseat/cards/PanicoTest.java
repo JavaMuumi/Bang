@@ -81,4 +81,10 @@ public class PanicoTest {
         Card thisPanico = new Panico("Hearts", 13);
         assertEquals("Panico!: King of Hearts", thisPanico.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", panico.getSuit());
+    }
 }

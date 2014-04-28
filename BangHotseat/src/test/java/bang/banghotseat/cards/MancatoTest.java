@@ -6,10 +6,10 @@ package bang.banghotseat.cards;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -80,5 +80,11 @@ public class MancatoTest {
         
         Card thisMancato = new Mancato("Hearts", 13);
         assertEquals("Mancato!: King of Hearts", thisMancato.toString());
+    }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", mancato.getSuit());
     }
 }

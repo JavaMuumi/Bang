@@ -81,4 +81,10 @@ public class WinchesterTest {
         Card thisWinchester = new Winchester("Hearts", 13);
         assertEquals("Winchester: King of Hearts", thisWinchester.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", winchester.getSuit());
+    }
 }

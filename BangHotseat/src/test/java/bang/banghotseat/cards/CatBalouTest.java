@@ -81,4 +81,10 @@ public class CatBalouTest {
         Card thisCatBalou = new CatBalou("Hearts", 13);
         assertEquals("Cat Balou: King of Hearts", thisCatBalou.toString());
     }
+
+    @Test
+    public void methodGetSuitReturnsCorrectString() {
+
+        assertEquals("Hearts", catBalou.getSuit());
+    }
 }
