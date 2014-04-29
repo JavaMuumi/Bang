@@ -4,8 +4,6 @@
  */
 package bang.banghotseat;
 
-import bang.banghotseat.avatars.BlackJack;
-import bang.banghotseat.avatars.SuzyLafayette;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.cards.Deck;
 import bang.banghotseat.essentials.AvatarRandomizer;
@@ -44,7 +42,7 @@ public class Setup {
      */
     public void givePlayersAvatarsAndSetMaxHealths() {
 
-        player1.setAvatar(new BlackJack());
+        player1.setAvatar(randomizer.giveAvatar());
         player1.setCurrentHealth();
 
         player2.setAvatar(randomizer.giveAvatar());

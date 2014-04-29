@@ -4,6 +4,9 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.Round;
+import bang.banghotseat.avatars.SlabTheKiller;
+import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -17,9 +20,12 @@ import org.junit.Test;
  */
 public class DinamiteTest {
 
-    Card dinamite;
+    private Round round;
+    private Card dinamite;
     
     public DinamiteTest() {
+        
+        round =  new Round(new Player(), new Player(), new Deck(), new Deck());
         dinamite = new Dinamite("Hearts", 1);
     }
 
@@ -86,5 +92,15 @@ public class DinamiteTest {
     public void methodGetSuitReturnsCorrectString() {
 
         assertEquals("Hearts", dinamite.getSuit());
+    }
+    
+    @Test
+    public void metfodFunctionOfDinamiteMakesPlayerInTurnLoseThreeHealthPoints() {
+        
+        round.getPlayerInTurn().setAvatar(new SlabTheKiller());
+        round.getPlayerInTurn().setCurrentHealth();
+        dinamite.function(round);
+        
+        assertEquals("Player in turn health: 1", "Player in turn health: " + round.getPlayerInTurn().getCurrentHealth());
     }
 }

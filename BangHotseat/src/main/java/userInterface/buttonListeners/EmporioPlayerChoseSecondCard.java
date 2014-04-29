@@ -12,8 +12,9 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie nakymaan, joka pyytaa
- * Duelloon vastannutta pelaajaa katsomaan pois.
+ * Luokka on ActionListener, jolla varustettu nappula antaa vuorossa olevalle
+ * pelaajalle toisena Emporiosta tarjotun kortin ja seuraavalle pelaajalle
+ * ensimmaisen ja palaa pelaajan pelinakymaan.
  */
 public class EmporioPlayerChoseSecondCard implements ActionListener {
 

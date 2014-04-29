@@ -32,7 +32,8 @@ public class DistractionReply implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+        visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
+
         visibleScreen.clickToPretendYouCouldReply();
 
         visibleScreen.getFrame().revalidate();

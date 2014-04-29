@@ -4,6 +4,9 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.Round;
+import bang.banghotseat.avatars.SlabTheKiller;
+import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -17,9 +20,12 @@ import org.junit.Test;
  */
 public class DuelloTest {
     
+    private Round round;
     private Card duello;
     
     public DuelloTest() {
+        
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
         duello = new Duello("Hearts", 1);
     }
     
@@ -86,5 +92,27 @@ public class DuelloTest {
     public void methodGetSuitReturnsCorrectString() {
 
         assertEquals("Hearts", duello.getSuit());
+    }
+    
+    @Test
+    public void metfodFunctionOfDuelloMakesPlayerInTurnLoseOneHealthPointIfPlayerInTurnIsNextToReactToDuello() {
+        
+        round.getPlayerInTurn().setAvatar(new SlabTheKiller());
+        round.getPlayerInTurn().setCurrentHealth();
+        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
+        round.setPlayerInTurnIsNextToReactToDuello(true);
+        duello.function(round);
+        
+        assertEquals("Player in turn health: 3", "Player in turn health: " + round.getPlayerInTurn().getCurrentHealth());
+    }
+    
+    @Test
+    public void metfodFunctionOfDuelloMakesPlayerToFollowLoseOneHealthPointIfPlayerInTurnIsNotNextToReactToDuello() {
+        
+        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
+        round.getPlayerToFollow().setCurrentHealth();
+        duello.function(round);
+        
+        assertEquals("Player to follow health: 3", "Player to follow health: " + round.getPlayerToFollow().getCurrentHealth());
     }
 }

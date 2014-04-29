@@ -32,6 +32,9 @@ public class Birra implements Card {
 
     /**
      *
+     * Kortin funktio ei tee mitaan, koska BANG!:n saantojen mukaan
+     * kaksinpelissa ei saa juoda kaljaa.
+     *
      * @param round pelattava kierros
      */
     @Override

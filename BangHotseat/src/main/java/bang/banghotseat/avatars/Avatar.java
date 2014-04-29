@@ -31,10 +31,7 @@ public interface Avatar {
      *
      * Vetaa vuorokortit kateen avatarin mukaan.
      *
-     * @param drawpile lista korteista, joita nostetaan pelin aikana
-     * @param discardpile lista, jolle pelissa poistetut kortit lisataan
-     * @param playerInTurn vuorossa oleva pelaaja
-     * @param playerToFollow seuraavana vuorossa oleva pelaaja
+     * @param round pelattava kierros
      */
     void drawCards(Round round);
 }

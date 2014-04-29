@@ -125,7 +125,7 @@ public class CheckerForPlayedCardTest {
     @Test
     public void atTheBeginningOfATurnBooleanBangHasBeenPlayedIsFalse() {
 
-        assertEquals(false, round.getBangHasBeenPlayed());
+        assertEquals(false, round.bangHasBeenPlayed());
     }
 
     @Test
@@ -134,7 +134,7 @@ public class CheckerForPlayedCardTest {
         round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
         round.getCheckerForPlayedCard().playingCard(0);
 
-        assertEquals(true, round.getBangHasBeenPlayed());
+        assertEquals(true, round.bangHasBeenPlayed());
     }
 
     @Test

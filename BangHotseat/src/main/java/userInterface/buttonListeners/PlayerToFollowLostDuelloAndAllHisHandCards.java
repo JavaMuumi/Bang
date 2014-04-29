@@ -40,10 +40,14 @@ public class PlayerToFollowLostDuelloAndAllHisHandCards implements ActionListene
         } else {
             visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getSetup().getRound().getCheckerForPlayedCard().getIndexOfCertainHandCard(visibleScreen.getSetup().getRound().getPlayerInTurn(), "Bang"), visibleScreen.getSetup().getRound()));
         }
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+        visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
 
-        visibleScreen.playerToFollowLostEverythingInDuello();
+        if (visibleScreen.getSetup().getRound().gameIsOver()) {
+            visibleScreen.gameIsOver();
 
+        } else {
+            visibleScreen.playerToFollowLostEverythingInDuello();
+        }
         frame.revalidate();
         frame.repaint();
     }

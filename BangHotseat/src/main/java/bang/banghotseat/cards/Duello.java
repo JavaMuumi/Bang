@@ -33,10 +33,19 @@ public class Duello implements Card {
 
     /**
      *
+     * Saa pelaajan, joka on seuraava vastaamaan Duelloon, menettamaan yhden
+     * keston.
+     *
      * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
+
+        if (round.playerInTurnIsNextToReactToDuello()) {
+            round.getPlayerInTurn().loseHealth(1, round);
+        } else {
+            round.getPlayerToFollow().loseHealth(1, round);
+        }
     }
 
     /**

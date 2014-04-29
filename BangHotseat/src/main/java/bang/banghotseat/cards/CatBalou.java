@@ -31,6 +31,9 @@ public class CatBalou implements Card {
 
     /**
      *
+     * Suora toiminnallisuus ei tee mitaan, koska pelaajan on paatettava miten
+     * korttia kaytetaan.
+     *
      * @param round pelattava kierros
      */
     @Override

@@ -13,8 +13,8 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula siirtaa kortin kadesta
- * poistettavien listaan. Jos Listalla on jo toinen kortti, molemmat poistetaan.
+ * Luokka on ActionListener, jolla varustettu nappula peruuttaa Sid Ketchumin
+ * korttien uhrauksen.
  */
 public class SidKetchumCancel implements ActionListener {
 

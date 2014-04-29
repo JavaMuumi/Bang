@@ -204,3 +204,15 @@ YHTEENSÄ: 2h
 klo 14-19
 Bugeja löyty vielä, korjattu
 YHTEENSÄ: 5h
+
+28.4.
+klo 12-14
+Testejä
+klo 18-21
+Bugikorjailua ja refraktointia
+YHTEENSÄ: 5h
+
+29.4.
+klo 12-15
+JavaDocit kuntoon, testejä, refraktointia, bugikorjailua...
+YHTEENSÄ: 3h

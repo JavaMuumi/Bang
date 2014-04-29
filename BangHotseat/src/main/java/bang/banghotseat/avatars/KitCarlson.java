@@ -39,12 +39,12 @@ public class KitCarlson implements Avatar {
      */
     @Override
     public void drawCards(Round round) {
-        
+
         for (int i = 0; i < 3; i++) {
             round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
         }
     }
-    
+
     @Override
     public String toString() {
         return "Kit Carlson";

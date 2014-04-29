@@ -13,7 +13,7 @@ import userInterface.VisibleScreen;
  * @author Antti Korpi
  *
  * Luokka on ActionListener, jolla varustettu nappula siirtyy ruutuun, joka
- * kehottaa toista pelaajaa katsomaan poispain.
+ * kehottaa toista pelaajaa katsomaan poispain tai kertoo pelin paattyneen.
  */
 public class PleaseLookAwayToPlayerXScreen implements ActionListener {
 

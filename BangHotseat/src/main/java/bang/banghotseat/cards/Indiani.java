@@ -32,10 +32,14 @@ public class Indiani implements Card {
 
     /**
      *
+     * Saa vuorossa seuraavana olevan pelaajan menettamaan yhden keston.
+     *
      * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
+
+        round.getPlayerToFollow().loseHealth(1, round);
     }
 
     /**

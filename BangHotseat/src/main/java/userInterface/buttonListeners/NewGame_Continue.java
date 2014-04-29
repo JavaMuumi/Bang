@@ -13,7 +13,7 @@ import userInterface.VisibleScreen;
  * @author Antti Korpi
  *
  * Luokka on ActionListener, jolla varustettu nappula vie ruutuun, joka kehottaa
- * toista pelaajaa katsomaan poispain ja uuden vuoron aloitustoimet suoritetaan.
+ * toisena vuorossa olevaa pelaajaa katsomaan poispain.
  */
 public class NewGame_Continue implements ActionListener {
 

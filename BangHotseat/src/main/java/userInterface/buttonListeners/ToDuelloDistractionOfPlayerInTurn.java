@@ -33,9 +33,14 @@ public class ToDuelloDistractionOfPlayerInTurn implements ActionListener {
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
-        visibleScreen.getSetup().getRound().getPlayerInTurn().loseHealth(1, visibleScreen.getSetup().getRound());
-        visibleScreen.playerInTurnclickToPretendYouCouldReplyToDuello();
+        visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
 
+        if (visibleScreen.getSetup().getRound().gameIsOver()) {
+            visibleScreen.gameIsOver();
+
+        } else {
+            visibleScreen.playerInTurnclickToPretendYouCouldReplyToDuello();
+        }
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

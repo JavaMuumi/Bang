@@ -21,7 +21,7 @@ public class Deck {
 
     /**
      *
-     * Luo kaikki pelissa olevat kortit.
+     * Luo kaikki 79 pelissa olevaa korttia ja sekoittaa ne.
      */
     public void createCards() {
 
@@ -154,16 +154,16 @@ public class Deck {
 
     /**
      *
-     * Asettaa kortin pakan paalimmaiseksi.
+     * Asettaa annetun kortin pakan paalimmaiseksi.
      *
      * @param toBePlaced asetettava kortti
      */
     public void place(Card toBePlaced) {
         deck.add(toBePlaced);
     }
-    
+
     /**
-     * 
+     *
      * Tyhjentaa pakan
      */
     public void clearDeck() {

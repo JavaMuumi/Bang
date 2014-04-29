@@ -12,8 +12,8 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie Kit Carlson -avatarin
- * korttienvalinta-ruutuun.
+ * Luokka on ActionListener, jolla varustettu nappula vie Black Jack -avatarin
+ * korttiennoston inforuutuun.
  */
 public class ToBlackJackScreen implements ActionListener {
 

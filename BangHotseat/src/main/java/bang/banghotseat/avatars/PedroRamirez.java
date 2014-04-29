@@ -43,8 +43,9 @@ public class PedroRamirez implements Avatar {
     public void drawCards(Round round) {
 
         if (round.getDiscardpile().getDeck().isEmpty()) {
-            round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
-            round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+            for (int i = 0; i < 2; i++) {
+                round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+            }
         }
     }
 

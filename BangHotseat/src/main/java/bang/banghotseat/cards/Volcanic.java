@@ -32,10 +32,14 @@ public class Volcanic implements Card {
 
     /**
      *
+     * Asettaa tiedon kierroksella pelatusta BANG!:sta virheelliseksi.
+     *
      * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
+
+        round.setBangHasBeenPlayed(false);
     }
 
     /**

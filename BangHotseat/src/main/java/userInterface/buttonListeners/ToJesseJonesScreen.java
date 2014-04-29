@@ -12,7 +12,7 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie Kit Carlson -avatarin
+ * Luokka on ActionListener, jolla varustettu nappula vie Jesse Jones -avatarin
  * korttienvalinta-ruutuun.
  */
 public class ToJesseJonesScreen implements ActionListener {

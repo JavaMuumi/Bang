@@ -31,6 +31,9 @@ public class Mancato implements Card {
 
     /**
      *
+     * Suora toiminnallisuus ei tee mitaan, koska pelaajan on valittava miten
+     * korttia kaytetaan.
+     *
      * @param round pelattava kierros
      */
     @Override

@@ -32,10 +32,27 @@ public class Barrel implements Card {
 
     /**
      *
+     * Tarkastaa nostopakan paalimmaisen kortin ja asettaa sen poistopakkaan.
+     * Jos kortti oli herttaa, merkitaan yksi vaisto pelatuksi Slab The Killeria
+     * vastaan. Jos vuorossa seuraava pelaaja on Lucky Duke, tarkastetaan kaksi
+     * paalimmaista korttia.
+     *
      * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
+
+        if (round.getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
+            round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts();
+
+        } else {
+
+            round.getCheckerForEventsBeforeTurn().checkTopCard();
+
+            if (round.getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+                round.getCheckerForAvatarSpeciality().missHasBeenPlayedAgainstSlabTheKiller();
+            }
+        }
     }
 
     /**

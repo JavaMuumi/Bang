@@ -64,6 +64,7 @@ public class Player {
      * Vahentaa pelaajan kestoja maaratyn verran.
      *
      * @param amountToBeLost menetettavien kestojen maara
+     * @param round pelattava kierros
      */
     public void loseHealth(int amountToBeLost, Round round) {
 
@@ -95,6 +96,7 @@ public class Player {
      * Vetaa maaratyn kortin pelaajan kadesta.
      *
      * @param index vedettavan kasikortin indeksi
+     * @param round pelattava kierros
      * @return vedetty kortti
      */
     public Card drawSpecificHandCard(int index, Round round) {
@@ -112,7 +114,8 @@ public class Player {
      * Vetaa maaratyn kortin pelaajan kadesta antamatta kortin menettavalle
      * hahmolle uutta, vaikka taman erikoiskyky yleensa sallisi sen.
      *
-     * @param index vedettavan kasikortin indeksi
+     * @param index vedettavan kortin indeksi pelaajan kadessa
+     * @param round pelattava kierros
      * @return vedetty kortti
      */
     public Card drawSpecificHandCardWithoutGivingReplacingOne(int index, Round round) {
@@ -127,6 +130,7 @@ public class Player {
      *
      * Vetaa satunnaisen kortin pelaajan kadesta.
      *
+     * @param round pelattava kierros
      * @return vedetty kortti
      */
     public Card drawRandomHandCard(Round round) {
@@ -159,12 +163,13 @@ public class Player {
 
     /**
      *
-     * Vetaa maaratyn pelaajalta maaratyn etukortin.
+     * Vetaa pelaajalta maaratyn etukortin.
      *
-     * @param index vedettavan kortin indeksi
+     * @param index vedettavan kortin indeksi pelaajan etukorteissa
      * @return vedetty kortti
      */
     public Card drawSpecificFrontCard(int index) {
+
         Card toBeGiven = frontCards.get(index);
         frontCards.remove(index);
         return toBeGiven;
@@ -182,7 +187,7 @@ public class Player {
 
     /**
      *
-     * Antaa pelaajalle yhden keston.
+     * Antaa pelaajalle yhden keston, jos han ei jo ole taysissa kestoissa.
      */
     public void gainHealth() {
         if (currentHealth < avatar.getMaxHealth()) {
@@ -218,6 +223,7 @@ public class Player {
      * @return pelaajan kantama
      */
     public int getReach() {
+
         int reach = 1;
 
         for (Card frontCard : frontCards) {
@@ -297,7 +303,7 @@ public class Player {
 
     /**
      *
-     * @return pakasta viimeksi tarkistettu kortti
+     * @return vastausta odottavaksi merkitty kortti
      */
     public Card getCardWaitingForAReply() {
         return cardWaitingForAReply;

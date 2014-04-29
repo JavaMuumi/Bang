@@ -33,10 +33,14 @@ public class Gatling implements Card {
 
     /**
      *
+     * Saa vuorossa seuraavan pelaajan menettamaan yhden keston.
+     *
      * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
+
+        round.getPlayerToFollow().loseHealth(1, round);
     }
 
     /**

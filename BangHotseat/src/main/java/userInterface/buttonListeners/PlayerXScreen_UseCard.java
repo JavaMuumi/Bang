@@ -35,7 +35,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         if (visibleScreen.getIndex() == -1) {
             visibleScreen.playerXScreen();
 
@@ -120,11 +120,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
         if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
 
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
-                if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
-                } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
-                    visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
-                }
-            } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
+                visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
             }
             visibleScreen.barrelScreen();
 
@@ -133,7 +129,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
         } else {
             visibleScreen.takingDamageAndNoHandCards();
-            visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+            visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
         }
     }
 
@@ -149,14 +145,10 @@ public class PlayerXScreen_UseCard implements ActionListener {
         if (visibleScreen.getSetup().getRound().getCheckerForPlayedCard().checkBarrel()) {
 
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
-                if (visibleScreen.getSetup().getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke") && visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
-                } else if (visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
-                    visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
-
-                } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
-                }
+                visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
             }
             visibleScreen.barrelScreen();
+
         } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {
             visibleScreen.jourdonnaisScreen();
         } else {
@@ -167,7 +159,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
     /**
      *
      * Pelaa valitun Gatling-kortin pelaajaa vastaan, jolla ei ole yhtakaan
-     * vaistokorttia.
+     * kasikorttia.
      */
     public void usingGatlingAgainstEnemyWithNoHandCards() {
 
@@ -179,7 +171,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
             visibleScreen.jourdonnaisScreen();
         } else {
             visibleScreen.takingDamageAndNoHandCards();
-            visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+            visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
         }
     }
 
@@ -202,15 +194,15 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
     /**
      *
-     * Pelaa valitun Indiani!-kortin pelaajaa vastaan, jolla ei ole yhtakaan
-     * vaistokorttia.
+     * Pelaa valitun Indiani!- tai Duello-kortin pelaajaa vastaan, jolla ei ole
+     * yhtakaan vaistokorttia.
      */
     public void usingIndianiOrDuelloAgainstEnemyWithNoHandCards() {
 
         visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
 
         visibleScreen.takingDamageAndNoHandCards();
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
+        visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
 
     }
 
@@ -219,6 +211,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
      * Pelaa valitun Indiani!-kortin.
      */
     public void usingIndiani() {
+
         visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
         visibleScreen.attackingPlayerPleaseLookAway();
     }
@@ -228,6 +221,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
      * Pelaa valitun Duello-kortin.
      */
     public void usingDuello() {
+
         visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
         visibleScreen.duelloToOtherPlayerScreen();
     }
@@ -255,6 +249,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
      * Pelaa valitun Cat Balou -kortin
      */
     public void usingCatBalou() {
+
         if (visibleScreen.getSetup().getRound().getPlayerToFollow().getHandCards().isEmpty() && visibleScreen.getSetup().getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
             visibleScreen.targetedPlayerHasNoCardsSoTheyCannotBeTaken();
         } else {
@@ -268,6 +263,7 @@ public class PlayerXScreen_UseCard implements ActionListener {
      * Pelaa valitun Emporio-kortin
      */
     public void usingEmporio() {
+
         visibleScreen.getSetup().getRound().getCheckerForPlayedCard().playingCard(visibleScreen.getIndex());
         visibleScreen.emporioScreen();
     }

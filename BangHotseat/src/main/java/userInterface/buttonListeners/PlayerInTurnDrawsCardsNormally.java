@@ -12,11 +12,12 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla Jesse Jones haluaa vetaa ensimmaisen
- * korttinsa nostopakasta.
+ * Luokka on ActionListener, jolla pelaaja, jonka avatarin erikoiskyky sallii
+ * hanen valita miten nostaa vuorokorttinsa, nostaa normaalisti kaksi korttia
+ * nostopakasta ja siirtyy pelaajan ruutuun.
  */
 public class PlayerInTurnDrawsCardsNormally implements ActionListener {
-    
+
     private VisibleScreen visibleScreen;
 
     /**
@@ -26,12 +27,12 @@ public class PlayerInTurnDrawsCardsNormally implements ActionListener {
     public PlayerInTurnDrawsCardsNormally(VisibleScreen visibleScreen) {
         this.visibleScreen = visibleScreen;
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Pedro Ramirez")) {
             for (int i = 0; i < 2; i++) {
                 visibleScreen.getSetup().getRound().getPlayerInTurn().putCardIntoHand(visibleScreen.getSetup().getRound().getDrawpile().take(visibleScreen.getSetup().getRound().getDiscardpile()));
@@ -39,7 +40,7 @@ public class PlayerInTurnDrawsCardsNormally implements ActionListener {
         }
         visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().drawCards(visibleScreen.getSetup().getRound());
         visibleScreen.playerXScreen();
-        
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

@@ -13,7 +13,7 @@ import userInterface.VisibleScreen;
  * @author Antti Korpi
  *
  * Luokka on ActionListener, jolla varustettu nappula vie valintaan, haluaako
- * pelaaja kayttaa BANG!ia intiaaneja vastaan.
+ * pelaaja kayttaa BANG!ia vastauksena toisen pelaajan kayttamaan kortiin.
  */
 public class ToBangAsAReplyChoice implements ActionListener {
 

@@ -61,6 +61,8 @@ public class CheckerForPlayedCard {
     /**
      *
      * Kasittelee oranssin kortin pelaamisen.
+     *
+     * @param playedCard pelattu kortti
      */
     public void playingOrangeCard(Card playedCard) {
         if (playedCard.getName().equals("BANG!") || playedCard.getName().equals("Mancato!") || playedCard.getName().equals("Gatling")) {
@@ -83,6 +85,7 @@ public class CheckerForPlayedCard {
             if (canPlayerInTurnTouchPlayerToFollow()) {
                 playingPanico();
             }
+
         } else if (playedCard.getName().equals("Emporio")) {
             playingEmporio();
 
@@ -144,6 +147,7 @@ public class CheckerForPlayedCard {
      *
      * Tarkastaa, onko samanlainen kortti jo vuorossa olevan pelaajan edessa.
      *
+     * @param cardName verrattavan kortin nimi
      * @return totuusarvo onko vuorossa olevan pelaajan edessa jo samanlainen
      * kortti.
      */
@@ -164,6 +168,7 @@ public class CheckerForPlayedCard {
      *
      * Tarkastaa, onko samantyyppinen kortti jo vuorossa olevan pelaajan edessa.
      *
+     * @param cardType verrattavan kortin tyyppi
      * @return totuusarvo, onko vuorossa olevan pelaajan edessa jo
      * samantyyppinen kortti.
      */
@@ -205,19 +210,14 @@ public class CheckerForPlayedCard {
      */
     public boolean bangCanBePlayed() {
 
-        boolean thereIsAVolcanic = false;
-
-        if (round.getBangHasBeenPlayed() == false) {
-            return true;
-        } else if (round.getPlayerInTurn().getAvatar().toString().equals("Willy The Kid")) {
-            return true;
-        }
         for (Card isItVolcanic : round.getPlayerInTurn().getFrontCards()) {
             if (isItVolcanic.getName().equals("Volcanic")) {
-                thereIsAVolcanic = true;
+                isItVolcanic.function(round);
             }
         }
-        if (thereIsAVolcanic) {
+        if (round.bangHasBeenPlayed() == false) {
+            return true;
+        } else if (round.getPlayerInTurn().getAvatar().toString().equals("Willy The Kid")) {
             return true;
         }
         return false;
@@ -233,26 +233,19 @@ public class CheckerForPlayedCard {
     public boolean checkBarrel() {
 
         boolean thereIsABarrel = false;
+        int indexOfBarrel = 0;
 
         for (Card isItBarrel : round.getPlayerToFollow().getFrontCards()) {
+
             if (isItBarrel.getName().equals("Barrel")) {
                 thereIsABarrel = true;
+                indexOfBarrel = round.getPlayerToFollow().getFrontCards().indexOf(isItBarrel);
             }
         }
-        if (thereIsABarrel && round.getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
-            round.getCheckerForAvatarSpeciality().checkTwoCardsForLuckyDuke();
-            if (round.getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
-            }
-            return true;
-
-        } else if (thereIsABarrel) {
-            round.getCheckerForEventsBeforeTurn().checkTopCard();
-            if (round.getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
-                round.getCheckerForAvatarSpeciality().missHasBeenPlayedAgainstSlabTheKiller();
-            }
-            return true;
+        if (thereIsABarrel) {
+            round.getPlayerToFollow().getFrontCards().get(indexOfBarrel).function(round);
         }
-        return false;
+        return thereIsABarrel;
     }
 
     /**
@@ -260,6 +253,7 @@ public class CheckerForPlayedCard {
      * Kasittelee Indiani!-kortin pelaamisen.
      */
     public void playingIndiani() {
+
         round.getPlayerInTurn().setCardWaitingForAReply(playedCard);
         round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
     }
@@ -269,6 +263,7 @@ public class CheckerForPlayedCard {
      * Kasittelee Duello-kortin pelaamisen.
      */
     public void playingDuello() {
+
         round.getPlayerInTurn().setCardWaitingForAReply(playedCard);
 
         if (round.getPlayerInTurn().getAvatar().toString().equals("Suzy Lafayette")) {
@@ -305,7 +300,9 @@ public class CheckerForPlayedCard {
      * Kasittelee Emporio-kortin pelaamisen.
      */
     public void playingEmporio() {
+
         round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificHandCard(indexOfHandCard, round));
+
         for (int i = 0; i < 2; i++) {
             round.getCheckerForEventsBeforeTurn().checkTopCard();
         }

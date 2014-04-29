@@ -36,7 +36,8 @@ public class BlackJack implements Avatar {
 
     /**
      *
-     * Vetaa vuorokortit kateen.
+     * Vetaa vuorokortit kateen siten, etta jos toinen vedetty kortti on herttaa
+     * tai ruutua, vedetaan viela kolmas kortti, muutoin vain kaksi.
      *
      * @param round pelattava kierros
      */

@@ -41,8 +41,10 @@ public class RoseDoolan implements Avatar {
      */
     @Override
     public void drawCards(Round round) {
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+        
+        for (int i = 0; i < 2; i++) {
+            round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+        }
     }
     
     @Override

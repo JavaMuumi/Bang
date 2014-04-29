@@ -16,14 +16,14 @@ import java.util.List;
  * Luokka sisaltaa kaikki avatarit ja voi arpoa niita jaettavaksi.
  */
 public class AvatarRandomizer {
-    
+
     private List<Avatar> avatars = new ArrayList<>();
 
     /**
      *
      */
     public AvatarRandomizer() {
-        
+
         avatars.add(new BartCassidy());
         avatars.add(new BlackJack());
         avatars.add(new CalamityJanet());
@@ -43,12 +43,12 @@ public class AvatarRandomizer {
 
     /**
      *
-     * Palauttaa yhden avatarin sekoitetusta listasta.
+     * Sekoittaa avatarien listan ja palauttaa yhden niista.
      *
      * @return annettava avatar
      */
     public Avatar giveAvatar() {
-        
+
         Collections.shuffle(avatars);
         Avatar toBeGiven = avatars.get(0);
         return toBeGiven;

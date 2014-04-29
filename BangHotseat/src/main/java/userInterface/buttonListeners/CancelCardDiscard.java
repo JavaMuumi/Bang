@@ -12,8 +12,8 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie takaisin
- * alkuvalikko-ruutuun.
+ * Luokka on ActionListener, jolla varustettu nappula peruuttaa korttien
+ * poistamisen.
  */
 public class CancelCardDiscard implements ActionListener {
 

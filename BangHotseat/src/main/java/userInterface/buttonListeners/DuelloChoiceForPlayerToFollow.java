@@ -31,7 +31,7 @@ public class DuelloChoiceForPlayerToFollow implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         visibleScreen.playerToFollowRepliesToDuello();
 
         visibleScreen.getFrame().revalidate();

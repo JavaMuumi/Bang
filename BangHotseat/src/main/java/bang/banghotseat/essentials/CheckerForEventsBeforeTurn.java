@@ -37,12 +37,14 @@ public class CheckerForEventsBeforeTurn {
 
     /**
      *
-     * Asettaa kierroksella vuorossa olevan ja seuraavan pelaajan.
+     * Asettaa kierroksella vuorossa olevan ja seuraavan pelaajan annettujen
+     * parametrien mukaan.
      *
      * @param playerInTurn vuorossa oleva pelaaja
      * @param playerToFollow seuraavana vuorossa oleva pelaaja
      */
     public void setPlayerTurns(Player playerInTurn, Player playerToFollow) {
+
         round.setPlayerInTurn(playerInTurn);
         round.setPlayerToFollow(playerToFollow);
     }
@@ -50,7 +52,7 @@ public class CheckerForEventsBeforeTurn {
     /**
      *
      * Tarkastaa onko vuorossa olevan pelaajan edessa dynamiitti ja muiden
-     * metodien kautta rajahtaako se, Lucky Duke huomioidaan erikseen.
+     * metodien kautta rajahtaako se. Lucky Duke huomioidaan erikseen.
      */
     public void checkDinamite() {
 
@@ -128,7 +130,7 @@ public class CheckerForEventsBeforeTurn {
     /**
      *
      * Tarkastaa onko pelaajan edessa vankilaa ja muiden metodien kautta
-     * menettaako pelaaja sen vuoksi vuoronsa, Lucky Duke huomioidaan erikseen.
+     * menettaako pelaaja sen vuoksi vuoronsa. Lucky Duke huomioidaan erikseen.
      */
     public boolean checkPrigione() {
 
@@ -196,6 +198,7 @@ public class CheckerForEventsBeforeTurn {
      * Tarkastaa, onko seuraavana vuorossa olevan pelaajan edessa jo samanlainen
      * kortti.
      *
+     * @param nameOfCard etsittavan kortin nimi
      * @return totuusarvo onko seuraavana vuorossa olevan pelaajan edessa jo
      * samanlainen kortti
      */

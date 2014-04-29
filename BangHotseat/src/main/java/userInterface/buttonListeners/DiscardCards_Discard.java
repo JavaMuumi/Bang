@@ -31,7 +31,7 @@ public class DiscardCards_Discard implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         visibleScreen.getFrame().getContentPane().removeAll();
-        
+
         if (visibleScreen.getIndex() > -1) {
             visibleScreen.getSetup().getRound().getPlayerInTurn().addCardToListOfDiscardedCards(visibleScreen.getSetup().getRound().getPlayerInTurn().getHandCards().get(visibleScreen.getIndex()));
             visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().drawSpecificHandCard(visibleScreen.getIndex(), visibleScreen.getSetup().getRound()));

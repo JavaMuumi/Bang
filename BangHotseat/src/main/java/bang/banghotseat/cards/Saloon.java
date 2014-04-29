@@ -32,10 +32,13 @@ public class Saloon implements Card {
 
     /**
      *
+     * Saa molemmat pelaajat parantumaan yhden keston.
+     *
      * @param round pelattava kierros
      */
     @Override
     public void function(Round round) {
+
         round.getPlayerInTurn().gainHealth();
         round.getPlayerToFollow().gainHealth();
     }

@@ -14,7 +14,7 @@ import userInterface.VisibleScreen;
  *
  * Luokka on ActionListener, jolla varustettu nappula vie ruutuun, joka
  * ilmoittaa vastustajan olemaan kykenematon vaistamaan, koska hanella ei ole
- * yhtaan kasikorttia.
+ * tarpeeksi kasikortteja.
  */
 public class ToYouDoNotHaveEnoughHandCardsAndCannotReply implements ActionListener {
 
@@ -33,8 +33,8 @@ public class ToYouDoNotHaveEnoughHandCardsAndCannotReply implements ActionListen
 
         visibleScreen.getFrame().getContentPane().removeAll();
 
+        visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
         visibleScreen.takingDamageAndNoHandCards();
-        visibleScreen.getSetup().getRound().getPlayerToFollow().loseHealth(1, visibleScreen.getSetup().getRound());
 
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();

@@ -77,9 +77,9 @@ public class VisibleScreen extends JFrame {
     private ActionListener panicoScreen_StealNow;
     private ActionListener catBalouScreen_RemoveNow;
     private ActionListener toRandomHandCardWasStolen;
+    private ActionListener toRandomHandCardWasStolenByElGringo;
     private ActionListener toRandomHandCardCannotBeTaken;
     private ActionListener toGameOverScreen;
-    private Color ImageIcon;
 
     /**
      *
@@ -139,6 +139,7 @@ public class VisibleScreen extends JFrame {
         panicoScreen_StealNow = new PanicoScreen_StealNow(this);
         catBalouScreen_RemoveNow = new CatBalouScreen_RemoveNow(this);
         toRandomHandCardWasStolen = new ToRandomHandCardWasStolen(this);
+        toRandomHandCardWasStolenByElGringo = new ToRandomHandCardWasStolenByElGringo(this);
         toRandomHandCardCannotBeTaken = new ToRandomHandCardCannotBeTaken(this);
         toGameOverScreen = new ToGameOverScreen(this);
     }
@@ -507,7 +508,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Asettaa vankilakortin infonakyman.
+     * Asettaa Prigionen infonakyman.
      */
     public void prigioneScreen() {
 
@@ -588,7 +589,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Asettaa dynamiitin infonakyman.
+     * Asettaa Dinamiten infonakyman.
      */
     public void dinamiteScreen() {
 
@@ -824,7 +825,7 @@ public class VisibleScreen extends JFrame {
                 }
             } else if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
 
-                JLabel firstDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
+                JLabel firstDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
                 firstDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(firstDrawnCard);
 
@@ -832,11 +833,11 @@ public class VisibleScreen extends JFrame {
                 and.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(and);
 
-                JLabel secondDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+                JLabel secondDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " were drawn", JLabel.CENTER);
                 secondDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(secondDrawnCard);
 
-                if (setup.getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
+                if (setup.getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
 
                     JLabel barrelWorkedAgainstSlabTheKiller = new JLabel("Barrel got in the way of the shot!", JLabel.CENTER);
                     barrelWorkedAgainstSlabTheKiller.setFont(new Font("Bang", Font.BOLD, 48));
@@ -851,6 +852,7 @@ public class VisibleScreen extends JFrame {
                     } else {
                         next.addActionListener(toAttackingPlayerPleaseLookAway);
                     }
+
                 } else {
 
                     JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
@@ -864,6 +866,10 @@ public class VisibleScreen extends JFrame {
                     }
                 }
             } else {
+
+                JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+                drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                container.add(drawnCard);
 
                 if (setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
 
@@ -880,6 +886,7 @@ public class VisibleScreen extends JFrame {
                     } else {
                         next.addActionListener(toAttackingPlayerPleaseLookAway);
                     }
+
                 } else {
                     JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
                     barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
@@ -893,6 +900,7 @@ public class VisibleScreen extends JFrame {
                 }
             }
         } else {
+
             if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Jourdonnais")) {
 
                 if (setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() == 2) {
@@ -915,9 +923,10 @@ public class VisibleScreen extends JFrame {
 
                     next.addActionListener(continueToPlayerXScreen);
                 }
+
             } else if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Lucky Duke")) {
 
-                JLabel firstDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
+                JLabel firstDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
                 firstDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(firstDrawnCard);
 
@@ -925,17 +934,18 @@ public class VisibleScreen extends JFrame {
                 and.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(and);
 
-                JLabel secondDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
+                JLabel secondDrawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " were drawn", JLabel.CENTER);
                 secondDrawnCard.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(secondDrawnCard);
 
-                if (setup.getRound().getCheckerForAvatarSpeciality().checkTwoTopCardsForLuckyDukeForHearts()) {
+                if (setup.getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
 
                     JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
                     barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
                     container.add(barrelWorked);
 
                     next.addActionListener(continueToPlayerXScreen);
+
                 } else {
 
                     JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
@@ -961,6 +971,7 @@ public class VisibleScreen extends JFrame {
                     container.add(barrelWorked);
 
                     next.addActionListener(continueToPlayerXScreen);
+
                 } else {
                     JLabel barrelDidNotWork = new JLabel("Barrel didn't stop the shot!", JLabel.CENTER);
                     barrelDidNotWork.setFont(new Font("Bang", Font.BOLD, 48));
@@ -1013,7 +1024,7 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel stolenCard = new JLabel("You stole " + setup.getRound().getPlayerInTurn().getLastCheckedCard().toString(), JLabel.CENTER);
+        JLabel stolenCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was stolen", JLabel.CENTER);
         stolenCard.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
@@ -1142,13 +1153,13 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Black Jackin kortinnoston infonakyma.
+     * Asettaa Black Jackin kortinnoston infonakyman.
      */
     public void blackJackDrawScreen() {
 
         container.setLayout(new GridLayout(4, 3));
 
-        JLabel drawnCard = new JLabel(setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString() + " was drawn", JLabel.CENTER);
+        JLabel drawnCard = new JLabel("Second card was " + setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString(), JLabel.CENTER);
         drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
 
         JLabel getsNew = new JLabel("You get one more card", JLabel.CENTER);
@@ -1163,7 +1174,7 @@ public class VisibleScreen extends JFrame {
 
         container.add(drawnCard);
 
-        if (setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().getSuit().equals("Hearts") || setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString().equals("Diamonds")) {
+        if (setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().getSuit().equals("Hearts") || setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().getSuit().equals("Diamonds")) {
             container.add(getsNew);
 
         } else {
@@ -1174,7 +1185,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Jesse Jonesin kortinnoston valintanakyma.
+     * Asettaa Jesse Jonesin kortinnoston valintanakyman.
      */
     public void jesseJonesDrawScreen() {
 
@@ -1219,7 +1230,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Kit Carlsonin kortinnoston valintanakyma.
+     * Asettaa Kit Carlsonin kortinnoston valintanakyman.
      */
     public void kitCarlsonDrawScreen() {
 
@@ -1245,7 +1256,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Pedro Ramirezin kortinnoston valintanakyma.
+     * Asettaa Pedro Ramirezin kortinnoston valintanakyman.
      */
     public void pedroRamirezDrawScreen() {
 
@@ -1290,8 +1301,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Sid Ketchumin kestojen palauttamiseksi poistettavien kasikorttien
-     * valintanakyma.
+     * Asettaa Sid Ketchumin kestojen palauttamiseksi poistettavien kasikorttien
+     * valintanakyman.
      */
     public void sidKetchumCardDiscard() {
 
@@ -1342,7 +1353,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Pelaajan vuoronakyma.
+     * Asettaa pelaajan vuoronakyman.
      */
     public void playerXScreen() {
 
@@ -1417,7 +1428,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kertoo vastustajan olevan kantaman ulkopuolella.
+     * Asettaa nakyman, joka kertoo vastustajan olevan kantaman ulkopuolella.
      */
     public void enemyIsOutOfReach() {
 
@@ -1436,7 +1447,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kertoo ettei BANG!-kortteja voi pelata enaa talla
+     * Asettaa nakyman, joka kertoo ettei BANG!-kortteja voi pelata enaa talla
      * kierroksella.
      */
     public void moreBangCardsCannotBePlayed() {
@@ -1456,8 +1467,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kertoo reagoijalle ettei han voi reagoida mutta salaa sen
-     * hyokkaajalta.
+     * Asettaa nakyman, joka kertoo reagoijalle ettei han voi reagoida mutta
+     * salaa sen hyokkaajalta.
      */
     public void clickToPretendYouCouldReply() {
 
@@ -1467,29 +1478,39 @@ public class VisibleScreen extends JFrame {
         youDoNotHaveEnoughReplyCards.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(youDoNotHaveEnoughReplyCards);
 
-        JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
-        clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
-
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
-        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
-            if (setup.getRound().getPlayerInTurn().getHandCards().isEmpty()) {
-                next.addActionListener(toRandomHandCardCannotBeTaken);
-            } else {
-                next.addActionListener(toRandomHandCardWasStolen);
-            }
+        if (setup.getRound().gameIsOver()) {
+
+            JLabel youDied = new JLabel("You run out of health points!", JLabel.CENTER);
+            youDied.setFont(new Font("Bang", Font.BOLD, 48));
+
+            container.add(youDied);
+            next.addActionListener(toGameOverScreen);
+
         } else {
-            next.addActionListener(pleaseLookAwayToPlayerXScreen);
+            JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
+            clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
+
+            if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
+                if (setup.getRound().getPlayerInTurn().getHandCards().isEmpty()) {
+                    next.addActionListener(toRandomHandCardCannotBeTaken);
+                } else {
+                    next.addActionListener(toRandomHandCardWasStolenByElGringo);
+                }
+            } else {
+                next.addActionListener(pleaseLookAwayToPlayerXScreen);
+            }
+            container.add(clickToDistract);
         }
-        container.add(clickToDistract);
         container.add(next);
     }
 
     /**
      *
-     * Nakyma, joka kertoo vuorossa olevalle pelaajalle, ettei han voi reagoida
-     * Duelloon mutta salaa sen hyokkaajalta.
+     * Asettaa nakyman, joka kertoo vuorossa olevalle pelaajalle, ettei han voi
+     * reagoida Duelloon mutta salaa sen hyokkaajalta.
      */
     public void playerInTurnclickToPretendYouCouldReplyToDuello() {
 
@@ -1512,22 +1533,25 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Vaistokortin kayton valintaikkuna.
+     * Asettaa vaistokortin kayton valintaikkunan.
      */
     public void doYouWannaPlayMancato() {
 
         container.setLayout(new GridLayout(4, 3));
 
         if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
+
             if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
                 JLabel willYouUseTwoCards = new JLabel("Will you use two BANG! / Mancato! -cards to cancel a hit?", JLabel.CENTER);
                 willYouUseTwoCards.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(willYouUseTwoCards);
+
             } else {
                 JLabel willYouUseACard = new JLabel("Will you use a BANG! / Mancato! to cancel a hit?", JLabel.CENTER);
                 willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
                 container.add(willYouUseACard);
             }
+
         } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
             JLabel willYouUseTwoMancatos = new JLabel("Will you use two Mancato!-cards to cancel a hit?", JLabel.CENTER);
             willYouUseTwoMancatos.setFont(new Font("Bang", Font.BOLD, 48));
@@ -1552,7 +1576,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * BANG!-kortilla reagoimisen valintaikkuna.
+     * Asettaa BANG!-kortilla reagoimisen valintaikkunan.
      */
     public void doYouWannaReplyWithBang() {
 
@@ -1581,7 +1605,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Seuraavana vuorossa olevan pelaajan Duello-korttiin reagointinakyma.
+     * Asettaa seuraavana vuorossa olevan pelaajan Duello-korttiin
+     * reagointinakyman.
      */
     public void playerToFollowRepliesToDuello() {
 
@@ -1620,7 +1645,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Seuraavana vuorossa olevan pelaajan Duello-korttiin reagointinakyma.
+     * Asettaa seuraavana vuorossa olevan pelaajan Duello-korttiin
+     * reagointinakyman.
      */
     public void playerInTurnRepliesToDuello() {
 
@@ -1659,7 +1685,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kehottaa Duelloon asken reagoinutta pelaajaa katsomaan pois.
+     * Asettaa nakyman, joka kehottaa Duelloon asken reagoinutta pelaajaa
+     * katsomaan pois.
      */
     public void duelloToOtherPlayerScreen() {
 
@@ -1697,8 +1724,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kertoo, etta vuorossa oleva pelaaja havisi Duellon, koska
-     * hanella ei ole korttia, jolla vastata.
+     * Asettaa akyman, joka kertoo, etta vuorossa oleva pelaaja havisi Duellon,
+     * koska hanella ei ole korttia, jolla vastata.
      */
     public void playerInTurnCannotReplyToDuello() {
 
@@ -1721,8 +1748,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kertoo vuorossa olevan pelaajan havinneen kaiken Duellossa
-     * ja seuraavana olevan pelaajan aloittavan vuoronsa.
+     * Asettaa nakyman, joka kertoo vuorossa olevan pelaajan havinneen kaiken
+     * Duellossa ja kumpi jatkaa pelia.
      */
     public void playerInTurnLostEverythingInDuello() {
 
@@ -1759,8 +1786,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kertoo vuorossa seuraavna olevan pelaajan havinneen kaiken
-     * Duellossa.
+     * Asettaa nakyman, joka kertoo vuorossa seuraavna olevan pelaajan havinneen
+     * kaiken Duellossa.
      */
     public void playerToFollowLostEverythingInDuello() {
 
@@ -1793,8 +1820,8 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Nakyma, joka kertoo ettei vastustaja voi reagoida, koska hanella ei ole
-     * kasikortteja.
+     * Asettaa nakyman, joka kertoo ettei vastustaja voi reagoida, koska hanella
+     * ei ole kasikortteja.
      */
     public void takingDamageAndNoHandCards() {
 
@@ -1815,8 +1842,12 @@ public class VisibleScreen extends JFrame {
         JLabel enemyCannotReply = new JLabel("the damage cannot be avoided!", JLabel.CENTER);
         enemyCannotReply.setFont(new Font("Bang", Font.BOLD, 48));
 
-        if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
+        if (setup.getRound().gameIsOver()) {
+            next.addActionListener(toGameOverScreen);
+
+        } else if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
             next.addActionListener(toRandomHandCardWasStolen);
+
         } else {
             next.addActionListener(continueToPlayerXScreen);
         }
@@ -1827,7 +1858,7 @@ public class VisibleScreen extends JFrame {
 
     /**
      *
-     * Korttien poiston valintanakyma.
+     * Asettaa korttien poiston valintanakyman.
      */
     public void discardCards() {
 
@@ -1888,6 +1919,7 @@ public class VisibleScreen extends JFrame {
      * valittu
      */
     public int getIndex() {
+
         for (JRadioButton isThisSelected : cardList) {
             if (isThisSelected.isSelected()) {
                 return cardList.indexOf(isThisSelected);
@@ -1899,7 +1931,7 @@ public class VisibleScreen extends JFrame {
     /**
      *
      * Palauttaa valikosta valitun kortin indeksin, -1 jos mitaan ei ole valittu
-     * ja -2 jos listan viimeinen on valittu.
+     * ja -2 jos listan viimeinen (sattumanvarainen kasikortti) on valittu.
      *
      * @return listasta valitun kortin indeksi tai -1 jos mitaan ei ole valittu
      * ja -2 jos viimeinen kortti on valittu.

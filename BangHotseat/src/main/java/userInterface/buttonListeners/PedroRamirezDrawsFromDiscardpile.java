@@ -12,8 +12,8 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla Jesse Jones haluaa vetaa ensimmaisen
- * korttinsa vihollisen kadesta.
+ * Luokka on ActionListener, jolla Pedro Ramirez haluaa vetaa ensimmaisen
+ * korttinsa poistopakasta ja siirtyy pelaajan ruutuun.
  */
 public class PedroRamirezDrawsFromDiscardpile implements ActionListener {
 

@@ -7,11 +7,11 @@ package bang.banghotseat.avatars;
 import bang.banghotseat.Round;
 
 /**
- * 
+ *
  * @author Antti Korpi
- * 
+ *
  * Luokka mallintaa Calamity Janetin ominaisuuksia.
- * 
+ *
  */
 public class CalamityJanet implements Avatar {
 
@@ -34,17 +34,19 @@ public class CalamityJanet implements Avatar {
     }
 
     /**
-     * 
+     *
      * Vetaa vuorokortit kateen.
-     * 
+     *
      * @param round pelattava kierros
      */
     @Override
     public void drawCards(Round round) {
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
-        round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+        
+        for (int i = 0; i < 2; i++) {
+            round.getPlayerInTurn().getHandCards().add(round.getDrawpile().take(round.getDiscardpile()));
+        }
     }
-    
+
     @Override
     public String toString() {
         return "Calamity Janet";

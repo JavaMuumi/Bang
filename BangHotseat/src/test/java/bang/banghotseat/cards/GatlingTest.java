@@ -4,6 +4,9 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.Round;
+import bang.banghotseat.avatars.SlabTheKiller;
+import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -17,9 +20,12 @@ import org.junit.Test;
  */
 public class GatlingTest {
     
+    private Round round;
     private Card gatling;
     
     public GatlingTest() {
+        
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
         gatling = new Gatling("Hearts", 1);
     }
     
@@ -86,5 +92,15 @@ public class GatlingTest {
     public void methodGetSuitReturnsCorrectString() {
 
         assertEquals("Hearts", gatling.getSuit());
+    }
+    
+    @Test
+    public void metfodFunctionOfGatlingMakesPlayerToFollowLoseOneHealthPoint() {
+        
+        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
+        round.getPlayerToFollow().setCurrentHealth();
+        gatling.function(round);
+        
+        assertEquals("Player to follow health: 3", "Player to follow health: " + round.getPlayerToFollow().getCurrentHealth());
     }
 }

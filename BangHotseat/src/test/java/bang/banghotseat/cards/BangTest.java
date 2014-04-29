@@ -4,6 +4,9 @@
  */
 package bang.banghotseat.cards;
 
+import bang.banghotseat.Round;
+import bang.banghotseat.avatars.SlabTheKiller;
+import bang.banghotseat.essentials.Player;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -17,9 +20,12 @@ import org.junit.Test;
  */
 public class BangTest {
 
+    private Round round;
     private Card bang;
 
     public BangTest() {
+        
+        round = new Round(new Player(), new Player(), new Deck(), new Deck());
         bang = new Bang("Hearts", 1);
     }
 
@@ -86,5 +92,15 @@ public class BangTest {
     public void methodGetSuitReturnsCorrectString() {
 
         assertEquals("Hearts", bang.getSuit());
+    }
+    
+    @Test
+    public void metfodFunctionOfBangMakesPlayerToFollowLoseOneHealthPoint() {
+        
+        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
+        round.getPlayerToFollow().setCurrentHealth();
+        bang.function(round);
+        
+        assertEquals("Player to follow health: 3", "Player to follow health: " + round.getPlayerToFollow().getCurrentHealth());
     }
 }

@@ -13,8 +13,7 @@ import userInterface.VisibleScreen;
  * @author Antti Korpi
  *
  * Luokka on ActionListener, jolla varustettu nappula vie ruutuun, joka
- * ilmoittaa vastustajan olemaan kykenematon vaistamaan, koska hanella ei ole
- * yhtaan kasikorttia.
+ * ilmoittaa pelin paattyneen.
  */
 public class ToGameOverScreen implements ActionListener {
 

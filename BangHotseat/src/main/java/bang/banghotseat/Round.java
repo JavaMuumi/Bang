@@ -157,9 +157,11 @@ public class Round {
 
     /**
      *
+     * Tarkastaa onko BANG! jo pelattu talla vuorolla.
+     *
      * @return tieto onko BANG! jo pelattu talla vuorolla
      */
-    public boolean getBangHasBeenPlayed() {
+    public boolean bangHasBeenPlayed() {
         return bangHasBeenPlayed;
     }
 
@@ -182,6 +184,9 @@ public class Round {
     }
 
     /**
+     *
+     * Kertoo onko vuorossa oleva pelaaja seuraava, jonka tulee reagoida
+     * Duello-korttiin.
      *
      * @return totuusarvo kumpi pelaaja reagoi seuraavana Duello-korttiin.
      */

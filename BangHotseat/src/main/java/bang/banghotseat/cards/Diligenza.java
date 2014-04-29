@@ -38,8 +38,10 @@ public class Diligenza implements Card {
      */
     @Override
     public void function(Round round) {
-        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
-        round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+
+        for (int i = 0; i < 2; i++) {
+            round.getPlayerInTurn().putCardIntoHand(round.getDrawpile().take(round.getDiscardpile()));
+        }
     }
 
     /**

@@ -13,8 +13,8 @@ import userInterface.VisibleScreen;
  * @author Antti Korpi
  *
  * Luokka on ActionListener, jolla varustettu nappula asettaa tarjotuista
- * vaihtoehdoista valitun kortin takaisin nostopakkaan ja siirtyy pelaajan
- * ruutuun.
+ * vaihtoehdoista valitun kortin takaisin nostopakkaan, pitaa toiset kaksi ja
+ * siirtyy pelaajan ruutuun.
  */
 public class KitCarlsonPutCardBack implements ActionListener {
 

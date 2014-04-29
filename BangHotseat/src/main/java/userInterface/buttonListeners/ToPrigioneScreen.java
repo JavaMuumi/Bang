@@ -12,8 +12,7 @@ import userInterface.VisibleScreen;
  *
  * @author Antti Korpi
  *
- * Luokka on ActionListener, jolla varustettu nappula vie Jourdonnaisin
- * vaistonakymaan.
+ * Luokka on ActionListener, jolla varustettu nappula vie vankilanakymaan.
  */
 public class ToPrigioneScreen implements ActionListener {
 

@@ -28,6 +28,7 @@ public class CheckerForAvatarSpeciality {
      * @param round pelattava kierros
      */
     public CheckerForAvatarSpeciality(Round round) {
+
         this.round = round;
         sidKetchumDiscardList = new ArrayList<>();
         howManyMissesHaveBeenUsedAgainstSlabTheKiller = 0;
@@ -65,7 +66,7 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
-     * Tarkastaa, onko Calamity Janetilla BANG! tai Mancato! kadessaan.
+     * Tarkastaa, onko Calamity Janetilla BANG! tai Mancato! kadessa.
      */
     public boolean checkCalamityJanetForBangsOrMancatos() {
 
@@ -108,7 +109,7 @@ public class CheckerForAvatarSpeciality {
      */
     public void drawCardFromEnemyHandWhenElGringoTakesAHit() {
 
-        if (round.getPlayerToFollow().getAvatar().toString().equals("El Gringo") && !round.getPlayerInTurn().getHandCards().isEmpty()) {
+        if (round.getPlayerToFollow().getAvatar().toString().equals("El Gringo") && !round.getPlayerInTurn().getAvatar().toString().equals("El Gringo") && !round.getPlayerInTurn().getHandCards().isEmpty()) {
 
             Card drawnCard = round.getPlayerInTurn().drawRandomHandCard(round);
             round.getPlayerInTurn().setLastCheckedCard(drawnCard);
@@ -177,8 +178,6 @@ public class CheckerForAvatarSpeciality {
 
         if (round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts") || round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 1).getSuit().equals("Hearts")) {
             thereWasHearts = true;
-        }
-        if (thereWasHearts) {
             missHasBeenPlayedAgainstSlabTheKiller();
         }
         return thereWasHearts;
@@ -197,9 +196,6 @@ public class CheckerForAvatarSpeciality {
 
         if (round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 2).getSuit().equals("Hearts") || round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 1).getSuit().equals("Hearts")) {
             thereWasHearts = true;
-        }
-        if (thereWasHearts) {
-            missHasBeenPlayedAgainstSlabTheKiller();
         }
         return thereWasHearts;
     }
@@ -228,7 +224,7 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
-     * Tarkastaa, rajayttivatko molemmat aiemmin annetut kortit Dinamite-kortin.
+     * Tarkastaa, rajayttavatko molemmat annetut kortit Dinamite-kortin.
      *
      * @param first ensimmainen tarkastettava kortti
      * @param second toinen tarkastettava kortti
@@ -272,6 +268,8 @@ public class CheckerForAvatarSpeciality {
     /**
      *
      * Tarkistaa menettaisiko Lucky Duke vuoron Prigione-kortin vuoksi.
+     *
+     * @return totuusarvo ettei Lucky Duke menettanyt vuoroa.
      */
     public boolean luckyDukeStaysInPrigione(int indexOfPrigione) {
 
@@ -299,6 +297,9 @@ public class CheckerForAvatarSpeciality {
      *
      * Lisaa poistettavaksi valitun kortin Sid Ketchumin uhrattavien korttien
      * listalle.
+     *
+     * @param roBeAdded Sid Ketchumin uhrattavien korttien listalle lisattava
+     * kortti
      */
     public void addToSidKetchumDiscardList(Card toBeAdded) {
         sidKetchumDiscardList.add(toBeAdded);
@@ -306,6 +307,7 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * @return Sid Ketchumin uhrattavien korttien lista
      */
     public List<Card> getSidKetchumDiscardList() {
         return sidKetchumDiscardList;
@@ -314,7 +316,10 @@ public class CheckerForAvatarSpeciality {
     /**
      *
      * Tarkastaa, onko seuraavana vuorossa olevan pelaajan kadessa kahta
-     * Mancato!-korttia.
+     * vaistokorttia.
+     *
+     * @return totuusarvo onko vuorossa seuraavana olevalla pelaajalla kahta
+     * vaistokorttia kadessa
      */
     public boolean checkThatEnemyHasTwoMancatosAgainstSlabTheKiller() {
 
@@ -340,6 +345,8 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * Lisaa yhden listaan siita, montako vaistoa vuorossa seuraava pelaaja on
+     * jo kayttanyt.
      */
     public void missHasBeenPlayedAgainstSlabTheKiller() {
         howManyMissesHaveBeenUsedAgainstSlabTheKiller++;
@@ -347,6 +354,7 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * Tarkastaa montako vaistoa vuorossa seuraava pelaaja on jo kayttanyt.
      */
     public int howManyMissesHaveBeenUsedAgainstSlabTheKiller() {
         return howManyMissesHaveBeenUsedAgainstSlabTheKiller;
@@ -354,6 +362,8 @@ public class CheckerForAvatarSpeciality {
 
     /**
      *
+     * Tyhjentaa listan siita, montako vaistoa vuorossa seuraava pelaaja on jo
+     * kayttanyt.
      */
     public void eraseHowManyMissesHaveBeenUsedAgainstSlabTheKiller() {
         howManyMissesHaveBeenUsedAgainstSlabTheKiller = 0;

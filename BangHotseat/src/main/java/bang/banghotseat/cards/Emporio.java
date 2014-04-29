@@ -32,6 +32,9 @@ public class Emporio implements Card {
 
     /**
      *
+     * Suora toiminnallisuus ei tee mitaan, koska pelaajan on valittava miten
+     * kortti toimii.
+     *
      * @param round pelattava kierros
      */
     @Override
