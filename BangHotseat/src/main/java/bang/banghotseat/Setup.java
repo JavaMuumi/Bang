@@ -17,12 +17,19 @@ import bang.banghotseat.essentials.Player;
  */
 public class Setup {
 
-    private Player player1 = new Player();
-    private Player player2 = new Player();
-    private AvatarRandomizer randomizer = new AvatarRandomizer();
-    private Deck drawpile = new Deck();
-    private Deck discardpile = new Deck();
+    private Player player1;
+    private Player player2;
+    private AvatarRandomizer randomizer;
+    private Deck drawpile;
+    private Deck discardpile;
     private Round round;
+
+    public Setup() {
+
+        player1 = new Player();
+        player2 = new Player();
+        randomizer = new AvatarRandomizer();
+    }
 
     /**
      *
@@ -58,8 +65,8 @@ public class Setup {
      */
     private void createDecks() {
 
-        drawpile.clearDeck();
-        discardpile.clearDeck();
+        drawpile = new Deck();
+        discardpile = new Deck();
 
         drawpile.createCards();
     }
@@ -69,6 +76,11 @@ public class Setup {
      * Jakaa pelaajille maksimikestojen mukaisen maaran kasikortteja.
      */
     private void dealStartingHands() {
+
+        player1.getHandCards().clear();
+        player1.getFrontCards().clear();
+        player2.getHandCards().clear();
+        player2.getFrontCards().clear();
 
         while (player1.getHandCards().size() < player1.getAvatar().getMaxHealth()) {
             Card cardToBeGiven = drawpile.take(discardpile);

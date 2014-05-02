@@ -128,8 +128,8 @@ public class PlayerXScreen_UseCard implements ActionListener {
             visibleScreen.jourdonnaisScreen();
 
         } else {
-            visibleScreen.takingDamageAndNoHandCards();
             visibleScreen.getSetup().getRound().getPlayerInTurn().getCardWaitingForAReply().function(visibleScreen.getSetup().getRound());
+            visibleScreen.takingDamageAndNoHandCards();
         }
     }
 

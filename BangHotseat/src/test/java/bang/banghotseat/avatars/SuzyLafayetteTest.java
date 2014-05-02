@@ -53,7 +53,7 @@ public class SuzyLafayetteTest {
     
     @Test
     public void getSpecialityReturnsCorrectDescriptionForSuzyLafayette() {
-        assertEquals("As soon as she has no cards in hand, she draws a card.", round.getPlayerInTurn().getAvatar().getSpeciality());
+        assertEquals("<html>As soon as she has no cards in hand,<br>she draws a card.</html>", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
 
     @Test

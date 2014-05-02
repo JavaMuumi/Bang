@@ -51,7 +51,7 @@ public class LuckyDukeTest {
     
     @Test
     public void getSpecialityReturnsCorrectDescriptionForLuckyDuke() {
-        assertEquals("Each time he 'draws!', he flips the top two cards and chooses one.", round.getPlayerInTurn().getAvatar().getSpeciality());
+        assertEquals("<html>Each time he 'draws!',<br>he flips the top two cards and chooses one.</html>", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
 
     @Test

@@ -8,7 +8,6 @@ import bang.banghotseat.Setup;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.essentials.Player;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -168,12 +167,12 @@ public class VisibleScreen extends JFrame {
         JButton goBackToMainMenu = new JButton("Back to main menu");
         goBackToMainMenu.setFont(new Font("Bang", Font.BOLD, 48));
 
-        if (setup.getRound().getPlayerInTurn().getCurrentHealth() == 0) {
+        if (setup.getRound().getPlayerInTurn().getCurrentHealth() <= 0) {
 
             container.add(playerInTurnDied);
             container.add(playerToFollowWon);
 
-        } else if (setup.getRound().getPlayerToFollow().getCurrentHealth() == 0) {
+        } else if (setup.getRound().getPlayerToFollow().getCurrentHealth() <= 0) {
 
             container.add(playerToFollowDied);
             container.add(playerInTurnWon);
@@ -602,6 +601,9 @@ public class VisibleScreen extends JFrame {
         JLabel dinamiteWasPassedOn = new JLabel("The dinamite didn't explode and was passed on", JLabel.CENTER);
         dinamiteWasPassedOn.setFont(new Font("Bang", Font.BOLD, 48));
 
+        JLabel bothPlayersHaveDinamite = new JLabel("Dinamite didn't explode, you both keep your own", JLabel.CENTER);
+        bothPlayersHaveDinamite.setFont(new Font("Bang", Font.BOLD, 48));
+
         JLabel and = new JLabel("and", JLabel.CENTER);
         and.setFont(new Font("Bang", Font.BOLD, 48));
 
@@ -613,7 +615,7 @@ public class VisibleScreen extends JFrame {
             container.setLayout(new GridLayout(6, 3));
             container.add(thereIsADinamite);
 
-            if (setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).getName().contains("Prigione")) {
+            if (setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).getName().contains("Prigione") && setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() > 2) {
 
                 JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 4).toString(), JLabel.CENTER);
                 drawnCard1.setFont(new Font("Bang", Font.BOLD, 48));
@@ -628,10 +630,19 @@ public class VisibleScreen extends JFrame {
 
                 if (setup.getRound().getCheckerForAvatarSpeciality().checkIfDinamiteExplodedOnLuckyDukeWhenHeHasBothDinamiteAndPrigione()) {
                     container.add(dinamiteExploded);
+
                 } else {
-                    container.add(dinamiteWasPassedOn);
+                    if (setup.getRound().getCheckerForPlayedCard().sameKindOfCardIsAlreadyInFrontOfPlayerInTurn("Dinamite")) {
+                        container.add(bothPlayersHaveDinamite);
+                    } else {
+                        container.add(dinamiteWasPassedOn);
+                    }
                 }
-                next.addActionListener(toPrigioneScreen);
+                if (setup.getRound().gameIsOver()) {
+                    next.addActionListener(toGameOverScreen);
+                } else {
+                    next.addActionListener(toPrigioneScreen);
+                }
 
             } else {
 
@@ -647,17 +658,27 @@ public class VisibleScreen extends JFrame {
 
                 if (setup.getRound().getCheckerForAvatarSpeciality().checkTwoAlreadyDrawnCardsIfTheyDetonatedDinamiteOnLuckyDuke(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2), setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1))) {
                     container.add(dinamiteExploded);
+
                 } else {
-                    container.add(dinamiteWasPassedOn);
+                    if (setup.getRound().getCheckerForPlayedCard().sameKindOfCardIsAlreadyInFrontOfPlayerInTurn("Dinamite")) {
+                        container.add(bothPlayersHaveDinamite);
+                    } else {
+                        container.add(dinamiteWasPassedOn);
+                    }
                 }
-                next.addActionListener(continueToPlayerXScreen);
+                if (setup.getRound().gameIsOver()) {
+                    next.addActionListener(toGameOverScreen);
+                } else {
+                    next.addActionListener(continueToPlayerXScreen);
+                }
             }
+
         } else {
 
             container.setLayout(new GridLayout(4, 3));
             container.add(thereIsADinamite);
 
-            if (setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).getName().contains("Prigione")) {
+            if (setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).getName().contains("Prigione") && setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() > 1) {
 
                 JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString() + " was drawn", JLabel.CENTER);
                 drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
@@ -665,10 +686,19 @@ public class VisibleScreen extends JFrame {
 
                 if (setup.getRound().getCheckerForEventsBeforeTurn().dinamiteBlowsUp(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2))) {
                     container.add(dinamiteExploded);
+
                 } else {
-                    container.add(dinamiteWasPassedOn);
+                    if (setup.getRound().getCheckerForPlayedCard().sameKindOfCardIsAlreadyInFrontOfPlayerInTurn("Dinamite")) {
+                        container.add(bothPlayersHaveDinamite);
+                    } else {
+                        container.add(dinamiteWasPassedOn);
+                    }
                 }
-                next.addActionListener(toPrigioneScreen);
+                if (setup.getRound().gameIsOver()) {
+                    next.addActionListener(toGameOverScreen);
+                } else {
+                    next.addActionListener(toPrigioneScreen);
+                }
 
             } else {
 
@@ -679,22 +709,31 @@ public class VisibleScreen extends JFrame {
                 if (setup.getRound().getCheckerForEventsBeforeTurn().dinamiteBlowsUp(setup.getRound().getPlayerInTurn().getLastCheckedCard())) {
                     container.add(dinamiteExploded);
                 } else {
-                    container.add(dinamiteWasPassedOn);
+                    if (setup.getRound().getCheckerForPlayedCard().sameKindOfCardIsAlreadyInFrontOfPlayerInTurn("Dinamite")) {
+                        container.add(bothPlayersHaveDinamite);
+                    } else {
+                        container.add(dinamiteWasPassedOn);
+                    }
                 }
-                if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Black Jack")) {
-                    next.addActionListener(toBlackJackScren);
-
-                } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
-                    next.addActionListener(toJesseJonesScreen);
-
-                } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
-                    next.addActionListener(toKitCarlsonScreen);
-
-                } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Pedro Ramirez")) {
-                    next.addActionListener(toPedroRamirezScreen);
+                if (setup.getRound().gameIsOver()) {
+                    next.addActionListener(toGameOverScreen);
 
                 } else {
-                    next.addActionListener(continueToPlayerXScreen);
+                    if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Black Jack")) {
+                        next.addActionListener(toBlackJackScren);
+
+                    } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Jesse Jones")) {
+                        next.addActionListener(toJesseJonesScreen);
+
+                    } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Kit Carlson")) {
+                        next.addActionListener(toKitCarlsonScreen);
+
+                    } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Pedro Ramirez")) {
+                        next.addActionListener(toPedroRamirezScreen);
+
+                    } else {
+                        next.addActionListener(continueToPlayerXScreen);
+                    }
                 }
             }
         }
@@ -994,24 +1033,34 @@ public class VisibleScreen extends JFrame {
      */
     public void panicoScreen() {
 
-        JLabel wichCardWillYouSteal = new JLabel("Wich card will you take?", JLabel.CENTER);
-        wichCardWillYouSteal.setFont(new Font("Bang", Font.BOLD, 48));
+        container.setLayout(new BoxLayout(container, WIDTH));
+
+        JLabel whichCardWillYouSteal = new JLabel("Which card will you take?", JLabel.CENTER);
+        whichCardWillYouSteal.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(whichCardWillYouSteal);
+        container.add(new JLabel(" "));
 
         ButtonGroup panicoChoice = new ButtonGroup();
         cardList.clear();
 
         for (int i = 0; i < setup.getRound().getPlayerToFollow().getFrontCards().size(); i++) {
-            cardList.add(new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString()));
+            JRadioButton frontCard = new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString());
+            frontCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            cardList.add(frontCard);
         }
         if (!setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-            cardList.add(new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")"));
+            JRadioButton randomHandCard = new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")");
+            randomHandCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            cardList.add(randomHandCard);
         }
         for (JRadioButton toBeAdded : cardList) {
             panicoChoice.add(toBeAdded);
             container.add(toBeAdded);
         }
+        container.add(new JLabel(" "));
 
         JButton steal = new JButton("Steal now!");
+        steal.setFont(new Font("StalButton", Font.ITALIC, 30));
         steal.addActionListener(panicoScreen_StealNow);
         container.add(steal);
     }
@@ -1060,24 +1109,35 @@ public class VisibleScreen extends JFrame {
      */
     public void catBalouScreen() {
 
-        JLabel wichCardWillYouRemove = new JLabel("Wich card will you remove?", JLabel.CENTER);
-        wichCardWillYouRemove.setFont(new Font("Bang", Font.BOLD, 48));
+        container.setLayout(new BoxLayout(container, WIDTH));
+
+        JLabel whichCardWillYouRemove = new JLabel("Which card will you remove?", JLabel.CENTER);
+        whichCardWillYouRemove.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(whichCardWillYouRemove);
+        container.add(new JLabel(" "));
 
         ButtonGroup catBalouChoice = new ButtonGroup();
         cardList.clear();
 
         for (int i = 0; i < setup.getRound().getPlayerToFollow().getFrontCards().size(); i++) {
-            cardList.add(new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString()));
+            JRadioButton frontCard = new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString());
+            frontCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            cardList.add(frontCard);
         }
         if (!setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
-            cardList.add(new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")"));
+            JRadioButton randomHandCard = new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")");
+            randomHandCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            cardList.add(randomHandCard);
         }
         for (JRadioButton toBeAdded : cardList) {
             catBalouChoice.add(toBeAdded);
             container.add(toBeAdded);
         }
+        container.add(new JLabel(" "));
+
         JButton remove = new JButton("Remove now!");
         remove.addActionListener(catBalouScreen_RemoveNow);
+        remove.setFont(new Font("RemoveButton", Font.ITALIC, 30));
         container.add(remove);
     }
 
@@ -1237,7 +1297,7 @@ public class VisibleScreen extends JFrame {
         BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
         container.setLayout(yPlane);
 
-        container.add(new JLabel("Wich of these card will you put back to the top of the drawpile?"));
+        container.add(new JLabel("Which of these card will you put back to the top of the drawpile?"));
 
         ButtonGroup choises = new ButtonGroup();
         cardList.clear();
@@ -1357,42 +1417,63 @@ public class VisibleScreen extends JFrame {
      */
     public void playerXScreen() {
 
-        BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
-        container.setLayout(yPlane);
+        container.setLayout(new GridLayout());
 
-        String enemyInfo = "<html>Enemy: " + setup.getRound().getPlayerToFollow().getAvatar().toString()
-                + "<br>" + setup.getRound().getPlayerToFollow().getAvatar().getSpeciality()
-                + "<br>"
-                + "<br>Enemy health: " + setup.getRound().getPlayerToFollow().getCurrentHealth()
-                + "<br>" + "<br></html>";
 
-        String enemyFrontCards = "<html><br>Enemy front cards:";
+
+        Container enemyFrontCards = new Container();
+        enemyFrontCards.setLayout(new BoxLayout(enemyFrontCards, BoxLayout.Y_AXIS));
+
+        enemyFrontCards.add(new JLabel("Enemy front cards:"));
+
         for (Card toBeShown : setup.getRound().getPlayerToFollow().getFrontCards()) {
-            enemyFrontCards = enemyFrontCards + "<br>" + toBeShown.toString();
+            enemyFrontCards.add(new JLabel(toBeShown.toString()));
         }
-        enemyFrontCards = enemyFrontCards + "</html>";
 
-        container.add(new JLabel(enemyInfo));
-        container.add(new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards"));
-        container.add(new JLabel(enemyFrontCards));
+        Container enemyInfoContainer = new Container();
+        enemyInfoContainer.setLayout(new GridLayout(20, 1));
 
+        enemyInfoContainer.add(new JLabel("Enemy: " + setup.getRound().getPlayerToFollow().getAvatar().toString()));
+        enemyInfoContainer.add(new JLabel(setup.getRound().getPlayerToFollow().getAvatar().getSpeciality()));
+        enemyInfoContainer.add(new JLabel(" "));
 
-        String playerInfo = "<html><br>You: " + setup.getRound().getPlayerInTurn().getAvatar().toString()
-                + "<br>" + setup.getRound().getPlayerInTurn().getAvatar().getSpeciality()
-                + "<br>"
-                + "<br>Your health: " + setup.getRound().getPlayerInTurn().getCurrentHealth()
-                + "<br>" + "<br></html>";
+        enemyInfoContainer.add(new JLabel("Enemy health: " + setup.getRound().getPlayerToFollow().getCurrentHealth()));
+        enemyInfoContainer.add(new JLabel(" "));
 
-        container.add(new JLabel(playerInfo));
+        enemyInfoContainer.add(new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards"));
+        enemyInfoContainer.add(new JLabel(" "));
 
-        String playerFrontCards = "<html>Your front cards:";
+        enemyInfoContainer.add(enemyFrontCards);
+
+        container.add(enemyInfoContainer);
+
+        Container playerFrontCards = new Container();
+        playerFrontCards.setLayout(new BoxLayout(playerFrontCards, BoxLayout.Y_AXIS));
+
+        playerFrontCards.add(new JLabel("Your front cards:"));
+
         for (Card toBeShown : setup.getRound().getPlayerInTurn().getFrontCards()) {
-            playerFrontCards = playerFrontCards + "<br>" + toBeShown.toString();
+            playerFrontCards.add(new JLabel(toBeShown.toString()));
         }
-        playerFrontCards = playerFrontCards + "<br>" + "<br></html>";
-        container.add(new JLabel(playerFrontCards));
 
-        container.add(new JLabel("Your hand cards:"));
+        Container playerInfoContainer = new Container();
+        playerInfoContainer.setLayout(new BoxLayout(playerInfoContainer, BoxLayout.Y_AXIS));
+
+        playerInfoContainer.add(new JLabel("You: " + setup.getRound().getPlayerInTurn().getAvatar().toString()));
+        playerInfoContainer.add(new JLabel(setup.getRound().getPlayerInTurn().getAvatar().getSpeciality()));
+        playerInfoContainer.add(new JLabel(" "));
+
+        playerInfoContainer.add(new JLabel("Your health: " + setup.getRound().getPlayerInTurn().getCurrentHealth()));
+        playerInfoContainer.add(new JLabel(" "));
+
+        playerInfoContainer.add(playerFrontCards);
+
+        container.add(playerInfoContainer);
+
+        Container handCardsMenu = new Container();
+        handCardsMenu.setLayout(new BoxLayout(handCardsMenu, BoxLayout.Y_AXIS));
+
+        handCardsMenu.add(new JLabel("Your hand cards:"));
 
         ButtonGroup playerHandCards = new ButtonGroup();
         cardList.clear();
@@ -1400,30 +1481,33 @@ public class VisibleScreen extends JFrame {
         for (int i = 0; i < setup.getRound().getPlayerInTurn().getHandCards().size(); i++) {
 
             JRadioButton toBeAdded = new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(i).toString());
-            toBeAdded.setOpaque(false);
-            toBeAdded.setContentAreaFilled(false);
-            toBeAdded.setBorderPainted(false);
-
             cardList.add(toBeAdded);
         }
+
         for (JRadioButton toBeAdded : cardList) {
+
             playerHandCards.add(toBeAdded);
-            container.add(toBeAdded);
+            JLabel buttonContainer = new JLabel();
+            buttonContainer.add(toBeAdded);
+            handCardsMenu.add(toBeAdded);
         }
+
         JButton useCard = new JButton("Use card");
         useCard.addActionListener(playerXScreen_UseCard);
-        container.add(useCard);
+        handCardsMenu.add(useCard);
 
         if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Sid Ketchum") && setup.getRound().getPlayerInTurn().getHandCards().size() > 1) {
 
             JButton healthForSidKetchum = new JButton("Regain health");
             healthForSidKetchum.addActionListener(toSidKetchumCardDiscard);
-            container.add(healthForSidKetchum);
+            handCardsMenu.add(healthForSidKetchum);
         }
 
         JButton endTurn = new JButton("End turn");
         endTurn.addActionListener(playerXScreen_EndTurn);
-        container.add(endTurn);
+        handCardsMenu.add(endTurn);
+
+        container.add(handCardsMenu, BorderLayout.EAST);
     }
 
     /**
@@ -1832,7 +1916,7 @@ public class VisibleScreen extends JFrame {
         next.setFont(new Font("Button", Font.ITALIC, 34));
 
         if (setup.getRound().getPlayerInTurn().getHandCards().size() == 1) {
-            enemyHasNoHandCards = new JLabel("The other only has one hand card,", JLabel.CENTER);
+            enemyHasNoHandCards = new JLabel("The other player only has one hand card,", JLabel.CENTER);
             enemyHasNoHandCards.setFont(new Font("Bang", Font.BOLD, 48));
 
         } else {

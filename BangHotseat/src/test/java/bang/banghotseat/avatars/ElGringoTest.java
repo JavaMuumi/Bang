@@ -51,7 +51,7 @@ public class ElGringoTest {
     
     @Test
     public void getSpecialityReturnsCorrectDescriptionForELGringo() {
-        assertEquals("Each time he is hit by a player, he draws a card from the hand of that player.", round.getPlayerInTurn().getAvatar().getSpeciality());
+        assertEquals("<html>Each time he is hit by a player,<br>he draws a card from the hand of that player.</html>", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
 
     @Test

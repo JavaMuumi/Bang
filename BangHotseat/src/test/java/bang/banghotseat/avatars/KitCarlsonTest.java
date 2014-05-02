@@ -52,7 +52,7 @@ public class KitCarlsonTest {
     
     @Test
     public void getSpecialityReturnsCorrectDescriptionForKitCarlson() {
-        assertEquals("He looks at the top three cards of the deck and chooses the 2 to draw.", round.getPlayerInTurn().getAvatar().getSpeciality());
+        assertEquals("<html>He looks at the top three cards of the deck<br>and chooses the 2 to draw.</html>", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
     
     @Test

@@ -30,7 +30,8 @@ public class ElGringo implements Avatar {
      */
     @Override
     public String getSpeciality() {
-        return "Each time he is hit by a player, he draws a card from the hand of that player.";
+        return "<html>Each time he is hit by a player,"
+                + "<br>he draws a card from the hand of that player.</html>";
     }
 
     /**

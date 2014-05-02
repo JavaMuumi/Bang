@@ -204,7 +204,7 @@ public class Round {
 
         boolean isEitherPlayerDead = false;
 
-        if (playerInTurn.getCurrentHealth() == 0 || playerToFollow.getCurrentHealth() == 0) {
+        if (playerInTurn.getCurrentHealth() <= 0 || playerToFollow.getCurrentHealth() <= 0) {
             isEitherPlayerDead = true;
         }
         return isEitherPlayerDead;

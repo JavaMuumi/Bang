@@ -112,6 +112,7 @@ public class CheckerForEventsBeforeTurn {
             round.getDiscardpile().place(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
 
         } else {
+
             if (enemyAlreadyHasADinamite) {
             } else {
                 round.getPlayerToFollow().putCardInFront(round.getPlayerInTurn().drawSpecificFrontCard(indexOfDinamite));
@@ -207,6 +208,7 @@ public class CheckerForEventsBeforeTurn {
         boolean sameCardIsAlreadyInFront = false;
 
         for (Card isTheSameCardAlreadyInFront : round.getPlayerToFollow().getFrontCards()) {
+
             if (isTheSameCardAlreadyInFront.getName().equals(nameOfCard)) {
                 indexOfSameCard = round.getPlayerToFollow().getFrontCards().indexOf(isTheSameCardAlreadyInFront);
                 sameCardIsAlreadyInFront = true;
@@ -232,5 +234,6 @@ public class CheckerForEventsBeforeTurn {
 
         thereIsADinamite = false;
         thereIsAPrigione = false;
+        dinamiteDetonated = false;
     }
 }

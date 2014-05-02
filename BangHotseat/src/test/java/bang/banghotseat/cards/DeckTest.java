@@ -18,10 +18,13 @@ import org.junit.Test;
 public class DeckTest {
     
     private Deck deck;
+    private Deck discardpile;
     
     public DeckTest() {
         
         deck = new Deck();
+        discardpile = new Deck();
+        discardpile.createCards();
     }
     
     @BeforeClass
@@ -79,19 +82,14 @@ public class DeckTest {
     public void ifDeckIsNotEmptyGivenDeckWillNotBeAddedToItWhenMethodTakeIsUsed() {
         
         deck.place(new Bang("Hearts" , 1));
-        Deck discarpile = new Deck();
-        discarpile.createCards();
         
-        deck.take(discarpile);
+        deck.take(discardpile);
         
         assertEquals("Deck size: 0", "Deck size: " + deck.getDeck().size());
     }
     
     @Test
     public void ifMethodTakeIsUsedOnEmptyDeckGivenDeckWillBeAddedToIt() {
-        
-        Deck discardpile = new Deck();
-        discardpile.createCards();
         
         deck.take(discardpile);
         
@@ -100,9 +98,6 @@ public class DeckTest {
     
     @Test
     public void ifMethodTakeIsUsedOnEmptyDeckGivenDeckWillBeCleared() {
-        
-        Deck discardpile = new Deck();
-        discardpile.createCards();
         
         deck.take(discardpile);
         
@@ -113,20 +108,18 @@ public class DeckTest {
     public void ifMethodTakeIsUsedOnDeckThatIsNotEmptyGivenDeckWillNotBeCleared() {
         
         deck.place(new Bang("Hearts", 1));
-        Deck discardpile = new Deck();
-        discardpile.createCards();
         
         deck.take(discardpile);
         
         assertEquals(false, discardpile.getDeck().isEmpty());
     }
     
-    @Test
-    public void methodClearDeckRemovesEverythingFromDeck() {
-        
-        deck.createCards();
-        deck.clearDeck();
-        
-        assertEquals(true, deck.getDeck().isEmpty());
-    }
+//    @Test
+//    public void methodClearDeckRemovesEverythingFromDeck() {
+//        
+//        deck.createCards();
+//        deck.clearDeck();
+//        
+//        assertEquals(true, deck.getDeck().isEmpty());
+//    }
 }

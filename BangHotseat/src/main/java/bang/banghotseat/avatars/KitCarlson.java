@@ -30,7 +30,8 @@ public class KitCarlson implements Avatar {
      */
     @Override
     public String getSpeciality() {
-        return "He looks at the top three cards of the deck and chooses the 2 to draw.";
+        return "<html>He looks at the top three cards of the deck"
+                + "<br>and chooses the 2 to draw.</html>";
     }
 
     /**

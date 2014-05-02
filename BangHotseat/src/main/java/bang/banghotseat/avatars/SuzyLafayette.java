@@ -30,7 +30,8 @@ public class SuzyLafayette implements Avatar {
      */
     @Override
     public String getSpeciality() {
-        return "As soon as she has no cards in hand, she draws a card.";
+        return "<html>As soon as she has no cards in hand,"
+                + "<br>she draws a card.</html>";
     }
 
     /**

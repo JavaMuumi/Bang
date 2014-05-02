@@ -39,19 +39,19 @@ public class CheckerForPlayedCard {
      */
     public void playingCard(int index) {
 
-        this.indexOfHandCard = index;
-        this.playedCard = round.getPlayerInTurn().getHandCards().get(index);
+        indexOfHandCard = index;
+        playedCard = round.getPlayerInTurn().getHandCards().get(index);
 
         if (playedCard.getType().equals("Orange") || (round.getPlayerInTurn().getAvatar().toString().equals("Calamity Janet") && playedCard.getType().equals("Mancato"))) {
-            playingOrangeCard(round.getPlayerInTurn().getHandCards().get(index));
+            playingOrangeCard(playedCard);
 
-        } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Blue")) {
+        } else if (playedCard.getType().equals("Blue")) {
             playingBlueCard();
 
-        } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Gun")) {
+        } else if (playedCard.getType().equals("Gun")) {
             playingGun();
 
-        } else if (round.getPlayerInTurn().getHandCards().get(index).getType().equals("Prigione")) {
+        } else if (playedCard.getType().equals("Prigione")) {
             playingPrigione();
 
         } else {
@@ -65,6 +65,7 @@ public class CheckerForPlayedCard {
      * @param playedCard pelattu kortti
      */
     public void playingOrangeCard(Card playedCard) {
+
         if (playedCard.getName().equals("BANG!") || playedCard.getName().equals("Mancato!") || playedCard.getName().equals("Gatling")) {
             playingBangOrGatling(playedCard);
 

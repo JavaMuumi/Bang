@@ -34,6 +34,7 @@ public class MainMenu_NewGame implements ActionListener {
         visibleScreen.getFrame().getContentPane().removeAll();
 
         visibleScreen.newGameInfo();
+
         visibleScreen.getFrame().revalidate();
         visibleScreen.getFrame().repaint();
     }

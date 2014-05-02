@@ -30,7 +30,8 @@ public class Jourdonnais implements Avatar {
      */
     @Override
     public String getSpeciality() {
-        return "Whenever he is the target of a BANG!, he may 'draw!': on a Heart, he is missed.";
+        return "<html>Whenever he is the target of a BANG!, he may 'draw!':"
+                + "<br>on a Heart, he is missed.</html>";
     }
 
     /**

@@ -30,7 +30,8 @@ public class LuckyDuke implements Avatar {
      */
     @Override
     public String getSpeciality() {
-        return "Each time he 'draws!', he flips the top two cards and chooses one.";
+        return "<html>Each time he 'draws!',"
+                + "<br>he flips the top two cards and chooses one.</html>";
     }
 
     /**

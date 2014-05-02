@@ -21,12 +21,12 @@ import org.junit.Test;
  */
 public class RoundTest {
 
-    private Setup setup = new Setup();
-    private Round round;
+    private Setup setup;
 
     public RoundTest() {
+        
+        setup = new Setup();
         setup.runSetup();
-        round = new Round(setup.getPlayer1(), setup.getPlayer2(), setup.getDrawpile(), setup.getDiscardpile());
     }
 
     @BeforeClass
@@ -47,96 +47,115 @@ public class RoundTest {
 
     @Test
     public void player1InSetupIsPlayerInTurnWhenRoundIsConstructed() {
-        assertEquals(setup.getPlayer1(), round.getPlayerInTurn());
+        assertEquals(setup.getPlayer1(), setup.getRound().getPlayerInTurn());
     }
 
     @Test
     public void player2InSetupIsPlayerToFollowWhenRoundIsConstructed() {
-        assertEquals(setup.getPlayer2(), round.getPlayerToFollow());
+        assertEquals(setup.getPlayer2(), setup.getRound().getPlayerToFollow());
     }
 
     @Test
     public void whenPlayTurnMethodIsPlayedPlayerDrawsCards() {
 
-        round.getPlayerInTurn().setAvatar(new WillyTheKid());
-        round.getPlayerInTurn().setCurrentHealth();
+        setup.getRound().getPlayerInTurn().setAvatar(new WillyTheKid());
+        setup.getRound().getPlayerInTurn().setCurrentHealth();
 
-        round.playTurn();
+        setup.getRound().playTurn();
 
-        assertEquals(6, round.getPlayerInTurn().getHandCards().size());
+        assertEquals(6, setup.getRound().getPlayerInTurn().getHandCards().size());
     }
 
     @Test
     public void whenEndTurnMethodIsPlayedPlayerInTurnAndPlayerToFollowAreSwitched() {
 
-        round.getPlayerInTurn().setAvatar(new SuzyLafayette());
-        round.getPlayerToFollow().setAvatar(new WillyTheKid());
+        setup.getRound().getPlayerInTurn().setAvatar(new SuzyLafayette());
+        setup.getRound().getPlayerToFollow().setAvatar(new WillyTheKid());
 
-        round.endTurn();
+        setup.getRound().endTurn();
 
-        assertEquals("Willy The Kid, Suzy Lafayette", round.getPlayerInTurn().getAvatar().toString() + ", " + round.getPlayerToFollow().getAvatar().toString());
+        assertEquals("Willy The Kid, Suzy Lafayette", setup.getRound().getPlayerInTurn().getAvatar().toString() + ", " + setup.getRound().getPlayerToFollow().getAvatar().toString());
     }
 
     @Test
     public void methodEndTurnClearsListOfLastCheckedCards() {
 
         for (int i = 0; i < 5; i++) {
-            round.getPlayerInTurn().setLastCheckedCard(new Bang("Hearts", 1));
+            setup.getRound().getPlayerInTurn().setLastCheckedCard(new Bang("Hearts", 1));
         }
-        round.endTurn();
+        setup.getRound().endTurn();
 
-        assertEquals("Last checked cards: 0", "Last checked cards: " + round.getPlayerInTurn().getListOfLastCheckedCards().size());
+        assertEquals("Last checked cards: 0", "Last checked cards: " + setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size());
     }
 
     @Test
     public void playerInTurnIsNextToReachToDuelloIsFalseWhenRoundBegins() {
 
-        assertEquals(false, round.playerInTurnIsNextToReactToDuello());
+        assertEquals(false, setup.getRound().playerInTurnIsNextToReactToDuello());
     }
 
     @Test
     public void methodSetPlayerInTurnIsNextToReactToDuelloSetsGivenBoolean() {
 
-        round.setPlayerInTurnIsNextToReactToDuello(true);
+        setup.getRound().setPlayerInTurnIsNextToReactToDuello(true);
 
-        assertEquals(true, round.playerInTurnIsNextToReactToDuello());
+        assertEquals(true, setup.getRound().playerInTurnIsNextToReactToDuello());
     }
 
     @Test
     public void ifNeitherPlayerIsDeadMethodGameIsOverReturnsFalse() {
 
-        round.getPlayerInTurn().setAvatar(new SlabTheKiller());
-        round.getPlayerInTurn().setCurrentHealth();
-        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
-        round.getPlayerToFollow().setCurrentHealth();
+        setup.getRound().getPlayerInTurn().setAvatar(new SlabTheKiller());
+        setup.getRound().getPlayerInTurn().setCurrentHealth();
+        setup.getRound().getPlayerToFollow().setAvatar(new SlabTheKiller());
+        setup.getRound().getPlayerToFollow().setCurrentHealth();
 
-        assertEquals(false, round.gameIsOver());
+        assertEquals(false, setup.getRound().gameIsOver());
     }
 
     @Test
     public void ifPlayerInTurnIsDeadMethodGameIsOverReturnsTrue() {
 
-        round.getPlayerInTurn().setAvatar(new SlabTheKiller());
-        round.getPlayerInTurn().setCurrentHealth();
-        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
-        round.getPlayerToFollow().setCurrentHealth();
+        setup.getRound().getPlayerInTurn().setAvatar(new SlabTheKiller());
+        setup.getRound().getPlayerInTurn().setCurrentHealth();
+        setup.getRound().getPlayerToFollow().setAvatar(new SlabTheKiller());
+        setup.getRound().getPlayerToFollow().setCurrentHealth();
 
-        round.getPlayerInTurn().loseHealth(4, round);
+        setup.getRound().getPlayerInTurn().loseHealth(4, setup.getRound());
 
-        assertEquals(true, round.gameIsOver());
+        assertEquals(true, setup.getRound().gameIsOver());
     }
 
     @Test
     public void ifPlayerToFollowIsDeadMethodGameIsOverReturnsTrue() {
 
-        round.getPlayerInTurn().setAvatar(new SlabTheKiller());
-        round.getPlayerInTurn().setCurrentHealth();
-        round.getPlayerToFollow().setAvatar(new SlabTheKiller());
-        round.getPlayerToFollow().setCurrentHealth();
+        setup.getRound().getPlayerInTurn().setAvatar(new SlabTheKiller());
+        setup.getRound().getPlayerInTurn().setCurrentHealth();
+        setup.getRound().getPlayerToFollow().setAvatar(new SlabTheKiller());
+        setup.getRound().getPlayerToFollow().setCurrentHealth();
 
-        round.getPlayerToFollow().loseHealth(4, round);
+        setup.getRound().getPlayerToFollow().loseHealth(4, setup.getRound());
 
 
-        assertEquals(true, round.gameIsOver());
+        assertEquals(true, setup.getRound().gameIsOver());
+    }
+       
+    @Test
+    public void whenGameIsFinishedAndNewBeginsDrawpileHas79CardsAndDiscardpileIsEmpty() {
+        
+        setup.runSetup();
+        
+        assertEquals("Drawpile: 79 cards, discardpile: 0 cards", "Drawpile: " + (setup.getRound().getDrawpile().getDeck().size() + setup.getRound().getPlayerInTurn().getHandCards().size() + setup.getRound().getPlayerToFollow().getHandCards().size()) + " cards, discardpile: " + setup.getRound().getDiscardpile().getDeck().size() + " cards");
+    }
+    
+    @Test
+    public void whenGameIsFinishedAndNewBeginsNeitherPlayerHasAnyFrontCards() {
+        
+        setup.getRound().getPlayerInTurn().putCardInFront(setup.getRound().getDrawpile().take(setup.getRound().getDiscardpile()));
+        setup.getRound().getPlayerToFollow().putCardInFront(setup.getRound().getDrawpile().take(setup.getRound().getDiscardpile()));
+        
+        setup.runSetup();
+        
+        assertEquals("Player in turn front cards: 0, player to follow front cards: 0", "Player in turn front cards: " + setup.getRound().getPlayerInTurn().getFrontCards().size() + ", player to follow front cards: " + setup.getRound().getPlayerToFollow().getFrontCards().size());
     }
 }

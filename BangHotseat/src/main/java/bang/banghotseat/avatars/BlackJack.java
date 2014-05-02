@@ -31,7 +31,8 @@ public class BlackJack implements Avatar {
      */
     @Override
     public String getSpeciality() {
-        return "He shows the second card he draws. On Heart or Diamonds, he draws one more card.";
+        return "<html>He shows the second card he draws."
+                + "<br>On Heart or Diamonds, he draws one more card.</html>";
     }
 
     /**

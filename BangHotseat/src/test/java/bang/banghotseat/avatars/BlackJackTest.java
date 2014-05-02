@@ -51,7 +51,7 @@ public class BlackJackTest {
 
     @Test
     public void getSpecialityReturnsCorrectDescriptionForBlackJack() {
-        assertEquals("He shows the second card he draws. On Heart or Diamonds, he draws one more card.", round.getPlayerInTurn().getAvatar().getSpeciality());
+        assertEquals("<html>He shows the second card he draws.<br>On Heart or Diamonds, he draws one more card.</html>", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
 
     @Test
