@@ -216,3 +216,10 @@ YHTEENSÄ: 5h
 klo 12-15
 JavaDocit kuntoon, testejä, refraktointia, bugikorjailua...
 YHTEENSÄ: 3h
+
+2.4.
+klo 12-24
+Kaikki kuntoon
+YHTEENSÄ: 12h
+
+TOT: 184h

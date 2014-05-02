@@ -56,17 +56,6 @@ public class RoundTest {
     }
 
     @Test
-    public void whenPlayTurnMethodIsPlayedPlayerDrawsCards() {
-
-        setup.getRound().getPlayerInTurn().setAvatar(new WillyTheKid());
-        setup.getRound().getPlayerInTurn().setCurrentHealth();
-
-        setup.getRound().playTurn();
-
-        assertEquals(6, setup.getRound().getPlayerInTurn().getHandCards().size());
-    }
-
-    @Test
     public void whenEndTurnMethodIsPlayedPlayerInTurnAndPlayerToFollowAreSwitched() {
 
         setup.getRound().getPlayerInTurn().setAvatar(new SuzyLafayette());

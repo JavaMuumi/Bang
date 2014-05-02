@@ -51,7 +51,7 @@ public class CalamityJanetTest {
     
     @Test
     public void getSpecialityReturnsCorrectDescriptionForCalamityJanet() {
-        assertEquals("She can play BANG! cards as Missed! cards and vice versa.", round.getPlayerInTurn().getAvatar().getSpeciality());
+        assertEquals("<html>She can play BANG! cards<br>as Missed! cards and vice versa.</html>", round.getPlayerInTurn().getAvatar().getSpeciality());
     }
 
     @Test

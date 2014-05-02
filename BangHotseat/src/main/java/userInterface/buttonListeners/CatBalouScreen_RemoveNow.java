@@ -35,12 +35,12 @@ public class CatBalouScreen_RemoveNow implements ActionListener {
 
             visibleScreen.getFrame().getContentPane().removeAll();
 
-            visibleScreen.getSetup().getRound().getPlayerInTurn().setLastCheckedCard(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHandCard(visibleScreen.getSetup().getRound()));
-            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard());
+            visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawRandomHandCard(visibleScreen.getSetup().getRound()));
             visibleScreen.catBalouRemovedRandomHandCard();
 
         } else {
             visibleScreen.getFrame().getContentPane().removeAll();
+
             visibleScreen.getSetup().getRound().getDiscardpile().place(visibleScreen.getSetup().getRound().getPlayerToFollow().drawSpecificFrontCard(visibleScreen.getPanicoOrCatBalouIndex()));
             visibleScreen.playerXScreen();
         }

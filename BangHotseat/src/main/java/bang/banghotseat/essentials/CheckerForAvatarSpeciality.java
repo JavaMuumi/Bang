@@ -112,7 +112,7 @@ public class CheckerForAvatarSpeciality {
         if (round.getPlayerToFollow().getAvatar().toString().equals("El Gringo") && !round.getPlayerInTurn().getAvatar().toString().equals("El Gringo") && !round.getPlayerInTurn().getHandCards().isEmpty()) {
 
             Card drawnCard = round.getPlayerInTurn().drawRandomHandCard(round);
-            round.getPlayerInTurn().setLastCheckedCard(drawnCard);
+            round.getCheckerForPlayedCard().setLastStolenCard(drawnCard);
             round.getPlayerToFollow().putCardIntoHand(drawnCard);
         }
     }

@@ -152,13 +152,13 @@ public class CheckerForAvatarSpecialityTest {
     }
 
     @Test
-    public void ifElGringoStealsACardItWillBeAddedToTheListOfLastCheckedCardsOfPlayerInTurn() {
+    public void ifElGringoStealsACardItWillBeMarkedAsLastStolenCardToCheckerOfPlayedCard() {
 
         round.getPlayerToFollow().setAvatar(new ElGringo());
         round.getPlayerInTurn().putCardIntoHand(new Bang("Hearts", 1));
         round.getPlayerToFollow().loseHealth(1, round);
 
-        assertEquals("BANG!: Ace of Hearts", round.getPlayerInTurn().getListOfLastCheckedCards().get(round.getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString());
+        assertEquals("BANG!: Ace of Hearts", round.getCheckerForPlayedCard().getLastStolenCard().toString());
     }
 
     @Test

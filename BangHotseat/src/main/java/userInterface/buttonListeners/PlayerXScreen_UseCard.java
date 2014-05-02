@@ -146,7 +146,11 @@ public class PlayerXScreen_UseCard implements ActionListener {
 
             if (visibleScreen.getSetup().getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer")) {
                 visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
+
+            } else if (!visibleScreen.getSetup().getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
+                visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais();
             }
+
             visibleScreen.barrelScreen();
 
         } else if (visibleScreen.getSetup().getRound().getCheckerForAvatarSpeciality().checkJourdonnais()) {

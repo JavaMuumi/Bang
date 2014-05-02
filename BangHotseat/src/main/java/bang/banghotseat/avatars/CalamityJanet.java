@@ -30,7 +30,7 @@ public class CalamityJanet implements Avatar {
      */
     @Override
     public String getSpeciality() {
-        return "She can play BANG! cards as Missed! cards and vice versa.";
+        return "<html>She can play BANG! cards<br>as Missed! cards and vice versa.</html>";
     }
 
     /**

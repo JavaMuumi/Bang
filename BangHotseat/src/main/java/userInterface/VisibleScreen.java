@@ -8,6 +8,7 @@ import bang.banghotseat.Setup;
 import bang.banghotseat.cards.Card;
 import bang.banghotseat.essentials.Player;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -91,6 +92,8 @@ public class VisibleScreen extends JFrame {
         container = frame.getContentPane();
         this.setup = setup;
         cardList = new ArrayList<>();
+
+        container.setBackground(Color.ORANGE);
 
         mainMenu_NewGame = new MainMenu_NewGame(this);
         mainMenu_Rules = new MainMenu_Rules(this);
@@ -190,51 +193,37 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new BorderLayout());
 
-        JLabel mainMenu = new JLabel(new ImageIcon("C:\\Users\\Antti Korpi\\Bang\\MainMenuBackGround.png"));
-        container.add(mainMenu);
-        mainMenu.setLayout(new GridLayout(5, 1));
+        Container liner = new Container();
+        liner.setLayout(new GridLayout(5, 1));
+
+        JLabel bangLogo = new JLabel("BANG!", JLabel.CENTER);
+        bangLogo.setFont(new Font("Big", Font.BOLD, 185));
+        liner.add(bangLogo);
+
+        JLabel bangExplanation = new JLabel("Computer adaption of classic card game", JLabel.CENTER);
+        bangExplanation.setFont(new Font("Big", Font.BOLD, 60));
+        liner.add(bangExplanation);
 
         JButton newGame = new JButton("New Game");
         newGame.setFont(new Font("MainMenu", Font.BOLD, 60));
-        newGame.setOpaque(false);
-        newGame.setContentAreaFilled(false);
-        newGame.setBorderPainted(false);
 
         newGame.addActionListener(mainMenu_NewGame);
 
         JButton rules = new JButton("Rules");
         rules.setFont(new Font("MainMenu", Font.BOLD, 60));
-        rules.setOpaque(false);
-        rules.setContentAreaFilled(false);
-        rules.setBorderPainted(false);
 
         rules.addActionListener(mainMenu_Rules);
 
         JButton exit = new JButton("Exit");
         exit.setFont(new Font("MainMenu", Font.BOLD, 60));
-        exit.setOpaque(false);
-        exit.setContentAreaFilled(false);
-        exit.setBorderPainted(false);
 
         exit.addActionListener(mainMenu_Exit);
 
-        for (int i = 0; i < 7; i++) {
-            mainMenu.add(new JLabel());
-        }
+        liner.add(newGame);
+        liner.add(rules);
+        liner.add(exit);
 
-        mainMenu.add(newGame);
-
-        for (int i = 0; i < 2; i++) {
-            mainMenu.add(new JLabel());
-        }
-
-        mainMenu.add(rules);
-
-        for (int i = 0; i < 2; i++) {
-            mainMenu.add(new JLabel());
-        }
-
-        mainMenu.add(exit);
+        container.add(liner);
     }
 
     /**
@@ -384,7 +373,7 @@ public class VisibleScreen extends JFrame {
         GridLayout layout = new GridLayout(7, 4);
         container.setLayout(layout);
 
-        JLabel player1Avatar = new JLabel("Player1, your character is " + setup.getPlayer1().getAvatar().toString());
+        JLabel player1Avatar = new JLabel("Player 1, your character is " + setup.getPlayer1().getAvatar().toString());
         player1Avatar.setFont(new Font("Bang", Font.BOLD, 48));
 
         JLabel player1Speciality = new JLabel(setup.getPlayer1().getAvatar().getSpeciality());
@@ -393,7 +382,7 @@ public class VisibleScreen extends JFrame {
         JLabel player1MaxHealth = new JLabel("Your maximum health is " + setup.getPlayer1().getAvatar().getMaxHealth());
         player1MaxHealth.setFont(new Font("CharacterAbility", Font.ITALIC, 28));
 
-        JLabel player2Avatar = new JLabel("Player2, your character is " + setup.getPlayer2().getAvatar().toString());
+        JLabel player2Avatar = new JLabel("Player 2, your character is " + setup.getPlayer2().getAvatar().toString());
         player2Avatar.setFont(new Font("Bang", Font.BOLD, 48));
 
         JLabel player2Speciality = new JLabel(setup.getPlayer2().getAvatar().getSpeciality());
@@ -426,14 +415,18 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel playerXPleaseLookAway = new JLabel(playerWhoShouldLookAway.getAvatar().toString() + ", please look away now", JLabel.CENTER);
-        playerXPleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
+        JLabel playerX = new JLabel(playerWhoShouldLookAway.getAvatar().toString() + ",", JLabel.CENTER);
+        playerX.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel lookAway = new JLabel("please look away now", JLabel.CENTER);
+        lookAway.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToNewRound);
 
-        container.add(playerXPleaseLookAway);
+        container.add(playerX);
+        container.add(lookAway);
         container.add(next);
     }
 
@@ -447,14 +440,18 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel playerXPleaseLookAway = new JLabel("Please look away now, it's the other player's turn", JLabel.CENTER);
-        playerXPleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
+        JLabel lookAway = new JLabel("Please look away now,", JLabel.CENTER);
+        lookAway.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel otherPlayerTurn = new JLabel("it's the other player's turn", JLabel.CENTER);
+        otherPlayerTurn.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToPlayerXScreen);
 
-        container.add(playerXPleaseLookAway);
+        container.add(lookAway);
+        container.add(otherPlayerTurn);
         container.add(next);
     }
 
@@ -467,8 +464,11 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel playerXPleaseLookAway = new JLabel("Please look away now, the other player may reply", JLabel.CENTER);
-        playerXPleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
+        JLabel pleaseLookAway = new JLabel("Please look away now,", JLabel.CENTER);
+        pleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel otherMayReply = new JLabel("the other player may reply", JLabel.CENTER);
+        otherMayReply.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
@@ -501,7 +501,8 @@ public class VisibleScreen extends JFrame {
                 next.addActionListener(distractionReply);
             }
         }
-        container.add(playerXPleaseLookAway);
+        container.add(pleaseLookAway);
+        container.add(otherMayReply);
         container.add(next);
     }
 
@@ -514,10 +515,13 @@ public class VisibleScreen extends JFrame {
         JLabel thereIsAPrigione = new JLabel("You are in prigione...", JLabel.CENTER);
         thereIsAPrigione.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel prigioneHeld = new JLabel("Prigione is secure!!! You lost your turn!!!", JLabel.CENTER);
+        JLabel prigioneHeld = new JLabel("Prigione is secure!", JLabel.CENTER);
         prigioneHeld.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel prigioneFailed = new JLabel("You broke out!!!", JLabel.CENTER);
+        JLabel youLostYourTurn = new JLabel("You lost your turn!", JLabel.CENTER);
+        youLostYourTurn.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel prigioneFailed = new JLabel("You broke out!", JLabel.CENTER);
         prigioneFailed.setFont(new Font("Bang", Font.BOLD, 48));
 
         JLabel and = new JLabel("and", JLabel.CENTER);
@@ -528,7 +532,7 @@ public class VisibleScreen extends JFrame {
 
         if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Lucky Duke")) {
 
-            container.setLayout(new GridLayout(6, 3));
+            container.setLayout(new GridLayout(7, 3));
             container.add(thereIsAPrigione);
 
             JLabel drawnCard1 = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 2).toString(), JLabel.CENTER);
@@ -543,6 +547,7 @@ public class VisibleScreen extends JFrame {
 
             if (!setup.getRound().getCheckerForAvatarSpeciality().checkTwoLastCheckedCardsForLuckyDukeForHearts()) {
                 container.add(prigioneHeld);
+                container.add(youLostYourTurn);
                 next.addActionListener(prigione_ToNextPlayer);
 
             } else {
@@ -551,7 +556,7 @@ public class VisibleScreen extends JFrame {
             }
         } else {
 
-            container.setLayout(new GridLayout(4, 3));
+            container.setLayout(new GridLayout(5, 3));
             container.add(thereIsAPrigione);
 
             JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was drawn", JLabel.CENTER);
@@ -560,6 +565,7 @@ public class VisibleScreen extends JFrame {
 
             if (!setup.getRound().getPlayerInTurn().getLastCheckedCard().getSuit().equals("Hearts")) {
                 container.add(prigioneHeld);
+                container.add(youLostYourTurn);
                 next.addActionListener(prigione_ToNextPlayer);
 
             } else {
@@ -592,16 +598,16 @@ public class VisibleScreen extends JFrame {
      */
     public void dinamiteScreen() {
 
-        JLabel thereIsADinamite = new JLabel("The dinamite is hissing...", JLabel.CENTER);
+        JLabel thereIsADinamite = new JLabel("Dinamite is hissing...", JLabel.CENTER);
         thereIsADinamite.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel dinamiteExploded = new JLabel("The dinamite exploded!!! You lost 3 health points!!!", JLabel.CENTER);
+        JLabel dinamiteExploded = new JLabel("Dinamite exploded! You lost 3 health points!", JLabel.CENTER);
         dinamiteExploded.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel dinamiteWasPassedOn = new JLabel("The dinamite didn't explode and was passed on", JLabel.CENTER);
+        JLabel dinamiteWasPassedOn = new JLabel("Dinamite didn't explode, it was passed on", JLabel.CENTER);
         dinamiteWasPassedOn.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel bothPlayersHaveDinamite = new JLabel("Dinamite didn't explode, you both keep your own", JLabel.CENTER);
+        JLabel bothPlayersHaveDinamite = new JLabel("Dinamite didn't explode, you both keep yours", JLabel.CENTER);
         bothPlayersHaveDinamite.setFont(new Font("Bang", Font.BOLD, 48));
 
         JLabel and = new JLabel("and", JLabel.CENTER);
@@ -956,6 +962,10 @@ public class VisibleScreen extends JFrame {
 
                 } else {
 
+                    JLabel drawnCard = new JLabel(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().get(setup.getRound().getPlayerInTurn().getListOfLastCheckedCards().size() - 1).toString() + " was drawn", JLabel.CENTER);
+                    drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
+                    container.add(drawnCard);
+
                     JLabel barrelWorked = new JLabel("The shot missed!", JLabel.CENTER);
                     barrelWorked.setFont(new Font("Bang", Font.BOLD, 48));
                     container.add(barrelWorked);
@@ -1046,11 +1056,17 @@ public class VisibleScreen extends JFrame {
         for (int i = 0; i < setup.getRound().getPlayerToFollow().getFrontCards().size(); i++) {
             JRadioButton frontCard = new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString());
             frontCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            frontCard.setOpaque(false);
+            frontCard.setContentAreaFilled(false);
+            frontCard.setBorderPainted(false);
             cardList.add(frontCard);
         }
         if (!setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
             JRadioButton randomHandCard = new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")");
             randomHandCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            randomHandCard.setOpaque(false);
+            randomHandCard.setContentAreaFilled(false);
+            randomHandCard.setBorderPainted(false);
             cardList.add(randomHandCard);
         }
         for (JRadioButton toBeAdded : cardList) {
@@ -1073,14 +1089,18 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel stolenCard = new JLabel(setup.getRound().getPlayerInTurn().getLastCheckedCard().toString() + " was stolen", JLabel.CENTER);
+        JLabel stolenCard = new JLabel(setup.getRound().getCheckerForPlayedCard().getLastStolenCard().toString(), JLabel.CENTER);
         stolenCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel wasStolen = new JLabel("was stolen", JLabel.CENTER);
+        wasStolen.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToPlayerXScreen);
 
         container.add(stolenCard);
+        container.add(wasStolen);
         container.add(next);
     }
 
@@ -1092,13 +1112,17 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel stolenCard = new JLabel("You stole " + setup.getRound().getPlayerInTurn().getLastCheckedCard().toString(), JLabel.CENTER);
+        JLabel youStole = new JLabel("You stole:", JLabel.CENTER);
+        youStole.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel stolenCard = new JLabel(setup.getRound().getCheckerForPlayedCard().getLastStolenCard().toString(), JLabel.CENTER);
         stolenCard.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(pleaseLookAwayToPlayerXScreen);
 
+        container.add(youStole);
         container.add(stolenCard);
         container.add(next);
     }
@@ -1122,11 +1146,17 @@ public class VisibleScreen extends JFrame {
         for (int i = 0; i < setup.getRound().getPlayerToFollow().getFrontCards().size(); i++) {
             JRadioButton frontCard = new JRadioButton(setup.getRound().getPlayerToFollow().getFrontCards().get(i).toString());
             frontCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            frontCard.setOpaque(false);
+            frontCard.setContentAreaFilled(false);
+            frontCard.setBorderPainted(false);
             cardList.add(frontCard);
         }
         if (!setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
             JRadioButton randomHandCard = new JRadioButton("Random hand card (other player has " + setup.getRound().getPlayerToFollow().getHandCards().size() + ")");
             randomHandCard.setFont(new Font("RadioButton", Font.PLAIN, 30));
+            randomHandCard.setOpaque(false);
+            randomHandCard.setContentAreaFilled(false);
+            randomHandCard.setBorderPainted(false);
             cardList.add(randomHandCard);
         }
         for (JRadioButton toBeAdded : cardList) {
@@ -1149,13 +1179,17 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel removedCard = new JLabel("You removed " + setup.getRound().getPlayerInTurn().getLastCheckedCard().toString(), JLabel.CENTER);
+        JLabel youRemoved = new JLabel("You removed:", JLabel.CENTER);
+        youRemoved.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel removedCard = new JLabel(setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).toString(), JLabel.CENTER);
         removedCard.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToPlayerXScreen);
 
+        container.add(youRemoved);
         container.add(removedCard);
         container.add(next);
     }
@@ -1206,7 +1240,7 @@ public class VisibleScreen extends JFrame {
         drawnCard2.addActionListener(emporioPlayerChoseSecondCard);
         container.add(drawnCard2);
 
-        JLabel whichWillYouTake = new JLabel("Which will you take? Enemy will have the other", JLabel.CENTER);
+        JLabel whichWillYouTake = new JLabel("Which will you take?", JLabel.CENTER);
         whichWillYouTake.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(whichWillYouTake);
     }
@@ -1219,7 +1253,10 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(4, 3));
 
-        JLabel drawnCard = new JLabel("Second card was " + setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString(), JLabel.CENTER);
+        JLabel secondCard = new JLabel("Second card:", JLabel.CENTER);
+        secondCard.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel drawnCard = new JLabel(setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().toString(), JLabel.CENTER);
         drawnCard.setFont(new Font("Bang", Font.BOLD, 48));
 
         JLabel getsNew = new JLabel("You get one more card", JLabel.CENTER);
@@ -1232,6 +1269,7 @@ public class VisibleScreen extends JFrame {
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToPlayerXScreen);
 
+        container.add(secondCard);
         container.add(drawnCard);
 
         if (setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().getSuit().equals("Hearts") || setup.getRound().getCheckerForAvatarSpeciality().getSecondDrawnCardOfBlackJack().getSuit().equals("Diamonds")) {
@@ -1267,11 +1305,21 @@ public class VisibleScreen extends JFrame {
             container.add(next);
 
         } else {
-            JLabel wannaDrawFromEnemyHand = new JLabel("Do you want to draw your first card from enemy's hand?", JLabel.CENTER);
+            JLabel wannaDrawFromEnemyHand = new JLabel("Do you want to draw from enemy's hand?", JLabel.CENTER);
             wannaDrawFromEnemyHand.setFont(new Font("Bang", Font.BOLD, 48));
             container.add(wannaDrawFromEnemyHand);
 
-            JLabel enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards", JLabel.CENTER);
+            JLabel enemyHandCards;
+
+            if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+                enemyHandCards = new JLabel("Enemy has no hand cards", JLabel.CENTER);
+
+            } else if (setup.getRound().getPlayerToFollow().getHandCards().size() == 1) {
+                enemyHandCards = new JLabel("Enemy has 1 hand card", JLabel.CENTER);
+
+            } else {
+                enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards", JLabel.CENTER);
+            }
             enemyHandCards.setFont(new Font("Bang", Font.BOLD, 48));
             container.add(enemyHandCards);
 
@@ -1294,10 +1342,11 @@ public class VisibleScreen extends JFrame {
      */
     public void kitCarlsonDrawScreen() {
 
-        BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
-        container.setLayout(yPlane);
+        container.setLayout(new GridLayout(5, 1));
 
-        container.add(new JLabel("Which of these card will you put back to the top of the drawpile?"));
+        JLabel whichCard = new JLabel("Which card will you put back to drawpile?", JLabel.CENTER);
+        whichCard.setFont(new Font("CardChoice", Font.BOLD, 30));
+        container.add(whichCard);
 
         ButtonGroup choises = new ButtonGroup();
         cardList.clear();
@@ -1305,11 +1354,18 @@ public class VisibleScreen extends JFrame {
         for (int i = 3; i > 0; i--) {
             cardList.add(new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(setup.getRound().getPlayerInTurn().getHandCards().size() - i).toString()));
         }
+
         for (JRadioButton toBeAdded : cardList) {
+            toBeAdded.setFont(new Font("CardChoice", Font.BOLD, 30));
+            toBeAdded.setOpaque(false);
+            toBeAdded.setContentAreaFilled(false);
+            toBeAdded.setBorderPainted(false);
             choises.add(toBeAdded);
             container.add(toBeAdded);
         }
+
         JButton putCardBack = new JButton("Put card back");
+        putCardBack.setFont(new Font("CardChoice", Font.BOLD, 30));
         putCardBack.addActionListener(kitCarlsonPutCardBack);
         container.add(putCardBack);
     }
@@ -1320,7 +1376,7 @@ public class VisibleScreen extends JFrame {
      */
     public void pedroRamirezDrawScreen() {
 
-        container.setLayout(new GridLayout(4, 3));
+        container.setLayout(new GridLayout(5, 3));
 
         if (setup.getRound().getDiscardpile().getDeck().isEmpty()) {
 
@@ -1338,11 +1394,16 @@ public class VisibleScreen extends JFrame {
             container.add(next);
 
         } else {
-            JLabel topCardOfDiscardPile = new JLabel("Top card of discardpile is " + setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).toString() + ",", JLabel.CENTER);
+
+            JLabel topCardOfDiscardPile = new JLabel("Top card of discardpile:", JLabel.CENTER);
             topCardOfDiscardPile.setFont(new Font("Bang", Font.BOLD, 48));
             container.add(topCardOfDiscardPile);
 
-            JLabel wannaDrawFromDiscardpile = new JLabel("do you want to draw your first card from discardpile?", JLabel.CENTER);
+            JLabel topCard = new JLabel(setup.getRound().getDiscardpile().getDeck().get(setup.getRound().getDiscardpile().getDeck().size() - 1).toString(), JLabel.CENTER);
+            topCard.setFont(new Font("Bang", Font.BOLD, 48));
+            container.add(topCard);
+
+            JLabel wannaDrawFromDiscardpile = new JLabel("do you want to draw it?", JLabel.CENTER);
             wannaDrawFromDiscardpile.setFont(new Font("Bang", Font.BOLD, 48));
             container.add(wannaDrawFromDiscardpile);
 
@@ -1366,47 +1427,74 @@ public class VisibleScreen extends JFrame {
      */
     public void sidKetchumCardDiscard() {
 
-        BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
-        container.setLayout(yPlane);
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
         if (setup.getRound().getCheckerForAvatarSpeciality().getSidKetchumDiscardList().size() == 2) {
-            container.add(new JLabel("Are you sure?"));
+            JLabel areYouSure = new JLabel("Are you sure?");
+            areYouSure.setFont(new Font("SidKetchum", Font.BOLD, 30));
+            container.add(areYouSure);
+            container.add(new JLabel(" "));
 
-            String remainingHandCards = "<html><br>Hand cards:";
+            JLabel handCards = new JLabel("Hand cards:");
+            handCards.setFont(new Font("SidKetchum", Font.BOLD, 30));
+            container.add(handCards);
+            container.add(new JLabel(" "));
+
             for (Card toBeShown : setup.getRound().getPlayerInTurn().getHandCards()) {
-                remainingHandCards = remainingHandCards + "<br>" + toBeShown.toString();
+                JLabel handCard = new JLabel(toBeShown.toString());
+                handCard.setFont(new Font("SidKetchumList", Font.BOLD, 20));
+                container.add(handCard);
             }
-            remainingHandCards = remainingHandCards + "</html>";
-            container.add(new JLabel(remainingHandCards));
 
         } else {
-            container.add(new JLabel("Choose a card to discard"));
 
-            container.add(new JLabel("Hand cards:"));
+            JLabel chooseToDiscard = new JLabel("Choose a card to discard");
+            chooseToDiscard.setFont(new Font("SidKetchum", Font.BOLD, 30));
+            container.add(chooseToDiscard);
+            container.add(new JLabel(" "));
+
+            JLabel handCards = new JLabel("Hand cards:");
+            handCards.setFont(new Font("SidKetchum", Font.BOLD, 30));
+            container.add(handCards);
+            container.add(new JLabel(" "));
 
             ButtonGroup choises = new ButtonGroup();
             cardList.clear();
 
             for (int i = 0; i < setup.getRound().getPlayerInTurn().getHandCards().size(); i++) {
-                cardList.add(new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(i).toString()));
+                JRadioButton toBeDiscarded = new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(i).toString());
+                toBeDiscarded.setFont(new Font("SidKetchumList", Font.BOLD, 20));
+                toBeDiscarded.setOpaque(false);
+                toBeDiscarded.setContentAreaFilled(false);
+                toBeDiscarded.setBorderPainted(false);
+                cardList.add(toBeDiscarded);
             }
             for (JRadioButton toBeAdded : cardList) {
                 choises.add(toBeAdded);
                 container.add(toBeAdded);
             }
         }
-        String cardsToBeDiscarded = "<html><br>To be discarded:";
+        container.add(new JLabel(" "));
+
+        JLabel toBeDiscarded = new JLabel("To be discarded:");
+        toBeDiscarded.setFont(new Font("SidKetchum", Font.BOLD, 30));
+        container.add(toBeDiscarded);
+        container.add(new JLabel(" "));
+
         for (Card toBeShown : setup.getRound().getCheckerForAvatarSpeciality().getSidKetchumDiscardList()) {
-            cardsToBeDiscarded = cardsToBeDiscarded + "<br>" + toBeShown.toString();
+            JLabel cardToDiscard = new JLabel(toBeShown.toString());
+            cardToDiscard.setFont(new Font("SidKetchumList", Font.BOLD, 20));
+            container.add(cardToDiscard);
         }
-        cardsToBeDiscarded = cardsToBeDiscarded + "</html>";
-        container.add(new JLabel(cardsToBeDiscarded));
+        container.add(new JLabel(" "));
 
         JButton discard = new JButton("Discard");
+        discard.setFont(new Font("SidKetchumButton", Font.ITALIC, 26));
         discard.addActionListener(sidKetchumDiscardClick);
         container.add(discard);
 
         JButton cancel = new JButton("Cancel");
+        cancel.setFont(new Font("SidKetchumButton", Font.ITALIC, 26));
         cancel.addActionListener(sidKetchumCancel);
         container.add(cancel);
     }
@@ -1419,61 +1507,130 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout());
 
+        Container enemyInfoContainer = new Container();
+        enemyInfoContainer.setLayout(new BoxLayout(enemyInfoContainer, BoxLayout.Y_AXIS));
 
+        JLabel enemyHeadline = new JLabel("Enemy");
+        enemyHeadline.setFont(new Font("Headline", Font.BOLD, 30));
+        enemyInfoContainer.add(enemyHeadline);
+        enemyInfoContainer.add(new JLabel(" "));
+
+        JLabel enemyAvatar = new JLabel(setup.getRound().getPlayerToFollow().getAvatar().toString());
+        enemyAvatar.setFont(new Font("EnemyInfo", Font.BOLD, 26));
+        enemyInfoContainer.add(enemyAvatar);
+
+        JLabel enemySpeciality = new JLabel(setup.getRound().getPlayerToFollow().getAvatar().getSpeciality());
+        enemySpeciality.setFont(new Font("EnemySpeciality", Font.BOLD, 16));
+        enemyInfoContainer.add(enemySpeciality);
+        enemyInfoContainer.add(new JLabel(" "));
+
+        JLabel enemyHealth = new JLabel("Enemy health: " + setup.getRound().getPlayerToFollow().getCurrentHealth());
+        enemyHealth.setFont(new Font("EnemyInfo", Font.BOLD, 26));
+        enemyInfoContainer.add(enemyHealth);
+        enemyInfoContainer.add(new JLabel(" "));
+
+        JLabel enemyHandCards;
+
+        if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+            enemyHandCards = new JLabel("Enemy has no hand cards");
+
+        } else if (setup.getRound().getPlayerToFollow().getHandCards().size() == 1) {
+            enemyHandCards = new JLabel("Enemy has 1 hand card", JLabel.CENTER);
+
+        } else {
+            enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards");
+        }
+        enemyHandCards.setFont(new Font("EnemyCards", Font.BOLD, 20));
+        enemyInfoContainer.add(enemyHandCards);
+        enemyInfoContainer.add(new JLabel(" "));
 
         Container enemyFrontCards = new Container();
         enemyFrontCards.setLayout(new BoxLayout(enemyFrontCards, BoxLayout.Y_AXIS));
 
-        enemyFrontCards.add(new JLabel("Enemy front cards:"));
+        JLabel enemyFrontCardsInfo;
 
-        for (Card toBeShown : setup.getRound().getPlayerToFollow().getFrontCards()) {
-            enemyFrontCards.add(new JLabel(toBeShown.toString()));
+        if (setup.getRound().getPlayerToFollow().getFrontCards().isEmpty()) {
+            enemyFrontCardsInfo = new JLabel("Enemy has no front cards");
+            enemyFrontCardsInfo.setFont(new Font("EnemyCards", Font.BOLD, 20));
+            enemyInfoContainer.add(enemyFrontCardsInfo);
+
+        } else {
+            enemyFrontCardsInfo = new JLabel("Enemy front cards:");
+            enemyFrontCardsInfo.setFont(new Font("EnemyCards", Font.BOLD, 20));
+            enemyInfoContainer.add(enemyFrontCardsInfo);
+
+            for (Card toBeShown : setup.getRound().getPlayerToFollow().getFrontCards()) {
+                JLabel enemyFrontCard = new JLabel(toBeShown.toString());
+                enemyFrontCard.setFont(new Font("EnemyCard", Font.BOLD, 16));
+                enemyInfoContainer.add(enemyFrontCard);
+            }
         }
-
-        Container enemyInfoContainer = new Container();
-        enemyInfoContainer.setLayout(new GridLayout(20, 1));
-
-        enemyInfoContainer.add(new JLabel("Enemy: " + setup.getRound().getPlayerToFollow().getAvatar().toString()));
-        enemyInfoContainer.add(new JLabel(setup.getRound().getPlayerToFollow().getAvatar().getSpeciality()));
-        enemyInfoContainer.add(new JLabel(" "));
-
-        enemyInfoContainer.add(new JLabel("Enemy health: " + setup.getRound().getPlayerToFollow().getCurrentHealth()));
-        enemyInfoContainer.add(new JLabel(" "));
-
-        enemyInfoContainer.add(new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards"));
-        enemyInfoContainer.add(new JLabel(" "));
-
-        enemyInfoContainer.add(enemyFrontCards);
-
         container.add(enemyInfoContainer);
-
-        Container playerFrontCards = new Container();
-        playerFrontCards.setLayout(new BoxLayout(playerFrontCards, BoxLayout.Y_AXIS));
-
-        playerFrontCards.add(new JLabel("Your front cards:"));
-
-        for (Card toBeShown : setup.getRound().getPlayerInTurn().getFrontCards()) {
-            playerFrontCards.add(new JLabel(toBeShown.toString()));
-        }
 
         Container playerInfoContainer = new Container();
         playerInfoContainer.setLayout(new BoxLayout(playerInfoContainer, BoxLayout.Y_AXIS));
 
-        playerInfoContainer.add(new JLabel("You: " + setup.getRound().getPlayerInTurn().getAvatar().toString()));
-        playerInfoContainer.add(new JLabel(setup.getRound().getPlayerInTurn().getAvatar().getSpeciality()));
+        JLabel playerHeadline = new JLabel("You");
+        playerHeadline.setFont(new Font("Headline", Font.BOLD, 30));
+        playerInfoContainer.add(playerHeadline);
         playerInfoContainer.add(new JLabel(" "));
 
-        playerInfoContainer.add(new JLabel("Your health: " + setup.getRound().getPlayerInTurn().getCurrentHealth()));
+        JLabel playerAvatar = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().toString());
+        playerAvatar.setFont(new Font("PlayerInfo", Font.BOLD, 26));
+        playerInfoContainer.add(playerAvatar);
+
+        JLabel playerSpeciality = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().getSpeciality());
+        playerSpeciality.setFont(new Font("PlayerSpeciality", Font.BOLD, 16));
+        playerInfoContainer.add(playerSpeciality);
         playerInfoContainer.add(new JLabel(" "));
 
-        playerInfoContainer.add(playerFrontCards);
+        JLabel playerHealth = new JLabel("Your health: " + setup.getRound().getPlayerInTurn().getCurrentHealth());
+        playerHealth.setFont(new Font("PlayerInfo", Font.BOLD, 26));
+        playerInfoContainer.add(playerHealth);
+        playerInfoContainer.add(new JLabel(" "));
 
+        Container playerFrontCards = new Container();
+        playerFrontCards.setLayout(new BoxLayout(playerFrontCards, BoxLayout.Y_AXIS));
+
+
+        if (setup.getRound().getPlayerInTurn().getFrontCards().isEmpty()) {
+            playerFrontCards.add(new JLabel("You have no front cards"));
+
+        } else {
+            playerFrontCards.add(new JLabel("Your front cards:"));
+
+            for (Card toBeShown : setup.getRound().getPlayerInTurn().getFrontCards()) {
+                playerFrontCards.add(new JLabel(toBeShown.toString()));
+            }
+        }
+
+        JLabel playerFrontCardsInfo;
+
+        if (setup.getRound().getPlayerInTurn().getFrontCards().isEmpty()) {
+            playerFrontCardsInfo = new JLabel("You have no front cards");
+            playerFrontCardsInfo.setFont(new Font("Player", Font.BOLD, 20));
+            playerInfoContainer.add(playerFrontCardsInfo);
+
+        } else {
+            playerFrontCardsInfo = new JLabel("Your front cards:");
+            playerFrontCardsInfo.setFont(new Font("PlayerCards", Font.BOLD, 20));
+            playerInfoContainer.add(playerFrontCardsInfo);
+
+            for (Card toBeShown : setup.getRound().getPlayerInTurn().getFrontCards()) {
+                JLabel playerFrontCard = new JLabel(toBeShown.toString());
+                playerFrontCard.setFont(new Font("PlayerCard", Font.BOLD, 16));
+                playerInfoContainer.add(playerFrontCard);
+            }
+        }
         container.add(playerInfoContainer);
 
         Container handCardsMenu = new Container();
         handCardsMenu.setLayout(new BoxLayout(handCardsMenu, BoxLayout.Y_AXIS));
 
-        handCardsMenu.add(new JLabel("Your hand cards:"));
+        JLabel playerHandCardList = new JLabel("Your hand cards");
+        playerHandCardList.setFont(new Font("Headline", Font.BOLD, 30));
+        handCardsMenu.add(playerHandCardList);
+        handCardsMenu.add(new JLabel(" "));
 
         ButtonGroup playerHandCards = new ButtonGroup();
         cardList.clear();
@@ -1485,25 +1642,32 @@ public class VisibleScreen extends JFrame {
         }
 
         for (JRadioButton toBeAdded : cardList) {
-
+            toBeAdded.setFont(new Font("HandCardList", Font.BOLD, 16));
+            toBeAdded.setOpaque(false);
+            toBeAdded.setContentAreaFilled(false);
+            toBeAdded.setBorderPainted(false);
             playerHandCards.add(toBeAdded);
             JLabel buttonContainer = new JLabel();
             buttonContainer.add(toBeAdded);
             handCardsMenu.add(toBeAdded);
         }
+        handCardsMenu.add(new JLabel(" "));
 
         JButton useCard = new JButton("Use card");
+        useCard.setFont(new Font("RoundButton", Font.ITALIC, 18));
         useCard.addActionListener(playerXScreen_UseCard);
         handCardsMenu.add(useCard);
 
         if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Sid Ketchum") && setup.getRound().getPlayerInTurn().getHandCards().size() > 1) {
 
             JButton healthForSidKetchum = new JButton("Regain health");
+            healthForSidKetchum.setFont(new Font("RoundButton", Font.ITALIC, 18));
             healthForSidKetchum.addActionListener(toSidKetchumCardDiscard);
             handCardsMenu.add(healthForSidKetchum);
         }
 
         JButton endTurn = new JButton("End turn");
+        endTurn.setFont(new Font("RoundButton", Font.ITALIC, 18));
         endTurn.addActionListener(playerXScreen_EndTurn);
         handCardsMenu.add(endTurn);
 
@@ -1556,11 +1720,15 @@ public class VisibleScreen extends JFrame {
      */
     public void clickToPretendYouCouldReply() {
 
-        container.setLayout(new GridLayout(3, 3));
+        container.setLayout(new GridLayout(5, 3));
 
-        JLabel youDoNotHaveEnoughReplyCards = new JLabel("You don't have cards to reply with and will lose health!", JLabel.CENTER);
+        JLabel youDoNotHaveEnoughReplyCards = new JLabel("You don't have cards to reply", JLabel.CENTER);
         youDoNotHaveEnoughReplyCards.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(youDoNotHaveEnoughReplyCards);
+
+        JLabel youWillLoseHealth = new JLabel("You will lose health!", JLabel.CENTER);
+        youWillLoseHealth.setFont(new Font("Bang", Font.BOLD, 48));
+        container.add(youWillLoseHealth);
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
@@ -1574,8 +1742,11 @@ public class VisibleScreen extends JFrame {
             next.addActionListener(toGameOverScreen);
 
         } else {
-            JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
+            JLabel clickToDistract = new JLabel("Click so it looks like", JLabel.CENTER);
             clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel couldHaveReplied = new JLabel("you could have replied", JLabel.CENTER);
+            couldHaveReplied.setFont(new Font("Bang", Font.BOLD, 48));
 
             if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("El Gringo")) {
                 if (setup.getRound().getPlayerInTurn().getHandCards().isEmpty()) {
@@ -1587,6 +1758,7 @@ public class VisibleScreen extends JFrame {
                 next.addActionListener(pleaseLookAwayToPlayerXScreen);
             }
             container.add(clickToDistract);
+            container.add(couldHaveReplied);
         }
         container.add(next);
     }
@@ -1621,31 +1793,56 @@ public class VisibleScreen extends JFrame {
      */
     public void doYouWannaPlayMancato() {
 
-        container.setLayout(new GridLayout(4, 3));
+        container.setLayout(new GridLayout(5, 3));
 
         if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
 
             if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
-                JLabel willYouUseTwoCards = new JLabel("Will you use two BANG! / Mancato! -cards to cancel a hit?", JLabel.CENTER);
+
+                JLabel willYouUseTwoCards = new JLabel("Will you use two BANG! / Mancato! -cards", JLabel.CENTER);
                 willYouUseTwoCards.setFont(new Font("Bang", Font.BOLD, 48));
+
+                JLabel toCancelHit = new JLabel("to cancel a hit?", JLabel.CENTER);
+                toCancelHit.setFont(new Font("Bang", Font.BOLD, 48));
+
                 container.add(willYouUseTwoCards);
+                container.add(toCancelHit);
 
             } else {
-                JLabel willYouUseACard = new JLabel("Will you use a BANG! / Mancato! to cancel a hit?", JLabel.CENTER);
+
+                JLabel willYouUseACard = new JLabel("Will you use BANG! / Mancato!", JLabel.CENTER);
                 willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+
+                JLabel toCancelHit = new JLabel("to cancel a hit?", JLabel.CENTER);
+                toCancelHit.setFont(new Font("Bang", Font.BOLD, 48));
+
                 container.add(willYouUseACard);
+                container.add(toCancelHit);
             }
 
         } else if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Slab The Killer") && setup.getRound().getCheckerForAvatarSpeciality().howManyMissesHaveBeenUsedAgainstSlabTheKiller() == 0) {
-            JLabel willYouUseTwoMancatos = new JLabel("Will you use two Mancato!-cards to cancel a hit?", JLabel.CENTER);
+
+            JLabel willYouUseTwoMancatos = new JLabel("Will you use two Mancato!-cards", JLabel.CENTER);
             willYouUseTwoMancatos.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelHit = new JLabel("to cancel a hit?", JLabel.CENTER);
+            toCancelHit.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseTwoMancatos);
+            container.add(toCancelHit);
 
         } else {
-            JLabel willYouUseAMancato = new JLabel("Will you use a Mancato! to cancel a hit?", JLabel.CENTER);
+
+            JLabel willYouUseAMancato = new JLabel("Will you use Mancato!", JLabel.CENTER);
             willYouUseAMancato.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelHit = new JLabel("to cancel a hit?", JLabel.CENTER);
+            toCancelHit.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseAMancato);
+            container.add(toCancelHit);
         }
+
         JButton useMancato = new JButton("Yes");
         useMancato.setFont(new Font("Button", Font.ITALIC, 34));
         useMancato.addActionListener(doYouWannaRespond_Yes);
@@ -1667,13 +1864,26 @@ public class VisibleScreen extends JFrame {
         container.setLayout(new GridLayout(4, 3));
 
         if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
-            JLabel willYouUseACard = new JLabel("Will you use a BANG! / Mancato! to cancel a hit?", JLabel.CENTER);
+
+            JLabel willYouUseACard = new JLabel("Will you use BANG! / Mancato!", JLabel.CENTER);
             willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelHit = new JLabel("to cancel a hit?", JLabel.CENTER);
+            toCancelHit.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseACard);
+            container.add(toCancelHit);
+
         } else {
-            JLabel willYouUseABang = new JLabel("Will you use a BANG! to cancel a hit?", JLabel.CENTER);
+
+            JLabel willYouUseABang = new JLabel("Will you use a BANG!", JLabel.CENTER);
             willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelHit = new JLabel("to cancel a hit?", JLabel.CENTER);
+            toCancelHit.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseABang);
+            container.add(toCancelHit);
         }
         JButton useBang = new JButton("Yes");
         useBang.setFont(new Font("Button", Font.ITALIC, 34));
@@ -1697,17 +1907,41 @@ public class VisibleScreen extends JFrame {
         container.setLayout(new GridLayout(5, 3));
 
         if (setup.getRound().getPlayerToFollow().getAvatar().toString().equals("Calamity Janet")) {
-            JLabel willYouUseACard = new JLabel("Will you use a BANG! or a Mancato! to reply to Duello?");
+
+            JLabel willYouUseACard = new JLabel("Will you use BANG! / Mancato!", JLabel.CENTER);
             willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelDuello = new JLabel("to reply to Duello?", JLabel.CENTER);
+            toCancelDuello.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseACard);
+            container.add(toCancelDuello);
 
         } else {
-            JLabel willYouUseABang = new JLabel("Will you use a BANG! to cancel a hit?", JLabel.CENTER);
+
+            JLabel willYouUseABang = new JLabel("Will you use a BANG!", JLabel.CENTER);
             willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelDuello = new JLabel("to reply to Duello?", JLabel.CENTER);
+            toCancelDuello.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseABang);
+            container.add(toCancelDuello);
         }
-        JLabel enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerInTurn().getHandCards().size() + " hand cards", JLabel.CENTER);
+
+        JLabel enemyHandCards;
+
+        if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+            enemyHandCards = new JLabel("Enemy has no hand cards", JLabel.CENTER);
+
+        } else if (setup.getRound().getPlayerToFollow().getHandCards().size() == 1) {
+            enemyHandCards = new JLabel("Enemy has 1 hand card", JLabel.CENTER);
+
+        } else {
+            enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards", JLabel.CENTER);
+        }
         enemyHandCards.setFont(new Font("Bang", Font.BOLD, 48));
+
         container.add(enemyHandCards);
 
         JButton useBang = new JButton("Yes");
@@ -1737,16 +1971,39 @@ public class VisibleScreen extends JFrame {
         container.setLayout(new GridLayout(5, 3));
 
         if (setup.getRound().getPlayerInTurn().getAvatar().toString().equals("Calamity Janet")) {
-            JLabel willYouUseACard = new JLabel("Will you use a BANG! or a Mancato! to reply to Duello?");
+
+            JLabel willYouUseACard = new JLabel("Will you use BANG! / Mancato!", JLabel.CENTER);
             willYouUseACard.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelDuello = new JLabel("to reply to Duello?", JLabel.CENTER);
+            toCancelDuello.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseACard);
+            container.add(toCancelDuello);
 
         } else {
-            JLabel willYouUseABang = new JLabel("Will you use a BANG! to cancel a hit?", JLabel.CENTER);
+
+            JLabel willYouUseABang = new JLabel("Will you use BANG!", JLabel.CENTER);
             willYouUseABang.setFont(new Font("Bang", Font.BOLD, 48));
+
+            JLabel toCancelDuello = new JLabel("to cancel a hit?", JLabel.CENTER);
+            toCancelDuello.setFont(new Font("Bang", Font.BOLD, 48));
+
             container.add(willYouUseABang);
+            container.add(toCancelDuello);
         }
-        JLabel enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards", JLabel.CENTER);
+
+        JLabel enemyHandCards;
+
+        if (setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
+            enemyHandCards = new JLabel("Enemy has no hand cards", JLabel.CENTER);
+
+        } else if (setup.getRound().getPlayerToFollow().getHandCards().size() == 1) {
+            enemyHandCards = new JLabel("Enemy has 1 hand card", JLabel.CENTER);
+
+        } else {
+            enemyHandCards = new JLabel("Enemy has " + setup.getRound().getPlayerToFollow().getHandCards().size() + " hand cards", JLabel.CENTER);
+        }
         enemyHandCards.setFont(new Font("Bang", Font.BOLD, 48));
         container.add(enemyHandCards);
 
@@ -1774,16 +2031,23 @@ public class VisibleScreen extends JFrame {
      */
     public void duelloToOtherPlayerScreen() {
 
-        container.setLayout(new GridLayout(2, 3));
+        container.setLayout(new GridLayout(3, 3));
 
         JLabel pleaseLookAway;
+        JLabel replies;
+
         if (setup.getRound().playerInTurnIsNextToReactToDuello()) {
-            pleaseLookAway = new JLabel("Please look away, " + setup.getRound().getPlayerInTurn().getAvatar().toString() + " replies to Duello", JLabel.CENTER);
+            pleaseLookAway = new JLabel("Please look away,", JLabel.CENTER);
+            replies = new JLabel(setup.getRound().getPlayerInTurn().getAvatar().toString() + " replies to Duello", JLabel.CENTER);
         } else {
-            pleaseLookAway = new JLabel("Please look away, " + setup.getRound().getPlayerToFollow().getAvatar().toString() + " replies to Duello", JLabel.CENTER);
+            pleaseLookAway = new JLabel("Please look away,", JLabel.CENTER);
+            replies = new JLabel(setup.getRound().getPlayerToFollow().getAvatar().toString() + " replies to Duello", JLabel.CENTER);
         }
         pleaseLookAway.setFont(new Font("Bang", Font.BOLD, 48));
+        replies.setFont(new Font("Bang", Font.BOLD, 48));
+
         container.add(pleaseLookAway);
+        container.add(replies);
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
@@ -1815,18 +2079,26 @@ public class VisibleScreen extends JFrame {
 
         container.setLayout(new GridLayout(3, 3));
 
-        JLabel youHaveNoBang = new JLabel("You have no BANG!-card to reply with and will lose health!", JLabel.CENTER);
+        JLabel youHaveNoBang = new JLabel("You have no BANG!-card to reply", JLabel.CENTER);
         youHaveNoBang.setFont(new Font("Bang", Font.BOLD, 48));
 
-        JLabel clickToDistract = new JLabel("Click so it looks like you could have replied!", JLabel.CENTER);
+        JLabel youWillLoseHealth = new JLabel("You will lose health!", JLabel.CENTER);
+        youWillLoseHealth.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel clickToDistract = new JLabel("Click so it looks like you", JLabel.CENTER);
         clickToDistract.setFont(new Font("Bang", Font.BOLD, 48));
+
+        JLabel couldHaveReplied = new JLabel("you could have replied", JLabel.CENTER);
+        couldHaveReplied.setFont(new Font("Bang", Font.BOLD, 48));
 
         JButton next = new JButton("Continue");
         next.setFont(new Font("Button", Font.ITALIC, 34));
         next.addActionListener(continueToPlayerXScreen);
 
         container.add(youHaveNoBang);
+        container.add(youWillLoseHealth);
         container.add(clickToDistract);
+        container.add(couldHaveReplied);
         container.add(next);
     }
 
@@ -1946,18 +2218,29 @@ public class VisibleScreen extends JFrame {
      */
     public void discardCards() {
 
-        BoxLayout yPlane = new BoxLayout(container, BoxLayout.Y_AXIS);
-        container.setLayout(yPlane);
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 
-        frame.add(new JLabel("You may only hold in your hand as many cards as you have health left"));
+        JLabel handCardLimitation = new JLabel("You may only hold in your hand as many cards as you have health left");
+        handCardLimitation.setFont(new Font("CardChoice", Font.BOLD, 30));
+        container.add(handCardLimitation);
+
+        JLabel cardsToDiscard;
 
         if (setup.getRound().getPlayerInTurn().getHandCards().size() == setup.getRound().getPlayerInTurn().getCurrentHealth() + 1) {
-            frame.add(new JLabel("You must discard 1 card"));
+            cardsToDiscard = new JLabel("You must discard 1 card");
 
         } else {
-            frame.add(new JLabel("You must discard " + (setup.getRound().getPlayerInTurn().getHandCards().size() - setup.getRound().getPlayerInTurn().getCurrentHealth()) + " cards"));
+            cardsToDiscard = new JLabel("You must discard " + (setup.getRound().getPlayerInTurn().getHandCards().size() - setup.getRound().getPlayerInTurn().getCurrentHealth()) + " cards");
         }
-        frame.add(new JLabel("Choose a card to discard"));
+        cardsToDiscard.setFont(new Font("CardChoice", Font.BOLD, 30));
+        container.add(cardsToDiscard);
+        container.add(new JLabel(" "));
+
+        JLabel chooseCard = new JLabel("Choose a card to discard");
+        chooseCard.setFont(new Font("CardChoice", Font.BOLD, 30));
+        container.add(chooseCard);
+
+        container.add(new JLabel(" "));
 
         cardList = new ArrayList<>();
         ButtonGroup cardsToBeDiscarded = new ButtonGroup();
@@ -1966,14 +2249,22 @@ public class VisibleScreen extends JFrame {
             cardList.add(new JRadioButton(setup.getRound().getPlayerInTurn().getHandCards().get(i).toString()));
         }
         for (JRadioButton toBeDiscarded : cardList) {
+            toBeDiscarded.setFont(new Font("CardList", Font.BOLD, 16));
+            toBeDiscarded.setOpaque(false);
+            toBeDiscarded.setContentAreaFilled(false);
+            toBeDiscarded.setBorderPainted(false);
             container.add(toBeDiscarded);
             cardsToBeDiscarded.add(toBeDiscarded);
         }
+        container.add(new JLabel(" "));
+
         JButton discardCards = new JButton("Discard");
+        discardCards.setFont(new Font("CardChoice", Font.ITALIC, 26));
         discardCards.addActionListener(discardCards_Discard);
         container.add(discardCards);
 
         JButton cancel = new JButton("Cancel");
+        cancel.setFont(new Font("CardChoice", Font.ITALIC, 26));
         cancel.addActionListener(cancelCardDiscard);
         container.add(cancel);
     }
@@ -2023,7 +2314,7 @@ public class VisibleScreen extends JFrame {
     public int getPanicoOrCatBalouIndex() {
         for (JRadioButton isThisSelected : cardList) {
 
-            if (isThisSelected.isSelected() && cardList.indexOf(isThisSelected) == cardList.size() - 1) {
+            if (isThisSelected.isSelected() && cardList.indexOf(isThisSelected) == cardList.size() - 1 && !setup.getRound().getPlayerToFollow().getHandCards().isEmpty()) {
                 return -2;
 
             } else if (isThisSelected.isSelected()) {

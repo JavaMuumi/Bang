@@ -22,6 +22,7 @@ public class CheckerForPlayedCard {
     private int indexOfSameCard;
     private int indexOfReplyCard;
     private int indexOfSecondReplyCard;
+    private Card lastStolenCard;
 
     /**
      *
@@ -233,6 +234,8 @@ public class CheckerForPlayedCard {
      */
     public boolean checkBarrel() {
 
+        round.getPlayerInTurn().clearListOfLastCheckedCards();
+        
         boolean thereIsABarrel = false;
         int indexOfBarrel = 0;
 
@@ -438,5 +441,25 @@ public class CheckerForPlayedCard {
             }
         }
         return indexOfCard;
+    }
+
+    /**
+     *
+     * Asettaa muitiin viimeisimmän varastetun kortin.
+     *
+     * @param stolenCard viimeisin varastettu kortti
+     */
+    public void setLastStolenCard(Card stolenCard) {
+
+        lastStolenCard = stolenCard;
+    }
+
+    /**
+     *
+     * @return viimeisin varastettu kortti
+     */
+    public Card getLastStolenCard() {
+
+        return lastStolenCard;
     }
 }
